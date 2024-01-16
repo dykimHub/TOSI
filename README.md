@@ -1,5 +1,5 @@
 # 👪 Tosi(The only story in the world) :books:
-![tosi.PNG](/uploads/58742e837f97b27cc33a3bb3cfefe765/tosi.PNG.png)
+![tosi.PNG]()
 
 ## :loud_sound: 주제
 
