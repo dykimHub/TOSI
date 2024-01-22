@@ -18,10 +18,10 @@
 | 이름   | 역할                  | 기능   | GitLab                                             |
 | ------ | --------------------- |-------|------------------------------------------------ |
 | 천우진 | FullStack, Team Leader              | 메인 페이지  | [@qpqpqp0102](https://lab.ssafy.com/qpqpqp0102) |
-| 우지민 | FullStack              | 동화 구연  | [@0542say](https://lab.ssafy.com/0542say)        |
-| 김다윤 | FullStack               | 동화 구연  | [@kdayun](https://lab.ssafy.com/kdayun)      |
-| 양성주 | FullStack              | 커스텀 동화  | [@ztjdwnz](https://lab.ssafy.com/ztjdwnz)           |
-| 이아진 | FullStack              | 등장인물과의 채팅  | [@nuestiloveyou](https://lab.ssafy.com/nuestiloveyou) |
+| 우지민 | FullStack, FrontEnd leader              | 동화 구연  | [@0542say](https://lab.ssafy.com/0542say)        |
+| 김다윤 | FullStack, 서기               | 동화 구연  | [@kdayun](https://lab.ssafy.com/kdayun)      |
+| 양성주 | FullStack, UI 설계              | 커스텀 동화  | [@ztjdwnz](https://lab.ssafy.com/ztjdwnz)           |
+| 이아진 | FullStack, BackEnd leader              | 등장인물과의 채팅  | [@nuestiloveyou](https://lab.ssafy.com/nuestiloveyou) |
 | 김소연 | FullStack                | 회원   | [@summerfallwin](https://lab.ssafy.com/summerfallwin)       |
 
 ## :runner: 주차별 진행 상황
