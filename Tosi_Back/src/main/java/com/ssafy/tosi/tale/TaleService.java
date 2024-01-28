@@ -19,14 +19,14 @@ public class TaleService {
     }
 
     public Tale selectOneTale(int taleId) {
-        return taleRepository.findOne(taleId);
+        return taleRepository.findById(taleId).get();
     }
 
     public List<Tale> selectByTitle(String title) {
-        return taleRepository.findByTitle(title);
+        return taleRepository.findByTitleContaining(title);
     }
 
-    public List<Tale> selectAllTalesOrderByRandom() {
-        return taleRepository.orderByRandom();
-    }
+//    public List<Tale> selectAllTalesOrderByRandom() {
+//        return taleRepository.orderByRandom();
+//    }
 }

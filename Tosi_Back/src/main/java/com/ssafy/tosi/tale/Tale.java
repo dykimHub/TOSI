@@ -1,9 +1,13 @@
 package com.ssafy.tosi.tale;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity(name ="tales")
+@Data
 @Getter
 public class Tale {
 
