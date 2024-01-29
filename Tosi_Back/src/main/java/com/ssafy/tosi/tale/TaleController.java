@@ -23,14 +23,6 @@ public class TaleController {
     }
 
     /**
-     * 랜덤순 정렬
-     */
-//    @GetMapping("/tales/random")
-//    public ResponseEntity<List<Tale>> getTalesOrderByRandom() {
-////        return new ResponseEntity<>(taleService.selectAllTalesOrderByRandom(), HttpStatus.OK);
-////    }
-
-    /**
      * taleId 기준으로 하나만 조회
      */
     @GetMapping("/tale/{taleId}")
