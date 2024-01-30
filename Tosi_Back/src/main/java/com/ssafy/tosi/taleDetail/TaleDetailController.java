@@ -55,6 +55,8 @@ public class TaleDetailController {
         }
 
     }
+    
+    // 목소리 가져오기
 
 
 }
