@@ -39,14 +39,14 @@ public class CustomTaleController {
     }
 
     @PostMapping("/customtale")
-    public ResponseEntity<?> postCustomTale(@RequestBody CustomTale customTale) {
+    public ResponseEntity<?> insertCustomTale(@RequestBody CustomTale customTale) {
             CustomTale savedCustomTale = customTaleService.postCustomTale(customTale);
             return new ResponseEntity<>(savedCustomTale, HttpStatus.CREATED);
 
     }
 
     @PutMapping("/customtale/{customTaleId}")
-    public ResponseEntity<?> putCustomTale(@PathVariable Long customTaleId, @RequestParam boolean isPublic) {
+    public ResponseEntity<?> updateCustomTale(@PathVariable Long customTaleId, @RequestParam boolean isPublic) {
             CustomTale updatedCustomTale = customTaleService.putCustomTale(customTaleId, isPublic);
             return ResponseEntity.ok(updatedCustomTale);
 
