@@ -1,6 +1,6 @@
 package com.ssafy.tosi.customTale.generateCustomTale;
 
-import com.ssafy.tosi.customTale.generateCustomTale.property.ChatgptProperties;
+import com.ssafy.tosi.customTale.generateCustomTale.property.CustomTalegptProperties;
 import io.github.flashvayne.chatgpt.dto.chat.MultiChatMessage;
 import io.github.flashvayne.chatgpt.dto.chat.MultiChatRequest;
 import io.github.flashvayne.chatgpt.dto.chat.MultiChatResponse;
@@ -15,12 +15,12 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class ChatgptServiceImpl implements ChatgptService {
-    protected final ChatgptProperties chatgptProperties;
+public class GenerateCustomTaleServiceImpl implements GenerateCustomTaleService {
+    protected final CustomTalegptProperties chatgptProperties;
     private final String AUTHORIZATION;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public ChatgptServiceImpl(ChatgptProperties chatgptProperties) {
+    public GenerateCustomTaleServiceImpl(CustomTalegptProperties chatgptProperties) {
         this.chatgptProperties = chatgptProperties;
         AUTHORIZATION = "Bearer " + chatgptProperties.getApiKey();
     }

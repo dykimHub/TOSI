@@ -1,6 +1,6 @@
 package com.ssafy.tosi.customTale.generateCustomTale.property;
 
-public class MultiChatProperties {
+public class MultiCustomTaleProperties {
 
     private String url = "https://api.openai.com/v1/chat/completions";
 

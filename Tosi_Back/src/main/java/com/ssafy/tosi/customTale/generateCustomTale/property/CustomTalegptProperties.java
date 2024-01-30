@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "chatgpt")
-public class ChatgptProperties {
+public class CustomTalegptProperties {
 
     private String apiKey = "OPENAI_TOKEN=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";
 
@@ -19,10 +19,10 @@ public class ChatgptProperties {
 
     private Double topP = 1.0;
 
-    private MultiChatProperties multi;
+    private MultiCustomTaleProperties multi;
 
-    public ChatgptProperties() {
-        this.multi = new MultiChatProperties();
+    public CustomTalegptProperties() {
+        this.multi = new MultiCustomTaleProperties();
     }
 
     public String getApiKey() {
@@ -73,11 +73,11 @@ public class ChatgptProperties {
         this.topP = topP;
     }
 
-    public MultiChatProperties getMulti() {
+    public MultiCustomTaleProperties getMulti() {
         return multi;
     }
 
-    public void setMulti(MultiChatProperties multi) {
+    public void setMulti(MultiCustomTaleProperties multi) {
         this.multi = multi;
     }
 }

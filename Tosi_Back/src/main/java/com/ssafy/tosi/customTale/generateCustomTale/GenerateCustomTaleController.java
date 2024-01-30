@@ -21,15 +21,15 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-public class GptController {
-    private final ChatgptService chatgptService;
+public class GenerateCustomTaleController {
+    private final GenerateCustomTaleService generateCustomTale;
 
-    public GptController(ChatgptService chatgptService) {
-        this.chatgptService = chatgptService;
+    public GenerateCustomTaleController(GenerateCustomTaleService generateCustomTale) {
+        this.generateCustomTale = generateCustomTale;
     }
 
-    @Operation(summary="GPT에게 메세지 보내기",
-            description="GPT에게 메세지를 보내고 응답을 반환 받습니다.",
+    @Operation(summary="GPT에게 동화 생성 요청하기",
+            description="GPT가 동화를 생성합니다.",
             tags={"GptController"}
     )
     @ApiResponses({
@@ -47,7 +47,7 @@ public class GptController {
                 new MultiChatMessage("user", userInputMessage.getUserMessage()));
 
         
-        GptOutputMessage responseMessage = new GptOutputMessage(chatgptService.sendChat(messages));
+        GptOutputMessage responseMessage = new GptOutputMessage(generateCustomTale.sendChat(messages));
 
         return new ResponseEntity<>(responseMessage,
                 HttpStatus.OK);
