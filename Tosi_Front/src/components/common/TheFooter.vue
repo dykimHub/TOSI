@@ -1,5 +1,5 @@
 <template>
-    <div>Footer</div>
+    <div>푸터</div>
 </template>
 
 <script setup></script>
