@@ -97,8 +97,34 @@ public class TaleDetailServiceImpl implements TaleDetailService {
 
     }
 
+    @Override
+    public List<Page> paging(String[] splitted_contents, TaleDto taleDto) {
+        int p = 1;
+        List<Page> pages = new ArrayList<>();
+
+        for (int i = 0; i < splitted_contents.length; i++) {
+            if (splitted_contents[i] == null)
+                continue;
+
+            String[] sentences = splitted_contents[i].split("\n");
+
+            for (int j = 0; j < sentences.length - 1; j += 2) {
+                Page page = Page.builder()
+                        .leftNo(p)
+                        .left(taleDto.getImages()[i])
+                        .rightNo(p + 1)
+                        .right(sentences[j] + "\n" + sentences[j + 1])
+                        .build();
+
+                pages.add(page);
+                p += 2;
+            }
 
 
+        }
+
+        return pages;
+    }
 
     @Override
     public String[] changeName(String[] contents) throws Exception {

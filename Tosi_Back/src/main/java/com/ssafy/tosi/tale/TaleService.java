@@ -26,7 +26,9 @@ public class TaleService {
         return taleRepository.findByTitleContaining(title);
     }
 
+
 //    public List<Tale> selectAllTalesOrderByRandom() {
 //        return taleRepository.orderByRandom();
 //    }
 }
+

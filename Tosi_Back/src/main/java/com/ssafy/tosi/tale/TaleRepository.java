@@ -12,6 +12,8 @@ public interface TaleRepository extends JpaRepository<Tale, Integer> {
 
     List<Tale> findByTitleContaining(String title);
 
-    //TODO 랜덤정렬
+
+
 
 }
+
