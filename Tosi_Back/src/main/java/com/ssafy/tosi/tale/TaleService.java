@@ -25,10 +25,4 @@ public class TaleService {
     public List<Tale> selectByTitle(String title) {
         return taleRepository.findByTitleContaining(title);
     }
-
-
-//    public List<Tale> selectAllTalesOrderByRandom() {
-//        return taleRepository.orderByRandom();
-//    }
 }
-

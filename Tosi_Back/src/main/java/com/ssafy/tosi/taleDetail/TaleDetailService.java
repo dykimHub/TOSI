@@ -1,12 +1,10 @@
 package com.ssafy.tosi.taleDetail;
 
-import com.ssafy.tosi.tale.Tale;
 import com.ssafy.tosi.tale.TaleDto;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public interface TaleDetailService {
     TaleDto getTaleDetail(int taleId) throws EntityNotFoundException;

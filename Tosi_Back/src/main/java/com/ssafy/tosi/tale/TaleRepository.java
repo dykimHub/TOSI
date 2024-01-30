@@ -11,9 +11,4 @@ import java.util.List;
 public interface TaleRepository extends JpaRepository<Tale, Integer> {
 
     List<Tale> findByTitleContaining(String title);
-
-
-
-
 }
-

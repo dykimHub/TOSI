@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity(name ="tales")
-//추가: Entity name 지정해줘야 함
+@Data
 @Getter
 public class Tale {
 
