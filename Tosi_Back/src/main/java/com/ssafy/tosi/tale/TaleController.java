@@ -43,22 +43,22 @@ public class TaleController {
      */
     @GetMapping("/tales/search")
     public ResponseEntity<?> searchTale(@RequestParam String title) {
-       try {
-           if(title == null || title.trim().isEmpty()) {
-               throw new IllegalArgumentException("검색어를 입력하세요.");
-           }
+        try {
+            if(title == null || title.trim().isEmpty()) {
+                throw new IllegalArgumentException("검색어를 입력하세요.");
+            }
 
-           List<Tale> list = taleService.selectByTitle(title);
+            List<Tale> list = taleService.selectByTitle(title);
 
-           if(list.isEmpty()) {
-               throw new NoTalesFoundException("일치하는 결과를 찾을 수 없습니다.");
-           } else {
+            if(list.isEmpty()) {
+                throw new NoTalesFoundException("일치하는 결과를 찾을 수 없습니다.");
+            } else {
                 return new ResponseEntity<>(list, HttpStatus.OK);
-           }
-       } catch (IllegalArgumentException  e) {
+            }
+        } catch (IllegalArgumentException  e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-       } catch ( NoTalesFoundException e) {
-           return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-       }
+        } catch ( NoTalesFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -5,8 +5,9 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 @Entity(name ="tales")
-@Data
+//추가: Entity name 지정해줘야 함
 @Getter
 public class Tale {
 
