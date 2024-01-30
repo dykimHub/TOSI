@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 @Entity(name ="tales")
 @Data
 @Getter
@@ -20,6 +19,7 @@ public class Tale {
     private String content2;
     private String content3;
     private String content4;
+    private String images;
     private String characters;
     private int time;
     private int likeCnt;
