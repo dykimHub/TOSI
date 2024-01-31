@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { useTaleStore } from "@/stores/tale";
+import { useTaleStore } from "@/stores/taleStore";
 import { onMounted, ref, watch } from "vue";
 
 const Talestore = useTaleStore()

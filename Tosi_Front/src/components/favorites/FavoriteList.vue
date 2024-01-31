@@ -8,7 +8,7 @@
                 <th>제목</th>
                 <th>재생 시간</th>
             </tr>
-            <tr v-for="favorite in store.favoriteList" :key="favorite.favoriteId">
+            <tr v-for="favorite in favoriteStore.favoriteList" :key="favorite.favoriteId">
                 <!--TODO 즐겨찾기 부분 코드 확인 후 수정-->
                 <td>
                 <!--TODO 이미지 추가-->
@@ -25,10 +25,10 @@
 </template>
 
 <script setup>
-import { useFavoriteStore } from "@/stores/favorite";
+import { useFavoriteStore } from "@/stores/favoriteStore";
 import { onMounted } from "vue";
 
-const store = useFavoriteStore()
+const favoriteStore = useFavoriteStore()
 
 onMounted(() => {
     store.getFavoriteList()
