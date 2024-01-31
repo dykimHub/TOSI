@@ -2,6 +2,9 @@
   <div id="app" class="container">
     <h1 class="text-center my-4">나만의 동화 만들기</h1>
 
+    <div v-if="loading" class="loading-screen">
+      <p>Loading...</p>
+    </div>
     <div>
       <img
         v-if="customTaleStore.customTaleImage"
@@ -12,7 +15,6 @@
       <img v-else :src="randomImageUrl" alt="" style="height: 300px" />
     </div>
 
-    <!-- First input field -->
     <div class="input">
       <label for="prompt1" class="form-label">주인공</label>
       <div class="input-group">
@@ -25,7 +27,6 @@
       </div>
     </div>
 
-    <!-- Second input field -->
     <div class="input">
       <label for="prompt2" class="form-label">배경</label>
       <div class="input-group">
@@ -38,7 +39,6 @@
       </div>
     </div>
 
-    <!-- Third input field -->
     <div class="input">
       <label for="prompt3" class="form-label">키워드</label>
       <div class="input-group">
@@ -57,22 +57,18 @@
       </button>
     </div>
 
-    <!-- <div v-if="imageUrl !== ''"> -->
-    <h2>Generated Image:</h2>
-    <img :src="customTaleStore.customTaleImage" class="img-fluid" style="height: 300px" />
-    <!-- </div> -->
-
     <div>
       <h2>Generated text:</h2>
       <p>{{ customTaleStore.customTaleText.gptMessage }}</p>
-      <!-- <router-link :to="{ name: 'customTaleSave', params: { imageUrl, gptMessage } }" class="btn btn-primary">
-      재생 및 저장
-    </router-link> -->
+      <router-link to="/customtale/detail" class="btn btn-primary">
+      재생
+    </router-link>
     </div>
   </div>
 </template>
 
 <script setup>
+import router from "@/router";
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, ref } from "vue";
 const customTaleStore = useCustomTaleStore();
@@ -84,37 +80,49 @@ const generateRandomImageUrl = () => {
 const randomImageUrl = ref(generateRandomImageUrl());
 
 const prompt = ref(["", "", ""]);
-const imageUrl = ref("");
 
-const generateCustomTale = function(){
-  if (prompt.value.some((prompt) => prompt === "")) {
+const loading = ref(false);
+const generateCustomTale = async function () {
+  try {
+    loading.value = true; // 로딩 화면 표시
+    if (prompt.value.some((prompt) => prompt === "")) {
       alert("키워드를 모두 입력해주세요.");
       return;
     }
-  const imagePrompt = "3D animation illustrations for children's books with " +
+    const imagePrompt =
+      "3D animation illustrations for children's books with " +
       prompt.value[0] +
       " child, " +
       prompt.value[1] +
       " is the background and " +
       prompt.value[2] +
-      // + ","+ prompt.value[3] + ","+ prompt.value[4]
-      "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image."
-  customTaleStore.getCustomTaleImage(imagePrompt);
+      "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image.";
 
-  const gptPrompt =
-    prompt.value[0] +
-    "라는 아이를 주인공, " +
-    prompt.value[1] +
-    "을 배경, " +
-    prompt.value[2] +
-    "를 이용해 500자 내외의 교훈있는 동화를 만들어줘. 줄바꿈은 하지 말아줘. 성별언급은 하지말아줘.";
-  // const escapedGptPrompt = gptPrompt.replace(/"/g, '\\"');
-  customTaleStore.getCustomTaleText(gptPrompt);
+    await customTaleStore.getCustomTaleImage(imagePrompt);
+
+    const gptPrompt =
+      prompt.value[0] +
+      "라는 아이를 주인공, " +
+      prompt.value[1] +
+      "을 배경, " +
+      prompt.value[2] +
+      "를 이용해 500자 내외의 교훈있는 동화를 만들어줘. 줄바꿈은 하지 말아줘. 성별언급은 하지말아줘.";
+
+    await customTaleStore.getCustomTaleText(gptPrompt);
+  } catch (error) {
+    console.error("커스텀 동화 생성 오류:", error);
+    // 오류 처리 필요한 경우 추가
+  } finally {
+    loading.value = false; // 로딩 화면 감추기
+  }
 };
+  // const escapedGptPrompt = gptPrompt.replace(/"/g, '\\"');
 
 onMounted(() => {
   console.log("Image URL:", customTaleStore.customTaleImage);
   console.log("tale", customTaleStore.customTaleText);
+  customTaleStore.resetCustomTale();
+  
 });
 </script>
 
