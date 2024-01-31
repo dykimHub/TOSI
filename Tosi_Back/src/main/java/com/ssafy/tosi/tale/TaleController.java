@@ -9,31 +9,26 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class TaleController {
 
     private final TaleService taleService;
 
-    //TODO 프론트에서 정렬
-    //기본 조회는 랜덤순
+    /**
+     * 일반 정렬
+     */
     @GetMapping("/tales")
-    public ResponseEntity<List<Tale>> getTalesOrderByRandom() {
-        return new ResponseEntity<>(taleService.selectAllTalesOrderByRandom(), HttpStatus.OK);
+    public ResponseEntity<List<Tale>> getAllTales() {
+        return new ResponseEntity<>(taleService.selectAllTales(), HttpStatus.OK);
     }
 
-    //인기순
-    @GetMapping("/tales?sort=popularity")
-    public ResponseEntity<List<Tale>> getTalesOrderByLikeCnt() {
-        return new ResponseEntity<>(taleService.selectAllTalesOrderByLikeCnt(), HttpStatus.OK);
-    }
-
-    //이름순
-    @GetMapping("/tales?sort=title")
-    public ResponseEntity<List<Tale>> getTalesOrderByTitle() {
-        return new ResponseEntity<>(taleService.selectAllTalesOrderByTitle(), HttpStatus.OK);
-    }
-
-    //수정: rest api 방식으로
-    //수정: @Controller -> @RestController
+    /**
+     * 랜덤순 정렬
+     */
+//    @GetMapping("/tales/random")
+//    public ResponseEntity<List<Tale>> getTalesOrderByRandom() {
+////        return new ResponseEntity<>(taleService.selectAllTalesOrderByRandom(), HttpStatus.OK);
+////    }
 
     /**
      * taleId 기준으로 하나만 조회
@@ -47,8 +42,23 @@ public class TaleController {
      * 이름으로 검색
      */
     @GetMapping("/tales/search")
-    //수정: PathVariable -> @RequestParam, url 변경
-    public ResponseEntity<List<Tale>> searchTale(@RequestParam String title) {
-        return new ResponseEntity<>(taleService.selectByTitle(title), HttpStatus.OK);
+    public ResponseEntity<?> searchTale(@RequestParam String title) {
+       try {
+           if(title == null || title.trim().isEmpty()) {
+               throw new IllegalArgumentException("검색어를 입력하세요.");
+           }
+
+           List<Tale> list = taleService.selectByTitle(title);
+
+           if(list.isEmpty()) {
+               throw new NoTalesFoundException("일치하는 결과를 찾을 수 없습니다.");
+           } else {
+                return new ResponseEntity<>(list, HttpStatus.OK);
+           }
+       } catch (IllegalArgumentException  e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+       } catch ( NoTalesFoundException e) {
+           return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+       }
     }
 }
