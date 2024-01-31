@@ -3,7 +3,7 @@
         <ul>
             <li><RouterLink to="/tales">전체 책 보기</RouterLink></li>
             <li><RouterLink :to="`/favorite/${userId}`">나의 책장</RouterLink></li>
-            <li><RouterLink to="#">나만의 동화 만들기</RouterLink></li>
+            <li><RouterLink to="/customtale/create">나만의 동화 만들기</RouterLink></li>
             <!-- TODO 링크 추가 -->
             <li><RouterLink to="/customtale">친구들의 동화 보기</RouterLink></li>
             <li><RouterLink to="#">마이페이지</RouterLink></li>
