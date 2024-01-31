@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import TheHeaderNav from "./components/common/TheheaderNav.vue";
+import TheHeaderNav from "./components/common/TheHeaderNav.vue";
 import TheFooter from "./components/common/TheFooter.vue";
 import TheSideBar from "./components/common/TheSideBar.vue";
 </script>
