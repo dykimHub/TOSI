@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class GptOutputMessage {
-    private String gptMessage;
+    private Message gptMessage;
 }

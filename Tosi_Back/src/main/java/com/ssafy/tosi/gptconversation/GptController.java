@@ -12,16 +12,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/gptapi")
+@CrossOrigin("*")
 public class GptController {
     private final ChatgptService chatgptService;
 
@@ -60,27 +58,36 @@ public class GptController {
                                 """
                 +userInputMessage.getPlayName()
                 + """
-                                이야. 응답은 되도록이면 간결하게 해 줘. 한 문장이야.
-                                응답 형식은 자연스러운 문장이야.
+                                이야. 응답은 되도록이면 간결하게 해 줘
+                                응답 형식은 자연스러운 문장이고,
+                                최대 응답 문장 갯수는 2개야.
                                 이름:내용 형식으로 응답하는 건 자제해줘.
-                                마치 채팅방에서 대화하듯 어린이와 소통해야 해."""));
+                                마치 채팅방에서 대화하듯 어린이와 소통해야 해.""")
+        );
 
-        List<Message> inputMessages=userInputMessage.getUserMessages();
+        List<Message> conversations=userInputMessage.getUserMessages();
 
-        for(int i=0;i<inputMessages.size();i++){
-            Message inputMessage=inputMessages.get(i);
-            System.out.println("i:"+i+", "+inputMessage);
+        // System.out.println(conversations);
 
-            System.out.println(inputMessage.getRole()+","+inputMessage.getMessage());
+        for(int i=0;i<conversations.size();i++){
+            if(conversations.get(i)==null){
+                continue;
+            }
 
-            MultiChatMessage temp=new MultiChatMessage(inputMessage.getRole(),inputMessage.getMessage());
-            messages.add(temp);
+            Message conversation =conversations.get(i);
+            System.out.println("i:"+i+", "+ conversation);
 
-            messages.add(new MultiChatMessage(inputMessage.getRole(), inputMessage.getMessage()));
+            System.out.println(conversation.getRole()+","+ conversation.getMessage());
+
+            System.out.println("[입력중...]GPT에게 지속적으로 들어가고 있는 컨텍스트입니다:"+ conversation.getMessage());
+
+            messages.add(new MultiChatMessage(conversation.getRole(), conversation.getMessage()));
         }
 
-        
-        GptOutputMessage responseMessage = new GptOutputMessage(chatgptService.sendChat(messages));
+        // System.out.println("메세지 리스트 생성이 완료되었습니다:"+messages+"\n");
+        System.out.println("chatgptService.sendChat method를 호출합니다.");
+        Message responseMessage = (
+                new Message("assistant",chatgptService.sendChat(messages)));
 
         return new ResponseEntity<>(responseMessage,
                 HttpStatus.OK);
