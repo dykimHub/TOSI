@@ -2,9 +2,6 @@
   <div id="app" class="container">
     <h1 class="text-center my-4">나만의 동화 만들기</h1>
 
-    <div v-if="loading" class="loading-screen">
-      <p>Loading...</p>
-    </div>
     <div>
       <img
         v-if="customTaleStore.customTaleImage"
@@ -15,6 +12,7 @@
       <img v-else :src="randomImageUrl" alt="" style="height: 300px" />
     </div>
 
+    <!-- First input field -->
     <div class="input">
       <label for="prompt1" class="form-label">주인공</label>
       <div class="input-group">
@@ -27,6 +25,7 @@
       </div>
     </div>
 
+    <!-- Second input field -->
     <div class="input">
       <label for="prompt2" class="form-label">배경</label>
       <div class="input-group">
@@ -39,6 +38,7 @@
       </div>
     </div>
 
+    <!-- Third input field -->
     <div class="input">
       <label for="prompt3" class="form-label">키워드</label>
       <div class="input-group">
@@ -57,6 +57,11 @@
       </button>
     </div>
 
+    <!-- <div v-if="imageUrl !== ''"> -->
+    <h2>Generated Image:</h2>
+    <img :src="customTaleStore.customTaleImage" class="img-fluid" style="height: 300px" />
+    <!-- </div> -->
+
     <div>
       <h2>Generated text:</h2>
       <p>{{ customTaleStore.customTaleText.gptMessage }}</p>
@@ -68,7 +73,6 @@
 </template>
 
 <script setup>
-import router from "@/router";
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, ref } from "vue";
 const customTaleStore = useCustomTaleStore();
@@ -80,6 +84,7 @@ const generateRandomImageUrl = () => {
 const randomImageUrl = ref(generateRandomImageUrl());
 
 const prompt = ref(["", "", ""]);
+const imageUrl = ref("");
 
 const loading = ref(false);
 const generateCustomTale = async function () {
@@ -89,14 +94,15 @@ const generateCustomTale = async function () {
       alert("키워드를 모두 입력해주세요.");
       return;
     }
-    const imagePrompt =
-      "3D animation illustrations for children's books with " +
+  const imagePrompt = "3D animation illustrations for children's books with " +
       prompt.value[0] +
       " child, " +
       prompt.value[1] +
       " is the background and " +
       prompt.value[2] +
-      "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image.";
+      // + ","+ prompt.value[3] + ","+ prompt.value[4]
+      "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image."
+  customTaleStore.getCustomTaleImage(imagePrompt);
 
     await customTaleStore.getCustomTaleImage(imagePrompt);
 
@@ -115,13 +121,13 @@ const generateCustomTale = async function () {
     loading.value = false;
   }
 };
-  // const escapedGptPrompt = gptPrompt.replace(/"/g, '\\"');
+//   // const escapedGptPrompt = gptPrompt.replace(/"/g, '\\"');
+//   customTaleStore.getCustomTaleText(gptPrompt);
+// };
 
 onMounted(() => {
   console.log("Image URL:", customTaleStore.customTaleImage);
   console.log("tale", customTaleStore.customTaleText);
-  customTaleStore.resetCustomTale();
-  
 });
 </script>
 

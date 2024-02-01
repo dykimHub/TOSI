@@ -11,6 +11,10 @@ import CustomTaleSave from '@/components/customTale/customTaleSave.vue'
 import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
 import gptConversationView from "@/views/gptConversationView.vue";
 import TaleDetail from '@/components/taleDetail/TaleDetail.vue';
+import LoginView from '@/views/LoginView.vue'
+import RegistView from '@/views/RegistView.vue'
+import UserInfoView from '@/views/UserInfoView.vue'
+import UserInfoUpdate from '@/components/user/UserInfoUpdate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,7 +78,8 @@ const router = createRouter({
               },
             ]
           },
-
+        ],
+      },
       {
         path: '/tales/chat',
         name: 'gptConversation',
@@ -97,7 +102,27 @@ const router = createRouter({
         name: 'NonMemberMainView',
         component: NonMemberMainView
         },
-      
+
+        {
+          path: "/login",
+          name: "login",
+          component: LoginView
+        },
+        {
+          path: "/regist",
+          name: "regist",
+          component: RegistView
+        },
+        {
+          path: "/userInfo",
+          name: "userInfo",
+          component: UserInfoView
+        },
+        {
+          path: "/userInfo/update",
+          name: "userInfoUpdate",
+          component: UserInfoUpdate
+        },
     ],
 });
 export default router;

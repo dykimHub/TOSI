@@ -56,7 +56,6 @@ onMounted(() => {
 
 <style scoped>
 .taleContainer {
-<<<<<<< HEAD
     display: flex; 
     justify-content: center;
     flex-direction: row;
@@ -80,24 +79,5 @@ onMounted(() => {
     flex-direction: column;
     align-items: flex-end;
     margin: 1em;
-=======
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.oneTale {
-  padding: 3em;
-  text-align: center;
-  margin: 80px;
-}
-
-.selecSort {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
->>>>>>> frontend/feature/taledetail2
 }
 </style>
