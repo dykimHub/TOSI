@@ -15,6 +15,7 @@ public class TaleDto {
     private String content4;
     private String total_contents;
     private String[] images;
+    private String thumbnail;
     private String[] characters;
     private int time;
     private int likeCnt;
