@@ -10,10 +10,32 @@ import CustomTaleDetail from '@/components/customTale/customTaleDetail.vue'
 import CustomTaleSave from '@/components/customTale/customTaleSave.vue'
 import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
 import gptConversationView from "@/views/gptConversationView.vue";
+import TaleDetail from '@/components/taleDetail/TaleDetail.vue';
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes: [
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/tosi',
+      name: 'tosi',
+      component: HomeView,
+    },
+    {
+      path: '/tales',
+      name: 'tales',
+      component: TalesView,
+    },
+    {
+      path: '/tales/:taleId',
+      name: 'taleDetail',
+      component: TaleDetail,
+      props: true,
+    },
+    {
+      path: '/customTale',
+      name: 'customTale',
+      component: CustomTaleView,
+      children: [
         {
         path: '/tosi',
         name: 'tosi',

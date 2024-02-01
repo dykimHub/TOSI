@@ -23,40 +23,40 @@
 </template>
 
 <script setup>
-import { useTaleStore } from "@/stores/taleStore";
-import { onMounted, ref, watch } from "vue";
+import { useTaleStore } from '@/stores/taleStore';
+import { onMounted, ref, watch } from 'vue';
 
-const Talestore = useTaleStore()
+const Talestore = useTaleStore();
 
-const sortOption = ref("title")
-const sortedTaleList = ref([])
+const sortOption = ref('title');
+const sortedTaleList = ref([]);
 
 const sortTaleList = () => {
-    switch (sortOption.value) {
-        case "title":
-            sortedTaleList.value = Talestore.taleList.sort((a, b) => a.title.localeCompare(b.title))
-            break
-        case "likeCnt":
-            sortedTaleList.value = Talestore.taleList.sort((a, b) => b.likeCnt - a.likeCnt)
-            break
-        case "random":
-            sortedTaleList.value = Talestore.taleList.sort(() => Math.random() - 0.5);
-            break
-        default:
-            break
-    }
-}
+  switch (sortOption.value) {
+    case 'title':
+      sortedTaleList.value = Talestore.taleList.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    case 'likeCnt':
+      sortedTaleList.value = Talestore.taleList.sort((a, b) => b.likeCnt - a.likeCnt);
+      break;
+    case 'random':
+      sortedTaleList.value = Talestore.taleList.sort(() => Math.random() - 0.5);
+      break;
+    default:
+      break;
+  }
+};
 
 onMounted(() => {
-    Talestore.getTaleList()
-    watch(() => Talestore.taleList, sortTaleList, {immediate: true})
-    watch(sortOption, sortTaleList)
-})
-
+  Talestore.getTaleList();
+  watch(() => Talestore.taleList, sortTaleList, { immediate: true });
+  watch(sortOption, sortTaleList);
+});
 </script>
 
 <style scoped>
 .taleContainer {
+<<<<<<< HEAD
     display: flex; 
     justify-content: center;
     flex-direction: row;
@@ -80,5 +80,24 @@ onMounted(() => {
     flex-direction: column;
     align-items: flex-end;
     margin: 1em;
+=======
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.oneTale {
+  padding: 3em;
+  text-align: center;
+  margin: 80px;
+}
+
+.selecSort {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+>>>>>>> frontend/feature/taledetail2
 }
 </style>
