@@ -43,21 +43,18 @@ export const useCustomTaleStore = defineStore("customtale", () => {
 
   //gptapi 에 동화생성 요청
   const customTaleText = ref("");
-  
-const getCustomTaleText = async function (userInputMessage) {
-  try {
-    const response = await axios.post("/customtale/input", {
-      userMessage: userInputMessage,
-    });
-
-    console.log(userInputMessage);
-    console.log(response.data);
-
-    customTaleText.value = response.data;
-  } catch (error) {
-    console.error("커스텀 이야기를 가져오는 중 오류 발생:", error);
-  }
-};
+  const getCustomTaleText = function (userInputMessage) {
+    axios
+      .post("/customtale/input", { userMessage: userInputMessage })
+      .then((response) => {
+        console.log(userInputMessage);
+        console.log(response.data);
+        customTaleText.value = response.data;
+      })
+      .catch((error) => {
+        console.error("커스텀 이야기를 가져오는 중 오류 발생:", error);
+      });
+  };
 
   const customTaleImage = ref("");
   const getCustomTaleImage = async (imagePrompt) => {
@@ -100,10 +97,7 @@ const getCustomTaleText = async function (userInputMessage) {
 
   }
   
-  const resetCustomTale = function(){
-    customTaleImage.value = "";
-    customTaleText.value = "";
-  }
+
   return {
     customTalesList,
     getCustomTalesList,
@@ -116,6 +110,5 @@ const getCustomTaleText = async function (userInputMessage) {
     getCustomTaleText,
     customTaleImage,
     getCustomTaleImage,
-    resetCustomTale,
   };
 });
