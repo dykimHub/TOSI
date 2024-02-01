@@ -48,6 +48,7 @@ public class TaleDetailServiceImpl implements TaleDetailService {
                 .content4(tale.getContent4())
                 .total_contents(total_contents)
                 .images(images)
+                .thumbnail(images[0])
                 .characters(characters)
                 .time(tale.getTime())
                 .likeCnt(tale.getLikeCnt())
