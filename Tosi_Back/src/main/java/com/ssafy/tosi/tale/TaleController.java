@@ -9,26 +9,17 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class TaleController {
 
     private final TaleService taleService;
-
-    //TODO 프론트에서 인기순, 이름순 정렬 구현
 
     /**
      * 일반 정렬
      */
     @GetMapping("/tales")
-    public ResponseEntity<List<Tale>> getAllTales() {
+    public ResponseEntity<List<TaleDto>> getAllTales() {
         return new ResponseEntity<>(taleService.selectAllTales(), HttpStatus.OK);
-    }
-
-    /**
-     * 랜덤순 정렬
-     */
-    @GetMapping("/tales/random")
-    public ResponseEntity<List<Tale>> getTalesOrderByRandom() {
-        return new ResponseEntity<>(taleService.selectAllTalesOrderByRandom(), HttpStatus.OK);
     }
 
     /**
@@ -36,7 +27,6 @@ public class TaleController {
      */
     @GetMapping("/tale/{taleId}")
     public ResponseEntity<Tale> getTale(@PathVariable int taleId) {
-        System.out.println(taleService.selectOneTale(taleId));
         return new ResponseEntity<>(taleService.selectOneTale(taleId), HttpStatus.OK);
     }
 
@@ -44,7 +34,23 @@ public class TaleController {
      * 이름으로 검색
      */
     @GetMapping("/tales/search")
-    public ResponseEntity<List<Tale>> searchTale(@RequestParam String title) {
-        return new ResponseEntity<>(taleService.selectByTitle(title), HttpStatus.OK);
+    public ResponseEntity<?> searchTale(@RequestParam String title) {
+        try {
+            if(title == null || title.trim().isEmpty()) {
+                throw new IllegalArgumentException("검색어를 입력하세요.");
+            }
+
+            List<Tale> list = taleService.selectByTitle(title);
+
+            if(list.isEmpty()) {
+                throw new NoTalesFoundException("일치하는 결과를 찾을 수 없습니다.");
+            } else {
+                return new ResponseEntity<>(list, HttpStatus.OK);
+            }
+        } catch (IllegalArgumentException  e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch ( NoTalesFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
