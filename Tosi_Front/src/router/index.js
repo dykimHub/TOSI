@@ -6,6 +6,8 @@ import CustomTaleCreate from '@/components/customTale/customTaleCreate.vue'
 import CustomTaleList from '@/components/customTale/customTaleList.vue'
 import CustomTaleDetail from '@/components/customTale/customTaleDetail.vue'
 import CustomTaleSave from '@/components/customTale/customTaleSave.vue'
+import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
+import gptConversationView from "@/views/gptConversationView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,8 +50,18 @@ const router = createRouter({
               },
             ]
           },
+
+      {
+        path: '/tales/chat',
+        name: 'gptConversation',
+        component: gptConversationView,
+      },
+      {
+        path: '/tales/chat/send',
+        name: 'gptConversationSend',
+        component: gptConversationSend,
+      },
       
     ],
 });
-
 export default router;
