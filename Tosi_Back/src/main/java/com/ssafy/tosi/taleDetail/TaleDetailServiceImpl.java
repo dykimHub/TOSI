@@ -79,7 +79,6 @@ public class TaleDetailServiceImpl implements TaleDetailService {
                 writer.write(contents[i]);
             }
 
-            // 문단에서 문장 분리
             ProcessBuilder builder = new ProcessBuilder("node", "src/main/java/com/ssafy/tosi/taleDetail/morpheme/process.js", files[i].getAbsolutePath());
             Process process = builder.start();
 
