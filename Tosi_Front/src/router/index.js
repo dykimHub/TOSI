@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TalesView from '@/views/TalesView.vue'
 import HomeView from '@/views/HomeView.vue'
+import MemberMainView from '@/views/MemberMainView.vue'
+import NonMemberMainView from '@/views/NonMemberMainView.vue'
 import CustomTaleView from '@/views/CustomTaleView.vue'
 import CustomTaleCreate from '@/components/customTale/customTaleCreate.vue'
 import CustomTaleList from '@/components/customTale/customTaleList.vue'
@@ -15,13 +17,13 @@ const router = createRouter({
         {
         path: '/tosi',
         name: 'tosi',
-        component: HomeView
-        },
-        {
-        path: '/tales',
-        name: 'tales',
-        component: TalesView
-        },
+        component: HomeView,
+        children: [
+            {
+            path: '/tales',
+            name: 'tales',
+            component: TalesView
+            },
             {path: '/customTale',
             name: 'customTale',
             component: CustomTaleView,
@@ -61,6 +63,18 @@ const router = createRouter({
         name: 'gptConversationSend',
         component: gptConversationSend,
       },
+          ]
+        },
+        {
+        path: '/membermain',
+        name: 'MemberMainView',
+        component: MemberMainView
+        },
+        {
+        path: '/nonMmmbermain',
+        name: 'NonMemberMainView',
+        component: NonMemberMainView
+        },
       
     ],
 });

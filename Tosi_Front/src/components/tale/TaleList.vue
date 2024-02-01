@@ -12,7 +12,7 @@
     <div class="taleContainer">
         <ul v-for="tale in Talestore.taleList" :key="tale.taleId">
             <div class="oneTale">
-                <RouterLink :to="`/tale/${tale.taleId}`">img</RouterLink>
+                <RouterLink :to="`/tale/${tale.taleId}`"><img class="thumbnail" :src="tale.thumbnail" /></RouterLink>
                 <br>
                 <RouterLink :to="`/tale/${tale.taleId}`">{{ tale.title }}</RouterLink>
                 <br>
@@ -62,17 +62,23 @@ onMounted(() => {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-around;
+}
+
+.thumbnail {
+    width: 200px;
 }
 
 .oneTale {
-    padding: 3em;
+    width: 15em;
     text-align: center;
-    margin: 80px;
+    margin: 2em;
 }
 
 .selecSort {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin: 1em;
 }
 </style>
