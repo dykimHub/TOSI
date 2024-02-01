@@ -18,7 +18,7 @@ public class TaleController {
      * 일반 정렬
      */
     @GetMapping("/tales")
-    public ResponseEntity<List<Tale>> getAllTales() {
+    public ResponseEntity<List<TaleDto>> getAllTales() {
         return new ResponseEntity<>(taleService.selectAllTales(), HttpStatus.OK);
     }
 
