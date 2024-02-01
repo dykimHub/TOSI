@@ -17,12 +17,12 @@ public class TtsController {
 
     @PostMapping
     public ResponseEntity<byte[]> createTts(@RequestBody TtsDto ttsDto) throws IOException  {
-            LOGGER.info("start createTTS.");
-            byte[] audioData = ttsService.convertTextToSpeech(ttsDto);
-            LOGGER.info("TTS 요청 보냄.");
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.valueOf("audio/mpeg"));
-            LOGGER.info("리턴 차례");
-            return new ResponseEntity<>(audioData, headers, HttpStatus.OK);
+        LOGGER.info("start createTTS.");
+        byte[] audioData = ttsService.convertTextToSpeech(ttsDto);
+        LOGGER.info("TTS 요청 보냄.");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf("audio/mpeg"));
+        LOGGER.info("리턴 차례");
+        return new ResponseEntity<>(audioData, headers, HttpStatus.OK);
     }
 }

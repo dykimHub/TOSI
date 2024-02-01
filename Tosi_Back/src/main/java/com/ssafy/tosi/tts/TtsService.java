@@ -22,15 +22,6 @@ public class TtsService {
         con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
         con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
 
-        /*
-        임의 설정, vue에서 아직 text만 받아와서 아래와 같이 기본 설정함.
-//         */
-//        ttsDto.setVolume("0");
-//        ttsDto.setSpeed("0");
-//        ttsDto.setPitch("0");
-//        ttsDto.setEmotion("3");
-//        ttsDto.setEmotionStrength("1");
-
         String postParams = ttsDto.toPostParams(); // TtsDto 객체를 사용하여 POST 매개변수 생성
         LOGGER.info("ttsDto: "+postParams);
         con.setDoOutput(true);
