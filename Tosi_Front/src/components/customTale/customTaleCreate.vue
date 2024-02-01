@@ -60,7 +60,7 @@
     <div>
       <h2>Generated text:</h2>
       <p>{{ customTaleStore.customTaleText.gptMessage }}</p>
-      <router-link to="/customtale/detail" class="btn btn-primary">
+      <router-link to="/customtale/save" class="btn btn-primary">
       재생
     </router-link>
     </div>
@@ -84,7 +84,7 @@ const prompt = ref(["", "", ""]);
 const loading = ref(false);
 const generateCustomTale = async function () {
   try {
-    loading.value = true; // 로딩 화면 표시
+    loading.value = true;
     if (prompt.value.some((prompt) => prompt === "")) {
       alert("키워드를 모두 입력해주세요.");
       return;
@@ -111,9 +111,8 @@ const generateCustomTale = async function () {
     await customTaleStore.getCustomTaleText(gptPrompt);
   } catch (error) {
     console.error("커스텀 동화 생성 오류:", error);
-    // 오류 처리 필요한 경우 추가
   } finally {
-    loading.value = false; // 로딩 화면 감추기
+    loading.value = false;
   }
 };
   // const escapedGptPrompt = gptPrompt.replace(/"/g, '\\"');

@@ -2,13 +2,14 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "@/util/http-common";
 import router from "@/router";
+import { useS3Store } from "@/stores/S3Store";
 
 export const useCustomTaleStore = defineStore("customtale", () => {
   //공개 중인 모든 커스텀동화
   const customTalesList = ref([]);
   const getCustomTalesList = function (isPublic) {
     axios
-      .get(`/customtale?isPublic=${isPublic}`)
+      .get(`/customtale?isPublic=${isPublic}`,isPublic)
       .then((response) => {
         console.log(response.data);
         customTalesList.value = response.data;
@@ -21,7 +22,7 @@ export const useCustomTaleStore = defineStore("customtale", () => {
   //나의책장 - 커스텀동화
   const myCustomTalesList = ref([]);
   const getMyCustomTalesList = function (userId) {
-    axios.get("/customtale/user/${userId},userId").then((response) => {
+    axios.get(`/customtale/user/${userId}`,userId).then((response) => {
       myCustomTalesList.value = response.data;
     });
   };
@@ -29,15 +30,18 @@ export const useCustomTaleStore = defineStore("customtale", () => {
   //상세조회
   const customTale = ref({});
   const getCustomTale = function (customTaleId) {
-    axios.get("/customtale/${customTaleId}").then((response) => {
+    axios.get(`/customtale/${customTaleId}`,customTaleId).then((response) => {
       customTale.value = response.data;
     });
   };
 
+  const S3Store = useS3Store();
   //등록
   const insertCustomTale = function (customTale) {
-    axios.post("/customtale", customTale).then(() => {
-      // router.push({name:'MycustomTaleList'}) 나의책장-커스텀 으로 이동
+    axios.post(`/customtale`, customTale).then(() => {
+      console.log(customTale.value);
+      // router.push({name:'MycustomTaleList'})
+      alert("저장되었습니다.")
     });
   };
 
@@ -46,7 +50,7 @@ export const useCustomTaleStore = defineStore("customtale", () => {
   
 const getCustomTaleText = async function (userInputMessage) {
   try {
-    const response = await axios.post("/customtale/input", {
+    const response = await axios.post(`/customtale/input`, {
       userMessage: userInputMessage,
     });
 
