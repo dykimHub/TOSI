@@ -1,23 +1,14 @@
 <template>
-    <TheHeaderNav />
-    <div class="container">
-        <TheSideBar />
-        <RouterView />
+    <div>
+        <RouterView/>
+        <TheFooter/>
     </div>
-        <TheFooter /> 
 </template>
 
 <script setup>
-import TheHeaderNav from "./components/common/TheHeaderNav.vue";
-import TheFooter from "./components/common/TheFooter.vue";
-import TheSideBar from "./components/common/TheSideBar.vue";
+import TheFooter from './components/common/TheFooter.vue';
 </script>
 
 <style scoped>
 
-.container {
-    display: flex;
-    justify-content: space-around;
-
-}
 </style>
