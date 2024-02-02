@@ -1,128 +1,112 @@
 import { createRouter, createWebHistory } from "vue-router";
-import TalesView from '@/views/TalesView.vue'
-import HomeView from '@/views/HomeView.vue'
-import MemberMainView from '@/views/MemberMainView.vue'
-import NonMemberMainView from '@/views/NonMemberMainView.vue'
-import CustomTaleView from '@/views/CustomTaleView.vue'
-import CustomTaleCreate from '@/components/customTale/customTaleCreate.vue'
-import CustomTaleList from '@/components/customTale/customTaleList.vue'
-import CustomTaleDetail from '@/components/customTale/customTaleDetail.vue'
-import CustomTaleSave from '@/components/customTale/customTaleSave.vue'
+import TalesView from "@/views/TalesView.vue";
+import HomeView from "@/views/HomeView.vue";
+import MemberMainView from "@/views/MemberMainView.vue";
+import NonMemberMainView from "@/views/NonMemberMainView.vue";
+import CustomTaleView from "@/views/CustomTaleView.vue";
+import CustomTaleCreate from "@/components/customTale/customTaleCreate.vue";
+import CustomTaleList from "@/components/customTale/customTaleList.vue";
+import CustomTaleDetail from "@/components/customTale/customTaleDetail.vue";
+import CustomTaleSave from "@/components/customTale/customTaleSave.vue";
 import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
 import gptConversationView from "@/views/gptConversationView.vue";
-import TaleDetail from '@/components/taleDetail/TaleDetail.vue';
-import LoginView from '@/views/LoginView.vue'
-import RegistView from '@/views/RegistView.vue'
-import UserInfoView from '@/views/UserInfoView.vue'
-import UserInfoUpdate from '@/components/user/UserInfoUpdate.vue'
+import TaleDetail from "@/components/taleDetail/TaleDetail.vue";
+import LoginView from "@/views/LoginView.vue";
+import RegistView from "@/views/RegistView.vue";
+import UserInfoView from "@/views/UserInfoView.vue";
+import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/tosi',
-      name: 'tosi',
+      path: "/tosi",
+      name: "tosi",
       component: HomeView,
-    },
-    {
-      path: '/tales',
-      name: 'tales',
-      component: TalesView,
-    },
-    {
-      path: '/tales/:taleId',
-      name: 'taleDetail',
-      component: TaleDetail,
-      props: true,
-    },
-    {
-      path: '/customTale',
-      name: 'customTale',
-      component: CustomTaleView,
       children: [
         {
-        path: '/tosi',
-        name: 'tosi',
-        component: HomeView,
-        children: [
+          path: "/tales",
+          name: "tales",
+          component: TalesView,
+        },
+        {
+          path: "/tales/:taleId",
+          name: "taleDetail",
+          component: TaleDetail,
+          props: true,
+        },
+        {
+          path: "/customTale",
+          name: "customTale",
+          component: CustomTaleView,
+          children: [
             {
-            path: '/tales',
-            name: 'tales',
-            component: TalesView
+              path: "",
+              name: "customTaleList",
+              component: CustomTaleList,
             },
-            {path: '/customTale',
-            name: 'customTale',
-            component: CustomTaleView,
-            children: [
-              {
-                path: '',
-                name: 'customTaleList',
-                component: CustomTaleList,
-              },
-              {
-                path: 'create',
-                name: 'customTaleCreate',
-                component: CustomTaleCreate,
-              },
-              {
-                path: 'save',
-                name: 'customTaleSave',
-                component: CustomTaleSave,
-                props: true,
-                // props: route => ({ imageUrl: route.params.imageUrl, gptMessage: route.params.gptMessage })
-              },
-              {
-                path: ':customTale_id',
-                name: 'customTaleDetail',
-                component: CustomTaleDetail,
-              },
-            ]
-          },
-        ],
-      },
-      {
-        path: '/tales/chat',
-        name: 'gptConversation',
-        component: gptConversationView,
-      },
-      {
-        path: '/tales/chat/send',
-        name: 'gptConversationSend',
-        component: gptConversationSend,
-      },
-          ]
+            {
+              path: "create",
+              name: "customTaleCreate",
+              component: CustomTaleCreate,
+            },
+            {
+              path: "save",
+              name: "customTaleSave",
+              component: CustomTaleSave,
+              props: true,
+              // props: route => ({ imageUrl: route.params.imageUrl, gptMessage: route.params.gptMessage })
+            },
+            {
+              path: ":customTale_id",
+              name: "customTaleDetail",
+              component: CustomTaleDetail,
+            },
+          ],
         },
         {
-        path: '/membermain',
-        name: 'MemberMainView',
-        component: MemberMainView
+          path: "/tales/chat",
+          name: "gptConversation",
+          component: gptConversationView,
         },
         {
-        path: '/nonMmmbermain',
-        name: 'NonMemberMainView',
-        component: NonMemberMainView
+          path: "/tales/chat/send",
+          name: "gptConversationSend",
+          component: gptConversationSend,
         },
-
         {
           path: "/login",
           name: "login",
-          component: LoginView
+          component: LoginView,
         },
         {
           path: "/regist",
           name: "regist",
-          component: RegistView
+          component: RegistView,
         },
         {
           path: "/userInfo",
           name: "userInfo",
-          component: UserInfoView
+          component: UserInfoView,
         },
         {
           path: "/userInfo/update",
           name: "userInfoUpdate",
-          component: UserInfoUpdate
+          component: UserInfoUpdate,
         },
-    ],
+      ],
+    },
+    {
+      path: "/membermain",
+      name: "MemberMainView",
+      component: MemberMainView,
+    },
+    {
+      //최초 진입 페이지 == 비회원용 메인페이지
+      path: "/",
+      name: "NonMemberMainView",
+      component: NonMemberMainView,
+    },
+  ],
 });
 export default router;
