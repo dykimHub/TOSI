@@ -72,7 +72,7 @@ const router = createRouter({
                 // props: route => ({ imageUrl: route.params.imageUrl, gptMessage: route.params.gptMessage })
               },
               {
-                path: ':customTale_id',
+                path: ':customTaleId',
                 name: 'customTaleDetail',
                 component: CustomTaleDetail,
               },

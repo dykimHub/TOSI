@@ -35,6 +35,7 @@ export const useCustomTaleStore = defineStore("customtale", () => {
     });
   };
 
+
   const S3Store = useS3Store();
   //등록
   const insertCustomTale = function (customTale) {
@@ -104,7 +105,10 @@ const getCustomTaleText = async function (userInputMessage) {
 
   }
   
-
+  const resetCustomTale = function(){
+    customTaleImage.value = "";
+    customTaleText.value = "";
+  }
   return {
     customTalesList,
     getCustomTalesList,
@@ -117,5 +121,6 @@ const getCustomTaleText = async function (userInputMessage) {
     getCustomTaleText,
     customTaleImage,
     getCustomTaleImage,
+    resetCustomTale,
   };
 });
