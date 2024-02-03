@@ -12,11 +12,19 @@ export const useS3Store = defineStore("s3", () => {
   };
 
   const uploadFile = function (file, fileName) {
+    // axios
+    //     .put(file, fileName)
+    //     .then((response) => console.log(response))
+    //     .catch((error) => console.error(error));
     const formData = new FormData();
     formData.append("file", file);
     formData.append("fileName", fileName);
     console.log(formData);
-    axios.post(`/tales/s3/upload`, formData).then((response) => {
+    axios.post(`/tales/s3/upload`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then((response) => {
       console.log("Upload successful:", response.data);
     });
   };

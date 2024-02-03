@@ -13,6 +13,7 @@ export const useCustomTaleStore = defineStore("customtale", () => {
       .then((response) => {
         console.log(response.data);
         customTalesList.value = response.data;
+        customTalesList.value.sort((a, b) => b.customTaleId - a.customTaleId);
       })
       .catch((error) => {
         console.error("Error fetching custom tales:", error);
