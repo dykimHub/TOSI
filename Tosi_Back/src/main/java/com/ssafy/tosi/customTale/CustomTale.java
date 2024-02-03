@@ -14,13 +14,13 @@ public class CustomTale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customtaleid")
-    private Long customTaleId;
+    private int customTaleId;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "userid")
 //    private User user;
     @Column(name = "userid")
-    private Long userId;
+    private int userId;
     private String title;
     private String content;
 
