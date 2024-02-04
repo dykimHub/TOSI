@@ -113,6 +113,13 @@
 			<artifactId>spring-cloud-starter-aws</artifactId>
 			<version>2.2.6.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>kiwi</groupId>
+			<artifactId>kiwi</artifactId>
+			<scope>system</scope>
+			<version>0.16.0</version>
+			<systemPath>${basedir}\src\lib\kiwi.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
