@@ -1,13 +1,16 @@
 <template>
   <div>
+    <div>
+     <h1>{{ customTaleStore.customTale.title }}</h1>
+    </div>
       <img
       :src="customTaleStore.customTale.thumbnail"
       class="img-fluid"
       style="height: 300px"
       alt="커스텀이미지"
     />
-      {{ customTaleStore.customTale.title }}
-      {{ customTaleStore.customTale.content }}
+      
+      <div>{{ customTaleStore.customTale.content }}</div>
   </div>
 
   <div>

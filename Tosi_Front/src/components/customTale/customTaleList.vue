@@ -1,20 +1,18 @@
 <template>
-  <div>
-    <h1>친구들의 동화 보기</h1>
+<div class="talelistContainer">
+    <div class = topOfTaleList>
+      <h2>친구들의 동화 보기</h2>
+    </div>
     <div class="taleContainer">
         <ul v-for="customTale in customTaleStore.customTalesList"
       :key="customTale.customTaleId">
             <div class="oneTale">
-              <router-link :to="`/customtale/${customTale.customTaleId}`" >
-      <img
-        :src="customTale.thumbnail"
-        class="img-fluid"
-        style="height: 300px"
-        alt="커스텀이미지"
-      />
-        {{ customTale.title }}
-        <!-- {{ customTale.time }} -->
-      </router-link>
+                <RouterLink :to="`/customtale/${customTale.customTaleId}`">
+                  <img class="thumbnail" :src="customTale.thumbnail" /></RouterLink>
+                <br>
+                <RouterLink :to="`/customtale/${customTale.customTaleId}`">{{ customTale.title }}</RouterLink>
+                <br>
+                재생 시간: {{ customTale.time }}
             </div>
         </ul>
     </div>
@@ -38,11 +36,41 @@ onMounted(() => {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-around;
+}
+
+.talelistContainer{
+  background-color:white;
+  border-radius: 20px;
+  margin: 35px;
+  padding-top: 40px;
+  opacity: 0.95;  
+}
+
+.thumbnail {
+    width: 200px;
 }
 
 .oneTale {
-    padding: 3em;
+    width: 13em;
     text-align: center;
-    margin: 80px;
+    margin: 2em;
+}
+
+.selecSort {
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+}
+
+.topOfTaleList{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 </style>

@@ -8,6 +8,7 @@ import CustomTaleCreate from "@/components/customTale/customTaleCreate.vue";
 import CustomTaleList from "@/components/customTale/customTaleList.vue";
 import CustomTaleDetail from "@/components/customTale/customTaleDetail.vue";
 import CustomTaleSave from "@/components/customTale/customTaleSave.vue";
+import LoadingModal from "@/components/customTale/loadingModal.vue";
 import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
 import gptConversationView from "@/views/gptConversationView.vue";
 import TaleDetail from "@/components/taleDetail/TaleDetail.vue";
@@ -62,6 +63,11 @@ const router = createRouter({
               name: "customTaleDetail",
               component: CustomTaleDetail,
             },
+            {
+              path: "loading",
+              name: "loading",
+              component: LoadingModal,
+            }
           ],
         },
         {
