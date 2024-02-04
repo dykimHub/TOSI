@@ -1,25 +1,28 @@
 <template>
-    <h2>동화 목록</h2>
-    <hr>
-    <div class="selecSort">
+  <div class="talelistContainer">
+    <div class = topOfTaleList>
+      <h2>전체 책 보기</h2>
+      <div class="selecSort">
         <label>정렬 기준</label>
         <select v-model="sortOption">
-            <option value="title">이름순</option>
-            <option value="likeCnt">인기순</option>
-            <option value="random">랜덤</option>
+          <option value="title">이름순</option>
+          <option value="likeCnt">인기순</option>
+          <option value="random">랜덤</option>
         </select>
+      </div>
     </div>
     <div class="taleContainer">
         <ul v-for="tale in Talestore.taleList" :key="tale.taleId">
             <div class="oneTale">
-                <RouterLink :to="`/tale/${tale.taleId}`"><img class="thumbnail" :src="tale.thumbnail" /></RouterLink>
+                <RouterLink :to="`/tales/${tale.taleId}`"><img class="thumbnail" :src="tale.thumbnail" /></RouterLink>
                 <br>
-                <RouterLink :to="`/tale/${tale.taleId}`">{{ tale.title }}</RouterLink>
+                <RouterLink :to="`/tales/${tale.taleId}`">{{ tale.title }}</RouterLink>
                 <br>
                 재생 시간: {{ tale.time }}
             </div>
         </ul>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -55,6 +58,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
 .taleContainer {
     display: flex; 
     justify-content: center;
@@ -64,12 +68,20 @@ onMounted(() => {
     justify-content: space-around;
 }
 
+.talelistContainer{
+  background-color:white;
+  border-radius: 20px;
+  margin: 35px;
+  padding-top: 40px;
+  opacity: 0.95;  
+}
+
 .thumbnail {
     width: 200px;
 }
 
 .oneTale {
-    width: 15em;
+    width: 13em;
     text-align: center;
     margin: 2em;
 }
@@ -77,7 +89,17 @@ onMounted(() => {
 .selecSort {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     margin: 1em;
+}
+
+.topOfTaleList{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 </style>
