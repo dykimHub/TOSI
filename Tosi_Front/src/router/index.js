@@ -50,12 +50,6 @@ const router = createRouter({
           props: true,
         },
         {
-          path: "/tales/end/chat/:cname/:bname",
-          name: "gptConversation",
-          component: gptConversationView,
-          props: true,
-        },
-        {
           path: "/customTale",
           name: "customTale",
           component: CustomTaleView,
@@ -78,21 +72,22 @@ const router = createRouter({
               // props: route => ({ imageUrl: route.params.imageUrl, gptMessage: route.params.gptMessage })
             },
             {
-              path: ":customTale_id",
+              path: ":customTaleId",
               name: "customTaleDetail",
               component: CustomTaleDetail,
             },
           ],
         },
-        // {
-        //   path: "/tales/chat",
-        //   name: "gptConversation",
-        //   component: gptConversationView,
-        // },
         {
           path: "/tales/chat/send",
           name: "gptConversationSend",
           component: gptConversationSend,
+        },
+        {
+          path: "/tales/end/chat/:cname/:bname",
+          name: "gptConversation",
+          component: gptConversationView,
+          props: true,
         },
         {
           path: "/login",

@@ -32,17 +32,20 @@ onMounted(() => {
 </script>
 
 <style>
-.taleContainer {
-    display: flex; 
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
+.thumbnail {
+    width: 200px;
 }
 
 .oneTale {
-    padding: 3em;
+    width: 15em;
     text-align: center;
-    margin: 80px;
+    margin: 2em;
+}
+
+.selecSort {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 1em;
 }
 </style>
