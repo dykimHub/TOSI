@@ -6,11 +6,13 @@
     <div class="content">
         <RouterView />
     </div>
+    <TheFooter/>
 </template>
 
 <script setup>
-import TheHeaderNav from "/src/components/common/TheHeaderNav.vue";
-import TheSideBar from "/src/components/common/TheSideBar.vue";
+import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
+import TheSideBar from "@/components/common/TheSideBar.vue";
+import TheFooter from '@/components/common/TheFooter.vue';
 </script>
 
 <style scoped>
@@ -21,7 +23,12 @@ import TheSideBar from "/src/components/common/TheSideBar.vue";
 }
 
 .content {
-    margin-left: 15em;
+    margin-left: 13em;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 </style>
