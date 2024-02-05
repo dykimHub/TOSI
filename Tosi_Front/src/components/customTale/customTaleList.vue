@@ -4,7 +4,7 @@
       <h2>친구들의 동화 보기</h2>
     </div>
     <div class="taleContainer">
-        <ul v-for="customTale in customTaleStore.customTalesList"
+        <ul v-for="customTale in currentPageBoardList"
       :key="customTale.customTaleId">
             <div class="oneTale">
                 <RouterLink :to="`/customtale/${customTale.customTaleId}`">
@@ -16,6 +16,25 @@
             </div>
         </ul>
     </div>
+
+    <div>
+      <nav aria-label="Page navigation" style="padding: 15px;">
+      <ul class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success ">
+        <li class="page-item">
+          <a class="page-link" :class="{ disabled: currentPage <= 1 }" href="#" @click.prevent="currentPage--">&lt;</a>
+        </li>
+        <li :class="{ active: currentPage === page }" class="page-item" v-for="page in pageCount" :key="page">
+          <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
+            page
+          }}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" :class="{ disabled: currentPage >= pageCount }" href="#"
+            @click.prevent="currentPage++">&gt;</a>
+        </li>
+      </ul>
+    </nav>
+    </div>
   </div>
 </template>
 
@@ -23,6 +42,27 @@
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, computed, ref } from "vue";
 const customTaleStore = useCustomTaleStore();
+
+//page
+const perPage = 9;
+const currentPage = ref(1);
+
+const pageCount = computed(() => {
+  return Math.ceil(customTaleStore.customTalesList.length / perPage);
+});
+
+const clickPage = function (page) {
+  currentPage.value = page;
+};
+
+const currentPageBoardList = computed(() => {
+  return customTaleStore.customTalesList.slice(
+    (currentPage.value - 1) * perPage,
+    currentPage.value * perPage
+  );
+}); //page
+
+
 
 onMounted(() => {
   customTaleStore.getCustomTalesList(true);
@@ -70,7 +110,44 @@ onMounted(() => {
 }
 
 a {
-  text-decoration: none;
-  color: black;
+  text-decoration: none !important;
+  color: black !important;
 }
+
+.flex {
+     -webkit-box-flex: 1;
+     -ms-flex: 1 1 auto;
+     flex: 1 1 auto
+ }
+
+
+ /* page */
+ .pagination,
+ .jsgrid .jsgrid-pager {
+     display: flex;
+     padding-left: 0;
+     list-style: none;
+     border-radius: 0.25rem
+ }
+ 
+ .page-link {
+     color: black
+ }
+
+ .pagination.pagination-rounded-flat .page-item {
+     margin: 0 .30rem
+ }
+ 
+
+ .pagination-success .page-item.active .page-link
+  {
+     background: #d8eef2;
+ }
+ 
+ .pagination.pagination-rounded-flat .page-item .page-link{
+    border: none;
+    border-radius: 50px;
+}
+
+
 </style>

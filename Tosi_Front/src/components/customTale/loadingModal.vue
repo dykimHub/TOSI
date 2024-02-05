@@ -15,7 +15,7 @@ const props = defineProps(['isLoading']);
   <style scoped>
   .loading-modal {
     position: fixed;
-    top: 40%; /* 화면 세로 중앙에 위치 */
+    top: 50%; /* 화면 세로 중앙에 위치 */
     left: 55%; /* 화면 가로 중앙에 위치 */
   transform: translate(-50%, -50%);
     width: 100px;

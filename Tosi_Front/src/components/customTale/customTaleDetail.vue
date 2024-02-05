@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading-modal :is-loading="loading"></loading-modal>
     <div>
      <h1>{{ customTaleStore.customTale.title }}</h1>
     </div>
