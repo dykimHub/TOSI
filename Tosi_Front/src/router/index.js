@@ -28,7 +28,7 @@ const router = createRouter({
       path: "/tosi",
       name: "tosi",
       component: HomeView,
-      meta: { requiresAuth: true },
+      // meta: { requiresAuth: true },
       children: [
         {
           path: "/tales",
