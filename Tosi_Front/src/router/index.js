@@ -11,6 +11,8 @@ import LoadingModal from "@/components/customTale/loadingModal.vue";
 import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
 import gptConversationView from "@/views/gptConversationView.vue";
 import TaleDetail from "@/components/taleDetail/TaleDetail.vue";
+import TalePlay from "@/components/taleDetail/TalePlay.vue";
+import TaleEnd from "@/components/taleDetail/TaleEnd.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegistView from "@/views/RegistView.vue";
 import UserInfoView from "@/views/UserInfoView.vue";
