@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TalesView from "@/views/TalesView.vue";
 import HomeView from "@/views/HomeView.vue";
-import MemberMainView from "@/views/MemberMainView.vue";
 import NonMemberMainView from "@/views/NonMemberMainView.vue";
 import CustomTaleView from "@/views/CustomTaleView.vue";
 import CustomTaleCreate from "@/components/customTale/customTaleCreate.vue";
@@ -55,10 +54,9 @@ const router = createRouter({
               name: "customTaleSave",
               component: CustomTaleSave,
               props: true,
-              // props: route => ({ imageUrl: route.params.imageUrl, gptMessage: route.params.gptMessage })
             },
             {
-              path: ":customTale_id",
+              path: ":customTaleId",
               name: "customTaleDetail",
               component: CustomTaleDetail,
             },
@@ -97,12 +95,6 @@ const router = createRouter({
       ],
     },
     {
-      path: "/membermain",
-      name: "MemberMainView",
-      component: MemberMainView,
-    },
-    {
-      //최초 진입 페이지 == 비회원용 메인페이지
       path: "/",
       name: "NonMemberMainView",
       component: NonMemberMainView,

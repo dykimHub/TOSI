@@ -87,6 +87,7 @@ onMounted(() => {
 }
 
 .selecSort {
+  
     display: flex;
     flex-direction: column;
     margin: 1em;
