@@ -1,7 +1,6 @@
 package com.ssafy.tosi.customTale;
 
 import com.ssafy.tosi.s3.S3Controller;
-import com.ssafy.tosi.taleDetail.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -79,10 +78,12 @@ public class CustomTaleController {
     public ResponseEntity<?> read(@RequestBody String string) {
         try {
             String splitted_contents = customTaleService.split_sentences(string); // 문장 분리
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.TEXT_PLAIN);
-            headers.set(HttpHeaders.CONTENT_TYPE, "text/plain;charset=UTF-8"); // 인코딩 설정
-            return new ResponseEntity<String>(splitted_contents, headers, HttpStatus.OK);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.TEXT_PLAIN);
+//            headers.set(HttpHeaders.CONTENT_TYPE, "text/plain;charset=UTF-8"); // 인코딩 설정
+            List<Page> pages = customTaleService.paging(splitted_contents); // 페이지 형식으로 변경
+//            return new ResponseEntity<List<Page>>(pages, headers, HttpStatus.OK);
+            return new ResponseEntity<List<Page>>(pages, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {

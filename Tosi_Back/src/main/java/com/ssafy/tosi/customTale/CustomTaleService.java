@@ -1,7 +1,6 @@
 package com.ssafy.tosi.customTale;
 
 import com.ssafy.tosi.tale.TaleDto;
-import com.ssafy.tosi.taleDetail.Page;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,30 +95,31 @@ public class CustomTaleService {
 
     }
 
-    public List<Page> paging(String[] splitted_contents, TaleDto taleDto) {
+    public List<Page> paging(String splitted_contents) {
         int p = 1;
         List<Page> pages = new ArrayList<>();
 
-        for (int i = 0; i < splitted_contents.length; i++) {
-            if (splitted_contents[i] == null)
-                continue;
-
-            String[] sentences = splitted_contents[i].split("\n");
+            String[] sentences = splitted_contents.split("\n");
 
             for (int j = 0; j < sentences.length - 1; j += 2) {
                 Page page = Page.builder()
                         .leftNo(p)
-                        .left(taleDto.getImages()[i])
                         .rightNo(p + 1)
                         .right(sentences[j] + "\n" + sentences[j + 1])
                         .build();
-
                 pages.add(page);
                 p += 2;
             }
+// 문장이 홀수개 일 때
+            if (sentences.length % 2 != 0) {
+                Page page = Page.builder()
+                        .leftNo(p)
+                        .rightNo(p + 1)
+                        .right(sentences[sentences.length - 1])
+                        .build();
 
-
-        }
+                pages.add(page);
+            }
 
         return pages;
     }
