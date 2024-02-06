@@ -44,9 +44,9 @@ public class TaleDetailController {
     @PostMapping("/tales/read")
     public ResponseEntity<?> readBook(@RequestBody TaleDto taleDto) {
         try {
-            String[] splitted_contents = taleDetailService.split_sentences(taleDto); // 문장 분리
-            String[] changedContents = taleDetailService.changeName(splitted_contents); // 이름 바꾸기
-            List<Page> pages = taleDetailService.paging(changedContents, taleDto); // 페이지 형태로 변경
+            String[] contents = {taleDto.getContent1(), taleDto.getContent2(), taleDto.getContent3(), taleDto.getContent4()};
+            String[] changedContents = taleDetailService.changeName(contents); // 이름 바꾸기
+            List<Page> pages = taleDetailService.paging(changedContents, taleDto); // 페이지 형식으로 변경
             return new ResponseEntity<List<Page>>(pages, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -55,10 +55,6 @@ public class TaleDetailController {
         }
 
     }
-
-
-    
-    // 목소리 가져오기
 
 
 }

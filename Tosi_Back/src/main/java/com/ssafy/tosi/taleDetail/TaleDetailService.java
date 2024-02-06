@@ -10,6 +10,6 @@ public interface TaleDetailService {
     TaleDto getTaleDetail(int taleId) throws EntityNotFoundException;
     void selectName(String CName, String BName);
     String[] split_sentences(TaleDto taleDto) throws IOException;
-    List<Page> paging(String[] splitted_contents, TaleDto taleDto);
     String[] changeName(String[] contents) throws Exception;
+    List<Page> paging(String[] changedContents, TaleDto taleDto);
 }
