@@ -70,8 +70,6 @@ onMounted(() => {
 </script>
 
 <style>
-<<<<<<< HEAD
-=======
 .taleContainer {
     display: flex; 
     justify-content: center;
@@ -89,28 +87,14 @@ onMounted(() => {
   opacity: 0.95;  
 }
 
->>>>>>> frontend/feature/customtale
 .thumbnail {
     width: 200px;
 }
 
 .oneTale {
-<<<<<<< HEAD
-    width: 15em;
-    text-align: center;
-    margin: 2em;
-}
-
-.selecSort {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin: 1em;
-=======
     width: 13em;
     text-align: center;
     margin: 2em;
->>>>>>> frontend/feature/customtale
 }
 
 .selecSort {
