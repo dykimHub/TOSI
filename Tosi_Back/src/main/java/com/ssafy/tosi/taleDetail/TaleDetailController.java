@@ -41,37 +41,22 @@ public class TaleDetailController {
 
     }
 
-    @PostMapping("/tales/paging")
-    public ResponseEntity<?> paging(@RequestBody TaleDto taleDto) {
+    @PostMapping("/tales/read")
+    public ResponseEntity<?> readBook(@RequestBody TaleDto taleDto) {
         try {
-            String[] splitted_contents = taleDetailService.split_sentences(taleDto);
-            List<Page> pages = taleDetailService.paging(splitted_contents, taleDto);
-            System.out.print(pages);
+            String[] splitted_contents = taleDetailService.split_sentences(taleDto); // 문장 분리
+            String[] changedContents = taleDetailService.changeName(splitted_contents); // 이름 바꾸기
+            List<Page> pages = taleDetailService.paging(changedContents, taleDto); // 페이지 형태로 변경
             return new ResponseEntity<List<Page>>(pages, HttpStatus.OK);
         } catch (IOException e) {
-            String errMsg = "File Changing Error";
-            return new ResponseEntity<String>(errMsg, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
 
-    @PostMapping("/tales/change")
-    public ResponseEntity<?> changeName(@RequestBody TaleDto taleDto) {
-        try {
-            String[] splitted_contents = taleDetailService.split_sentences(taleDto);
-            String[] changedContents = new String[splitted_contents.length];
-            changedContents = taleDetailService.changeName(splitted_contents);
-            return new ResponseEntity<String[]>(changedContents, HttpStatus.OK);
-        } catch (IOException e) {
-            String errMsg = "File Changing Error";
-            return new ResponseEntity<String>(errMsg, HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
 
-    }
     
     // 목소리 가져오기
 

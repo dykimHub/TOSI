@@ -48,6 +48,7 @@ public class TaleDetailServiceImpl implements TaleDetailService {
                 .content4(tale.getContent4())
                 .total_contents(total_contents)
                 .images(images)
+                .thumbnail(images[0])
                 .characters(characters)
                 .time(tale.getTime())
                 .likeCnt(tale.getLikeCnt())
@@ -78,7 +79,6 @@ public class TaleDetailServiceImpl implements TaleDetailService {
                 writer.write(contents[i]);
             }
 
-            // 문단에서 문장 분리
             ProcessBuilder builder = new ProcessBuilder("node", "src/main/java/com/ssafy/tosi/taleDetail/morpheme/process.js", files[i].getAbsolutePath());
             Process process = builder.start();
 
