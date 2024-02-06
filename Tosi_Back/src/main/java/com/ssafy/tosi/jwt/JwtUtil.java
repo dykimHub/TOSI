@@ -6,17 +6,19 @@ import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Date;
 
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Component
 public class JwtUtil {
 
-    private final JwtProperties jwtProperties;
+    @Autowired
+    private JwtProperties jwtProperties;
 
     public String generateToken(Integer userId, Duration expiredAt) {
         Date now = new Date();

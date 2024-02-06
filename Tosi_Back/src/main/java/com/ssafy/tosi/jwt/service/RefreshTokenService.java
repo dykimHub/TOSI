@@ -1,5 +1,8 @@
-package com.ssafy.tosi.jwt;
+package com.ssafy.tosi.jwt.service;
 
+import com.ssafy.tosi.jwt.JwtUtil;
+import com.ssafy.tosi.jwt.RefreshToken;
+import com.ssafy.tosi.jwt.RefreshTokenRepository;
 import com.ssafy.tosi.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,6 @@ public class RefreshTokenService {
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected token"));
     }
 
-//    public void insertRefreshToken(RefreshToken refreshToken) {
-//        refreshTokenRepository.save(refreshToken);
-//    }
 
     public void updateRefreshToken(RefreshToken refreshToken) {
         Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByUserId(refreshToken.getUserId());
@@ -29,26 +29,10 @@ public class RefreshTokenService {
 
             foundRefreshToken.update(refreshToken);
             refreshTokenRepository.save(foundRefreshToken);
-            //            foundRefreshToken.setUserId(refreshToken.getUserId());
-//            foundRefreshToken.setRefreshToken(refreshToken.getRefreshToken());
-        } else {
+          } else {
             refreshTokenRepository.save(refreshToken);
         }
-//
-//        Optional<User> user = userRepository.findById(userInfo.getUserId());
-//        Optional<RefreshToken> foundRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken.getRefreshToken());
-//        foundRefreshToken.orElse(null).update(refreshToken);
-
     }
-
-
-//    private void saveRefreshToken(Integer userId, String newRefreshToken) {
-//        RefreshToken refreshToken = refreshTokenRepository.findByUserId(userId)
-//                .map(entity -> entity.update(newRefreshToken))
-//                .orElse(new RefreshToken(userId, newRefreshToken));
-//
-//        refreshTokenRepository.save(refreshToken);
-//    }
 
 }
 

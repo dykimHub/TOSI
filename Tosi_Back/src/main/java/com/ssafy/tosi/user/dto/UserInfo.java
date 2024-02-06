@@ -18,7 +18,6 @@ public class UserInfo {
     private Integer userId;
     private String email;
     private String password;
-//    private LocalDateTime regDate;
     private String bookshelfName;
     private List<ChildInfo> childrenList = new ArrayList<>();
 

@@ -3,28 +3,23 @@ package com.ssafy.tosi.user;
 import com.ssafy.tosi.cookieUtil.CookieUtil;
 import com.ssafy.tosi.jwt.JwtUtil;
 import com.ssafy.tosi.jwt.RefreshToken;
-import com.ssafy.tosi.jwt.RefreshTokenService;
+import com.ssafy.tosi.jwt.service.RefreshTokenService;
 import com.ssafy.tosi.user.dto.UserInfo;
 import com.ssafy.tosi.user.entity.Child;
 import com.ssafy.tosi.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RequestMapping("/users")
 @RestController
-@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -42,7 +37,8 @@ public class UserController {
 
     // 회원 정보 조회
     @GetMapping
-    public ResponseEntity<User> getUser(HttpServletRequest request) {
+    public ResponseEntity<User> getUser(HttpServletRequest request, HttpServletResponse response) {
+
         Integer userId = (Integer) request.getAttribute("userId");
         User user = userService.selectUser(userId);
 
@@ -51,8 +47,9 @@ public class UserController {
 
     // 회원 정보 수정
     @PutMapping
-    public ResponseEntity<Void> putUser(@RequestBody UserInfo userInfo, HttpServletRequest request) {
+    public ResponseEntity<Void> putUser(HttpServletRequest request, HttpServletResponse response, @RequestBody UserInfo userInfo) {
         Integer userId = (Integer) request.getAttribute("userId");
+        System.out.println("userId : " + userId);
 
         userInfo.setUserId(userId);
 
@@ -75,9 +72,9 @@ public class UserController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response) {
+    public ResponseEntity<?> postLogin(@RequestBody User user, HttpServletResponse response) {
         System.out.println(user);
-
+//
         System.out.println(user.toString());
 
         Integer userId = userService.login(user);
@@ -104,7 +101,6 @@ public class UserController {
     public ResponseEntity<Void> getLogout(HttpServletRequest request, HttpServletResponse response) {
         cookieUtil.deleteCookie(request, response, "access-token");
         cookieUtil.deleteCookie(request, response, "refresh-token");
-
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
@@ -117,15 +113,16 @@ public class UserController {
 
     // 아이목록 조회
     @GetMapping("/children-list")
-    public ResponseEntity<List<Child>> getChildrenList(HttpServletRequest request) {
+    public ResponseEntity<List<Child>> getChildrenList(HttpServletRequest request, HttpServletResponse response) {
         Integer userId = (Integer) request.getAttribute("userId");
+//        System.out.println("컨트롤러:" + userId);
         List<Child> childrenList = userService.selectChildrenList(userId);
         return new ResponseEntity<List<Child>>(childrenList, HttpStatus.OK);
     }
 
     // 비밀번호 확인
     @PostMapping("/password-check")
-    public ResponseEntity<?> postPasswordCheck(@RequestBody String password, HttpServletRequest request) {
+    public ResponseEntity<?> postPasswordCheck(HttpServletRequest request, HttpServletResponse response, @RequestBody String password) {
         Integer userId = (Integer) request.getAttribute("userId");
         System.out.println(userId);
 

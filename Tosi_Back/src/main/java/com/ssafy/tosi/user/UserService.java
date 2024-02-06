@@ -80,6 +80,7 @@ public class UserService {
     public Integer login (User user) {
         System.out.println(user);
         User foundUser = userRepository.findByEmail(user.getEmail());
+        System.out.println(foundUser);
         if(foundUser != null && foundUser.getPassword().equals(user.getPassword())) {
             return foundUser.getUserId();
         }
@@ -90,6 +91,7 @@ public class UserService {
     public boolean checkEmailDuplication (String email) {
         User searchedUser = userRepository.findByEmail (email);
         if (searchedUser != null){
+            System.out.println("false");
             return true;
         }
         return false;
@@ -99,7 +101,9 @@ public class UserService {
     public boolean checkPassword (Integer userId, String password) {
         System.out.println(userId);
         Optional<User> optionalUser = userRepository.findById(userId);
-
+        
+//        User user = null;
+        
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
             if(user.getPassword().equals(password)) {
@@ -113,7 +117,11 @@ public class UserService {
 
     // 아이 목록 조회
     public List<Child> selectChildrenList(Integer userId) {
-        return childRepository.findByUserId(userId);
+
+        System.out.println("서비스:" + userId);
+        List<Child> childrenList = childRepository.findByUserId(userId);
+        System.out.println(childrenList);
+        return childrenList;
     }
 
 

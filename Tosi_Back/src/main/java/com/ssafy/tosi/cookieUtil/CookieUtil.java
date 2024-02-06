@@ -4,13 +4,15 @@ import com.ssafy.tosi.jwt.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.SerializationUtils;
 
 import java.util.Base64;
 
-@RequiredArgsConstructor
+//@NoArgsConstructor
+//@RequiredArgsConstructor
 @Component
 public class CookieUtil {
 
