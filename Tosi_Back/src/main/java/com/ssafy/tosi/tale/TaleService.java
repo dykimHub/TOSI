@@ -15,7 +15,6 @@ import java.util.List;
 //final field에 대한 생성자 주입
 public class TaleService {
     private final TaleRepository taleRepository;
-
     private final S3Service s3Service;
 
     public List<TaleDto> selectAllTales() {

@@ -3,7 +3,10 @@ package com.ssafy.tosi.taleDetail.morpheme;
 import com.ssafy.tosi.taleDetail.morpheme.kiwi.KiwiTag;
 import kr.pe.bab2min.Kiwi;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class NameChanger {
     private static final String modelPath = "src/main/java/com/ssafy/tosi/taleDetail/morpheme/kiwi/ModelGenerator";
@@ -22,10 +25,13 @@ public class NameChanger {
 
     public String changeName(String content, Map<String, String> nameMap) throws Exception {
         List<String> cnames = new ArrayList<>();
-        cnames.addAll(nameMap.keySet());
+        for (String key : nameMap.keySet()) {
+            if (!key.equals(nameMap.get(key))) // 이름 바뀌었을 때만 추가
+                cnames.add(key);
+        }
 
         for (int i = 0; i < cnames.size(); i++) {
-            content = content.replace(cnames.get(i), String.valueOf(i));
+            content = content.replace(cnames.get(i), "* " + i);
         }
 
         changingContent = new StringBuilder();
@@ -35,51 +41,48 @@ public class NameChanger {
             String sentCopy = sent;
             Kiwi.Token[] tokens = getKiwi().tokenize(sent, Kiwi.Match.allWithNormalizing); // 형태소 분석
 
-            for (int i = tokens.length - 2; i >= 0; i--) {
+            for (int i = tokens.length - 3; i >= 0; i--) {
                 String word = "";
 
-                try {
-                    Integer.parseInt(tokens[i].form);
-                } catch (NumberFormatException e) {
+                if (!tokens[i].form.equals("*"))
                     continue;
-                }
 
-                word = nameMap.get(cnames.get(Integer.parseInt(tokens[i].form)));
-                String myjosa = appendJosa(tokens[i + 1], word);
+                if (tokens[i + 2].form.equals("님") || (tokens[i + 2].form.equals("니") && tokens[i + 3].form.equals("ㅁ")))
+                    continue;
+
+                word = nameMap.get(cnames.get(Integer.parseInt(tokens[i + 1].form)));
+                String myjosa = appendJosa(tokens[i + 2], word);
 
                 int start, end;
+                start = tokens[i + 2].position;
+                end = start + tokens[i + 2].length;
+                sentCopy = sentCopy.substring(0, start) + myjosa + sentCopy.substring(end);
 
-                if (myjosa != null) {
-                    start = tokens[i + 1].position;
-                    end = start + tokens[i + 1].length;
-                    sentCopy = sentCopy.substring(0, start) + myjosa + sentCopy.substring(end);
-                } else if (KiwiTag.toString(tokens[i + 1].tag).equals("VCP")) {
-                    start = tokens[i + 1].position;
-                    end = start + tokens[i + 2].length;
-
-                    if (tokens[i + 2].form.equals("아") || tokens[i + 2].form.equals("야")) {
+                if (KiwiTag.toString(tokens[i + 2].tag).equals("VCP")) {
+                    start = tokens[i + 2].position;
+                    end = start + tokens[i + 3].length + 1;
+                    if (tokens[i + 3].form.equals("아") || tokens[i + 3].form.equals("야")) {
                         myjosa = josa.aYa(word);
-                    } else if (KiwiTag.toString(tokens[i + 2].tag).equals("ETM")) {
-                        myjosa = josa.eNoE(word) + tokens[i + 2].form;
+                    } else if (KiwiTag.toString(tokens[i + 3].tag).equals("ETM") || KiwiTag.toString(tokens[i + 3].tag).equals("EF") || KiwiTag.toString(tokens[i + 3].tag).equals("EP") || KiwiTag.toString(tokens[i + 3].tag).equals("JX")) {
+                        myjosa = josa.eNoE(word) + tokens[i + 3].form;
                     } else {
                         myjosa = josa.eNoE(word);
                     }
                     sentCopy = sentCopy.substring(0, start) + myjosa + sentCopy.substring(end);
 
-
-                } else continue;
-
+                }
 
             }
             changingContent.append(sentCopy).append("\n");
 
         }
 
+
         String changedContent = changingContent.toString();
 
-        // 숫자를 아이 이름으로 변환
+        // '* 숫자'를 아이 이름으로 변환
         for (int i = 0; i < cnames.size(); i++) {
-            changedContent = changedContent.replace(String.valueOf(i), nameMap.get(cnames.get(i)));
+            changedContent = changedContent.replace("* " + i, nameMap.get(cnames.get(i)));
         }
 
         return changedContent;
@@ -92,36 +95,49 @@ public class NameChanger {
         switch (nextTag) {
             case "JKS":
             case "ETM":
-            case "MM":
                 return form.equals("이") || form.equals("가") ? josa.iGa(word) : josa.eunNeun(word);
             case "JX":
-                return form.equals("아") || form.equals("야") ? josa.aYa(word) : josa.eunNeun(word);
+                if (form.equals("아") || form.equals("야")) {
+                    return josa.aYa(word);
+                } else if (form.equals("은") || form.equals("는")) {
+                    return josa.eunNeun(word);
+                } else if (form.equals("이나") || form.equals("나")) {
+                    return josa.eNoE(word) + "나";
+                } else {
+                    return josa.eNoE(word);
+                }
             case "JKO":
                 return josa.eulReul(word);
             case "JKC":
                 return josa.iGa(word);
             case "JKB":
-                return form.equals("로") || form.equals("으로") ? josa.euroRo(word) : josa.eNoE(word) + form;
+                if (form.equals("로") || form.equals("으로")) {
+                    return josa.euroRo(word);
+                } else if (form.equals("와") || form.equals("과")) {
+                    return josa.gwaWa(word);
+                } else {
+                    return josa.eNoE(word) + form;
+                }
             case "JKV":
                 return josa.aYa(word);
             case "JC":
                 return josa.gwaWa(word);
             case "XSN":
             case "JKG":
-                if (form.equals("님")) {
-                    return form;
-                }
                 return josa.eNoE(word) + form;
             case "NNG":
+            case "NNB":
                 if (form.equals("와") || form.equals("과")) {
                     return josa.gwaWa(word);
                 } else if (form.equals("은") || form.equals("는")) {
                     return josa.eunNeun(word);
                 } else if (form.equals("을") || form.equals("를")) {
                     return josa.eulReul(word);
-                }
+                } else if (form.equals("도")) {
+                    return josa.eNoE(word) + form;
+                } else return form;
             default:
-                return null;
+                return form;
 
         }
     }

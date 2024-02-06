@@ -46,7 +46,7 @@ public class ChatgptServiceImpl implements ChatgptService {
     }
 
     protected <T> T getResponse(HttpEntity<?> httpEntity, Class<T> responseType, String url) {
-        log.info("request url: {}, httpEntity: {}", url, httpEntity);
+        log.info("request url: {}, httpEntity: {}\n 49라인 로그 출력이 끝났습니다.", url, httpEntity);
         ResponseEntity<T> responseEntity = restTemplate.postForEntity(url, httpEntity, responseType);
         if (responseEntity.getStatusCodeValue() != HttpStatus.OK.value()) {
             log.error("error response status: {}", responseEntity);

@@ -22,8 +22,8 @@ public class TaleDetailController {
             TaleDto taleDto = taleDetailService.getTaleDetail(taleId);
             return new ResponseEntity<TaleDto>(taleDto, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            String errMsg = "Entity Not Found";
-            return new ResponseEntity<String>(errMsg, HttpStatus.BAD_REQUEST);
+            String errMsg = "No Data";
+            return new ResponseEntity<String>(errMsg, HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -44,8 +44,8 @@ public class TaleDetailController {
     @PostMapping("/tales/read")
     public ResponseEntity<?> readBook(@RequestBody TaleDto taleDto) {
         try {
-            String[] splitted_contents = taleDetailService.split_sentences(taleDto); // 문장 분리
-            String[] changedContents = taleDetailService.changeName(splitted_contents); // 이름 바꾸기
+            String[] contents = {taleDto.getContent1(), taleDto.getContent2(), taleDto.getContent3(), taleDto.getContent4()};
+            String[] changedContents = taleDetailService.changeName(contents); // 이름 바꾸기
             List<Page> pages = taleDetailService.paging(changedContents, taleDto); // 페이지 형식으로 변경
             return new ResponseEntity<List<Page>>(pages, HttpStatus.OK);
         } catch (IOException e) {
@@ -55,5 +55,6 @@ public class TaleDetailController {
         }
 
     }
+
 
 }

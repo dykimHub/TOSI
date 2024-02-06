@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -54,7 +51,12 @@ public class TaleDetailServiceImpl implements TaleDetailService {
                 .likeCnt(tale.getLikeCnt())
                 .build();
 
-        nameMap = new HashMap<>();
+        // 주인공 - 이름 매핑 공간 초기화
+        // 순서 기억해야 다른 주인공 이름에 주인공 이름이 포함될 때 replace 가능
+        nameMap = new LinkedHashMap<>();
+        for (String c : characters) {
+            nameMap.put(c, c);
+        }
         return taleDto;
 
     }
@@ -98,39 +100,7 @@ public class TaleDetailServiceImpl implements TaleDetailService {
     }
 
     @Override
-    public List<Page> paging(String[] splitted_contents, TaleDto taleDto) {
-        int p = 1;
-        List<Page> pages = new ArrayList<>();
-
-        for (int i = 0; i < splitted_contents.length; i++) {
-            if (splitted_contents[i] == null)
-                continue;
-
-            String[] sentences = splitted_contents[i].split("\n");
-
-            for (int j = 0; j < sentences.length - 1; j += 2) {
-                Page page = Page.builder()
-                        .leftNo(p)
-                        .left(taleDto.getImages()[i])
-                        .rightNo(p + 1)
-                        .right(sentences[j] + "\n" + sentences[j + 1])
-                        .build();
-
-                pages.add(page);
-                p += 2;
-            }
-
-
-        }
-
-        return pages;
-    }
-
-    @Override
     public String[] changeName(String[] contents) throws Exception {
-        if (nameMap == null || nameMap.isEmpty())
-            return contents;
-
         nameChanger = new NameChanger();
         String[] changedContents = new String[contents.length];
 
@@ -144,6 +114,46 @@ public class TaleDetailServiceImpl implements TaleDetailService {
         }
 
         return changedContents;
+    }
+
+    @Override
+    public List<Page> paging(String[] changedContents, TaleDto taleDto) {
+        int p = 1;
+        List<Page> pages = new ArrayList<>();
+
+        for (int i = 0; i < changedContents.length; i++) {
+            if (changedContents[i] == null)
+                continue;
+
+            String[] sentences = changedContents[i].split("\n");
+
+            for (int j = 0; j < sentences.length - 1; j += 2) {
+                Page page = Page.builder()
+                        .leftNo(p)
+                        .left(taleDto.getImages()[i])
+                        .rightNo(p + 1)
+                        .right(sentences[j] + "\n" + sentences[j + 1])
+                        .build();
+
+                pages.add(page);
+                p += 2;
+            }
+
+            // 문장이 홀수개 일 때
+            if (sentences.length % 2 != 0) {
+                Page page = Page.builder()
+                        .leftNo(p)
+                        .left(taleDto.getImages()[i])
+                        .rightNo(p + 1)
+                        .right(sentences[sentences.length - 1])
+                        .build();
+
+                pages.add(page);
+            }
+
+        }
+
+        return pages;
     }
 
 
