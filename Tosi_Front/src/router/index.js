@@ -7,9 +7,12 @@ import CustomTaleCreate from "@/components/customTale/customTaleCreate.vue";
 import CustomTaleList from "@/components/customTale/customTaleList.vue";
 import CustomTaleDetail from "@/components/customTale/customTaleDetail.vue";
 import CustomTaleSave from "@/components/customTale/customTaleSave.vue";
+import LoadingModal from "@/components/customTale/loadingModal.vue";
 import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
 import gptConversationView from "@/views/gptConversationView.vue";
 import TaleDetail from "@/components/taleDetail/TaleDetail.vue";
+import TalePlay from "@/components/taleDetail/TalePlay.vue";
+import TaleEnd from "@/components/taleDetail/TaleEnd.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegistView from "@/views/RegistView.vue";
 import UserInfoView from "@/views/UserInfoView.vue";
@@ -32,6 +35,18 @@ const router = createRouter({
           path: "/tales/:taleId",
           name: "taleDetail",
           component: TaleDetail,
+          props: true,
+        },
+        {
+          path: "/tales/play/:speaker",
+          name: "talePlay",
+          component: TalePlay,
+          props: true,
+        },
+        {
+          path: "/tales/end/:taleId",
+          name: "taleEnd",
+          component: TaleEnd,
           props: true,
         },
         {
@@ -60,17 +75,23 @@ const router = createRouter({
               name: "customTaleDetail",
               component: CustomTaleDetail,
             },
+            {
+              path: "loading",
+              name: "loading",
+              component: LoadingModal,
+            },
           ],
         },
         {
           path: "/tales/chat",
-          name: "gptConversation",
+          name: "gptConversationView",
           component: gptConversationView,
         },
         {
-          path: "/tales/chat/send",
+          path: "/tales/end/chat/:cname/:bname",
           name: "gptConversationSend",
           component: gptConversationSend,
+          props: true,
         },
         {
           path: "/login",

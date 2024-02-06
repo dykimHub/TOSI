@@ -45,15 +45,13 @@ import { ref, onMounted } from "vue";
 import router from "@/router";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
 import axios from "axios";
+import { onBeforeRouteLeave } from "vue-router";
 
 const taleDetailStore = useTaleDetailStore();
 
 const props = defineProps({
   taleId: String,
 });
-
-taleDetailStore.taleId = props.taleId;
-taleDetailStore.getTaleDetail();
 
 const greetings = [
   "마법같은 이야기는 끝나지 않았고, 상상 속 세계가 기다리고 있어요.",
@@ -63,10 +61,13 @@ const greetings = [
   "매일매일 꿈꾸고 상상하는 거 잊지 말아요!",
   "별들도 우리 이야기를 듣고 싶어 하네요. 굿나잇, 작은 별들!",
   "조용한 밤, 우리의 이야기를 속삭여보세요. 우주도 함께 꿈꾸게 될 거예요.",
-  "이 순간이 마음 속에 남아있기를 바라요. 다시 만날 그날을 기다릴게요!",
+  "이 순간이 마음 속에 남아있기를 바라요. 다시 만날 그 날을 기다릴게요!",
   "이야기 세계는 늘 기다리고 있어요. 다음 모험을 상상해보세요.",
   "찾아와줘서 고마워요. 이야기는 잠시 멈췄지만, 우리의 웃음은 계속될 거예요!",
 ];
+
+taleDetailStore.taleId = props.taleId;
+taleDetailStore.getTaleDetail();
 
 const assignedGreeting = ref([]);
 onMounted(() => {
@@ -94,7 +95,7 @@ const selectedName = ref();
 
 const chatStart = () => {
   router.push({
-    name: "gptConversation",
+    name: "gptConversationSend",
     params: { cname: selectedCharacter.value, bname: selectedName.value },
   });
 };
