@@ -2,13 +2,13 @@
     <header>
         <div></div>
         <div>
-            <RouterLink to="/membermain">
+            <RouterLink to="/tosi">
                 <img src="@/assets/logo.png" class="logo" alt="Logo"/>
             </RouterLink>   
         </div>
         <div>
             <div>
-                <RouterLink to="/membermain">홈</RouterLink>
+                <RouterLink to="/tosi">홈</RouterLink>
                 <br>
                 <a>로그아웃</a>
             </div>

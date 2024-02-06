@@ -88,9 +88,16 @@ onMounted(() => {
 }
 
 .selecSort {
+<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   margin: 1em;
+=======
+  
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+>>>>>>> frontend/feature/tale
 }
 
 .topOfTaleList {
