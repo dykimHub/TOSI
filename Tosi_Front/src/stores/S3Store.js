@@ -5,7 +5,7 @@ import axios from "@/util/http-common";
 export const useS3Store = defineStore("s3", () => {
   const downloadFile = ref({});
   const getDownloadFile = function (fileName) {
-    axios.get(`/tales/s3/download/${fileName}`,fileName)
+    axios.get(`/tales/s3/download/${fileName}`,fileName, { withCredentials: true })
     .then((response) => {
       file.value = response.data;
     });
@@ -20,7 +20,7 @@ export const useS3Store = defineStore("s3", () => {
     formData.append("file", file);
     formData.append("fileName", fileName);
     console.log(formData);
-    axios.post(`/tales/s3/upload`, formData, {
+    axios.post(`/tales/s3/upload`, formData, { withCredentials: true }, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

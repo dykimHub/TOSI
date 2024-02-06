@@ -10,7 +10,7 @@
             <div>
                 <RouterLink to="/tosi">홈</RouterLink>
                 <br>
-                <a>로그아웃</a>
+                <a href="#" class="my-link" v-if="isLoggedIn" @click="logout">로그아웃&nbsp;&nbsp;</a>
             </div>
             <div>검색</div>
         </div>
@@ -18,6 +18,23 @@
 </template>
 
 <script setup>
+import { useUserStore } from "@/stores/userStore";
+import { onMounted, ref } from "vue";
+
+const store = useUserStore()
+
+const isLoggedIn = ref('');
+
+onMounted(() => {
+    if(localStorage.getItem('isLoggedIn') != null) {
+        isLoggedIn.value = 'true';
+    }
+  console.log("Is Authenticated:", isLoggedIn.value);
+});
+
+const logout = () => {
+  store.getLogout();
+};
 
 </script>
 

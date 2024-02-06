@@ -30,9 +30,9 @@ const password = ref("");
 const login = () => {
   let user = {
     email: email.value,
-    password: password.value,
+    password: password.value
   };
-  store.postLogin(email, password);
+  store.postLogin(user);
 };
 
 </script>

@@ -9,7 +9,7 @@ export const useTaleDetailStore = defineStore("taleDetail", () => {
 
   const getTaleDetail = function () {
     axios
-      .get(`http://localhost:8080/tales/${taleId.value}`)
+      .get(`http://localhost:8080/tales/${taleId.value}`, { withCredentials: true })
       .then((response) => {
         tale.value = response.data;
       })
