@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TalesView from "@/views/TalesView.vue";
 import HomeView from "@/views/HomeView.vue";
-import MemberMainView from "@/views/MemberMainView.vue";
 import NonMemberMainView from "@/views/NonMemberMainView.vue";
 import CustomTaleView from "@/views/CustomTaleView.vue";
 import CustomTaleCreate from "@/components/customTale/customTaleCreate.vue";
@@ -17,24 +16,95 @@ import RegistView from "@/views/RegistView.vue";
 import UserInfoView from "@/views/UserInfoView.vue";
 import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: "/tosi",
-      name: "tosi",
-      component: HomeView,
-      children: [
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [
         {
-          path: "/tales",
-          name: "tales",
-          component: TalesView,
+            path: "/tosi",
+            name: "tosi",
+            component: HomeView,
+            children: [
+                {
+                    path: "/tales",
+                    name: "tales",
+                    component: TalesView,
+                },
+                {
+                    path: "/tales/:taleId",
+                    name: "taleDetail",
+                    component: TaleDetail,
+                    props: true,
+                },
+                {
+                    path: "/customTale",
+                    name: "customTale",
+                    component: CustomTaleView,
+                    children: [
+                        {
+                            path: "",
+                            name: "customTaleList",
+                            component: CustomTaleList,
+                        },
+                        {
+                            path: "create",
+                            name: "customTaleCreate",
+                            component: CustomTaleCreate,
+                        },
+                        {
+                            path: "save",
+                            name: "customTaleSave",
+                            component: CustomTaleSave,
+                            props: true,
+                        },
+                        {
+                            path: ":customTaleId",
+                            name: "customTaleDetail",
+                            component: CustomTaleDetail,
+                        },
+                        {
+                            path: "loading",
+                            name: "loading",
+                            component: LoadingModal,
+                        },
+                    ],
+                },
+                {
+                    path: "/tales/chat",
+                    name: "gptConversation",
+                    component: gptConversationView,
+                },
+                {
+                    path: "/tales/chat/send",
+                    name: "gptConversationSend",
+                    component: gptConversationSend,
+                },
+                {
+                    path: "/login",
+                    name: "login",
+                    component: LoginView,
+                },
+                {
+                    path: "/regist",
+                    name: "regist",
+                    component: RegistView,
+                },
+                {
+                    path: "/userInfo",
+                    name: "userInfo",
+                    component: UserInfoView,
+                },
+                {
+                    path: "/userInfo/update",
+                    name: "userInfoUpdate",
+                    component: UserInfoUpdate,
+                },
+            ],
         },
         {
-          path: "/tales/:taleId",
-          name: "taleDetail",
-          component: TaleDetail,
-          props: true,
+            path: "/",
+            name: "NonMemberMainView",
+            component: NonMemberMainView,
         },
+<<<<<<< HEAD
         {
           path: "/customTale",
           name: "customTale",
@@ -111,5 +181,8 @@ const router = createRouter({
       component: NonMemberMainView,
     },
   ],
+=======
+    ],
+>>>>>>> frontend/feature/taledetail1
 });
 export default router;

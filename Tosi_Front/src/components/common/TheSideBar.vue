@@ -9,11 +9,17 @@
         </ul>
     </div>
 </template>
+<<<<<<< HEAD
 <script setup>
 </script>
+=======
+
+<script setup></script>
+
+>>>>>>> frontend/feature/taledetail1
 <style scoped>
 div {
-    width:13rem;
+    width: 13rem;
     position: fixed;
     margin-top: 40px;
 }
@@ -24,7 +30,12 @@ li {
   list-style-type: none;
 }
 a {
+<<<<<<< HEAD
 text-decoration: none;
 color: black;
+=======
+    text-decoration: none;
+    color: black;
+>>>>>>> frontend/feature/taledetail1
 }
 </style>
