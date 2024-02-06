@@ -1,9 +1,13 @@
 package com.ssafy.tosi.customTale;
 
+import com.ssafy.tosi.tale.TaleDto;
+import com.ssafy.tosi.taleDetail.Page;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,4 +63,64 @@ public class CustomTaleService {
         return true;
     }
 
+    public String split_sentences(String string) throws IOException {
+        String[] contents = new String[]{string};
+        String[] splitted_contents = new String[contents.length];
+        File[] files = new File[contents.length];
+
+        for (int i = 0; i < contents.length; i++) {
+            if (contents[i] == null) continue;
+
+            files[i] = File.createTempFile("content" + i, ".txt");
+            System.out.print(files[i]);
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(files[i]))) {
+                writer.write(contents[i]);
+            }
+
+            ProcessBuilder builder = new ProcessBuilder("node", "src/main/java/com/ssafy/tosi/taleDetail/morpheme/process.js", files[i].getAbsolutePath());
+            Process process = builder.start();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            StringBuilder response = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                response.append(line + "\n");
+            }
+
+            splitted_contents[i] = response.toString();
+
+        }
+        System.out.print(splitted_contents[0]);
+        return splitted_contents[0];
+
+    }
+
+    public List<Page> paging(String[] splitted_contents, TaleDto taleDto) {
+        int p = 1;
+        List<Page> pages = new ArrayList<>();
+
+        for (int i = 0; i < splitted_contents.length; i++) {
+            if (splitted_contents[i] == null)
+                continue;
+
+            String[] sentences = splitted_contents[i].split("\n");
+
+            for (int j = 0; j < sentences.length - 1; j += 2) {
+                Page page = Page.builder()
+                        .leftNo(p)
+                        .left(taleDto.getImages()[i])
+                        .rightNo(p + 1)
+                        .right(sentences[j] + "\n" + sentences[j + 1])
+                        .build();
+
+                pages.add(page);
+                p += 2;
+            }
+
+
+        }
+
+        return pages;
+    }
 }
