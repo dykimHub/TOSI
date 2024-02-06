@@ -2,6 +2,7 @@
   <div id="app" class="container">
     <h1 class="text-center my-4">나만의 동화 만들기</h1>
 
+    <loading-modal :is-loading="loading"></loading-modal>
     <div>
       <img
         v-if="customTaleStore.customTaleImage"
@@ -57,11 +58,6 @@
       </button>
     </div>
 
-    <!-- <div v-if="imageUrl !== ''"> -->
-    <h2>Generated Image:</h2>
-    <img :src="customTaleStore.customTaleImage" class="img-fluid" style="height: 300px" />
-    <!-- </div> -->
-
     <div>
       <h2>Generated text:</h2>
       <p>{{ customTaleStore.customTaleText.gptMessage }}</p>
@@ -75,6 +71,7 @@
 <script setup>
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, ref } from "vue";
+import LoadingModal from "@/components/customTale/loadingModal.vue";
 const customTaleStore = useCustomTaleStore();
 
 const generateRandomImageUrl = () => {
@@ -84,7 +81,6 @@ const generateRandomImageUrl = () => {
 const randomImageUrl = ref(generateRandomImageUrl());
 
 const prompt = ref(["", "", ""]);
-const imageUrl = ref("");
 
 const loading = ref(false);
 const generateCustomTale = async function () {
@@ -102,9 +98,7 @@ const generateCustomTale = async function () {
       prompt.value[2] +
       // + ","+ prompt.value[3] + ","+ prompt.value[4]
       "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image."
-  customTaleStore.getCustomTaleImage(imagePrompt);
-
-    await customTaleStore.getCustomTaleImage(imagePrompt);
+   await customTaleStore.getCustomTaleImage(imagePrompt);
 
     const gptPrompt =
       prompt.value[0] +
@@ -112,7 +106,7 @@ const generateCustomTale = async function () {
       prompt.value[1] +
       "을 배경, " +
       prompt.value[2] +
-      "를 이용해 500자 내외의 교훈있는 동화를 만들어줘. 줄바꿈은 하지 말아줘. 성별언급은 하지말아줘.";
+      "를 이용해 500자 내외의 환상적인 동화를 만들어줘. 줄바꿈은 하지말아줘. 성별언급은 하지말아줘. 자연스럽고 매끄러운 문맥.";
 
     await customTaleStore.getCustomTaleText(gptPrompt);
   } catch (error) {
@@ -121,14 +115,31 @@ const generateCustomTale = async function () {
     loading.value = false;
   }
 };
-//   // const escapedGptPrompt = gptPrompt.replace(/"/g, '\\"');
-//   customTaleStore.getCustomTaleText(gptPrompt);
-// };
 
 onMounted(() => {
   console.log("Image URL:", customTaleStore.customTaleImage);
-  console.log("tale", customTaleStore.customTaleText);
+  console.log("tale", customTaleStore.customTaleText.gptMessage);
 });
 </script>
 
-<style></style>
+<style>
+.loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-content {
+  text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+</style>
