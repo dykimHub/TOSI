@@ -9,10 +9,11 @@ export const useCustomTaleStore = defineStore("customtale", () => {
   const customTalesList = ref([]);
   const getCustomTalesList = function (isPublic) {
     axios
-      .get(`/customtale?isPublic=${isPublic}`,isPublic)
+      .get(`/customtale?isPublic=${isPublic}`,isPublic, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         customTalesList.value = response.data;
+        customTalesList.value.sort((a, b) => b.customTaleId - a.customTaleId);
       })
       .catch((error) => {
         console.error("Error fetching custom tales:", error);
@@ -21,8 +22,8 @@ export const useCustomTaleStore = defineStore("customtale", () => {
 
   //나의책장 - 커스텀동화
   const myCustomTalesList = ref([]);
-  const getMyCustomTalesList = function (userId) {
-    axios.get(`/customtale/user/${userId}`,userId).then((response) => {
+  const getMyCustomTalesList = function () {
+    axios.get(`/customtale/user`).then((response) => {
       myCustomTalesList.value = response.data;
     });
   };
@@ -30,15 +31,16 @@ export const useCustomTaleStore = defineStore("customtale", () => {
   //상세조회
   const customTale = ref({});
   const getCustomTale = function (customTaleId) {
-    axios.get(`/customtale/${customTaleId}`,customTaleId).then((response) => {
+    axios.get(`/customtale/${customTaleId}`,customTaleId, { withCredentials: true }).then((response) => {
       customTale.value = response.data;
     });
   };
 
+
   const S3Store = useS3Store();
   //등록
   const insertCustomTale = function (customTale) {
-    axios.post(`/customtale`, customTale).then(() => {
+    axios.post(`/customtale`, customTale, { withCredentials: true }).then(() => {
       console.log(customTale.value);
       // router.push({name:'MycustomTaleList'})
       alert("저장되었습니다.")
@@ -52,7 +54,7 @@ const getCustomTaleText = async function (userInputMessage) {
   try {
     const response = await axios.post(`/customtale/input`, {
       userMessage: userInputMessage,
-    });
+    }, { withCredentials: true });
 
     console.log(userInputMessage);
     console.log(response.data);
@@ -104,7 +106,10 @@ const getCustomTaleText = async function (userInputMessage) {
 
   }
   
-
+  const resetCustomTale = function(){
+    customTaleImage.value = "";
+    customTaleText.value = "";
+  }
   return {
     customTalesList,
     getCustomTalesList,
@@ -117,5 +122,6 @@ const getCustomTaleText = async function (userInputMessage) {
     getCustomTaleText,
     customTaleImage,
     getCustomTaleImage,
+    resetCustomTale,
   };
 });

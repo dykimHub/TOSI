@@ -1,23 +1,24 @@
-import { ref, computed } from 'vue';
-import { defineStore } from 'pinia';
-import router from '@/router';
-import axios from 'axios';
+import { ref, computed } from "vue";
+import { defineStore } from "pinia";
+import router from "@/router";
+import axios from "axios";
 
-export const useTaleDetailStore = defineStore('taleDetail', () => {
+export const useTaleDetailStore = defineStore("taleDetail", () => {
   const taleId = ref(null);
   const tale = ref(null);
 
   const getTaleDetail = function () {
-    console.log(taleId.value);
     axios
-      .get(`http://localhost:8080/tales/${taleId.value}`)
+      .get(`http://localhost:8080/tales/${taleId.value}`, { withCredentials: true })
       .then((response) => {
         tale.value = response.data;
       })
       .catch((error) => {
-        console.error('Error fetching:', error);
+        console.error("Error fetching:", error);
       });
   };
 
-  return { tale, taleId, getTaleDetail };
+  const pages = ref(null);
+
+  return { tale, taleId, getTaleDetail, pages };
 });
