@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TalesView from "@/views/TalesView.vue";
 import HomeView from "@/views/HomeView.vue";
-import MemberMainView from "@/views/MemberMainView.vue";
 import NonMemberMainView from "@/views/NonMemberMainView.vue";
 import CustomTaleView from "@/views/CustomTaleView.vue";
 import CustomTaleCreate from "@/components/customTale/customTaleCreate.vue";
@@ -99,11 +98,6 @@ const router = createRouter({
           component: UserInfoUpdate,
         },
       ],
-    },
-    {
-      path: "/membermain",
-      name: "MemberMainView",
-      component: MemberMainView,
     },
     {
       path: "/",
