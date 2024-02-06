@@ -10,7 +10,11 @@
             <div>
                 <RouterLink to="/tosi">홈</RouterLink>
                 <br>
+<<<<<<< HEAD
                 <a href="#" class="my-link" v-if="isLoggedIn" @click="logout">로그아웃&nbsp;&nbsp;</a>
+=======
+                <a>로그아웃</a>
+>>>>>>> 4d40147d770f53e2189b668c4be10f034a658ea0
             </div>
             <div>검색</div>
         </div>
@@ -18,6 +22,7 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
 
@@ -36,6 +41,9 @@ const logout = () => {
   store.getLogout();
 };
 
+=======
+
+>>>>>>> 4d40147d770f53e2189b668c4be10f034a658ea0
 </script>
 
 <style scoped>
@@ -61,4 +69,8 @@ a {
   color: black;
 }
 
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> 4d40147d770f53e2189b668c4be10f034a658ea0

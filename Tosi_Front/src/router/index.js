@@ -42,6 +42,18 @@ const router = createRouter({
           meta: { requiresAuth: true },
         },
         {
+          path: "/tales/play/:speaker",
+          name: "talePlay",
+          component: TalePlay,
+          props: true,
+        },
+        {
+          path: "/tales/end/:taleId",
+          name: "taleEnd",
+          component: TaleEnd,
+          props: true,
+        },
+        {
           path: "/customTale",
           name: "customTale",
           component: CustomTaleView,
@@ -82,15 +94,16 @@ const router = createRouter({
         },
         {
           path: "/tales/chat",
-          name: "gptConversation",
+          name: "gptConversationView",
           component: gptConversationView,
           meta: { requiresAuth: true },
         },
         {
-          path: "/tales/chat/send",
+          path: "/tales/end/chat/:cname/:bname",
           name: "gptConversationSend",
           component: gptConversationSend,
           meta: { requiresAuth: true },
+          props: true,
         },
         {
           path: "/login",
