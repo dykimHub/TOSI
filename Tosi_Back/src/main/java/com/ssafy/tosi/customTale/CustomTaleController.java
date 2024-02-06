@@ -2,6 +2,8 @@ package com.ssafy.tosi.customTale;
 
 import com.ssafy.tosi.s3.S3Controller;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,16 +30,17 @@ public class CustomTaleController {
 
     @Operation(summary="커스텀 동화 상세조회")
     @GetMapping("/customtale/{customTaleId}")
-    public ResponseEntity<?> getCustomTale(@PathVariable Long customTaleId) {
+    public ResponseEntity<?> getCustomTale(@PathVariable Integer customTaleId) {
             Optional<CustomTale> customTale = customTaleService.getCustomTale(customTaleId);
             return ResponseEntity.ok(customTale);
     }
 
     @Operation(summary="내가 만든 동화 목록")
     @GetMapping("/customtale/user/{userId}")
-    public ResponseEntity<?> getCustomTalesByUserId(@PathVariable Long userId) {
-            List<CustomTale> customTales = customTaleService.getCustomTalesByUserId(userId);
-            return ResponseEntity.ok(customTales);
+    public ResponseEntity<?> getCustomTalesByUserId(HttpServletRequest request, HttpServletResponse response) {
+        Integer userId = (Integer) request.getAttribute("userId");
+        List<CustomTale> customTales = customTaleService.getCustomTalesByUserId(userId);
+        return ResponseEntity.ok(customTales);
     }
 
     @Operation(summary="공개중인 커스텀 동화 목록")
@@ -50,7 +53,9 @@ public class CustomTaleController {
 
     @Operation(summary="내가 만든 동화 저장")
     @PostMapping("/customtale")
-    public ResponseEntity<?> insertCustomTale(@RequestBody CustomTale customTale) {
+    public ResponseEntity<?> insertCustomTale(HttpServletRequest request, HttpServletResponse response, @RequestBody CustomTale customTale) {
+        Integer userId = (Integer) request.getAttribute("userId");
+        customTale.setUserId(userId);
         System.out.println(customTale.getThumbnail());
             customTale.setThumbnail("https://talebucket.s3.ap-northeast-2.amazonaws.com/"+s3Controller.uploadImageToS3(customTale.getThumbnail()));
         System.out.println(customTale.getThumbnail());
@@ -61,7 +66,7 @@ public class CustomTaleController {
 
     @Operation(summary="내가 만든 동화 공개여부 수정")
     @PutMapping("/customtale/{customTaleId}")
-    public ResponseEntity<?> updateCustomTale(@PathVariable Long customTaleId, @RequestParam boolean isPublic) {
+    public ResponseEntity<?> updateCustomTale(@PathVariable Integer customTaleId, @RequestParam boolean isPublic) {
             CustomTale updatedCustomTale = customTaleService.putCustomTale(customTaleId, isPublic);
             return ResponseEntity.ok(updatedCustomTale);
 
@@ -69,7 +74,7 @@ public class CustomTaleController {
 
     @Operation(summary="내가 만든 동화 삭제")
     @DeleteMapping("/customtale/{customTaleId}")
-    public ResponseEntity<?> deleteCustomTale(@PathVariable Long customTaleId) {
+    public ResponseEntity<?> deleteCustomTale(@PathVariable Integer customTaleId) {
         customTaleService.deleteCustomTale(customTaleId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

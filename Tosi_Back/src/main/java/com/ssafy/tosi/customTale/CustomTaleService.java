@@ -23,12 +23,12 @@ public class CustomTaleService {
 
 
     //customTaleId에 해당하는 CustomTale 엔터티 (커스텀 동화 상세조회)
-    public Optional<CustomTale> getCustomTale(Long customTaleId) {
+    public Optional<CustomTale> getCustomTale(Integer customTaleId) {
         return customTaleRepository.findById(customTaleId);
     }
 
     //userId에 해당하는 CustomTale 엔터티를 조회 (나의 책장 - 내가 만든 동화)
-    public List<CustomTale> getCustomTalesByUserId(Long userId) {
+    public List<CustomTale> getCustomTalesByUserId(Integer userId) {
         // Implement your custom query method in the repository if needed
         return customTaleRepository.findByUserId(userId);
     }
@@ -44,7 +44,7 @@ public class CustomTaleService {
     }
 
     //customTaleId에 해당하는 CustomTale 엔터티의 isPublic 값 변경 (나의 책장 - 내가 만든 동화)
-    public CustomTale putCustomTale(Long customTaleId, boolean isPublic) {
+    public CustomTale putCustomTale(Integer customTaleId, boolean isPublic) {
         Optional<CustomTale> optionalCustomTale = customTaleRepository.findById(customTaleId);
 
         if (optionalCustomTale.isPresent()) {
@@ -57,7 +57,7 @@ public class CustomTaleService {
     }
 
     //customTaleId에 해당하는 CustomTale 엔터티를 삭제
-    public boolean deleteCustomTale(Long customTaleId) {
+    public boolean deleteCustomTale(Integer customTaleId) {
         customTaleRepository.deleteById(customTaleId);
         return true;
     }
