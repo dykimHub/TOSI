@@ -11,10 +11,13 @@ import LoadingModal from "@/components/customTale/loadingModal.vue";
 import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
 import gptConversationView from "@/views/gptConversationView.vue";
 import TaleDetail from "@/components/taleDetail/TaleDetail.vue";
+import TalePlay from "@/components/taleDetail/TalePlay.vue";
+import TaleEnd from "@/components/taleDetail/TaleEnd.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegistView from "@/views/RegistView.vue";
 import UserInfoView from "@/views/UserInfoView.vue";
 import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,6 +35,18 @@ const router = createRouter({
           path: "/tales/:taleId",
           name: "taleDetail",
           component: TaleDetail,
+          props: true,
+        },
+        {
+          path: "/tales/play/:speaker",
+          name: "talePlay",
+          component: TalePlay,
+          props: true,
+        },
+        {
+          path: "/tales/end/:taleId",
+          name: "taleEnd",
+          component: TaleEnd,
           props: true,
         },
         {
@@ -60,7 +75,7 @@ const router = createRouter({
               name: "customTaleDetail",
               component: CustomTaleDetail,
             },
-            {
+           {
               path: "loading",
               name: "loading",
               component: LoadingModal,
@@ -69,13 +84,14 @@ const router = createRouter({
         },
         {
           path: "/tales/chat",
-          name: "gptConversation",
+          name: "gptConversationView",
           component: gptConversationView,
         },
         {
-          path: "/tales/chat/send",
+          path: "/tales/end/chat/:cname/:bname",
           name: "gptConversationSend",
           component: gptConversationSend,
+          props: true,
         },
         {
           path: "/login",
