@@ -1,30 +1,32 @@
 <template>
   <div v-if="taleDetailStore.pages">
-    <div class="book">
-      <div class="flip-book">
-        <div
-          class="flip"
-          v-for="(page, index) in pages"
-          :key="`page-${index}`"
-          :class="{ flipped: page.flipped }"
-          :style="{ zIndex: zIndexes[index] }"
-        >
-          <div class="back">
-            <img :src="page.left" alt="" />
-            <button @click="flipPage(index, false)" class="back-btn">Before</button>
-          </div>
-          <div class="front">
-            <h2 v-if="index + 1 < pages.length">
-              {{ pages[index + 1].right }}
-            </h2>
-            <h2 v-else>
-              {{ taleDetailStore.tale.title }}
-            </h2>
-            <div v-if="index === 1">
-              <button @click="goToEnd" class="next-btn">End</button>
+    <div class="play">
+      <div class="book">
+        <div class="flip-book">
+          <div
+            class="flip"
+            v-for="(page, index) in pages"
+            :key="`page-${index}`"
+            :class="{ flipped: page.flipped }"
+            :style="{ zIndex: zIndexes[index] }"
+          >
+            <div class="back">
+              <img :src="page.left" alt="" />
+              <button @click="flipPage(index, false)" class="back-btn">Before</button>
             </div>
-            <div v-else>
-              <button @click="flipPage(index, true)" class="next-btn">NEXT</button>
+            <div class="front">
+              <h2 v-if="index + 1 < pages.length">
+                {{ pages[index + 1].right }}
+              </h2>
+              <h2 v-else>
+                {{ taleDetailStore.tale.title }}
+              </h2>
+              <div v-if="index === 1">
+                <button @click="goToEnd" class="next-btn">End</button>
+              </div>
+              <div v-else>
+                <button @click="flipPage(index, true)" class="next-btn">NEXT</button>
+              </div>
             </div>
           </div>
         </div>
@@ -87,22 +89,28 @@ function flipPage(index, flip) {
 </script>
 
 <style scoped>
+.play {
+  width: 1200px;
+  height: 550px;
+  border: 5px solid #cee8e8;
+  margin: 20px 0px 20px 40px;
+  border-radius: 50px;
+}
 img {
   width: 400px;
-  height: 600px;
+  height: 400px;
+  margin-top: 50px;
 }
 .book {
+  margin: 20px 0px 20px 600px;
   display: flex;
 }
-#cover {
-  width: 400px;
-  height: 600px;
-}
 .flip-book {
-  width: 400px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   position: relative;
   perspective: 1500px;
+  border-radius: 100px;
 }
 .flip {
   width: 100%;
@@ -128,10 +136,12 @@ img {
   background-color: #fff;
   box-sizing: border-box;
   padding: 0 13px;
+  border-radius: 30px 20px 20px 30px;
 }
 .back {
-  background-color: #000;
+  background-color: white;
   transform: rotateY(180deg);
+  border-radius: 20px 30px 30px 20px;
 }
 .next-btn,
 .back-btn {
