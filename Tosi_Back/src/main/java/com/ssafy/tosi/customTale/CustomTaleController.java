@@ -1,12 +1,16 @@
 package com.ssafy.tosi.customTale;
 
 import com.ssafy.tosi.s3.S3Controller;
+import com.ssafy.tosi.taleDetail.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,5 +73,21 @@ public class CustomTaleController {
     public ResponseEntity<?> deleteCustomTale(@PathVariable Long customTaleId) {
         customTaleService.deleteCustomTale(customTaleId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/customtale/read")
+    public ResponseEntity<?> read(@RequestBody String string) {
+        try {
+            String splitted_contents = customTaleService.split_sentences(string); // 문장 분리
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_PLAIN);
+            headers.set(HttpHeaders.CONTENT_TYPE, "text/plain;charset=UTF-8"); // 인코딩 설정
+            return new ResponseEntity<String>(splitted_contents, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }

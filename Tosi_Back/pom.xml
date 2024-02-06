@@ -33,7 +33,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -133,7 +132,6 @@
 			<systemPath>${basedir}\src\lib\kiwi.jar</systemPath>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -166,5 +164,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
