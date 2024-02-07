@@ -28,7 +28,7 @@ const router = createRouter({
       path: "/",
       name: "NonMemberMainView",
       component: NonMemberMainView,
-      meta: { requiresGuest: true },      
+      meta: { requiresGuest: true },
     },
     {
       path: "/login",
@@ -59,7 +59,7 @@ const router = createRouter({
           name: "taleDetail",
           component: TaleDetail,
           props: true,
-          // meta: { requiresAuth: true },
+          meta: { requiresAuth: true },
         },
         {
           path: "/tales/play/:speaker",
@@ -160,7 +160,6 @@ const router = createRouter({
         },
       ],
     },
-
   ],
 });
 

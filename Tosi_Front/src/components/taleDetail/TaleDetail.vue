@@ -18,12 +18,9 @@
         </select>
 
         <select class="form-select" aria-label="Default select example" v-model="selectedName">
-          <option value="다윤">다윤</option>
-          <option value="지민">지민</option>
-          <option value="성주">성주</option>
-          <option value="우진">우진</option>
-          <option value="아진">아진</option>
-          <option value="소연">소연</option>
+          <option v-for="(child, index) in userStore.userInfo.childrenList" :key="index">
+            {{ child.childName }}
+          </option>
         </select>
       </div>
 
@@ -53,12 +50,23 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
+import { useUserStore } from "@/stores/userStore";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const props = defineProps({
+  taleId: String,
+});
 
 const taleDetailStore = useTaleDetailStore();
+taleDetailStore.taleId = props.taleId;
+taleDetailStore.getTaleDetail();
+
+const userStore = useUserStore();
+userStore.getUser();
+console.log(userStore.userInfo);
+
 const speaker = ref("vdain");
 const items = ref([
   { name: "다인", speaker: "vdain", emotion: 3, "emotion-strength": 1 },
@@ -68,13 +76,6 @@ const items = ref([
   { name: "대성", speaker: "vdaeseong", emotion: 3, "emotion-strength": 1 },
   { name: "원탁", speaker: "nwontak", emotion: 0, "emotion-strength": 0 },
 ]);
-
-const props = defineProps({
-  taleId: String,
-});
-
-taleDetailStore.taleId = props.taleId;
-taleDetailStore.getTaleDetail();
 
 const selectedCharacter = ref();
 const selectedName = ref();

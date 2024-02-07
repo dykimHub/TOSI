@@ -1,7 +1,13 @@
 <template>
   <div v-if="taleDetailStore.pages">
     <div class="play">
+      <div class="info">
+        <div class="title">{{ taleDetailStore.tale.title }}</div>
+        <!-- <img class="like" src="@/assets/like.png" /> -->
+        <img class="like" src="@/assets/unlike.png" />
+      </div>
       <div class="book">
+        <div class="cover"><img :src="taleDetailStore.tale.thumbnail" class="coverImg" /></div>
         <div class="flip-book">
           <div
             class="flip"
@@ -10,22 +16,29 @@
             :class="{ flipped: page.flipped }"
             :style="{ zIndex: zIndexes[index] }"
           >
-            <div class="back">
-              <img :src="page.left" alt="" />
-              <button @click="flipPage(index, false)" class="back-btn">Before</button>
+            <div class="back" v-if="index >= 1">
+              <div class="page-separator-left"></div>
+              <img :src="pages[index - 1].left" class="leftImg" />
+              <img src="@/assets/leftarrow.gif" class="left" />
+              <img
+                src="@/assets/leftarrowstatic.png"
+                class="leftstatic"
+                @click="flipPage(index, false)"
+              />
             </div>
-            <div class="front">
-              <h2 v-if="index + 1 < pages.length">
-                {{ pages[index + 1].right }}
-              </h2>
-              <h2 v-else>
-                {{ taleDetailStore.tale.title }}
-              </h2>
-              <div v-if="index === 1">
-                <button @click="goToEnd" class="next-btn">End</button>
+            <div class="front pre-wrap">
+              <div class="page-separator-right"></div>
+              {{ pages[index].right }}
+              <div v-if="index === 0">
+                <img src="@/assets/end.gif" class="end" @click="goToEnd" />
               </div>
               <div v-else>
-                <button @click="flipPage(index, true)" class="next-btn">NEXT</button>
+                <img src="@/assets/rightarrow.gif" class="right" />
+                <img
+                  src="@/assets/rightarrowstatic.png"
+                  class="rightstatic"
+                  @click="flipPage(index, true)"
+                />
               </div>
             </div>
           </div>
@@ -37,7 +50,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from "vue";
+import { ref, computed, reactive, onMounted } from "vue";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
 import { useRouter } from "vue-router";
 
@@ -90,20 +103,52 @@ function flipPage(index, flip) {
 
 <style scoped>
 .play {
-  width: 1200px;
-  height: 550px;
-  border: 5px solid #cee8e8;
-  margin: 20px 0px 20px 40px;
+  width: 1180px;
+  height: 800px;
+  border: 15px solid #cee8e8;
+  margin: 20px 0px 30px 40px;
   border-radius: 50px;
+  background-color: #f5f5f5;
 }
-img {
-  width: 400px;
-  height: 400px;
-  margin-top: 50px;
+.info {
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: inset 0 -20px 0 #ffd3d3;
+  font-size: 40px;
+  margin: 60px 0px 40px 70px;
+  line-height: 1;
+}
+
+.like {
+  width: 50px;
+  height: 50px;
+  margin: 50px 70px 0px 0px;
+}
+.cover {
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 500px;
+  height: 500px;
+  border-radius: 0px 40px 40px 0px;
+}
+.coverImg,
+.leftImg {
+  width: 450px;
+  height: 450px;
+  margin-top: 25px;
+  margin-left: 5px;
 }
 .book {
-  margin: 20px 0px 20px 600px;
+  margin: 0px 0px 0px 45px;
+  padding: 10px 10px 0px 25px;
   display: flex;
+  background-color: #21364d;
+  width: 1050px;
+  height: 520px;
 }
 .flip-book {
   width: 500px;
@@ -123,7 +168,41 @@ img {
   transition: 0.5s;
   color: #000;
 }
-.front,
+.front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 0 13px;
+  border-radius: 40px 0px 0px 40px;
+}
+.page-separator-right {
+  position: absolute;
+  top: 6.5%;
+  right: 100%;
+  width: 2px;
+  height: 88%;
+  /* background-color: #5d4037; */
+  background-color: #ede7e0;
+  transform: translateX(1px);
+  border-radius: 10px;
+}
+.page-separator-left {
+  position: absolute;
+  top: 6%;
+  left: 100%;
+  width: 2px;
+  height: 88%;
+  /* background-color: #5d4037; */
+  background-color: #ede7e0;
+  transform: translateX(-1px);
+  border-radius: 10px;
+}
+
 .back {
   position: absolute;
   width: 100%;
@@ -131,32 +210,42 @@ img {
   top: 0;
   left: 0;
   backface-visibility: hidden;
-}
-.front {
   background-color: #fff;
-  box-sizing: border-box;
-  padding: 0 13px;
-  border-radius: 30px 20px 20px 30px;
-}
-.back {
-  background-color: white;
   transform: rotateY(180deg);
-  border-radius: 20px 30px 30px 20px;
-}
-.next-btn,
-.back-btn {
-  position: absolute;
-  bottom: 13px;
-  right: 13px;
-  cursor: pointer;
-}
-.next-btn {
-  color: #000;
-}
-.back-btn {
-  color: #fff;
+  border-radius: 0px 40px 40px 0px;
 }
 .flip.flipped {
   transform: rotateY(-180deg);
+}
+.pre-wrap {
+  white-space: pre-wrap;
+}
+.left,
+.leftstatic,
+.right,
+.rightstatic {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background: white;
+  cursor: pointer;
+  bottom: 13px;
+  right: 13px;
+}
+.rightstatic:hover,
+.leftstatic:hover {
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  cursor: pointer;
+}
+.end {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background: white;
+  cursor: pointer;
+  bottom: 13px;
+  right: 13px;
 }
 </style>
