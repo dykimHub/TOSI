@@ -13,6 +13,7 @@ export const useCustomTaleStore = defineStore("customtale", () => {
       .then((response) => {
         console.log(response.data);
         customTalesList.value = response.data;
+        customTalesList.value.sort((a, b) => b.customTaleId - a.customTaleId);
       })
       .catch((error) => {
         console.error("Error fetching custom tales:", error);
@@ -34,6 +35,7 @@ export const useCustomTaleStore = defineStore("customtale", () => {
       customTale.value = response.data;
     });
   };
+
 
   const S3Store = useS3Store();
   //등록
@@ -104,7 +106,10 @@ const getCustomTaleText = async function (userInputMessage) {
 
   }
   
-
+  const resetCustomTale = function(){
+    customTaleImage.value = "";
+    customTaleText.value = "";
+  }
   return {
     customTalesList,
     getCustomTalesList,
@@ -117,5 +122,6 @@ const getCustomTaleText = async function (userInputMessage) {
     getCustomTaleText,
     customTaleImage,
     getCustomTaleImage,
+    resetCustomTale,
   };
 });
