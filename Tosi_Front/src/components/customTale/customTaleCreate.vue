@@ -92,7 +92,7 @@ import LoadingModal from "@/components/customTale/loadingModal.vue";
 const customTaleStore = useCustomTaleStore();
 
 const generateRandomImageUrl = () => {
-  const randomNumber = Math.floor(Math.random() * 9) + 1; // 1부터 9까지의 랜덤 숫자 생성
+  const randomNumber = Math.floor(Math.random() * 9) + 1;
   return `https://customtalebucket.s3.ap-northeast-2.amazonaws.com/customthum${randomNumber}.png`;
 };
 const randomImageUrl = ref(generateRandomImageUrl());
@@ -107,6 +107,14 @@ const generateCustomTale = async function () {
       alert("키워드를 모두 입력해주세요.");
       return;
     }
+
+    const forbiddenWords = ["바보", "멍청이", "병신"];
+
+    if (forbiddenWords.some((word) => prompt.value.includes(word))) {
+      alert("나쁜 말 안돼요.");
+      return;
+    }
+
     const imagePrompt =
       "3D animation illustrations for children's books with " +
       prompt.value[0] +

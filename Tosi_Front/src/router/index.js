@@ -25,10 +25,28 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: "/",
+      name: "NonMemberMainView",
+      component: NonMemberMainView,
+      meta: { requiresGuest: true },      
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: LoginView,
+      meta: { requiresGuest: true },
+    },
+    {
+      path: "/regist",
+      name: "regist",
+      component: RegistView,
+      meta: { requiresGuest: true },
+    },
+    {
       path: "/tosi",
       name: "tosi",
       component: HomeView,
-      // meta: { requiresAuth: true },
+      meta: { requiresAuth: true },
       children: [
         {
           path: "/tales",
@@ -107,18 +125,7 @@ const router = createRouter({
           meta: { requiresAuth: true },
           props: true,
         },
-        {
-          path: "/login",
-          name: "login",
-          component: LoginView,
-          meta: { requiresGuest: true },
-        },
-        {
-          path: "/regist",
-          name: "regist",
-          component: RegistView,
-          meta: { requiresGuest: true },
-        },
+
         {
           path: "/userInfo",
           name: "userInfo",
@@ -153,12 +160,7 @@ const router = createRouter({
         },
       ],
     },
-    {
-      path: "/",
-      name: "NonMemberMainView",
-      component: NonMemberMainView,
-      meta: { requiresGuest: true },
-    },
+
   ],
 });
 
