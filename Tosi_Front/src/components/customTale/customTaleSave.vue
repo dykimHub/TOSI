@@ -68,6 +68,10 @@ const customTale = ref({
 });
 
 const saveCustomTale =  async function () {
+  if(customTale.value.title == ""){
+    alert("제목을 입력해주세요.");
+    return;
+  }
   try{
   loading.value = true;
   await customTaleStore.insertCustomTale(customTale.value);

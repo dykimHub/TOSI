@@ -4,26 +4,25 @@
       <h1 class="form__title">마이페이지</h1>
 
       <div class="update-div">
-        <input type="email" class="update-input" placeholder=" " v-model="data.email" readonly>
+        <input type="email" class="update-input" placeholder="" v-model="userInfo.email" readonly>
         <label class="update-label">이메일</label>
       </div>
       <div class="update-div">
-        <input type="password" class="update-input" placeholder=" " v-model="data.password">
+        <input type="password" class="update-input" placeholder=" " v-model="userInfo.password">
         <label class="update-label">Password</label>
       </div>
       <div class="update-div">
-        <input type="text" class="update-input" placeholder=" " v-model="data.bookshelfName">
+        <input type="text" class="update-input" placeholder=" " v-model="userInfo.bookshelfName">
         <label class="update-label">나의 책장 이름</label>
       </div>
+
       <ul class="children-ul">
-        <li v-for="(child, index) in children" :key="child.id" class="children-li">
-          <div>{{ board.title }}</div>
-          <div class="children-childName">{{ children.childName }}</div>
-          <div class="children-gender">{{ children.gender }}</div>
-          <div class="children-isMyBaby">{{ children.isMyBaby }}</div>
-        </li>
-      </ul>
+  <li v-for="(child, index) in userInfo.childrenList" :key="child.index" class="children-li">
+    {{ child.childName }} - 성별: {{ child.gender }} - 내 아이 여부: {{ child.isMyBaby }}
+  </li>
+</ul>
       <div>
+
         <div class="regist-div">
           <div>
             <input type="text" class="regist-input" placeholder=" " v-model="child.childName">
@@ -56,50 +55,43 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "@/stores/userStore";
 
-
-const store = useUserStore()
-
-const userInfo = ref({});
-const child = ref({ childName: '', gender: '', isMyBaby: '' });
-const childrenList = ref([]);
+const store = useUserStore();
+const userInfo = ref({ email: store.userInfo.email, bookshelfName: store.userInfo.bookShelfName, childrenList: store.userInfo.childrenList });
+const child = ref({ childName: '', gender: 0, isMyBaby: false });
+const childrenList = ref(userInfo.value.childrenList);
+const isLoggedIn = ref('');
 
 onMounted(() => {
-  user= store.getUser();
-  data.email = user.email;
-  data.password = user.password;
-  data.bookShelfName = user.bookShelfName;
-  data.children = user.children;
+  isLoggedIn.value = localStorage.getItem('isLoggedIn');
+  console.log("Is Authenticated:", isLoggedIn.value);
+  store.getUser();
+  const user = store.userInfo;
+  userInfo.value.email = user.email;
+  userInfo.value.bookShelfName = user.bookShelfName;
+  userInfo.value.childrenList = user.childrenList;
 });
 
 const registerChild = function () {
   childrenList.value.push({ ...child.value });
   console.log(childrenList.value);
-}
+  child.value.childName = "";
+  }
 
-const data = ref({
-  email: userInfo.email,
-  password: userInfo.password,
-  bookShelfName: userInfo.bookShelfName,
-  children: userInfo.children
-})
-
-const update = function () {
-  console.log(data.value)
-  store.updateUser(data.value)
+  const update = function () {
+  store.updateUser(userInfo.value);
 }
 
 const deleteUserInfo = function () {
-  console.log(userInfo.email)
-  store.deleteUser(userInfo.email)
+  console.log(userInfo.value.email);
+  store.deleteUser(userInfo.value.email);
   userInfo.value = null;
   localStorage.removeItem("loginUser");
-  alert("회원탈퇴 완료. \n그동안 고마웠습니다.");
+  alert("회원탈퇴 완료.");
 }
+
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

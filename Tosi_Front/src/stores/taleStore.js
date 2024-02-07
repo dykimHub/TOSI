@@ -7,7 +7,7 @@ export const useTaleStore = defineStore('tale', () => {
   //동화 목록
   const taleList = ref([])
   const getTaleList = function () {
-    axios.get(`/tales`)
+    axios.get(`/tales`, { withCredentials: true })
       .then((response) => {
         console.log(response.data)
         taleList.value = response.data
@@ -21,7 +21,7 @@ export const useTaleStore = defineStore('tale', () => {
   const searchTaleByTitle = function (title) {
     axios.get(`/search`, {
       params: { title }
-    })
+    }, { withCredentials: true })
       .then((response) => {
         taleList.value = response.data
     }).catch((error) => {
