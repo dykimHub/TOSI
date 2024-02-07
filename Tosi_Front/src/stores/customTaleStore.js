@@ -23,8 +23,9 @@ export const useCustomTaleStore = defineStore("customtale", () => {
   //나의책장 - 커스텀동화
   const myCustomTalesList = ref([]);
   const getMyCustomTalesList = function () {
-    axios.get(`/customtale/user`).then((response) => {
+    axios.get(`/customtale/user`, { withCredentials: true }).then((response) => {
       myCustomTalesList.value = response.data;
+      console.log(myCustomTalesList.value);
     });
   };
 

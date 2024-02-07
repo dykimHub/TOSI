@@ -70,8 +70,8 @@ export const useUserStore = defineStore('user', () => {
   };
 
   //이메일 중복 확인
-  const getUserSearch = function (email) {
-    axios({
+  const getUserSearch = async function (email) {
+    await axios({
       method: "GET",
       url: `${User_API}/email-check`,
       params: {
@@ -90,10 +90,8 @@ const postLogin = function(userInfo) {
       localStorage.setItem('isLoggedIn', 'true');
       if (localStorage.getItem('isLoggedIn') != false) {
         console.log("토큰" + localStorage.getItem('isLoggedIn'));
-        router.push({ name: "HomeView" });
+        window.location.href = `http://localhost:5173/tosi`
       }
-
-      router.push({ name: "HomeView" });
     })
     .catch(() => {
       // 로그인 실패 처리
@@ -106,7 +104,7 @@ const postLogin = function(userInfo) {
     localStorage.removeItem('isLoggedIn');
     console.log(localStorage.getItem('isLoggedIn'));
     alert("로그아웃 했습니다.");
-    router.push({ name: "NonMemberMainView" });
+    window.location.href = `http://localhost:5173/`
   };
 
   //비밀번호 확인
