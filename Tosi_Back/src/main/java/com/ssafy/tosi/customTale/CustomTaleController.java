@@ -35,10 +35,14 @@ public class CustomTaleController {
     }
 
     @Operation(summary="내가 만든 동화 목록")
-    @GetMapping("/customtale/user/{userId}")
+    @GetMapping("/customtale/user")
     public ResponseEntity<?> getCustomTalesByUserId(HttpServletRequest request, HttpServletResponse response) {
         Integer userId = (Integer) request.getAttribute("userId");
         List<CustomTale> customTales = customTaleService.getCustomTalesByUserId(userId);
+        System.out.println("내가 만든 동화 목록:");
+        for (CustomTale tale : customTales) {
+            System.out.println(tale.toString());
+        }
         return ResponseEntity.ok(customTales);
     }
 
