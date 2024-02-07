@@ -13,11 +13,13 @@
                 <img class="icon" @click="toggleIcon('Mine')" :class="{ 'active': activeIcon === 'Mine' }" src="@/assets/favorite.png" />
                 <p>토씨의 특별한 기능에 대해서 알아보려면 누르세요</p>
             </div>
+            <TheFooter/>
         </div>
     </div>
 </template>
 
 <script setup>
+import TheFooter from '@/components/common/TheFooter.vue';
 import {ref} from 'vue';
 
 const isPlaying = ref(false);

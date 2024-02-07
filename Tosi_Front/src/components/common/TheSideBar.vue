@@ -18,9 +18,9 @@ div {
 }
 
 li {
-  display: inline-block;
-  margin: 10px;
-  list-style-type: none;
+    display: inline-block;
+    margin: 10px;
+    list-style-type: none;
 }
 a {
   text-decoration: none;

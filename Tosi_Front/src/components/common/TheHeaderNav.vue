@@ -10,7 +10,7 @@
             <div>
                 <RouterLink to="/tosi">홈</RouterLink>
                 <br>
-                <a href="#" class="my-link" v-if="isLoggedIn" @click="logout">로그아웃&nbsp;&nbsp;</a>
+                <a v-if="isLoggedIn" @click="logout">로그아웃&nbsp;&nbsp;</a>
             </div>
             <div>검색</div>
         </div>
