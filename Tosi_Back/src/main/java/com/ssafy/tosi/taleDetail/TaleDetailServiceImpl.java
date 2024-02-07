@@ -133,6 +133,7 @@ public class TaleDetailServiceImpl implements TaleDetailService {
                         .left(taleDto.getImages()[i])
                         .rightNo(p + 1)
                         .right(sentences[j] + "\n" + sentences[j + 1])
+                        .flipped(false)
                         .build();
 
                 pages.add(page);
@@ -146,6 +147,7 @@ public class TaleDetailServiceImpl implements TaleDetailService {
                         .left(taleDto.getImages()[i])
                         .rightNo(p + 1)
                         .right(sentences[sentences.length - 1])
+                        .flipped(false)
                         .build();
 
                 pages.add(page);

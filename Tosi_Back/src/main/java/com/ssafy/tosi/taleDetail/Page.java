@@ -10,5 +10,6 @@ public class Page {
     private String left;
     private int rightNo;
     private String right;
+    private boolean flipped;
 
 }
