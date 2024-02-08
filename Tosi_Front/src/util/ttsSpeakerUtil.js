@@ -1,6 +1,6 @@
 // ttsUtil.js
 // 응답을 바로재생하지 않고 반환
-export const generateTTS = async (inputText, speaker, emotion, emotionStrength, responseOutput) => {
+export const generateTTS = async (inputText, speaker, emotion, emotionStrength) => {
     if (!inputText) {
         alert("Please enter some text");
         return;

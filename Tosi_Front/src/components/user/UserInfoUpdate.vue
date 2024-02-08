@@ -1,57 +1,58 @@
 <template>
-  <div class="update-form">
-    <form action="" class="form" @submit.prevent="onsubmit">
-      <h1 class="form__title">마이페이지</h1>
+    <div class="update-form">
+        <form action="" class="form" @submit.prevent="onsubmit">
+            <h1 class="form__title">마이페이지</h1>
 
-      <div class="update-div">
-        <input type="email" class="update-input" placeholder="" v-model="userInfo.email" readonly>
-        <label class="update-label">이메일</label>
-      </div>
-      <div class="update-div">
-        <input type="password" class="update-input" placeholder=" " v-model="userInfo.password">
-        <label class="update-label">Password</label>
-      </div>
-      <div class="update-div">
-        <input type="text" class="update-input" placeholder=" " v-model="userInfo.bookshelfName">
-        <label class="update-label">나의 책장 이름</label>
-      </div>
+            <div class="update-div">
+                <input type="email" class="update-input" placeholder="" v-model="userInfo.email" readonly />
+                <label class="update-label">이메일</label>
+            </div>
+            <div class="update-div">
+                <input type="password" class="update-input" placeholder=" " v-model="userInfo.password" />
+                <label class="update-label">Password</label>
+            </div>
+            <div class="update-div">
+                <input type="text" class="update-input" placeholder=" " v-model="userInfo.bookshelfName" />
+                <label class="update-label">나의 책장 이름</label>
+            </div>
 
-      <ul class="children-ul">
-  <li v-for="(child, index) in userInfo.childrenList" :key="child.index" class="children-li">
-    {{ child.childName }} - 성별: {{ child.gender }} - 내 아이 여부: {{ child.isMyBaby }}
-  </li>
-</ul>
-      <div>
-
-        <div class="regist-div">
-          <div>
-            <input type="text" class="regist-input" placeholder=" " v-model="child.childName">
-            <label class="regist-label">아이 이름</label>
-          </div>
-          <div>
-            <input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="0"> 여자
-            <input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="1"> 남자
-            <label class="regist-label">아이 성별</label>
-          </div>
-          <div>
-            <input type="checkbox" class="regist-input" placeholder=" " v-model="child.isMyBaby">
-            <label class="regist-label">내 아이 여부</label>
-          </div>
-          <button @click="registerChild">등록</button>
-        </div>
-        <div>
-          <h2>등록된 아이 목록</h2>
-          <ul>
-            <li v-for="(child, index) in childrenList" :key="index">
-              {{ child.childName }} - 성별: {{ child.gender }} - 내 아이 여부: {{ child.isMyBaby }}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <button @click="deleteUserInfo">회원탈퇴</button>
-      <input type="submit" class="update-button" value="update" @click="update">
-    </form>
-  </div>
+            <ul class="children-ul">
+                <li v-for="(child, index) in userInfo.childrenList" :key="child.index" class="children-li">
+                    {{ child.childName }} - 성별: {{ child.gender }} - 내 아이 여부: {{ child.isMyBaby }}
+                </li>
+            </ul>
+            <div>
+                <div class="regist-div">
+                    <div>
+                        <input type="text" class="regist-input" placeholder=" " v-model="child.childName" />
+                        <label class="regist-label">아이 이름</label>
+                    </div>
+                    <div>
+                        <input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="0" />
+                        여자
+                        <input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="1" />
+                        남자
+                        <label class="regist-label">아이 성별</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="regist-input" placeholder=" " v-model="child.isMyBaby" />
+                        <label class="regist-label">내 아이 여부</label>
+                    </div>
+                    <button @click="registerChild">등록</button>
+                </div>
+                <div>
+                    <h2>등록된 아이 목록</h2>
+                    <ul>
+                        <li v-for="(child, index) in childrenList" :key="index">
+                            {{ child.childName }} - 성별: {{ child.gender }} - 내 아이 여부: {{ child.isMyBaby }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button @click="deleteUserInfo">회원탈퇴</button>
+            <input type="submit" class="update-button" value="update" @click="update" />
+        </form>
+    </div>
 </template>
 
 <script setup>
@@ -59,39 +60,42 @@ import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "@/stores/userStore";
 
 const store = useUserStore();
-const userInfo = ref({ email: store.userInfo.email, bookshelfName: store.userInfo.bookShelfName, childrenList: store.userInfo.childrenList });
-const child = ref({ childName: '', gender: 0, isMyBaby: false });
+const userInfo = ref({
+    email: store.userInfo.email,
+    bookshelfName: store.userInfo.bookShelfName,
+    childrenList: store.userInfo.childrenList,
+});
+const child = ref({ childName: "", gender: 0, isMyBaby: false });
 const childrenList = ref(userInfo.value.childrenList);
-const isLoggedIn = ref('');
+const isLoggedIn = ref("");
 
 onMounted(() => {
-  isLoggedIn.value = localStorage.getItem('isLoggedIn');
-  console.log("Is Authenticated:", isLoggedIn.value);
-  store.getUser();
-  const user = store.userInfo;
-  userInfo.value.email = user.email;
-  userInfo.value.bookShelfName = user.bookShelfName;
-  userInfo.value.childrenList = user.childrenList;
+    isLoggedIn.value = localStorage.getItem("isLoggedIn");
+    console.log("Is Authenticated:", isLoggedIn.value);
+    store.getUser();
+    const user = store.userInfo;
+    userInfo.value.email = user.email;
+    userInfo.value.bookShelfName = user.bookShelfName;
+    userInfo.value.childrenList = user.childrenList;
 });
 
 const registerChild = function () {
-  childrenList.value.push({ ...child.value });
-  console.log(childrenList.value);
-  child.value.childName = "";
-  }
+    childrenList.value.push({ ...child.value });
+    console.log(childrenList.value);
+    child.value.childName = "";
+};
 
-  const update = function () {
-  store.updateUser(userInfo.value);
-}
+const update = function () {
+    store.updateUser(userInfo.value);
+};
 
 const deleteUserInfo = function () {
-  console.log(userInfo.value.email);
-  store.deleteUser(userInfo.value.email);
-  userInfo.value = null;
-  localStorage.removeItem("loginUser");
-  alert("회원탈퇴 완료.");
-}
-
+    console.log(userInfo.value.email);
+    store.deleteUser(userInfo.value.email);
+    userInfo.value = null;
+    localStorage.removeItem("loginUser");
+    alert("회원탈퇴 완료.");
+};
 </script>
 
 <style scoped></style>
