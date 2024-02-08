@@ -3,7 +3,6 @@
     <form action="" class="form" @submit.prevent="onsubmit">
       <div>
       <h1 class="form__title">마이페이지</h1>
-
       <div class="update-div">
         <input type="email" class="update-input" placeholder="" v-model="userInfo.email" readonly>
         <label class="update-label">이메일</label>
@@ -21,7 +20,6 @@
           v-model="userInfo.bookshelfName">
         <label class="update-label">나의 책장 이름</label>
       </div>
-
       <div class="regist-div">
           <div>
             <input type="text" class="regist-input" placeholder=" " v-model="child.childName">
@@ -55,20 +53,16 @@
             {{ child.childName }} - 성별: {{ child.gender }} - 내 아이 여부: {{ child.myBaby }}
           </li>
         </ul> -->
-
       </div>
       <button @click="deleteUserInfo">회원탈퇴</button>
       <input type="submit" class="update-button" value="update" @click="update">
     </form>
-
   </div>
 </template>
-
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "@/stores/userStore";
 import ChildItem from "@/components/user/ChildItem.vue";
-
 const store = useUserStore();
 const userInfo = ref({ email: '', bookshelfName: '', childrenList: [] });
 const child = ref({ childName: '', gender: 0, myBaby: false });
@@ -77,7 +71,6 @@ const email = ref("");
 const password = ref("");
 const passwordCheck = ref("");
 const bookshelfName = ref("");
-
 onMounted(() => {
   store.getUser();
   const user = store.userInfo;
@@ -86,13 +79,11 @@ onMounted(() => {
   // userInfo.value.bookshelfName = user.bookshelfName;
   // userInfo.value.childrenList = user.childrenList;
 });
-
 const registerChild = function () {
   userInfo.value.childrenList.push({ ...child.value });
   console.log(userInfo.value.childrenList);
   child.value.childName = "";
 }
-
 const update = function () {
   if (password.value && passwordCheck.value && password.value !== passwordCheck.value) {
     alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
@@ -100,7 +91,6 @@ const update = function () {
   }
   store.updateUser(userInfo.value);
 }
-
 const deleteUserInfo = function () {
   console.log(userInfo.value.email);
   store.deleteUser(userInfo.value.email);
@@ -109,12 +99,8 @@ const deleteUserInfo = function () {
   console.log("isLoggedIn:" + localStorage.getItem('isLoggedIn'));
   alert("회원탈퇴 완료.");
 }
-
 const deleteChild = function(index) {
   userInfo.value.childrenList.splice(index, 1);
 };
-
->>>>>>> frontend/feature/newuser
 </script>
-
 <style scoped></style>
