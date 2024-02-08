@@ -8,7 +8,7 @@
   <script setup>
   import { ref } from "vue";
   
-//   const isLoading = ref(true);
+  // const isLoading = ref(false);
 const props = defineProps(['isLoading']);
   </script>
   
@@ -18,8 +18,8 @@ const props = defineProps(['isLoading']);
     top: 50%; /* 화면 세로 중앙에 위치 */
     left: 55%; /* 화면 가로 중앙에 위치 */
   transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     background: transparent;
     display: flex;
     justify-content: center;

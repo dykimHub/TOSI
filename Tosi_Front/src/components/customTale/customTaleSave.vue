@@ -58,7 +58,6 @@ const customTale = ref({
   userId: "1",
   title: "",
   content: customTaleStore.customTaleText.gptMessage,
-  // content: "한적한 시골 마을에 성주라는 아이가 살고 있었어.",
   public: true,
   thumbnail: customTaleStore.customTaleImage,
   // thumbnail:
