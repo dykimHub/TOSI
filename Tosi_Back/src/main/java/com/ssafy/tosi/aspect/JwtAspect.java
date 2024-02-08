@@ -16,8 +16,12 @@ public class JwtAspect {
 
     private final JwtUtil jwtUtil;
     private final CookieUtil cookieUtil;
-    @Before("execution(* com.ssafy.tosi.*..*Controller.*(..)) && !execution(* com.ssafy.tosi.user.UserController.postUser(..)) && !execution(* com.ssafy.tosi.user.UserController.postLogin(..)) && !execution(* com.ssafy.tosi.user.UserController.getLogout(..)) && !execution(* com.ssafy.tosi.user.UserController.getEmailCheck(..)) && !execution(* com.ssafy.tosi.jwt.TokenController.postNewAccessToken(..)) && args(request, response, ..)")
-    public void beforeControllerMethod(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Before("execution(* com.ssafy.tosi.*..*Controller.*(..)) && !execution(* com.ssafy.tosi.user.UserController.postUser(..)) " +
+            "&& !execution(* com.ssafy.tosi.user.UserController.post*Login(..)) " +
+            "&& !execution(* com.ssafy.tosi.user.UserController.get*Logout(..)) " +
+            "&& !execution(* com.ssafy.tosi.user.UserController.getEmailCheck(..)) " +
+            "&& !execution(* com.ssafy.tosi.jwt.TokenController.postNewAccessToken(..)) && args(request, ..)")
+    public void beforeControllerMethod(HttpServletRequest request) throws Exception {
 
     String accessToken = cookieUtil.getTokenFromCookie(request, "access-token");
 
