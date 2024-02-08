@@ -6,9 +6,9 @@
                 <TheSideBar />
             </div>
             <div class="content">
-                <RouterView/>
+                <RouterView />
             </div>
-        </div >
+        </div>
         <article v-if="isMain">
             <div class="slotMachine">슬롯머신</div>
             <div class="toMenus">
@@ -29,11 +29,12 @@
             <div class="top3">
                 <ul v-for="tale in Talestore.taleList.slice(0, 3)" :key="tale.taleId">
                     <div class="oneTale">
-                        <RouterLink :to="`/tales/${tale.taleId}`"><img class="thumbnail" :src="tale.thumbnail" />
+                        <RouterLink :to="`/tales/${tale.taleId}`"
+                            ><img class="thumbnail" :src="tale.thumbnail" />
                         </RouterLink>
-                        <br>
+                        <br />
                         <RouterLink :to="`/tales/${tale.taleId}`">{{ tale.title }}</RouterLink>
-                        <br>
+                        <br />
                     </div>
                 </ul>
             </div>
@@ -43,24 +44,24 @@
 </template>
 <script setup>
 import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
-import TheFooter from '@/components/common/TheFooter.vue';
+import TheFooter from "@/components/common/TheFooter.vue";
 import TheSideBar from "@/components/common/TheSideBar.vue";
 
-import { useTaleStore } from '@/stores/taleStore';
-import { onMounted, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useTaleStore } from "@/stores/taleStore";
+import { onMounted, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 const Talestore = useTaleStore();
 const router = useRouter();
 
 const isMain = ref(false);
 
 //TODO 필요없는 코드 삭제
-const sortOption = ref('likeCnt');
+const sortOption = ref("likeCnt");
 const sortedTaleList = ref([]);
 
 const sortTaleList = () => {
     switch (sortOption.value) {
-        case 'likeCnt':
+        case "likeCnt":
             sortedTaleList.value = Talestore.taleList.sort((a, b) => b.likeCnt - a.likeCnt);
             break;
     }
@@ -73,11 +74,10 @@ onMounted(() => {
 });
 
 watch(router.currentRoute, (to) => {
-    isMain.value = to.path === '/tosi';
+    isMain.value = to.path === "/tosi";
     console.log(router.currentRoute);
     console.log(isMain.value);
 });
-
 </script>
 
 <style scoped>

@@ -30,8 +30,8 @@
         </div>
 
         <h1>목소리 선택</h1>
-        <div>
-            <div v-for="item in items" :key="item.speaker">
+        <div class="align-items-center">
+            <div v-for="item in items" :key="item.speaker" class="form-wrapper align-items-center">
                 <label
                     ><input type="radio" :value="item.speaker" v-model="speaker" :name="item.name" />
                     {{ item.name }}
@@ -177,5 +177,16 @@ button {
 .selected {
     height: 300px;
     background-color: #c4ecb0;
+}
+
+.align-items-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.form-wrapper {
+    width: 100%;
+    max-width: 28rem;
 }
 </style>
