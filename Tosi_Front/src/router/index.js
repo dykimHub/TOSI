@@ -22,8 +22,37 @@ import favoriteTaleList from "@/components/bookshelf/favoriteTaleList.vue";
 import favoriteCustomList from "@/components/bookshelf/favoriteCustomList.vue";
 
 const router = createRouter({
+<<<<<<< HEAD
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+=======
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: "/",
+      name: "NonMemberMainView",
+      component: NonMemberMainView,
+      meta: { requiresGuest: true },
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: LoginView,
+      meta: { requiresGuest: true },
+    },
+    {
+      path: "/regist",
+      name: "regist",
+      component: RegistView,
+      meta: { requiresGuest: true },
+    },
+    {
+      path: "/tosi",
+      name: "tosi",
+      component: HomeView,
+      meta: { requiresAuth: true },
+      children: [
+>>>>>>> frontend/feature/taledetail2
         {
             path: "/",
             name: "NonMemberMainView",
@@ -31,10 +60,18 @@ const router = createRouter({
             meta: { requiresGuest: true },
         },
         {
+<<<<<<< HEAD
             path: "/login",
             name: "login",
             component: LoginView,
             meta: { requiresGuest: true },
+=======
+          path: "/tales/:taleId",
+          name: "taleDetail",
+          component: TaleDetail,
+          props: true,
+          meta: { requiresAuth: true },
+>>>>>>> frontend/feature/taledetail2
         },
         {
             path: "/regist",
@@ -151,6 +188,7 @@ const router = createRouter({
                             props: true,
                         },
 
+<<<<<<< HEAD
                         {
                             path: "/userInfo",
                             name: "userInfo",
@@ -273,6 +311,43 @@ const router = createRouter({
             ],
         },
     ],
+=======
+        {
+          path: "/userInfo",
+          name: "userInfo",
+          component: UserInfoView,
+          meta: { requiresAuth: true },
+        },
+        {
+          path: "/userInfo/update",
+          name: "userInfoUpdate",
+          component: UserInfoUpdate,
+          meta: { requiresAuth: true },
+        },
+        {
+          path: "/bookshelf",
+          name: "bookshelf",
+          component: BookshelfView,
+          meta: { requiresAuth: true },
+          children: [
+            {
+              path: "",
+              name: "favoriteTaleList",
+              component: favoriteTaleList,
+              meta: { requiresAuth: true },
+            },
+            {
+              path: "custom",
+              name: "favoriteCustomList",
+              component: favoriteCustomList,
+              meta: { requiresAuth: true },
+            },
+          ],
+        },
+      ],
+    },
+  ],
+>>>>>>> frontend/feature/taledetail2
 });
 
 router.beforeEach((to, from, next) => {
