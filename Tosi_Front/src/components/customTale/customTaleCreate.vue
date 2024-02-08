@@ -1,6 +1,8 @@
 <template>
   <div id="app" class="talelistContainer">
-    <h1 class="topOfTaleList">나만의 동화 만들기</h1>
+    <div class="topOfTaleList">
+      <h2>나만의 동화 만들기</h2>
+    </div>
 
     <loading-modal :is-loading="loading"></loading-modal>
 
@@ -43,8 +45,8 @@
             </div>
           </div>
 
-          <div class="mb-3">
-            <button @click="generateCustomTale">동화 생성</button>
+          <div >
+            <button class="button" @click="generateCustomTale">동화 생성</button>
           </div>
         </div>
 
@@ -62,10 +64,8 @@
                 {{ item.name }}</label
               >
             </div>
-            <div>선택한 목소리 : {{ speaker }}</div>
-          </div>
-          <div class="btn">
-            <router-link to="/customtale/save"> 재생 </router-link>
+            </div>
+          <div class="button" @click="readBook">재생
           </div>
         </div>
       </div>
@@ -89,6 +89,9 @@
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, ref } from "vue";
 import LoadingModal from "@/components/customTale/loadingModal.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const customTaleStore = useCustomTaleStore();
 
 const generateRandomImageUrl = () => {
@@ -132,9 +135,10 @@ const generateCustomTale = async function () {
       prompt.value[1] +
       "을 배경, " +
       prompt.value[2] +
-      "를 이용해 500자 내외의 환상적인 동화를 만들어줘. 줄바꿈은 하지말아줘. 성별언급은 하지말아줘. 자연스럽고 매끄러운 문맥.";
+      "를 이용해 500자 내외의 환상적인 동화를 만들어줘. 줄바꿈은 하지 말아줘. 성별언급은 하지말아줘. 자연스럽고 매끄러운 문맥.보내기전에 줄바꿈 모두 없애줘. 보내기전에 문맥이 자연스러운지 확인해줘.";
 
     await customTaleStore.getCustomTaleText(gptPrompt);
+    // customTaleStore.getCustomTaleText(gptPrompt);
   } catch (error) {
     console.error("커스텀 동화 생성 오류:", error);
   } finally {
@@ -152,9 +156,28 @@ const items = ref([
   { name: "원탁", speaker: "nwontak", emotion: 0, "emotion-strength": 0 },
 ]);
 
+const readBook = async () => {
+  try {
+    await customTaleStore.readCustomTale(customTaleStore.customTaleText.gptMessage)
+    // console.log(customTaleStore.pages);
+    navigateToTalePlay();
+  } catch (error) {
+    console.error("Error fetching:", error);
+  }
+};
+
+const navigateToTalePlay = () => {
+  const selectedSpeaker = items.value.find((item) => item.speaker === speaker.value);
+  router.push({
+    name: "customTaleCreatePlay",
+    params: { speaker: selectedSpeaker.speaker },
+  });
+};
+
 onMounted(() => {
-  console.log("Image URL:", customTaleStore.customTaleImage);
-  console.log("tale", customTaleStore.customTaleText.gptMessage);
+  // console.log("Image URL:", customTaleStore.customTaleImage);
+  // console.log("tale", customTaleStore.customTaleText.gptMessage);
+  customTaleStore.resetCustomTale();
 });
 </script>
 
@@ -172,11 +195,12 @@ onMounted(() => {
   background-color: white;
   border-radius: 20px;
   margin: 35px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  /* padding-top: 40px;
+  padding-bottom: 40px; */
   opacity: 0.95;
   margin: auto;
   width: 90%;
+  padding: 40px 60px;
 }
 
 .topOfTaleList {
@@ -197,7 +221,7 @@ onMounted(() => {
 }
 
 .book-column {
-  width: 45%;
+  width: 50%;
   overflow: hidden;
 }
 
@@ -231,5 +255,26 @@ onMounted(() => {
   background: white;
   padding: 20px;
   border-radius: 8px;
+}
+
+
+.button {
+  margin-top: 20px;
+  width: 130px;
+  height: 40px;
+  /* padding: 10px 25px; */
+  border: 2px solid #d0d0d0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: 3px 3px 5px 0px #0002;
+}
+.button:hover {
+   box-shadow:
+   7px 7px 5px 0px #0002,
+   4px 4px 5px 0px #0001;
 }
 </style>

@@ -3,8 +3,8 @@
     <div>
         <div>
             <div class="sign">
-                <RouterLink to="/regist">회원가입</RouterLink>
-                <RouterLink to="/login">로그인</RouterLink>
+                <button @click="openRegistForm">회원가입</button>
+                <button @click="openLoginForm">로그인</button>
             </div>
             <div class="toMenus">                   
                 <img class="icon" @click="toggleIcon('Play')" :class="{ 'active': activeIcon === 'Play' }" src="@/assets/talelist.png" />
@@ -13,12 +13,47 @@
                 <img class="icon" @click="toggleIcon('Mine')" :class="{ 'active': activeIcon === 'Mine' }" src="@/assets/favorite.png" />
                 <p>토씨의 특별한 기능에 대해서 알아보려면 누르세요</p>
             </div>
+            <TheFooter/>
         </div>
+            <div v-if="showRegistForm === true" >
+                <button @click="closeRegistForm">닫기</button>
+                <RegistForm @closeRegistForm="closeRegistForm"/>
+            </div>
+            <div v-if="showLoginForm === true" >
+                <button @click="closeLoginForm">닫기</button>
+                <LoginForm @closeLoginForm="closeLoginForm"/>
+            </div>
+            
     </div>
 </template>
 
 <script setup>
+import TheFooter from '@/components/common/TheFooter.vue';
 import {ref} from 'vue';
+import RegistForm from "@/components/user/RegistForm.vue";
+import LoginForm from "@/components/user/LoginForm.vue";
+
+
+const showRegistForm = ref(false);
+
+const openRegistForm = () => {
+  showRegistForm.value = true;
+};
+
+const closeRegistForm = () => {
+  showRegistForm.value = false;
+};
+
+
+const showLoginForm = ref(false);
+
+const openLoginForm = () => {
+  showLoginForm.value = true;
+};
+
+const closeLoginForm = () => {
+  showLoginForm.value = false;
+};
 
 const isPlaying = ref(false);
 const activeIcon = ref('');

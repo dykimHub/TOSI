@@ -7,20 +7,20 @@ import CustomTaleCreate from "@/components/customTale/customTaleCreate.vue";
 import CustomTaleList from "@/components/customTale/customTaleList.vue";
 import CustomTaleDetail from "@/components/customTale/customTaleDetail.vue";
 import CustomTaleSave from "@/components/customTale/customTaleSave.vue";
+import CustomTalePlay from "@/components/customTale/customTalePlay.vue";
+import CustomTaleCreatePlay from "@/components/customTale/customTaleCreatePlay.vue";
+import CustomTaleEnd from "@/components/customTale/customTaleEnd.vue";
 import LoadingModal from "@/components/customTale/loadingModal.vue";
 import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
 import gptConversationView from "@/views/gptConversationView.vue";
 import TaleDetail from "@/components/taleDetail/TaleDetail.vue";
 import TalePlay from "@/components/taleDetail/TalePlay.vue";
 import TaleEnd from "@/components/taleDetail/TaleEnd.vue";
-import LoginView from "@/views/LoginView.vue";
-import RegistView from "@/views/RegistView.vue";
 import UserInfoView from "@/views/UserInfoView.vue";
 import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 import BookshelfView from "@/views/BookshelfView.vue";
 import favoriteTaleList from "@/components/bookshelf/favoriteTaleList.vue";
 import favoriteCustomList from "@/components/bookshelf/favoriteCustomList.vue";
-
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -28,18 +28,6 @@ const router = createRouter({
             path: "/",
             name: "NonMemberMainView",
             component: NonMemberMainView,
-            meta: { requiresGuest: true },
-        },
-        {
-            path: "/login",
-            name: "login",
-            component: LoginView,
-            meta: { requiresGuest: true },
-        },
-        {
-            path: "/regist",
-            name: "regist",
-            component: RegistView,
             meta: { requiresGuest: true },
         },
         {
@@ -59,7 +47,7 @@ const router = createRouter({
                     name: "taleDetail",
                     component: TaleDetail,
                     props: true,
-                    meta: { requiresAuth: true },
+                    // meta: { requiresAuth: true },
                 },
                 {
                     path: "/tales/play/:speaker",
@@ -105,6 +93,27 @@ const router = createRouter({
                             meta: { requiresAuth: true },
                         },
                         {
+                            path: "play/:speaker",
+                            name: "customTalePlay",
+                            component: CustomTalePlay,
+                            meta: { requiresAuth: true },
+                            props: true,
+                        },
+                        {
+                            path: "createplay/:speaker",
+                            name: "customTaleCreatePlay",
+                            component: CustomTaleCreatePlay,
+                            meta: { requiresAuth: true },
+                            props: true,
+                        },
+                        {
+                            path: "end",
+                            name: "customTaleEnd",
+                            component: CustomTaleEnd,
+                            meta: { requiresAuth: true },
+                            props: true,
+                        },
+                        {
                             path: "loading",
                             name: "loading",
                             component: LoadingModal,
@@ -125,7 +134,6 @@ const router = createRouter({
                     meta: { requiresAuth: true },
                     props: true,
                 },
-
                 {
                     path: "/userInfo",
                     name: "userInfo",
@@ -162,13 +170,11 @@ const router = createRouter({
         },
     ],
 });
-
 router.beforeEach((to, from, next) => {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-
     if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
-        alert("로그인 페이지로 이동합니다.");
-        next("/login");
+        alert("메인 페이지로 이동합니다.");
+        next("/");
     } else if (to.matched.some((record) => record.meta.requiresGuest) && isLoggedIn) {
         alert("이미 로그인 되어있습니다.");
         next("/tosi");
@@ -176,5 +182,4 @@ router.beforeEach((to, from, next) => {
         next();
     }
 });
-
 export default router;

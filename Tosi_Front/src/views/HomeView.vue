@@ -1,14 +1,6 @@
 <template>
     <TheHeaderNav />
     <div class="mainContainer">
-        <div v-if="!isMain">
-            <div class="sideBar">
-                <TheSideBar />
-            </div>
-            <div class="content">
-                <RouterView />
-            </div>
-        </div>
         <article v-if="isMain">
             <div class="slotMachine">슬롯머신</div>
             <div class="toMenus">
@@ -39,6 +31,14 @@
                 </ul>
             </div>
         </article>
+        <div v-else>
+            <div class="sideBar">
+                <TheSideBar />
+            </div>
+            <div class="content">
+                <RouterView />
+            </div>
+        </div>
         <TheFooter />
     </div>
 </template>
@@ -53,7 +53,7 @@ import { useRouter } from "vue-router";
 const Talestore = useTaleStore();
 const router = useRouter();
 
-const isMain = ref(false);
+const isMain = ref(true);
 
 //TODO 필요없는 코드 삭제
 const sortOption = ref("likeCnt");
@@ -67,16 +67,14 @@ const sortTaleList = () => {
     }
 };
 
-onMounted(() => {
+onMounted(async () => {
     Talestore.getTaleList();
     watch(() => Talestore.taleList, sortTaleList, { immediate: true });
     watch(sortOption, sortTaleList);
-});
 
-watch(router.currentRoute, (to) => {
-    isMain.value = to.path === "/tosi";
-    console.log(router.currentRoute);
-    console.log(isMain.value);
+    await router.afterEach((to) => {
+        isMain.value = to.path === "/tosi";
+    });
 });
 </script>
 
@@ -184,6 +182,7 @@ a {
     display: flex;
     width: 15em;
 }
+
 .content {
     margin-left: 13em;
 }

@@ -2,10 +2,8 @@
     <div v-if="taleDetailStore.tale">
         <h1>{{ taleDetailStore.tale.title }}</h1>
         <img :src="taleDetailStore.tale.thumbnail" />
-
         <div class="selected">
             <h1>오늘의 주인공</h1>
-
             <div class="selectbox">
                 <select class="form-select" aria-label="Default select example" v-model="selectedCharacter">
                     <option
@@ -16,19 +14,16 @@
                         {{ character }}
                     </option>
                 </select>
-
                 <select class="form-select" aria-label="Default select example" v-model="selectedName">
                     <option v-for="(child, index) in userStore.userInfo.childrenList" :key="index">
                         {{ child.childName }}
                     </option>
                 </select>
             </div>
-
             <div v-for="(name, index) in nameMap" :key="index">
                 <h2>{{ name[0] }} -> {{ name[1] }} <button @click="deleteName(index)">삭제</button></h2>
             </div>
         </div>
-
         <h1>목소리 선택</h1>
         <div class="align-items-center">
             <div v-for="item in items" :key="item.speaker" class="form-wrapper align-items-center">
@@ -44,34 +39,28 @@
                 </label>
             </div>
         </div>
-
         <button class="btn btn-primary" type="submit" @click="readBook">동화 시작하기</button>
     </div>
     <div v-else>
         <div>is Loading...</div>
     </div>
 </template>
-
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
 import { useUserStore } from "@/stores/userStore";
 import axios from "axios";
 import { useRouter } from "vue-router";
-
 const router = useRouter();
 const props = defineProps({
     taleId: String,
 });
-
 const taleDetailStore = useTaleDetailStore();
 taleDetailStore.taleId = props.taleId;
 taleDetailStore.getTaleDetail();
-
 const userStore = useUserStore();
 userStore.getUser();
 console.log(userStore.userInfo);
-
 const speaker = ref("vdain");
 const items = ref([
     {
@@ -114,10 +103,8 @@ const playVoice = (url) => {
     audioRef.value = audio;
     audioRef.value.play();
 };
-
 const selectedCharacter = ref();
 const selectedName = ref();
-
 const nameMap = ref([]);
 watch([selectedCharacter, selectedName], ([newCharacter, newName]) => {
     if (newCharacter && newName) {
@@ -127,15 +114,12 @@ watch([selectedCharacter, selectedName], ([newCharacter, newName]) => {
         selectedName.value = null;
     }
 });
-
 function isCharacterSelected(character) {
     return nameMap.value.some(([selectedCharacter]) => selectedCharacter === character);
 }
-
 function deleteName(index) {
     nameMap.value.splice(index, 1);
 }
-
 const readBook = async () => {
     try {
         console.log("요청 보냄");
@@ -143,10 +127,8 @@ const readBook = async () => {
         for (const [cname, bname] of nameMap.value) {
             axios.post(`http://localhost:8080/tales/${cname}/${bname}`);
         }
-
         const response = await axios.post("http://localhost:8080/tales/read", taleDetailStore.tale);
         taleDetailStore.pages = response.data;
-
         // 요청이 성공적으로 완료된 후에 navigateToTalePlay 호출
         console.log("요청이 성공적으로 완료된 후에 navigateToTalePlay 호출");
         navigateToTalePlay();
@@ -154,7 +136,6 @@ const readBook = async () => {
         console.error("Error fetching:", error);
     }
 };
-
 const navigateToTalePlay = () => {
     console.log("다음페이지 보내기");
     const selectedSpeaker = items.value.find((item) => item.speaker === speaker.value);
@@ -164,16 +145,13 @@ const navigateToTalePlay = () => {
     });
 };
 </script>
-
 <style scoped>
 button {
     border: 1px solid burlywood;
 }
-
 .selectbox {
     display: flex;
 }
-
 .selected {
     height: 300px;
     background-color: #c4ecb0;
