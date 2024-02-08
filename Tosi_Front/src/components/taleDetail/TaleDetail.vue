@@ -34,10 +34,15 @@
       <div v-for="item in items" :key="item.speaker">
         <label
           ><input type="radio" :value="item.speaker" v-model="speaker" :name="item.name" />
-          {{ item.name }}</label
-        >
+          {{ item.name }}
+          <img
+            src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+            alt="Speaker Image"
+            class="speaker-image"
+            @click="playVoice(item.url)"
+          />
+        </label>
       </div>
-      <div>선택한 목소리 : {{ speaker }}</div>
     </div>
 
     <button class="btn btn-primary" type="submit" @click="readBook">동화 시작하기</button>
@@ -69,13 +74,46 @@ console.log(userStore.userInfo);
 
 const speaker = ref("vdain");
 const items = ref([
-  { name: "다인", speaker: "vdain", emotion: 3, "emotion-strength": 1 },
-  { name: "고은", speaker: "vgoeun", emotion: 3, "emotion-strength": 1 },
-  { name: "미경", speaker: "vmikyung", emotion: 3, "emotion-strength": 1 },
-  { name: "이안", speaker: "vian", emotion: 0, "emotion-strength": 0 },
-  { name: "대성", speaker: "vdaeseong", emotion: 3, "emotion-strength": 1 },
-  { name: "원탁", speaker: "nwontak", emotion: 0, "emotion-strength": 0 },
+  {
+    name: "다인",
+    speaker: "vdain",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdain.mp3",
+  },
+  {
+    name: "고은",
+    speaker: "vgoeun",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vgoeun.mp3",
+  },
+  {
+    name: "미경",
+    speaker: "vmikyung",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vmikyung.mp3",
+  },
+  {
+    name: "이안",
+    speaker: "vian",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vian.mp3",
+  },
+  {
+    name: "대성",
+    speaker: "vdaeseong",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdaeseong.mp3",
+  },
+  {
+    name: "원탁",
+    speaker: "nwontak",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/nwontak.mp3",
+  },
 ]);
+const audioRef = ref(null);
+const playVoice = (url) => {
+  if (audioRef.value != null) {
+    audioRef.value.pause();
+  }
+  const audio = new Audio(url);
+  audioRef.value = audio;
+  audioRef.value.play();
+};
 
 const selectedCharacter = ref();
 const selectedName = ref();
