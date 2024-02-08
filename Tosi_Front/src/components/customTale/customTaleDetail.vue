@@ -1,44 +1,43 @@
 <template>
-  <div>
-    <loading-modal :is-loading="loading"></loading-modal>
-    <div class="talelistContainer">
-      <h1>{{ customTaleStore.customTale.title }}</h1>
+    <div>
+        <loading-modal :is-loading="loading"></loading-modal>
+        <div class="talelistContainer">
+            <h1>{{ customTaleStore.customTale.title }}</h1>
 
-      <div class="twoContainer">
-        <div class="info-column">
-          <div class="info" v-if="!play">
-            <h3>목소리 선택</h3>
-            <div>
-              <div v-for="item in items" :key="item.speaker">
-                <label
-                  ><input
-                    type="radio"
-                    :value="item.speaker"
-                    v-model="speaker"
-                    :name="item.name"
-                  />
-                  {{ item.name }}</label
-                >
-              </div>
-              <div>선택한 목소리 : {{ speaker }}</div>
-            </div>
-            <div class="btn">
-              <button @click="readBook">재생</button>
-            </div>
-          </div>
-        </div>
+            <div class="twoContainer">
+                <div class="info-column">
+                    <div class="info" v-if="!play">
+                        <h3>목소리 선택</h3>
+                        <div v-for="item in items" :key="item.speaker" class="form-wrapper align-items-center">
+                            <label
+                                ><input type="radio" :value="item.speaker" v-model="speaker" :name="item.name" />
+                                {{ item.name }}
+                                <img
+                                    src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+                                    alt="Speaker Image"
+                                    class="speaker-image"
+                                    @click="playVoice(item.url)"
+                                />
+                            </label>
+                        </div>
+                        <div class="btn">
+                            <button @click="readBook">재생</button>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="book-column">
-          <div class="book">
-            <img
-              :src="customTaleStore.customTale.thumbnail"
-              class="img-fluid"
-              style="height: 300px"
-              alt="커스텀이미지"
-            />
-          </div>
+                <div class="book-column">
+                    <div class="book">
+                        <img
+                            :src="customTaleStore.customTale.thumbnail"
+                            class="img-fluid"
+                            style="height: 300px"
+                            alt="커스텀이미지"
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 </template>
 
@@ -47,6 +46,7 @@ import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import LoadingModal from "@/components/customTale/loadingModal.vue";
+import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
@@ -78,15 +78,18 @@ const playVoice = (url) => {
     audioRef.value.play();
 };
 //end tts
-
+console.log("customTaleStore.customTaleText", customTaleStore.customTaleText);
+console.log("customTaleStore.customTaleText.value", customTaleStore.customTaleText.value);
+console.log("customTaleStore.customTale", customTaleStore.customTale);
+console.log("customTaleStore.customTale.value", customTaleStore.customTale.value);
+console.log();
+console.log();
 //start go customPlay
 const readBook = async () => {
     try {
         console.log("요청 보냄");
-
-        const response = await axios.post("http://localhost:8080/tales/read", customTaleStore.tale);
-        customTaleStore.pages = response.data;
-
+        await customTaleStore.readCustomTale(customTaleStore.customTale.content);
+        console.log(customTaleStore.pages);
         // 요청이 성공적으로 완료된 후에 navigateToTalePlay 호출
         console.log("요청이 성공적으로 완료된 후에 navigateToTalePlay 호출");
         navigateToTalePlay();
@@ -99,7 +102,7 @@ const navigateToTalePlay = () => {
     console.log("다음페이지 보내기");
     const selectedSpeaker = items.value.find((item) => item.speaker === speaker.value);
     router.push({
-        name: "talePlay",
+        name: "customTalePlay",
         params: { speaker: selectedSpeaker.speaker },
     });
 };
@@ -115,25 +118,6 @@ function shuffleArray(array) {
     }
     return shuffledArray;
 }
-
-const readBook = async () => {
-  try {
-    await customTaleStore.readCustomTale(customTaleStore.customTale.content)
-    console.log(customTaleStore.pages);
-    navigateToTalePlay();
-  } catch (error) {
-    console.error("Error fetching:", error);
-  }
-};
-
-const navigateToTalePlay = () => {
-  const selectedSpeaker = items.value.find((item) => item.speaker === speaker.value);
-  router.push({
-    name: "customTalePlay",
-    params: { speaker: selectedSpeaker.speaker },
-  });
-};
-
 onMounted(async () => {
     // 비동기로 데이터를 먼저 로드
     await Promise.all([

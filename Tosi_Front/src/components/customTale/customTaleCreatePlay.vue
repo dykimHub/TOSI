@@ -1,145 +1,240 @@
 <template>
     <div v-if="customTaleStore.pages">
-      <div class="play">
-        <div class="title">나만의 동화 만들기</div>
-        <div class="book">
-          <div class="cover"><img :src="customTaleStore.customTaleImage" class="coverImg" /></div>
-          <div class="flip-book">
-            <div
-              class="flip"
-              v-for="(page, index) in pages"
-              :key="`page-${index}`"
-              :class="{ flipped: page.flipped }"
-              :style="{ zIndex: zIndexes[index] }"
-            >
-              <div class="back" v-if="index > 1">
-                <img :src="customTaleStore.customTaleImage" class="leftImg" />
-                <img src="@/assets/leftarrow.gif" class="left" />
-                <img
-                  src="@/assets/leftarrowstatic.png"
-                  class="leftstatic"
-                  @click="flipPage(index, false)"
-                />
-              </div>
-              <div class="front pre-wrap">
-                {{ pages[index].right }}
-                <div v-if="index === 0">
-                  <img src="@/assets/end.gif" class="end" @click="goToEnd" />
+        <div class="play">
+            <div class="title">나만의 동화 만들기</div>
+            <div class="book">
+                <div class="cover"><img :src="customTaleStore.customTaleImage" class="coverImg" /></div>
+                <div class="flip-book">
+                    <div
+                        class="flip"
+                        v-for="(page, index) in pages"
+                        :key="`page-${index}`"
+                        :class="{ flipped: page.flipped }"
+                        :style="{ zIndex: zIndexes[index] }"
+                    >
+                        <div class="back" v-if="index > 1">
+                            <img :src="customTaleStore.customTaleImage" class="leftImg" />
+                            <img src="@/assets/leftarrow.gif" class="left" />
+                            <img
+                                src="@/assets/leftarrowstatic.png"
+                                class="leftstatic"
+                                @click="flipPage(index, false)"
+                            />
+                        </div>
+                        <div class="front pre-wrap">
+                            {{ pages[index].right }}
+                            <div v-if="index === 0">
+                                <img src="@/assets/end.gif" class="end" @click="goToEnd" />
+                            </div>
+                            <div v-else>
+                                <img src="@/assets/rightarrow.gif" class="right" />
+                                <img
+                                    src="@/assets/rightarrowstatic.png"
+                                    class="rightstatic"
+                                    @click="flipPage(index, true)"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div v-else>
-                  <img src="@/assets/rightarrow.gif" class="right" />
-                  <img
-                    src="@/assets/rightarrowstatic.png"
-                    class="rightstatic"
-                    @click="flipPage(index, true)"
-                  />
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
     <div v-else>is Loading...</div>
-  </template>
-  
-  <script setup>
-  import { ref, computed, reactive, onMounted } from "vue";
-  import { useCustomTaleStore } from "@/stores/customTaleStore";
-  import { useRouter } from "vue-router";
-  
-  const customTaleStore = useCustomTaleStore();
-  const router = useRouter();
-  const pages = customTaleStore.pages.reverse();
-  
-  const props = defineProps({
+</template>
+
+<script setup>
+import { ref, computed, reactive, onMounted, watch } from "vue";
+import { useCustomTaleStore } from "@/stores/customTaleStore";
+import { useRouter } from "vue-router";
+import { generateTTS } from "@/util/ttsSpeakerUtil";
+
+const customTaleStore = useCustomTaleStore();
+const router = useRouter();
+const pages = customTaleStore.pages.reverse();
+
+const props = defineProps({
     speaker: String,
-  });
-  
-  const goToEnd = () => {
-    router.push({ name: "customTaleSave"});
-  };
-  
-  // 페이지 배열의 인덱스를 저장해서 zindex 배열로 만듦
-  // zindex는 클수록 위쪽에 위치함
-  // map함수로 pages를 돌면서 index + 1을 저장하고 있음
-  const zIndexes = reactive(pages.map((_, index) => index + 1));
-  
-  // index: 뒤집을 페이지의 인덱스
-  // flip: true; 뒤집은 상태, false; 이전 페이지 펼친 상태
-  function flipPage(index, flip) {
+});
+
+const goToEnd = () => {
+    router.push({ name: "customTaleSave" });
+};
+
+// 페이지 배열의 인덱스를 저장해서 zindex 배열로 만듦
+// zindex는 클수록 위쪽에 위치함
+// map함수로 pages를 돌면서 index + 1을 저장하고 있음
+const zIndexes = reactive(pages.map((_, index) => index + 1));
+// 현재 페이지의 인덱스를 저장하는 변수
+const currentPageIndex = ref(pages.length - 1);
+// index: 뒤집을 페이지의 인덱스
+// flip: true; 뒤집은 상태, false; 이전 페이지 펼친 상태
+function flipPage(index, flip) {
     pages[index].flipped = flip;
-  
+
     // 페이지를 뒤집을 때
     if (flip) {
-      zIndexes.forEach((_, i) => {
-        if (i === index) {
-          // 페이지 인덱스가 클수록 z-index가 낮아야 함
-          // 제일 낮은 인덱스(첫페이지)가 맨 위에 있어야 해서
-          zIndexes[i] = pages.length - index;
-        }
-      });
+        zIndexes.forEach((_, i) => {
+            if (i === index) {
+                // 페이지 인덱스가 클수록 z-index가 낮아야 함
+                // 제일 낮은 인덱스(첫페이지)가 맨 위에 있어야 해서
+                zIndexes[i] = pages.length - index;
+            }
+            // 배열리스트의 현재 인덱스
+            currentPageIndex.value = index - 1;
+        });
     } else {
-      // 이전 상태로 되돌리면 해당 페이지가 제일 위에 와야함
-      // zindex의 max값에 1을 더한 값을 저장
-      const maxZIndex = Math.max(...zIndexes) + 1;
-      zIndexes[index] = maxZIndex;
-  
-      // 다른 페이지들의 z-index 업데이트
-      zIndexes.forEach((z, i) => {
-        if (i !== index && pages[i].flipped) {
-          zIndexes[i] = z - 1;
-        }
-      });
+        // 이전 상태로 되돌리면 해당 페이지가 제일 위에 와야함
+        // zindex의 max값에 1을 더한 값을 저장
+        const maxZIndex = Math.max(...zIndexes) + 1;
+        zIndexes[index] = maxZIndex;
+
+        // 다른 페이지들의 z-index 업데이트
+        zIndexes.forEach((z, i) => {
+            if (i !== index && pages[i].flipped) {
+                zIndexes[i] = z - 1;
+            }
+        });
+        // 배열리스트의 현재 인덱스
+        currentPageIndex.value = index;
     }
-  }
-  </script>
-  
-  <style scoped>
-  .play {
-    width: 1100px;
+}
+// tts
+const items = ref([
+    { name: "다인", speaker: "vdain", emotion: 3, "emotion-strength": 1 },
+    { name: "고은", speaker: "vgoeun", emotion: 3, "emotion-strength": 1 },
+    { name: "미경", speaker: "vmikyung", emotion: 3, "emotion-strength": 1 },
+    { name: "이안", speaker: "vian", emotion: "", "emotion-strength": "" },
+    { name: "대성", speaker: "vdaeseong", emotion: 3, "emotion-strength": 1 },
+    { name: "원탁", speaker: "nwontak", emotion: "", "emotion-strength": "" },
+]);
+const audioRef = ref(null); //오디오 재생을 위한 객체
+const audioSrcCache = {}; // 캐시를 저장하는 객체
+const ttsMaker = async (text) => {
+    //speaker정보
+    const selectedSpeaker = items.value.find((item) => item.speaker == props.speaker);
+    if (selectedSpeaker) {
+        const speakerName = selectedSpeaker.speaker;
+        const emotion = selectedSpeaker.emotion;
+        const emotionStrength = selectedSpeaker["emotion-strength"];
+        try {
+            const blob = await generateTTS(text, speakerName, emotion, emotionStrength);
+            const url = URL.createObjectURL(blob);
+            audioSrcCache[text] = url; // 결과를 캐시에 저장
+            return url;
+        } catch (error) {
+            console.error("Error:", error);
+            return "";
+        }
+    }
+};
+const autoAudio = (text) => {
+    //기존 오디오 끊기
+    if (audioRef.value != null) {
+        audioRef.value.pause();
+    }
+    // 이미 캐시된 결과가 있는지 확인
+    if (audioSrcCache[text] != null) {
+        audioRef.value = new Audio(audioSrcCache[text]);
+        // 재생이 끝나면 Promise를 resolve하도록 설정
+        audioRef.value.onended = () => {
+            onAudioEnded();
+            resolve();
+        };
+        audioRef.value.play(); // 재생
+    } else {
+        ttsMaker(text).then((url) => {
+            if (url) {
+                audioRef.value = new Audio(url); // 새로운 오디오를 할당
+                // audioRef.value.play(); // 재생
+                // 재생이 끝나면 Promise를 resolve하도록 설정
+                audioRef.value.onended = () => {
+                    onAudioEnded();
+                    resolve();
+                };
+                audioRef.value.play(); // 재생
+            }
+        });
+    }
+};
+// 오디오 재생이 끝날 때 실행되는 콜백 함수
+const onAudioEnded = () => {
+    if (currentPageIndex.value < pages.length) flipPage(currentPageIndex.value, true);
+};
+// //페이지 변화를 감지해서 틈
+watch(pages, (newPages, oldPages) => {
+    if (newPages && newPages.length > 0) {
+        // 페이지 배열이 변경되었을 때 실행할 코드 작성
+        autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
+    }
+});
+onMounted(async () => {
+    try {
+        if (pages.length > 0) {
+            await autoAudio(pages[currentPageIndex.value].right);
+        }
+    } catch (error) {
+        console.error("Error in onMounted:", error);
+    }
+});
+</script>
+
+<style scoped>
+.play {
+    width: 1180px;
     height: 800px;
-    border: 5px solid #cee8e8;
-    margin: 20px 0px 20px 40px;
+    border: 15px solid #cee8e8;
+    margin: 20px 0px 30px 40px;
     border-radius: 50px;
-  }
-  .title {
-    position: relative;
+    background-color: #f5f5f5;
+}
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+.title {
     text-decoration: none;
-    display: inline;
-    box-shadow: inset 0 -6px 0 #ffd3d3;
-  }
-  
-  .like {
+    display: inline-block;
+    box-shadow: inset 0 -20px 0 #ffd3d3;
+    font-size: 40px;
+    margin: 60px 0px 40px 70px;
+    line-height: 1;
+}
+.like {
     width: 50px;
     height: 50px;
-  }
-  .cover {
+    margin: 50px 70px 0px 0px;
+}
+.cover {
     background-color: #fff;
     box-sizing: border-box;
     width: 500px;
     height: 500px;
     border-radius: 0px 40px 40px 0px;
-  }
-  .coverImg,
-  .leftImg {
+}
+.coverImg,
+.leftImg {
     width: 450px;
     height: 450px;
     margin-top: 25px;
     margin-left: 5px;
-  }
-  .book {
-    margin: 90px 0px 20px 50px;
+}
+.book {
+    margin: 0px 0px 0px 45px;
+    padding: 10px 10px 0px 25px;
     display: flex;
-  }
-  .flip-book {
+    background-color: #21364d;
+    width: 1050px;
+    height: 520px;
+}
+.flip-book {
     width: 500px;
     height: 500px;
     position: relative;
     perspective: 1500px;
     border-radius: 100px;
-  }
-  .flip {
+}
+.flip {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -149,37 +244,64 @@
     transform-style: preserve-3d;
     transition: 0.5s;
     color: #000;
-  }
-  .front,
-  .back {
+}
+.front {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     backface-visibility: hidden;
-  }
-  .front {
     background-color: #fff;
     box-sizing: border-box;
     padding: 0 13px;
     border-radius: 40px 0px 0px 40px;
-  }
-  .back {
+    box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5); /* 내부 그림자 추가 */
+}
+.page-separator-right {
+    position: absolute;
+    top: 6.5%;
+    right: 100%;
+    width: 2px;
+    height: 88%;
+    /* background-color: #5d4037; */
+    background-color: #ede7e0;
+    transform: translateX(1px);
+    border-radius: 10px;
+}
+.page-separator-left {
+    position: absolute;
+    top: 6%;
+    left: 100%;
+    width: 2px;
+    height: 88%;
+    /* background-color: #5d4037; */
+    background-color: #ede7e0;
+    transform: translateX(-1px);
+    border-radius: 10px;
+}
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
     background-color: #fff;
     transform: rotateY(180deg);
     border-radius: 0px 40px 40px 0px;
-  }
-  .flip.flipped {
+    box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
+}
+.flip.flipped {
     transform: rotateY(-180deg);
-  }
-  .pre-wrap {
+}
+.pre-wrap {
     white-space: pre-wrap;
-  }
-  .left,
-  .leftstatic,
-  .right,
-  .rightstatic {
+}
+.left,
+.leftstatic,
+.right,
+.rightstatic {
     width: 40px;
     height: 40px;
     position: absolute;
@@ -187,15 +309,16 @@
     cursor: pointer;
     bottom: 13px;
     right: 13px;
-  }
-  .rightstatic:hover,
-  .leftstatic:hover {
+    border-radius: 50%;
+}
+.rightstatic:hover,
+.leftstatic:hover {
     width: 40px;
     height: 40px;
     opacity: 0;
     cursor: pointer;
-  }
-  .end {
+}
+.end {
     width: 40px;
     height: 40px;
     position: absolute;
@@ -203,5 +326,6 @@
     cursor: pointer;
     bottom: 13px;
     right: 13px;
-  }
-  </style>
+    border-radius: 50%;
+}
+</style>
