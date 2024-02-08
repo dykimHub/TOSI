@@ -85,6 +85,10 @@ public class CustomTaleController {
     @PostMapping("/customtale/read")
     public ResponseEntity<?> read(@RequestBody String string) {
         try {
+            if(string.charAt(0)=='"' && string.charAt(string.length()-1)=='"'){
+                string = string.substring(1, string.length() - 1);
+            }
+            string = string.replaceAll("\\\\|n\\\\n", "");
             String splitted_contents = customTaleService.split_sentences(string); // 문장 분리
 //            HttpHeaders headers = new HttpHeaders();
 //            headers.setContentType(MediaType.TEXT_PLAIN);
