@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import { useCookieStore } from "@/stores/cookieStore";
-import router from "@/router";
+
 import axios from "axios";
 
 const User_API = `http://localhost:8080/users`;
@@ -61,7 +61,7 @@ export const useUserStore = defineStore("user", () => {
       url: User_API,
       withCredentials: true,
     }).then(() => {
-      window.location.href = `http://localhost:5173/`;
+      window.location.replace("/tosi")
     });
   };
 
@@ -79,21 +79,21 @@ export const useUserStore = defineStore("user", () => {
     });
   };
 
-  // 로그인
-  const postLogin = function (userInfo) {
-    axios
-      .post(`${User_API}/login`, userInfo)
-      .then((response) => {
-        localStorage.setItem("isLoggedIn", "true");
-        if (localStorage.getItem("isLoggedIn") != false) {
-          console.log("토큰" + localStorage.getItem("isLoggedIn"));
-          window.location.href = `http://localhost:5173/tosi`;
-        }
-      })
-      .catch(() => {
-        // 로그인 실패 처리
-      });
-  };
+// 로그인
+const postLogin = function(userInfo) {
+  axios.post(`${User_API}/login`, userInfo)
+    .then((response) => {
+      localStorage.setItem('isLoggedIn', 'true');
+      if (localStorage.getItem('isLoggedIn') != false) {
+        console.log("토큰" + localStorage.getItem('isLoggedIn'));
+        window.location.replace(`http://localhost:5173/tosi`);
+      }
+    })
+    .catch(() => {
+      // 로그인 실패 처리
+      return false;
+    });
+};
 
   //로그아웃
   const getLogout = () => {
@@ -101,7 +101,7 @@ export const useUserStore = defineStore("user", () => {
     localStorage.removeItem("isLoggedIn");
     console.log(localStorage.getItem("isLoggedIn"));
     alert("로그아웃 했습니다.");
-    window.location.href = `http://localhost:5173/`;
+    window.location.replace = `http://localhost:5173/`
   };
 
   //비밀번호 확인
