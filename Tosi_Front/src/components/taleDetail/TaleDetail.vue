@@ -18,12 +18,9 @@
                 </select>
 
                 <select class="form-select" aria-label="Default select example" v-model="selectedName">
-                    <option value="다윤">다윤</option>
-                    <option value="지민">지민</option>
-                    <option value="성주">성주</option>
-                    <option value="우진">우진</option>
-                    <option value="아진">아진</option>
-                    <option value="소연">소연</option>
+                    <option v-for="(child, index) in userStore.userInfo.childrenList" :key="index">
+                        {{ child.childName }}
+                    </option>
                 </select>
             </div>
 
@@ -58,21 +55,55 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
+import { useUserStore } from "@/stores/userStore";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const props = defineProps({
+    taleId: String,
+});
 
 const taleDetailStore = useTaleDetailStore();
+taleDetailStore.taleId = props.taleId;
+taleDetailStore.getTaleDetail();
+
+const userStore = useUserStore();
+userStore.getUser();
+console.log(userStore.userInfo);
 
 const speaker = ref("vdain");
 const items = ref([
-    { name: "다인", speaker: "vdain", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdain.mp3" },
-    { name: "고은", speaker: "vgoeun", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vgoeun.mp3" },
-    { name: "미경", speaker: "vmikyung", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vmikyung.mp3" },
-    { name: "이안", speaker: "vian", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vian.mp3" },
-    { name: "대성", speaker: "vdaeseong", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdaeseong.mp3" },
-    { name: "원탁", speaker: "nwontak", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/nwontak.mp3" },
+    {
+        name: "다인",
+        speaker: "vdain",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdain.mp3",
+    },
+    {
+        name: "고은",
+        speaker: "vgoeun",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vgoeun.mp3",
+    },
+    {
+        name: "미경",
+        speaker: "vmikyung",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vmikyung.mp3",
+    },
+    {
+        name: "이안",
+        speaker: "vian",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vian.mp3",
+    },
+    {
+        name: "대성",
+        speaker: "vdaeseong",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdaeseong.mp3",
+    },
+    {
+        name: "원탁",
+        speaker: "nwontak",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/nwontak.mp3",
+    },
 ]);
 const audioRef = ref(null);
 const playVoice = (url) => {
@@ -83,13 +114,6 @@ const playVoice = (url) => {
     audioRef.value = audio;
     audioRef.value.play();
 };
-
-const props = defineProps({
-    taleId: String,
-});
-
-taleDetailStore.taleId = props.taleId;
-taleDetailStore.getTaleDetail();
 
 const selectedCharacter = ref();
 const selectedName = ref();
