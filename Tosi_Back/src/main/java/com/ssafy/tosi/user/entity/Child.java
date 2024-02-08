@@ -27,14 +27,14 @@ public class Child {
     private int gender;
 
     @Column(nullable = false)
-    private boolean isMyBaby;
+    private boolean myBaby;
 
     @Builder
-    public Child(Integer userId, String childName, int gender, boolean isMyBaby) {
+    public Child(Integer userId, String childName, int gender, boolean myBaby) {
         this.userId = userId;
         this.childName = childName;
         this.gender = gender;
-        this.isMyBaby = isMyBaby;
+        this.myBaby = myBaby;
     }
 
 }

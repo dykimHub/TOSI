@@ -39,7 +39,7 @@ public class User {
 
     @OneToMany
     @JoinColumn(name = "userId")
-    @OrderBy("isMyBaby desc, childName asc")
+    @OrderBy("myBaby desc, childName asc")
     private List<Child> childrenList = new ArrayList<>();
 
     @Builder

@@ -5,6 +5,7 @@ import com.ssafy.tosi.jwt.JwtUtil;
 import com.ssafy.tosi.jwt.RefreshToken;
 import com.ssafy.tosi.jwt.service.RefreshTokenService;
 import com.ssafy.tosi.user.dto.UserInfo;
+import com.ssafy.tosi.user.dto.UserInfoResponse;
 import com.ssafy.tosi.user.entity.Child;
 import com.ssafy.tosi.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,17 +38,22 @@ public class UserController {
 
     // 회원 정보 조회
     @GetMapping
-    public ResponseEntity<User> getUser(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<UserInfoResponse> getUser(HttpServletRequest request) {
 
         Integer userId = (Integer) request.getAttribute("userId");
         User user = userService.selectUser(userId);
+        UserInfoResponse userInfoResponse = UserInfoResponse.builder()
+                .email(user.getEmail())
+                .bookshelfName((user.getBookshelfName()))
+                .childrenList(user.getChildrenList())
+                .build();
 
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        return new ResponseEntity<UserInfoResponse>(userInfoResponse, HttpStatus.OK);
     }
 
     // 회원 정보 수정
     @PutMapping
-    public ResponseEntity<Void> putUser(HttpServletRequest request, HttpServletResponse response, @RequestBody UserInfo userInfo) {
+    public ResponseEntity<Void> putUser(HttpServletRequest request, @RequestBody UserInfo userInfo) {
         Integer userId = (Integer) request.getAttribute("userId");
         System.out.println("userId : " + userId);
 
@@ -113,7 +119,7 @@ public class UserController {
 
     // 아이목록 조회
     @GetMapping("/children-list")
-    public ResponseEntity<List<Child>> getChildrenList(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<List<Child>> getChildrenList(HttpServletRequest request) {
         Integer userId = (Integer) request.getAttribute("userId");
 //        System.out.println("컨트롤러:" + userId);
         List<Child> childrenList = userService.selectChildrenList(userId);
@@ -122,7 +128,7 @@ public class UserController {
 
     // 비밀번호 확인
     @PostMapping("/password-check")
-    public ResponseEntity<?> postPasswordCheck(HttpServletRequest request, HttpServletResponse response, @RequestBody String password) {
+    public ResponseEntity<?> postPasswordCheck(HttpServletRequest request, @RequestBody String password) {
         Integer userId = (Integer) request.getAttribute("userId");
         System.out.println(userId);
 

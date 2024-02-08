@@ -19,15 +19,16 @@ public class FavoriteController {
 
     // 즐겨찾기 등록
     @PostMapping
-    public ResponseEntity<?> postFavorite(HttpServletRequest request, HttpServletResponse response, @RequestBody Favorite favorite) {
+    public ResponseEntity<?> postFavorite(HttpServletRequest request, @RequestBody Favorite favorite) {
         Integer userId = (Integer)request.getAttribute("userId");
+        favorite.setUserId(userId);
         favoriteService.insertFavorite(favorite);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 즐겨찾기 삭제
     @DeleteMapping
-    public ResponseEntity<?> deteleFavorite(HttpServletRequest request, HttpServletResponse response, @RequestParam Integer favoriteId) {
+    public ResponseEntity<?> deleteFavorite(HttpServletRequest request, @RequestParam Integer favoriteId) {
         Integer userId = (Integer)request.getAttribute("userId");
         favoriteService.deleteFavorite(favoriteId);
         return new ResponseEntity<Void>(HttpStatus.OK);
@@ -35,9 +36,9 @@ public class FavoriteController {
 
     // 즐겨찾기 목록 조회
     @GetMapping
-    public ResponseEntity<?> getFavoritesList(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> getFavoritesList(HttpServletRequest request) {
         Integer userId = (Integer)request.getAttribute("userId");
-        List<Favorite> result = favoriteService.selectFavoriteList(userId);
-        return new ResponseEntity<List<Favorite>> (result, HttpStatus.OK);
+        List<FavoriteDto> result = favoriteService.selectFavoriteList(userId);
+        return new ResponseEntity<List<FavoriteDto>> (result, HttpStatus.OK);
     }
 }
