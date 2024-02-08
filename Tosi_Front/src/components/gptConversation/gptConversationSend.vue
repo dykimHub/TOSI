@@ -5,7 +5,7 @@
       </div>
       <div id="Hi">
             <p>{{props.cname}}님이 입장했습니다!</p>
-          </div>
+      </div>
       <div id="body">
         <ul style="list-style:none;">
           <div class="bubble">
@@ -18,6 +18,9 @@
           </li>
         </ul>
       </div>
+      <div v-if="chatCount==6" id="Hi">
+            <p>{{props.cname}}님이 나갔습니다.</p>
+        </div>
       <div class="mb-3">
         <div class="input-group">
           <input @keyup.enter="generateChat" type="text" id="message" v-model="message" class="form-control" placeholder="메세지를 입력하세요."/>
@@ -48,7 +51,7 @@
   <script setup>
   import { ref } from "vue";
   import { useTaleDetailStore } from "@/stores/taleDetailStore";
-  let chatCount=0;
+  const chatCount=ref(0);
 
   const chatMemory = ref([]);
   const message = ref("");
@@ -70,21 +73,23 @@
       return;
     }
 
-    if (chatCount==5){
-      alert("채팅 횟수를 초과했어요. 다음에 다시 만나요!");
+    if (chatCount.value==6){
+      alert(props.cname+"님은 쉬는 중이에요. 다른 친구를 만나러 가 볼까요?");
       return;
     }
   
-    const API_URL = "http://localhost:8080/gptapi/input";
+    const API_URL = "http://localhost:8080/gptapi/";
   
     chatMemory.value.push({
       role: "user",
       message: message.value,
     });
 
-    message.value="";
+    message.value=""; // 인풋 비우기
 
-    fetch(API_URL, {
+    console.log("채팅 카운트:"+chatCount.value);
+
+    fetch(API_URL+"input", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +99,6 @@
         taleScript: taleDetailStore.tale.total_contents,
         playName: props.cname,
         userName: props.bname,
-        chatCount: chatCount,
       }),
     })
       .then((response) => {
@@ -110,13 +114,50 @@
           message: data.message,
         });
 
-        chatCount+=1;
+        chatCount.value+=1;
+        console.log(chatCount.value+"번째 응답입니다.");
 
-        if(chatCount==5){
+        // 채팅 카운트가 모두 소모됐을 때 인사를 추가한다.
+      if(chatCount.value==5){
+          fetch(API_URL+"bye", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userMessages: [...chatMemory.value],
+              taleScript: taleDetailStore.tale.total_contents,
+              playName: props.cname,
+              userName: props.bname,
+            }),
+          })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error("Network response was not ok.");
+          })
+          .then((data) => {
+            gptMessage.value = data.message;
+            chatMemory.value.push({
+            role: "assistant",
+            message: data.message,
+          });
+
+          console.log(chatCount.value+"번째 응답입니다.");
+
           chatMemory.value.push({
             role:"assistant",
-            message: "대화 가능한 횟수가 모두 소모 되었어. 날 만나고 싶으면 다음에 다시 찾아와 줘, 기다릴게! 🙂"
+            message: "대화 가능한 횟수가 모두 소모 되어 대화를 종료합니다. 🍀"
           })
+
+          // div 업데이트를 위한 카운트
+          chatCount.value+=1;
+        })
+        .catch((error) => {
+          alert("에러가 발생했어요.");
+          console.error("에러가 났어요.", error);
+        });
         }
       })
       .catch((error) => {
@@ -128,6 +169,9 @@
   
   <style scoped>
   /* 전체 */
+  .input-group{
+    margin-top:30px;
+  }
   #app{
     background-color: #EBFFDF;
     border-radius: 30px;
