@@ -42,8 +42,8 @@ export const useCustomTaleStore = defineStore("customtale", () => {
   //등록
   const insertCustomTale = function (customTale) {
     axios.post(`/customtale`, customTale, { withCredentials: true }).then(() => {
-      console.log(customTale.value);
-      // router.push({name:'MycustomTaleList'})
+      // console.log(customTale.value);
+      router.push({name:'favoriteCustomList'})
       alert("저장되었습니다.")
     });
   };
@@ -57,8 +57,8 @@ const getCustomTaleText = async function (userInputMessage) {
       userMessage: userInputMessage,
     }, { withCredentials: true });
 
-    console.log(userInputMessage);
-    console.log(response.data);
+    // console.log(userInputMessage);
+    // console.log(response.data);
 
     customTaleText.value = response.data;
   } catch (error) {
@@ -111,6 +111,17 @@ const getCustomTaleText = async function (userInputMessage) {
     customTaleImage.value = "";
     customTaleText.value = "";
   }
+
+  const pages = ref([]);
+  const readCustomTale = async function (text) {
+    // console.log(text);
+   await axios.post(`/customtale/read`, text, { withCredentials: true }).then((response) => {
+    // console.log(response.data);
+    pages.value = response.data;
+    // console.log(pages.value);  
+    });
+  };
+
   return {
     customTalesList,
     getCustomTalesList,
@@ -124,5 +135,7 @@ const getCustomTaleText = async function (userInputMessage) {
     customTaleImage,
     getCustomTaleImage,
     resetCustomTale,
+    pages,
+    readCustomTale,
   };
 });

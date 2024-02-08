@@ -23,7 +23,7 @@
               <div>선택한 목소리 : {{ speaker }}</div>
             </div>
             <div class="btn">
-              <button @click="playbtn">재생</button>
+              <button @click="readBook">재생</button>
             </div>
           </div>
         </div>
@@ -39,28 +39,6 @@
           </div>
         </div>
       </div>
-
-      <div v-if="play">{{ customTaleStore.customTale.content }}</div>
-    </div>
-
-    <div>
-      <p>친구들의 동화 보기</p>
-      <ul>
-        <li
-          v-for="customTale in getRandomCustomTales"
-          :key="customTale.customTaleId"
-        >
-          <router-link :to="`/customtale/${customTale.customTaleId}`">
-            <img
-              :src="customTale.thumbnail"
-              class="img-fluid"
-              style="height: 300px"
-              alt="커스텀이미지"
-            />
-            {{ customTale.title }}
-          </router-link>
-        </li>
-      </ul>
     </div>
   </div>
 </template>
@@ -101,8 +79,23 @@ for (let i = shuffledArray.length - 1; i > 0; i--) {
 return shuffledArray;
 }
 
-const loading = ref(false);
+const readBook = async () => {
+  try {
+    await customTaleStore.readCustomTale(customTaleStore.customTale.content)
+    console.log(customTaleStore.pages);
+    navigateToTalePlay();
+  } catch (error) {
+    console.error("Error fetching:", error);
+  }
+};
 
+const navigateToTalePlay = () => {
+  const selectedSpeaker = items.value.find((item) => item.speaker === speaker.value);
+  router.push({
+    name: "customTalePlay",
+    params: { speaker: selectedSpeaker.speaker },
+  });
+};
 
 onMounted(async () => {
   // 비동기로 데이터를 먼저 로드

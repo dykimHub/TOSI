@@ -7,6 +7,9 @@ import CustomTaleCreate from "@/components/customTale/customTaleCreate.vue";
 import CustomTaleList from "@/components/customTale/customTaleList.vue";
 import CustomTaleDetail from "@/components/customTale/customTaleDetail.vue";
 import CustomTaleSave from "@/components/customTale/customTaleSave.vue";
+import CustomTalePlay from "@/components/customTale/customTalePlay.vue";
+import CustomTaleCreatePlay from "@/components/customTale/customTaleCreatePlay.vue";
+import CustomTaleEnd from "@/components/customTale/customTaleEnd.vue";
 import LoadingModal from "@/components/customTale/loadingModal.vue";
 import gptConversationSend from "@/components/gptConversation/gptConversationSend.vue";
 import gptConversationView from "@/views/gptConversationView.vue";
@@ -28,7 +31,7 @@ const router = createRouter({
       path: "/",
       name: "NonMemberMainView",
       component: NonMemberMainView,
-      meta: { requiresGuest: true },      
+      meta: { requiresGuest: true },
     },
     {
       path: "/login",
@@ -105,6 +108,27 @@ const router = createRouter({
               meta: { requiresAuth: true },
             },
             {
+              path: "play/:speaker",
+              name: "customTalePlay",
+              component: CustomTalePlay,
+              meta: { requiresAuth: true },
+              props: true,
+            },
+            {
+              path: "createplay/:speaker",
+              name: "customTaleCreatePlay",
+              component: CustomTaleCreatePlay,
+              meta: { requiresAuth: true },
+              props: true,
+            },
+            {
+              path: "end",
+              name: "customTaleEnd",
+              component: CustomTaleEnd,
+              meta: { requiresAuth: true },
+              props: true,
+            },
+            {
               path: "loading",
               name: "loading",
               component: LoadingModal,
@@ -160,7 +184,6 @@ const router = createRouter({
         },
       ],
     },
-
   ],
 });
 
@@ -170,7 +193,10 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
     alert("로그인 페이지로 이동합니다.");
     next("/login");
-  } else if (to.matched.some((record) => record.meta.requiresGuest) && isLoggedIn) {
+  } else if (
+    to.matched.some((record) => record.meta.requiresGuest) &&
+    isLoggedIn
+  ) {
     alert("이미 로그인 되어있습니다.");
     next("/tosi");
   } else {
