@@ -13,14 +13,14 @@ public class ChildInfo {
     private String childName;
     private Integer userId;
     private int gender;
-    private boolean isMyBaby;
+    private boolean myBaby;
 
     public Child toEntity(Integer userId) {
         return Child.builder()
                 .userId(userId)
                 .childName(childName)
                 .gender(gender)
-                .isMyBaby(isMyBaby)
+                .myBaby(myBaby)
                 .build();
     }
 }
