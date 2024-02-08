@@ -27,15 +27,19 @@ export const useFavoriteStore = defineStore("favorite", () => {
             console.error('에러 발생:', error);
         });
   };
-
+  
   //즐겨찾기 삭제
-  const deleteMyFavoriteTale = function () {
+  const deleteMyFavoriteTale = function (favoriteId) {
     axios({
       method: "delete",
       url: `/favorites`,
+      params: {
+        favoriteId: favoriteId,
+      },
       withCredentials: true
     }).then(() => {
-      
+      alert("즐겨찾기가 삭제되었습니다.")
+      // router.push({ name: 'favoriteTaleList' })
     });
   };
 

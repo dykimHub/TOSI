@@ -11,10 +11,10 @@ const User_API = `http://localhost:8080/users`;
 
 export const useUserStore = defineStore('user', () => {
   const userInfo = ref({email:'', bookshelfName:'', childrenList:[]})
-  const searchResult = ref(false);
+  const searchResult = ref();
   const loginUserId = ref('');
   const childrenList = ref([]);
-  const child = ref({childName: '', gender: 0, isMyBaby: false});
+  const child = ref({childName: '', gender: 0, myBaby: false});
   const isLoggedIn= ref(false); // 로그인 했으면 true / false
   const isAuthenticated = computed(() => isLoggedIn.value);
   const cookieStore = useCookieStore()
