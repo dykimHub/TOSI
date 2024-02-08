@@ -3,8 +3,6 @@
     <div>
         <div>
             <div class="sign">
-                <RouterLink to="/regist">회원가입</RouterLink>
-                <RouterLink to="/login">로그인</RouterLink>
                 <button @click="openRegistForm">회원가입</button>
                 <button @click="openLoginForm">로그인</button>
             </div>
