@@ -10,5 +10,4 @@ public class UserInputMessage {
     private String taleScript;
     private String playName;
     private String userName;
-    private int chatCount;
 }
