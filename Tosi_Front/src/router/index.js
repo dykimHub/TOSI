@@ -16,8 +16,6 @@ import gptConversationView from "@/views/gptConversationView.vue";
 import TaleDetail from "@/components/taleDetail/TaleDetail.vue";
 import TalePlay from "@/components/taleDetail/TalePlay.vue";
 import TaleEnd from "@/components/taleDetail/TaleEnd.vue";
-import LoginView from "@/views/LoginView.vue";
-import RegistView from "@/views/RegistView.vue";
 import UserInfoView from "@/views/UserInfoView.vue";
 import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 import BookshelfView from "@/views/BookshelfView.vue";
@@ -30,18 +28,6 @@ const router = createRouter({
       path: "/",
       name: "NonMemberMainView",
       component: NonMemberMainView,
-      meta: { requiresGuest: true },
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: LoginView,
-      meta: { requiresGuest: true },
-    },
-    {
-      path: "/regist",
-      name: "regist",
-      component: RegistView,
       meta: { requiresGuest: true },
     },
     {
@@ -187,12 +173,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
-    alert("로그인 페이지로 이동합니다.");
-    next("/login");
-  } else if (
-    to.matched.some((record) => record.meta.requiresGuest) &&
-    isLoggedIn
-  ) {
+    alert("메인 페이지로 이동합니다.");
+    next("/");
+  } else if (to.matched.some((record) => record.meta.requiresGuest) && isLoggedIn) {
     alert("이미 로그인 되어있습니다.");
     next("/tosi");
   } else {

@@ -12,15 +12,15 @@
     </div>
     </div>
     <div class="taleContainer">
-        <ul v-for="tale in favoriteStore.taleList" :key="tale.favoriteId">
+        <ul v-for="favorite in favoriteStore.myFavoriteTalesList" :key="favorite.favoriteId">
             <div class="oneTale">
-                <RouterLink :to="`/tale/${tale.taleId}`"><img class="thumbnail" :src="tale.thumbnail" /></RouterLink>
+                <RouterLink :to="`/tales/${favorite.taleDto.taleId}`"><img class="thumbnail" :src="favorite.taleDto.thumbnail" /></RouterLink>
                 <br>
-                <RouterLink :to="`/tale/${tale.taleId}`">{{ tale.title }}</RouterLink>
+                <RouterLink :to="`/tales/${favorite.taleDto.taleId}`">{{ favorite.taleDto.title }}</RouterLink>
                 <br>
-                재생 시간: {{ tale.time }}
+                재생 시간: {{ favorite.taleDto.time }}
             </div>
-            <button @click="deleteTale">삭제</button>
+            <button @click="deleteTale(favorite.favoriteId)">삭제</button>
         </ul>
     </div>
   </div>
@@ -38,10 +38,10 @@ const sortedTaleList = ref([]);
 const sortTaleList = () => {
   switch (sortOptionC.value) {
     case 'title':
-      sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => a.title.localeCompare(b.title));
+      sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => a.taleDto.title.localeCompare(b.taleDto.title));
       break;
     case 'likeCnt':
-      sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => b.likeCnt - a.likeCnt);
+      sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => b.taleDto.likeCnt - a.taleDto.likeCnt);
       break;
     case 'random':
       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort(() => Math.random() - 0.5);
@@ -51,15 +51,21 @@ const sortTaleList = () => {
   }
 };
 
+const deleteTale = function (favoriteId) {
+  favoriteStore.deleteMyFavoriteTale(favoriteId);
+  // sortedTaleList.value.splice(taleId, taleId);
+  // sortedTaleList.value = sortedTaleList.value.filter(tale => favorite.favoriteId !== taleId);
+  // window.location.reload()
+}
+
 onMounted(() => {
   favoriteStore.getMyFavoriteTalesList();
+  // console.log(tale.title.value);
   watch(() => favoriteStore.myFavoriteTalesList, sortTaleList, { immediate: true });
   watch(sortOptionC, sortTaleList);
 });
 
-const deleteTale = function (favoriteId) {
-  favoriteStore.deleteMyFavoriteTale(favoriteId);
-}
+
 </script>
 
 <style scoped>

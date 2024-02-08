@@ -29,6 +29,12 @@ export const useCustomTaleStore = defineStore("customtale", () => {
     });
   };
 
+  //나의책장 - 커스텀동화
+  const deleteCustomTale = function (customTaleId) {
+    axios.delete(`/customtale/${customTaleId}`,customTaleId, { withCredentials: true }).then((response) => {
+    });
+  };
+
   //상세조회
   const customTale = ref({});
   const getCustomTale = function (customTaleId) {
@@ -127,6 +133,7 @@ const getCustomTaleText = async function (userInputMessage) {
     getCustomTalesList,
     myCustomTalesList,
     getMyCustomTalesList,
+    deleteCustomTale,
     customTale,
     getCustomTale,
     insertCustomTale,
