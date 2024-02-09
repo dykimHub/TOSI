@@ -4,13 +4,13 @@
         <h1 class="form__title">로그인</h1>
   
         <div class="login-div">
-          <input type="text" class="login-input" placeholder=" " v-model="email">
           <label for="" class="login-label">Email</label>
+          <input type="text" class="login-input" placeholder=" " v-model="email">
         </div>
   
         <div class="login-div">
-          <input type="password" class="login-input" placeholder=" " v-model="password">
           <label for="" class="login-label">비밀번호</label>
+          <input type="password" class="login-input" placeholder=" " v-model="password">
         </div>
 
         <div class="login-div">
@@ -60,5 +60,20 @@
   
   
   <style scoped>
-  
+  .login-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.login-label {
+  width: 200px; /* 레이블의 너비를 일정하게 설정 */
+  margin-right: 10px;
+}
+
+.login-input {
+  flex: 1; /* 입력 칸이 남은 공간을 모두 차지하도록 설정 */
+  padding: 5px;
+}
+
   </style>

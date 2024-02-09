@@ -101,7 +101,7 @@ const postLogin = function(userInfo) {
     localStorage.removeItem("isLoggedIn");
     console.log(localStorage.getItem("isLoggedIn"));
     alert("로그아웃 했습니다.");
-    window.location.replace = `http://localhost:5173/`
+    window.location.replace(`http://localhost:5173/`)
   };
 
   //비밀번호 확인

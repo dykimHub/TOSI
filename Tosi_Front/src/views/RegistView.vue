@@ -77,7 +77,18 @@ const registerChild = function () {
   child.childName = "";
 }
 
+const validateEmail = (email) => {
+  const re = /\S+@\S+\.\S+/;
+  return re.test(email);
+};
+
 const regist = () => {
+
+  if (!validateEmail(email.value)) {
+    alert("올바른 이메일 형식이 아닙니다.");
+    return;
+  }
+
   if (
     email.value === "" ||
     password.value === "" ||
@@ -113,6 +124,11 @@ const regist = () => {
 const checkEmailDuplication = async function () {
   if (email.value.trim() === "") {
     return; // 이메일이 비어있을 경우 건너뛰기
+  }
+
+  if (!validateEmail(email.value)) {
+    alert("올바른 이메일 형식이 아닙니다.");
+    return;
   }
 
   try {

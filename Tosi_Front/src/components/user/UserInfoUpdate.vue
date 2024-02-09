@@ -103,4 +103,34 @@ const deleteChild = function(index) {
   userInfo.value.childrenList.splice(index, 1);
 };
 </script>
-<style scoped></style>
+<style scoped>
+.regist-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.regist-label {
+  width: 150px;
+  /* 레이블의 너비를 줄임 */
+  margin-right: 10px;
+}
+
+.regist-input {
+  flex: 1;
+  /* 입력 칸이 남은 공간을 모두 차지하도록 설정 */
+  padding: 5px;
+  max-width: 300px;
+  /* 최대 가로길이 설정 */
+}
+
+.children-li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.children-li button {
+  margin-left: 10px;
+}
+</style>

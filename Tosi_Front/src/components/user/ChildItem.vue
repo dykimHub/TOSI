@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
 
 const { child } = defineProps(['child']);
 const { emit } = defineEmits();

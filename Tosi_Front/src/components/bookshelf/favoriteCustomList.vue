@@ -10,6 +10,8 @@
           <option value="random">랜덤</option>
         </select>
       </div>
+      <button v-if="!deleteButton" @click="activateDeleteButton" class="deleteButton">삭제</button>
+      <button v-if="deleteButton" @click="deactivateDeleteButton" class="deleteButton">삭제 취소</button>
     </div>
     <div class="taleContainer">
       <ul v-for="tale in customTaleStore.myCustomTalesList" :key="tale.customTaleId">
@@ -20,7 +22,7 @@
           <br>
           재생 시간: {{ tale.time }}
         </div>
-        <button @click="deleteCustomTale(tale.customTaleId)">삭제</button>
+        <button v-if="deleteButton == true" @click="deleteTale(favorite.favoriteId)">×</button>
       </ul>
     </div>
   </div>
@@ -29,6 +31,16 @@
 import { useCustomTaleStore } from '@/stores/customTaleStore';
 import { onMounted, ref, watch } from 'vue';
 const customTaleStore = useCustomTaleStore();
+
+const deleteButton = ref(false);
+
+const activateDeleteButton = () => {
+  deleteButton.value = true;
+}
+const deactivateDeleteButton = () => {
+  deleteButton.value = false;
+}
+
 const sortOptionT = ref('title');
 const sortedTaleList = ref([]);
 const sortTaleList = () => {
@@ -57,6 +69,7 @@ const sortByDate = (a, b) => {
 };
 
 const deleteCustomTale = function (customTaleId) {
+  alert("나의 책장에서 삭제하시겠습니까?")
   customTaleStore.deleteCustomTale(customTaleId);
   // sortedTaleList.value.splice(customTaleId, customTaleId);
   // sortedTaleList.value = sortedTaleList.value.filter(tale => tale.customTaleId !== customTaleId);
@@ -72,6 +85,51 @@ onMounted(() => {
 
 </script>
 <style scoped>
+ul {
+  position: relative;
+}
+
+.deleteButton {
+  background-color: #d6b0ec;
+  border: none;
+  color: white;
+  font-size: 16px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.deleteButton:hover {
+  background-color: #d6b0ec;
+}
+
+.taleContainer {
+  position: relative;
+}
+
+.taleContainer button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.topOfTaleList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taleContainer button {
+    background-color: transparent; /* 배경색을 투명하게 설정 */
+    border: none; /* 테두리 제거 */
+    font-size: 20px; /* 텍스트 크기 설정 */
+    cursor: pointer; /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
+    position: absolute; /* 버튼을 모달 안에서 절대 위치로 설정 */
+    top: 10px; /* 위쪽 여백 설정 */
+    right: 10px; /* 오른쪽 여백 설정 */
+    color: rgb(0,0,0); /* 텍스트 색상 설정 */
+}
 .taleContainer {
   display: flex;
   justify-content: center;
@@ -92,7 +150,6 @@ onMounted(() => {
 .thumbnail {
   width: 200px;
 }
-
 .oneTale {
   width: 13em;
   text-align: center;
@@ -114,4 +171,5 @@ onMounted(() => {
 a {
   text-decoration: none;
   color: black;
-}</style>
+}
+</style>
