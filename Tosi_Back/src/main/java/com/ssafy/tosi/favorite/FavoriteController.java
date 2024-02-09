@@ -50,7 +50,7 @@ public class FavoriteController {
     public ResponseEntity<?> postFavorite(@RequestBody Favorite favorite) {
         try {
             Favorite savedFavorite = favoriteService.insertFavorite(favorite);
-            boolean result = taleDetailService.updaeLikeCnt(favorite.getTaleId());
+            boolean result = taleDetailService.updateLikeCnt(favorite.getTaleId());
 
             Map<Favorite, Boolean> map = new HashMap<>();
             map.put(savedFavorite, result);
