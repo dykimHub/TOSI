@@ -3,14 +3,16 @@ package com.ssafy.tosi.favorite;
 import com.ssafy.tosi.tale.Tale;
 import com.ssafy.tosi.user.entity.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Table(name = "favorites")
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 public class Favorite {
 
@@ -22,7 +24,13 @@ public class Favorite {
     @Column(nullable = false)
     private Integer userId;
 
-    @ManyToOne
-    @JoinColumn(name = "taleId")
-    private Tale tale;
+    @Column
+    private int taleId;
+
+    @Column(insertable = false)
+    private LocalDateTime regDate;
+
+//    @ManyToOne
+//    @JoinColumn(name = "taleId")
+//    private Tale tale;
 }
