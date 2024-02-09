@@ -31,7 +31,7 @@ const showFavoriteList = () => {
 <style scoped>
 .buttonContainer {
   display: flex;
-  justify-content: center; /* 버튼을 가로 상으로 중앙 정렬 */
+  justify-content: center;
 }
 
 button {
@@ -41,17 +41,17 @@ button {
   cursor: pointer;
   padding: 8px;
   position: relative;
-  width: calc(15% - 10px); /* taleList의 가로길이의 절반 */
-  border-top-left-radius: 10px; /* 왼쪽 상단 모서리 둥글게 처리 */
-  border-top-right-radius: 10px; /* 오른쪽 상단 모서리 둥글게 처리 */
+  width: calc(15% - 10px);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .favoriteListButton {
-  background-color: #c4ecb0; /* 즐겨찾기 동화 목록 버튼 배경색 */
+  background-color: #c4ecb0;
 }
 
 .customListButton {
-  background-color: #d6b0ec; /* 내가 만든 동화 목록 버튼 배경색 */
+  background-color: #d6b0ec;
 }
 
 button::before {
@@ -74,7 +74,7 @@ button:hover::before {
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  justify-content: center; /* taleListButtonContainer 내부 컨텐츠를 가로 상으로 중앙 정렬 */
+  justify-content: center;
   width: calc(100% - 70px);
 }
 

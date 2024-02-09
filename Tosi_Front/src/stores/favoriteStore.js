@@ -14,6 +14,7 @@ export const useFavoriteStore = defineStore("favorite", () => {
       console.log("즐겨찾기목록:" + myFavoriteTalesList.value);
     });
   };
+  
   //즐겨찾기 등록
   const postMyFavoriteTale = (favoriteInfo) => {
     axios.post(`/favorite`, favoriteInfo)

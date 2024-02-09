@@ -18,7 +18,7 @@
                 <button @click="[openRegistForm(), closeLoginForm()]">회원가입</button>
                 <button @click="[openLoginForm(), closeRegistForm()]">로그인</button>
             </div>
-            <div v-ifclass="toMenus">
+            <div v-if="showRegistForm == false && showLoginForm == false" class="toMenus">
                 <img class="icon" @click="toggleIcon('Play')" :class="{ 'active': activeIcon === 'Play' }"
                     src="@/assets/talelist.png" />
                 <img class="icon" @click="toggleIcon('Maker')" :class="{ 'active': activeIcon === 'Maker' }"
@@ -95,14 +95,14 @@ body {
 div {
     box-sizing: border-box;
 }
-
+/* 
 .black-bg {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0);
     position: fixed;
     padding: 20px;
-}
+} */
 /* 
 .white-bg {
     width: 100%;
@@ -117,22 +117,33 @@ div {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: fixed;
+    /* position: fixed; */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    padding: 20px;
+    padding: 40px;
     border-radius: 8px;
-    max-width: 90%; /* 최대 너비 설정 */
-    max-height: 90%; /* 최대 높이 설정 */
-    overflow: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+    width: 600px;
+    overflow-y: auto;
+    height: min-content;
+    /* max-width: 90%; 최대 너비 설정 */
+    /* max-height: 90%; 최대 높이 설정 */
+    /* overflow: auto; 내용이 넘칠 경우 스크롤바 표시 */
     /*z-index: 9999;  숫자가 클수록 앞에 위치 */
 }
 
+/* RegistForm {
+    overflow: auto;
+}
+
+LoginForm {
+    height: min-content;
+} */
+
 .modal button {
-    background-color: transparent; /* 배경색을 투명하게 설정 */
-    border: none; /* 테두리 제거 */
+    background-color: transparent; /* 투명 */
+    border: none; /* 테두리 없음 */
     font-size: 20px; /* 텍스트 크기 설정 */
     cursor: pointer; /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
     position: absolute; /* 버튼을 모달 안에서 절대 위치로 설정 */

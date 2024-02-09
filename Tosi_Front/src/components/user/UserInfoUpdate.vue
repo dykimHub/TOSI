@@ -42,12 +42,12 @@
             <ChildItem v-for="(child, index) in childrenList" :key="index" :child="child" @deleteChild="deleteChild" />
           </ul>
         </div> -->
-        <ul class="children-ul">
+        <!-- <ul class="children-ul">
           <li v-for="(child, index) in userInfo.childrenList" :key="index" class="children-li">
             <ChildItem :key="index" :child="child"/>
             <button @click="deleteChild(index)">삭제</button>
           </li>
-        </ul>
+        </ul> -->
         <!-- <ul class="children-ul">
           <li v-for="(child, index) in userInfo.childrenList" :key="index" class="children-li">
             {{ child.childName }} - 성별: {{ child.gender }} - 내 아이 여부: {{ child.myBaby }}
@@ -62,7 +62,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "@/stores/userStore";
-import ChildItem from "@/components/user/ChildItem.vue";
 const store = useUserStore();
 const userInfo = ref({ email: '', bookshelfName: '', childrenList: [] });
 const child = ref({ childName: '', gender: 0, myBaby: false });

@@ -7,7 +7,7 @@
     <input type="submit" class="set-btn" value="확인" @click="checkPassword">
   </div>
   <div class="user-info-container">
-    <UserInfoUpdate />
+    <UserInfoUpdate v-if = "passwordCheck == true" />
   </div>
 </template>
 
@@ -19,17 +19,18 @@ import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 const store = useUserStore()
 
 const password = ref("");
+const passwordCheck = ref();
 
-const checkPassword = () => {
+const checkPassword = async function () {
   if (
     password.value === ""
   ) {
     alert("비밀번호를 입력해주세요");
     return;
   }
-  store.getPasswordCheck(password);
+  await store.getPasswordCheck(password);
+  passwordCheck.value = store.passwordCheck.value
 };
-
 
 </script>
 

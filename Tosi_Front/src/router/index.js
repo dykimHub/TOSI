@@ -19,8 +19,6 @@ import TaleEnd from "@/components/taleDetail/TaleEnd.vue";
 import UserInfoView from "@/views/UserInfoView.vue";
 import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 import BookshelfView from "@/views/BookshelfView.vue";
-import favoriteTaleList from "@/components/bookshelf/favoriteTaleList.vue";
-import favoriteCustomList from "@/components/bookshelf/favoriteCustomList.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -28,96 +26,98 @@ const router = createRouter({
       path: "/",
       name: "NonMemberMainView",
       component: NonMemberMainView,
-      // meta: { requiresGuest: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/tosi",
       name: "tosi",
       component: HomeView,
-      // meta: { requiresAuth: true },
+      meta: { requiresAuth: true },
       children: [
         {
           path: "/tales",
           name: "tales",
           component: TalesView,
-          // meta: { requiresAuth: true },
+          meta: { requiresAuth: true },
         },
         {
           path: "/tales/:taleId",
           name: "taleDetail",
           component: TaleDetail,
           props: true,
-          // meta: { requiresAuth: true },
+          meta: { requiresAuth: true },
         },
         {
           path: "/tales/play/:speaker",
           name: "talePlay",
           component: TalePlay,
+          meta: { requiresAuth: true },
           props: true,
         },
         {
           path: "/tales/end/:taleId",
           name: "taleEnd",
           component: TaleEnd,
+          meta: { requiresAuth: true },
           props: true,
         },
         {
           path: "/customTale",
           name: "customTale",
           component: CustomTaleView,
-          // meta: { requiresAuth: true },
+          meta: { requiresAuth: true },
           children: [
             {
               path: "",
               name: "customTaleList",
               component: CustomTaleList,
-              // meta: { requiresAuth: true },
+              meta: { requiresAuth: true },
             },
             {
               path: "create",
               name: "customTaleCreate",
               component: CustomTaleCreate,
-              // meta: { requiresAuth: true },
+              meta: { requiresAuth: true },
             },
             {
               path: "save",
               name: "customTaleSave",
               component: CustomTaleSave,
-              // meta: { requiresAuth: true },
+              meta: { requiresAuth: true },
               props: true,
             },
             {
               path: ":customTaleId",
               name: "customTaleDetail",
               component: CustomTaleDetail,
-              // meta: { requiresAuth: true },
+              meta: { requiresAuth: true },
             },
             {
               path: "play/:speaker",
               name: "customTalePlay",
               component: CustomTalePlay,
-              // meta: { requiresAuth: true },
+              meta: { requiresAuth: true },
               props: true,
             },
             {
               path: "createplay/:speaker",
               name: "customTaleCreatePlay",
               component: CustomTaleCreatePlay,
-              // meta: { requiresAuth: true },
+              meta: { requiresAuth: true },
               props: true,
             },
             {
               path: "end",
               name: "customTaleEnd",
               component: CustomTaleEnd,
-              // meta: { requiresAuth: true },
+              meta: { requiresAuth: true },
               props: true,
             },
             {
               path: "loading",
               name: "loading",
               component: LoadingModal,
-              // meta: { requiresAuth: true },
+              meta: { requiresAuth: true },
             },
           ],
         },
@@ -125,57 +125,45 @@ const router = createRouter({
           path: "/tales/chat",
           name: "gptConversationView",
           component: gptConversationView,
-          // meta: { requiresAuth: true },
+          meta: { requiresAuth: true },
         },
         {
           path: "/tales/end/chat/:cname/:bname",
           name: "gptConversationSend",
           component: gptConversationSend,
-          // meta: { requiresAuth: true },
+          meta: { requiresAuth: true },
           props: true,
         },
         {
           path: "/userInfo",
           name: "userInfo",
           component: UserInfoView,
-          // meta: { requiresAuth: true },
+          meta: { requiresAuth: true },
         },
         {
           path: "/userInfo/update",
           name: "userInfoUpdate",
           component: UserInfoUpdate,
-          // meta: { requiresAuth: true },
+          meta: { requiresAuth: true },
         },
         {
           path: "/bookshelf",
           name: "bookshelf",
           component: BookshelfView,
-          // meta: { requiresAuth: true },
-          children: [
-            {
-              path: "",
-              name: "favoriteTaleList",
-              component: favoriteTaleList,
-              // meta: { requiresAuth: true },
-            },
-            {
-              path: "custom",
-              name: "favoriteCustomList",
-              component: favoriteCustomList,
-              // meta: { requiresAuth: true },
-            },
-          ],
+          meta: { requiresAuth: true },
         },
       ],
     },
   ],
 });
+
 router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
+  const isLoggedInS = sessionStorage.getItem("isLoggedIn") === "true";
+  if (to.matched.some((record) => record.meta.requiresAuth) && (!isLoggedIn && !isLoggedInS)) {
     alert("메인 페이지로 이동합니다.");
     next("/");
-  } else if (to.matched.some((record) => record.meta.requiresGuest) && isLoggedIn) {
+  } else if (to.matched.some((record) => record.meta.requiresGuest) && (isLoggedIn || isLoggedInS)) {
     alert("이미 로그인 되어있습니다.");
     next("/tosi");
   } else {

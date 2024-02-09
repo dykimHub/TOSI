@@ -20,13 +20,15 @@
 <script setup>
 import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
+import { useCookieStore } from "@/stores/cookieStore";
 
 const store = useUserStore()
+const cookieStore = useCookieStore();
 
 const isLoggedIn = ref('');
 
 onMounted(() => {
-    if(localStorage.getItem('isLoggedIn') != null) {
+    if(sessionStorage.getItem('isLoggedIn') != null || cookieStore.getCookieValue('isLogggedIn') != null) {
         isLoggedIn.value = 'true';
     }
   console.log("Is Authenticated:", isLoggedIn.value);

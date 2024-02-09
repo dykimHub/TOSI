@@ -14,64 +14,109 @@
       <button v-if="deleteButton" @click="deactivateDeleteButton" class="deleteButton">삭제 취소</button>
     </div>
     <div class="taleContainer">
+      <ul v-for="favorite in favorites" :key="favorite.id">
+        <div class="oneTale">
+          <RouterLink :to="`/tales/${favorite.taleId}`"><img class="thumbnail" :src="favorite.thumbnail" /></RouterLink>
+          <br />
+          <RouterLink :to="`/tales/${favorite.taleId}`">{{ favorite.title }}</RouterLink>
+          <br />
+          재생 시간: {{ favorite.time }}
+        </div>
+        <button v-if="deleteButton" @click="deleteFavorite(favorite.taleId)">×</button>
+      </ul>
+<!-- 
       <ul v-for="favorite in favoriteStore.myFavoriteTalesList" :key="favorite.favoriteId">
         <div class="oneTale">
-          <RouterLink :to="`/tales/${favorite.taleDto.taleId}`"><img class="thumbnail" :src="favorite.taleDto.thumbnail" /></RouterLink>
+          <RouterLink :to="`/tales/${favorite.taleDto.taleId}`"><img class="thumbnail"
+              :src="favorite.taleDto.thumbnail" /></RouterLink>
           <br>
           <RouterLink :to="`/tales/${favorite.taleDto.taleId}`">{{ favorite.taleDto.title }}</RouterLink>
           <br>
           재생 시간: {{ favorite.taleDto.time }}
         </div>
         <button v-if="deleteButton" @click="deleteTale(favorite.favoriteId)">×</button>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </template>
 
 <script setup>
-import { useFavoriteStore } from '@/stores/favoriteStore';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, computed } from "vue";
+import { useUserStore } from "@/stores/userStore";
+import axios from "axios";
 
-const favoriteStore = useFavoriteStore();
+const userStore = useUserStore();
+userStore.getUser();
 
-const deleteButton = ref(false);
+const favoriteList = ref([]);
+const favorites = computed(() => favoriteList.value);
 
-const activateDeleteButton = () => {
-  deleteButton.value = true;
-}
-const deactivateDeleteButton = () => {
-  deleteButton.value = false;
-}
+watch(
+  () => userStore.userInfo,
+  (userInfo) => {
+    if (userInfo && userInfo.userId) {
+      axios
+        .get(`http://localhost:8080/favorites/${userInfo.userId}`)
+        .then((res) => (favoriteList.value = res.data))
+        .catch((err) => console.error(err));
+    }
+  },
+  { immediate: true }
+);
 
-const sortOptionC = ref('title');
-const sortedTaleList = ref([]);
-
-const sortTaleList = () => {
-  switch (sortOptionC.value) {
-    case 'title':
-      sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => a.taleDto.title.localeCompare(b.taleDto.title));
-      break;
-    case 'likeCnt':
-      sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => b.taleDto.likeCnt - a.taleDto.likeCnt);
-      break;
-    case 'random':
-      sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort(() => Math.random() - 0.5);
-      break;
-    default:
-      break;
-  }
+const deleteFavorite = (taleId) => {
+  axios
+    .get(`http://localhost:8080/favorites/${userStore.userInfo.userId}/${taleId}`)
+    .then((res) => {
+      const favoriteId = res.data;
+      return axios.delete(`http://localhost:8080/favorites/${favoriteId}`);
+    })
+    .then(() => {
+      favoriteList.value = favoriteList.value.filter((favorite) => favorite.taleId !== taleId);
+    })
+    .catch((err) => console.error(err));
 };
 
-const deleteTale = function (favoriteId) {
-  alert("나의 책장에서 삭제하시겠습니까?")
-  favoriteStore.deleteMyFavoriteTale(favoriteId);
-}
 
-onMounted(() => {
-  favoriteStore.getMyFavoriteTalesList();
-  watch(() => favoriteStore.myFavoriteTalesList, sortTaleList, { immediate: true });
-  watch(sortOptionC, sortTaleList);
-});
+// console.log(favoriteList.value);
+
+// import { useFavoriteStore } from '@/stores/favoriteStore';
+// import { onMounted, ref, watch } from 'vue';
+
+// const favoriteStore = useFavoriteStore();
+
+// const sortOptionC = ref('title');
+// const sortedTaleList = ref([]);
+
+// const sortTaleList = () => {
+//   switch (sortOptionC.value) {
+//     case 'title':
+//       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => a.taleDto.title.localeCompare(b.taleDto.title));
+//       break;
+//     case 'likeCnt':
+//       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => b.taleDto.likeCnt - a.taleDto.likeCnt);
+//       break;
+//     case 'random':
+//       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort(() => Math.random() - 0.5);
+//       break;
+//     default:
+//       break;
+//   }
+// };
+
+// const deleteTale = function (favoriteId) {
+//   favoriteStore.deleteMyFavoriteTale(favoriteId);
+//   // sortedTaleList.value.splice(taleId, taleId);
+//   // sortedTaleList.value = sortedTaleList.value.filter(tale => favorite.favoriteId !== taleId);
+//   // window.location.reload()
+// }
+
+// onMounted(() => {
+//   favoriteStore.getMyFavoriteTalesList();
+//   // console.log(tale.title.value);
+//   watch(() => favoriteStore.myFavoriteTalesList, sortTaleList, { immediate: true });
+//   watch(sortOptionC, sortTaleList);
+// });
 
 </script>
 
@@ -112,15 +157,24 @@ ul {
 }
 
 .taleContainer button {
-    background-color: transparent; /* 배경색을 투명하게 설정 */
-    border: none; /* 테두리 제거 */
-    font-size: 20px; /* 텍스트 크기 설정 */
-    cursor: pointer; /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
-    position: absolute; /* 버튼을 모달 안에서 절대 위치로 설정 */
-    top: 10px; /* 위쪽 여백 설정 */
-    right: 10px; /* 오른쪽 여백 설정 */
-    color: rgb(0,0,0); /* 텍스트 색상 설정 */
+  background-color: transparent;
+  /* 배경색을 투명하게 설정 */
+  border: none;
+  /* 테두리 제거 */
+  font-size: 20px;
+  /* 텍스트 크기 설정 */
+  cursor: pointer;
+  /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
+  position: absolute;
+  /* 버튼을 모달 안에서 절대 위치로 설정 */
+  top: 10px;
+  /* 위쪽 여백 설정 */
+  right: 10px;
+  /* 오른쪽 여백 설정 */
+  color: rgb(0, 0, 0);
+  /* 텍스트 색상 설정 */
 }
+
 .taleContainer {
   display: flex;
   justify-content: center;
@@ -136,12 +190,14 @@ ul {
   margin: 35px;
   padding-top: 40px;
   opacity: 0.95;
-  max-width: calc(100% - 70px); /* 화면 너비에서 좌우 마진값만큼 뺀 값으로 최대 너비 설정 */
+  max-width: calc(100% - 70px);
+  /* 화면 너비에서 좌우 마진값만큼 뺀 값으로 최대 너비 설정 */
 }
 
 .thumbnail {
   width: 200px;
 }
+
 .oneTale {
   width: 13em;
   text-align: center;
@@ -163,5 +219,4 @@ ul {
 a {
   text-decoration: none;
   color: black;
-}
-</style>
+}</style>

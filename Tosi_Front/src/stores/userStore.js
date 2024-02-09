@@ -2,9 +2,7 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import { useCookieStore } from "@/stores/cookieStore";
 
-import axios from "axios";
-
-const User_API = `http://localhost:8080/users`;
+import axios from "@/util/http-common";
 
 export const useUserStore = defineStore("user", () => {
   const userInfo = ref({ email: "", bookshelfName: "", childrenList: [] });
@@ -19,11 +17,16 @@ export const useUserStore = defineStore("user", () => {
   //회원 가입
   const postUser = (userInfo) => {
     axios
-      .post(`${User_API}/regist`, userInfo)
+      .post(`/users/regist`, userInfo)
       .then((response) => {
         console.log(response.data);
         console.log(userInfo);
-        postLogin(userInfo);
+        let loginInfo = {
+          email: userInfo.email.value,
+          password: userInfo.password.value,
+          autoLogin: false
+        };
+        postLogin(loginInfo);
       })
       .catch((error) => {
         console.error("에러 발생:", error);
@@ -34,7 +37,7 @@ export const useUserStore = defineStore("user", () => {
   const getUser = function () {
     axios({
       method: "GET",
-      url: User_API,
+      url: `/users`,
       withCredentials: true,
     }).then((response) => {
       userInfo.value = response.data;
@@ -46,7 +49,7 @@ export const useUserStore = defineStore("user", () => {
 
   //회원정보 수정
   const updateUser = function (data) {
-    axios.put(User_API, data, { withCredentials: true }).then(() => {
+    axios.put(`/users`, data, { withCredentials: true }).then(() => {
       console.log(data);
       console.log("회원정보 수정 완료");
       alert("회원 정보를 수정했습니다.");
@@ -58,7 +61,7 @@ export const useUserStore = defineStore("user", () => {
   const deleteUser = function () {
     axios({
       method: "delete",
-      url: User_API,
+      url: `/users`,
       withCredentials: true,
     }).then(() => {
       window.location.replace("/tosi")
@@ -69,7 +72,7 @@ export const useUserStore = defineStore("user", () => {
   const getUserSearch = async function (email) {
     await axios({
       method: "GET",
-      url: `${User_API}/email-check`,
+      url: `/users/email-check`,
       params: {
         email: email,
       },
@@ -80,14 +83,22 @@ export const useUserStore = defineStore("user", () => {
   };
 
 // 로그인
-const postLogin = function(userInfo) {
-  axios.post(`${User_API}/login`, userInfo)
+const postLogin = function(loginInfo) {
+  axios({
+    method: "POST",
+    url: `/users/login`,
+    data: loginInfo,
+
+  })
     .then((response) => {
-      localStorage.setItem('isLoggedIn', 'true');
-      if (localStorage.getItem('isLoggedIn') != false) {
-        console.log("토큰" + localStorage.getItem('isLoggedIn'));
-        window.location.replace(`http://localhost:5173/tosi`);
+      let loginType = '';
+      if(loginInfo.autoLogin == true) {
+        localStorage.setItem('isLoggedIn', 'true');
+      } else {
+        sessionStorage.setItem('isLoggedIn', 'true');
       }
+      alert("환영합니다.")
+      window.location.replace(`http://localhost:5173/tosi`);
     })
     .catch(() => {
       // 로그인 실패 처리
@@ -97,8 +108,10 @@ const postLogin = function(userInfo) {
 
   //로그아웃
   const getLogout = () => {
-    axios.get(`${User_API}/logout`, { withCredentials: true });
+    axios.get(`/users/logout`, { withCredentials: true });
     localStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem("isLoggedIn");
+    cookieStore.deleteCookie("isLoggedIn");
     console.log(localStorage.getItem("isLoggedIn"));
     alert("로그아웃 했습니다.");
     window.location.replace(`http://localhost:5173/`)
@@ -107,7 +120,7 @@ const postLogin = function(userInfo) {
   //비밀번호 확인
   const getPasswordCheck = function (password) {
     axios
-      .post(`${User_API}/password-check`, { password }, { withCredentials: true })
+      .post(`/users/password-check`, { password }, { withCredentials: true })
       .then((response) => {
         console.log(response);
 
@@ -120,7 +133,7 @@ const postLogin = function(userInfo) {
   const getChildrenList = function () {
     axios({
       method: "GET",
-      url: `${User_API}/children-list`,
+      url: `/users/children-list`,
       withCredentials: true,
     }).then((response) => {
       userInfo.value = response.data;
