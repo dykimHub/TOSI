@@ -38,17 +38,17 @@ public class UserController {
 
     // 회원 정보 조회
     @GetMapping
-    public ResponseEntity<UserInfoResponse> getUser(HttpServletRequest request) {
+    public ResponseEntity<User> getUser(HttpServletRequest request) {
 
         Integer userId = (Integer) request.getAttribute("userId");
         User user = userService.selectUser(userId);
-        UserInfoResponse userInfoResponse = UserInfoResponse.builder()
-                .email(user.getEmail())
-                .bookshelfName((user.getBookshelfName()))
-                .childrenList(user.getChildrenList())
-                .build();
+//        UserInfoResponse userInfoResponse = UserInfoResponse.builder()
+//                .email(user.getEmail())
+//                .bookshelfName((user.getBookshelfName()))
+//                .childrenList(user.getChildrenList())
+//                .build();
 
-        return new ResponseEntity<UserInfoResponse>(userInfoResponse, HttpStatus.OK);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     // 회원 정보 수정

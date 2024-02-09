@@ -6,9 +6,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name ="tales")
+@Entity
 @Data
-@Getter
+@Table(name="tales")
 public class Tale {
 
     @Id
