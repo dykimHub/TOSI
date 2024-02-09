@@ -14,7 +14,7 @@ import java.nio.file.Files;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class S3Controller {
     private final S3Service s3UploadService;
 
