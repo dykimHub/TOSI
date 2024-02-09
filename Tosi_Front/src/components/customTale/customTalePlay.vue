@@ -184,7 +184,7 @@ onMounted(async () => {
 .play {
     width: 1180px;
     height: 800px;
-    border: 15px solid #cee8e8;
+    border: 5px solid #cee8e8;
     margin: 20px 0px 30px 40px;
     border-radius: 50px;
     background-color: #f5f5f5;

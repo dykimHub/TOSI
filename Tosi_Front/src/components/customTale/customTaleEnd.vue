@@ -20,23 +20,24 @@
       <div class="info-column">
         <p class="minititle">친구들의 동화 보기</p>
         <div class="othercustom">
-          <div
-            v-for="customTale in getRandomCustomTales"
-            :key="customTale.customTaleId"
-          >
-            <div class="onetale">
-              <router-link :to="`/customtale/${customTale.customTaleId}`">
-                <img
-                  :src="customTale.thumbnail"
-                  class="img-fluid"
-                  style="height: 150px"
-                  alt="커스텀이미지"
-                />
-                <div>{{ customTale.title }}</div>
-              </router-link>
-            </div>
-          </div>
+      <div class="twoColumns">
+        <div
+          v-for="customTale in getRandomCustomTales"
+          :key="customTale.customTaleId"
+          class="onetale"
+        >
+          <router-link :to="`/customtale/${customTale.customTaleId}`">
+            <img
+              :src="customTale.thumbnail"
+              class="img-fluid"
+              style="height: 150px"
+              alt="커스텀이미지"
+            />
+            <div>{{ customTale.title }}</div>
+          </router-link>
         </div>
+      </div>
+    </div>
       </div>
     </div>
   </div>
@@ -95,6 +96,7 @@ a {
   padding: 40px 0px 0px 50px;
   border: 5px solid #cee8e8;
   min-height: 90vh;
+  min-width: 130vh
 }
 
 .twoContainer {
@@ -136,7 +138,7 @@ a {
 }
 
 .book-column {
-  width: 80%;
+  width: 40%;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -224,13 +226,18 @@ a {
   padding: 0 10px;
   margin-top: 20px;
 }
-.othercustom {
+/* .othercustom {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
+} */
+.twoColumns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2개의 열로 설정 */
+  gap: 20px; /* 열 사이의 간격 설정 */
 }
 .onetale {
-  margin: 20px;
+  margin: 10px;
 }
 </style>
