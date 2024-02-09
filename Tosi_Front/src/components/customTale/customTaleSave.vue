@@ -10,7 +10,7 @@
 
       <div class="book-column">
          <div class="btncolumn">
-            <button class="button">다시 만들래요!</button>
+            <button class="button" @click="retry">다시 만들래요!</button>
           <RouterLink :to="`/customtale`">
             <button class="button">나가기</button>
           </RouterLink>
@@ -70,6 +70,7 @@ import { onMounted, ref } from "vue";
 const customTaleStore = useCustomTaleStore();
 const S3Store = useS3Store();
 import LoadingModal from "@/components/customTale/loadingModal.vue";
+import router from "@/router";
 
 const loading = ref(false);
 const customTale = ref({
@@ -93,6 +94,11 @@ const saveCustomTale = async function () {
     loading.value = false;
   }
 };
+
+const retry = function(){
+  customTaleStore.resetCustomTale();
+  router.push({name:'customTaleCreate'})
+}
 </script>
 
 <style scoped>
