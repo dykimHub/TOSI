@@ -49,7 +49,7 @@ export const useCustomTaleStore = defineStore("customtale", () => {
   const insertCustomTale = function (customTale) {
     axios.post(`/customtale`, customTale, { withCredentials: true }).then(() => {
       // console.log(customTale.value);
-      router.push({name:'favoriteCustomList'})
+      router.push({name:'customTaleList'})
       alert("저장되었습니다.")
     });
   };

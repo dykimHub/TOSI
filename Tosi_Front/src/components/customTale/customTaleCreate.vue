@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="talelistContainer">
     <div class="topOfTaleList">
-      <h2>나만의 동화 만들기</h2>
+      <div class="title">나만의 동화 만들기</div>
     </div>
 
     <loading-modal :is-loading="loading"></loading-modal>
@@ -9,63 +9,83 @@
     <div class="twoContainer">
       <div class="info-column">
         <div class="info" v-if="!customTaleStore.customTaleText.gptMessage">
-          <div class="input">
-            <label for="prompt1" class="form-label">주인공</label>
-            <div class="input-group">
-              <input
-                type="text"
-                id="prompt1"
-                v-model="prompt[0]"
-                class="form-control"
-              />
+          <div class="inputgroup">
+            <div class="input">
+              <label for="prompt1" class="form-label">주인공</label>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                v-model="selectedChild"
+              >
+                <option value="" disabled selected>
+                  주인공을 선택해보세요
+                </option>
+                <option
+                  v-for="(child, index) in userStore.userInfo.childrenList"
+                  :key="index"
+                  :value="child"
+                >
+                  {{ child.childName }}
+                </option>
+              </select>
+            </div>
+
+            <div class="input">
+              <label for="prompt0" class="form-label">배경</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="prompt0"
+                  v-model="prompt[0]"
+                  class="form-control"
+                  placeholder="예) 집, 놀이터 ..."
+                />
+              </div>
+            </div>
+
+            <div class="input">
+              <label for="prompt1" class="form-label">키워드</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="prompt1"
+                  v-model="prompt[1]"
+                  class="form-control"
+                  placeholder="예) 장난감, 우주여행 ..."
+                />
+              </div>
             </div>
           </div>
-
-          <div class="input">
-            <label for="prompt2" class="form-label">배경</label>
-            <div class="input-group">
-              <input
-                type="text"
-                id="prompt2"
-                v-model="prompt[1]"
-                class="form-control"
-              />
-            </div>
-          </div>
-
-          <div class="input">
-            <label for="prompt3" class="form-label">키워드</label>
-            <div class="input-group">
-              <input
-                type="text"
-                id="prompt3"
-                v-model="prompt[2]"
-                class="form-control"
-              />
-            </div>
-          </div>
-
-          <div >
-            <button class="button" @click="generateCustomTale">동화 생성</button>
+          <div class="infobtn">
+            <button class="button" @click="generateCustomTale">
+              동화 생성
+            </button>
           </div>
         </div>
 
         <div class="info" v-else>
           <h3>목소리 선택</h3>
-          <div>
-            <div v-for="item in items" :key="item.speaker">
-              <label
+          <div class="itemform-container">
+            <div v-for="item in items" :key="item.speaker" class="itemform">
+              <label style="display: flex; flex-direction: row"
                 ><input
                   type="radio"
                   :value="item.speaker"
                   v-model="speaker"
                   :name="item.name"
                 />
-                {{ item.name }}</label
-              >
+                {{ item.name }}
+                <img
+                  src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+                  alt="Speaker Image"
+                  class="speaker-image"
+                  @click="playVoice(item.url)"
+                />
+              </label>
             </div>
-            </div>
-          <div class="button" @click="readBook">재생
+          </div>
+          <div class="infobtn">
+            <button class="button" @click="readBook">재생</button>
           </div>
         </div>
       </div>
@@ -75,10 +95,8 @@
           <img
             v-if="customTaleStore.customTaleImage"
             :src="customTaleStore.customTaleImage"
-            class="img-fluid"
-            style="height: 300px"
           />
-          <img v-else :src="randomImageUrl" alt="" style="height: 300px" />
+          <img v-else :src="randomImageUrl" alt="" />
         </div>
       </div>
     </div>
@@ -87,12 +105,15 @@
 
 <script setup>
 import { useCustomTaleStore } from "@/stores/customTaleStore";
+import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
 import LoadingModal from "@/components/customTale/loadingModal.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const customTaleStore = useCustomTaleStore();
+const userStore = useUserStore();
+userStore.getUser();
 
 const generateRandomImageUrl = () => {
   const randomNumber = Math.floor(Math.random() * 9) + 1;
@@ -100,14 +121,15 @@ const generateRandomImageUrl = () => {
 };
 const randomImageUrl = ref(generateRandomImageUrl());
 
-const prompt = ref(["", "", ""]);
+const prompt = ref(["", ""]);
+const selectedChild = ref({ childName: "", gender: 0 });
 
 const loading = ref(false);
 const generateCustomTale = async function () {
   try {
     loading.value = true;
     if (prompt.value.some((prompt) => prompt === "")) {
-      alert("키워드를 모두 입력해주세요.");
+      alert("입력칸을 모두 채워주세요.");
       return;
     }
 
@@ -117,26 +139,30 @@ const generateCustomTale = async function () {
       alert("나쁜 말 안돼요.");
       return;
     }
+    const genderText = selectedChild.value.gender === 0 ? "girl" : "boy";
 
     const imagePrompt =
       "3D animation illustrations for children's books with " +
-      prompt.value[0] +
+      genderText +
       " child, " +
-      prompt.value[1] +
+      prompt.value[0] +
       " is the background and " +
-      prompt.value[2] +
-      // + ","+ prompt.value[3] + ","+ prompt.value[4]
+      prompt.value[1] +
       "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image.";
     // await customTaleStore.getCustomTaleImage(imagePrompt);
 
     const gptPrompt =
+      selectedChild.value.childName +
+      "라는" +
+      genderText +
+      " 아이를 주인공, " +
       prompt.value[0] +
-      "라는 아이를 주인공, " +
-      prompt.value[1] +
       "을 배경, " +
-      prompt.value[2] +
+      prompt.value[1] +
       "를 이용해 500자 내외의 환상적인 동화를 만들어줘. 줄바꿈은 하지 말아줘. 성별언급은 하지말아줘. 자연스럽고 매끄러운 문맥.보내기전에 줄바꿈 모두 없애줘. 보내기전에 문맥이 자연스러운지 확인해줘.";
 
+    // console.log(gptPrompt);
+    // console.log(imagePrompt);
     await customTaleStore.getCustomTaleText(gptPrompt);
     // customTaleStore.getCustomTaleText(gptPrompt);
   } catch (error) {
@@ -146,19 +172,55 @@ const generateCustomTale = async function () {
   }
 };
 
+//tts
 const speaker = ref("vdain");
 const items = ref([
-  { name: "다인", speaker: "vdain", emotion: 3, "emotion-strength": 1 },
-  { name: "고은", speaker: "vgoeun", emotion: 3, "emotion-strength": 1 },
-  { name: "미경", speaker: "vmikyung", emotion: 3, "emotion-strength": 1 },
-  { name: "이안", speaker: "vian", emotion: 0, "emotion-strength": 0 },
-  { name: "대성", speaker: "vdaeseong", emotion: 3, "emotion-strength": 1 },
-  { name: "원탁", speaker: "nwontak", emotion: 0, "emotion-strength": 0 },
+  {
+    name: "다인",
+    speaker: "vdain",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdain.mp3",
+  },
+  {
+    name: "고은",
+    speaker: "vgoeun",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vgoeun.mp3",
+  },
+  {
+    name: "미경",
+    speaker: "vmikyung",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vmikyung.mp3",
+  },
+  {
+    name: "이안",
+    speaker: "vian",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vian.mp3",
+  },
+  {
+    name: "대성",
+    speaker: "vdaeseong",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdaeseong.mp3",
+  },
+  {
+    name: "원탁",
+    speaker: "nwontak",
+    url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/nwontak.mp3",
+  },
 ]);
-
+const audioRef = ref(null);
+const playVoice = (url) => {
+  if (audioRef.value != null) {
+    audioRef.value.pause();
+  }
+  const audio = new Audio(url);
+  audioRef.value = audio;
+  audioRef.value.play();
+};
+//end tts
 const readBook = async () => {
   try {
-    await customTaleStore.readCustomTale(customTaleStore.customTaleText.gptMessage)
+    await customTaleStore.readCustomTale(
+      customTaleStore.customTaleText.gptMessage
+    );
     // console.log(customTaleStore.pages);
     navigateToTalePlay();
   } catch (error) {
@@ -167,7 +229,9 @@ const readBook = async () => {
 };
 
 const navigateToTalePlay = () => {
-  const selectedSpeaker = items.value.find((item) => item.speaker === speaker.value);
+  const selectedSpeaker = items.value.find(
+    (item) => item.speaker === speaker.value
+  );
   router.push({
     name: "customTaleCreatePlay",
     params: { speaker: selectedSpeaker.speaker },
@@ -181,16 +245,7 @@ onMounted(() => {
 });
 </script>
 
-<style>
-.taleContainer {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-}
-
+<style scoped>
 .talelistContainer {
   background-color: white;
   border-radius: 20px;
@@ -198,15 +253,8 @@ onMounted(() => {
   /* padding-top: 40px;
   padding-bottom: 40px; */
   opacity: 0.95;
-  margin: auto;
-  width: 90%;
   padding: 40px 60px;
-}
-
-.topOfTaleList {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  border: 5px solid #cee8e8;
 }
 
 .twoContainer {
@@ -214,27 +262,62 @@ onMounted(() => {
   justify-content: space-between;
   margin-left: 10%;
   margin-right: 10%;
+  height: 350px;
 }
-
+.title {
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: inset 0 -20px 0 #c4ecb0;
+  font-size: 40px;
+  margin: 30px 0px 0px 50px;
+  margin-bottom: 40px;
+  line-height: 1;
+  text-align: left;
+}
 .info-column {
   width: 45%;
+  display: flex;
+  align-items: center;
+}
+
+.inputgroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .book-column {
   width: 50%;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 
 .info {
+  background-color: #ffffff;
+  border: 3px solid #cee8e8;
+  border-radius: 20px;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.input {
+  margin-bottom: 10px;
 }
 
 .book {
   width: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .book img {
-  width: 100%;
-  height: auto;
+  width: 80%;
+  height: 80%;
 }
 
 .loading-modal {
@@ -257,7 +340,6 @@ onMounted(() => {
   border-radius: 8px;
 }
 
-
 .button {
   margin-top: 20px;
   width: 130px;
@@ -273,8 +355,21 @@ onMounted(() => {
   box-shadow: 3px 3px 5px 0px #0002;
 }
 .button:hover {
-   box-shadow:
-   7px 7px 5px 0px #0002,
-   4px 4px 5px 0px #0001;
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
+}
+
+.infobtn {
+  text-align: center;
+}
+
+.itemform-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.itemform {
+  flex: 0 0 33.33%;
+  box-sizing: border-box;
+  /* padding: 0 10px; */
+  margin-top: 20px;
 }
 </style>

@@ -216,14 +216,14 @@ const autoAudio = (text) => {
 const onAudioEnded = () => {
   if (currentPageIndex.value < pages.length) flipPage(currentPageIndex.value, true);
 };
-// 페이지 변화를 감지해서 틈
-watch(pages, (newPages, oldPages) => {
-  if (newPages && newPages.length > 0) {
-    // 페이지 배열이 변경되었을 때 실행할 코드 작성
-    console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
-    autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
-  }
-});
+// //페이지 변화를 감지해서 틈
+// watch(pages, (newPages, oldPages) => {
+//   if (newPages && newPages.length > 0) {
+//       // 페이지 배열이 변경되었을 때 실행할 코드 작성
+//       console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
+//       autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
+//   }
+// });
 onMounted(async () => {
   try {
     getFavorite();

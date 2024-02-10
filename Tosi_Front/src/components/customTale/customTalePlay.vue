@@ -23,7 +23,7 @@
                         </div>
                         <div class="front pre-wrap">
                             <div class="page-separator-right"></div>
-                            {{ pages[index].right }}
+                            <div class="content">{{ pages[index].right }}</div>
                             <div v-if="index === 0">
                                 <img src="@/assets/end.gif" class="end" @click="goToEnd" />
                             </div>
@@ -59,7 +59,7 @@ const props = defineProps({
 });
 
 const goToEnd = () => {
-    router.push({ name: "customTaleEnd", params: { taleId: customTaleStore.customTaleId } });
+    router.push({ name: "customTaleEnd" });
 };
 
 // 페이지 배열의 인덱스를 저장해서 zindex 배열로 만듦
@@ -184,7 +184,7 @@ onMounted(async () => {
 .play {
     width: 1180px;
     height: 800px;
-    border: 15px solid #cee8e8;
+    border: 5px solid #cee8e8;
     margin: 20px 0px 30px 40px;
     border-radius: 50px;
     background-color: #f5f5f5;
@@ -194,12 +194,13 @@ onMounted(async () => {
     justify-content: space-between;
 }
 .title {
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: inset 0 -20px 0 #ffd3d3;
-    font-size: 40px;
-    margin: 60px 0px 40px 70px;
-    line-height: 1;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: inset 0 -20px 0 #D3E4FF;
+  font-size: 40px;
+  margin: 30px 0px 30px 50px;
+  line-height: 1;
+  text-align: left;
 }
 .like {
     width: 50px;
@@ -328,5 +329,13 @@ onMounted(async () => {
     bottom: 13px;
     right: 13px;
     border-radius: 50%;
+}
+.content {
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  height: 100%;
+  margin-left: 20px;
+  margin-right: 10px;
 }
 </style>

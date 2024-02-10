@@ -1,7 +1,8 @@
 <!-- LoadingModal.vue -->
 <template>
     <div v-if="isLoading" class="loading-modal-background">
-    <img class="loading-modal" src="@/assets/loading.gif" alt="Loading...">
+    <!-- <img class="loading-modal" src="@/assets/loading.gif" alt="Loading..."> -->
+    <img class="loading-modal" src="@/assets/colorloading2.gif" alt="Loading...">
   </div>
   </template>
   
@@ -17,15 +18,18 @@ const props = defineProps(['isLoading']);
     position: fixed;
     top: 50%; /* 화면 세로 중앙에 위치 */
     left: 55%; /* 화면 가로 중앙에 위치 */
-  transform: translate(-50%, -50%);
-    width: 130px;
+    transform: translate(-50%, -50%);
+    /* width: 130px;
     height: 130px;
+    border-radius: 50px; */
+    width: 250px;
+    height: 250px;
+    border-radius: 500px;
     background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    border-radius: 50px;
   }
 
   .loading-modal-background {
