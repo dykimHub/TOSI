@@ -106,6 +106,7 @@ public class CustomTaleService {
                         .leftNo(p)
                         .rightNo(p + 1)
                         .right(sentences[j] + "\n" + sentences[j + 1])
+                        .flipped(false)
                         .build();
                 pages.add(page);
                 p += 2;
