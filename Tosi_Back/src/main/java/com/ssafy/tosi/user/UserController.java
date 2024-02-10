@@ -18,7 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -101,10 +103,12 @@ public class UserController {
         System.out.println(accessToken);
         RefreshToken refreshTokenEntity = RefreshToken.builder().userId(userId).refreshToken(refreshToken).build();
         refreshTokenService.updateRefreshToken(refreshTokenEntity);
-        cookieUtil.addCookie(response, "access-token", accessToken, (int) Duration.ofDays(1).toSeconds());
-        cookieUtil.addCookie(response, "refresh-token", refreshToken, (int) Duration.ofDays(7).toSeconds());
 
-        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+        Map<String, String> map = new HashMap<>();
+        map.put("access-token", accessToken);
+        map.put("refresh-token", refreshToken);
+
+        return new ResponseEntity<Map>(map, HttpStatus.ACCEPTED);
     }
 
     // 로그아웃
