@@ -2,6 +2,7 @@ package com.ssafy.tosi.user;
 
 import com.ssafy.tosi.jwt.RefreshTokenRepository;
 import com.ssafy.tosi.user.dto.ChildInfo;
+import com.ssafy.tosi.user.dto.LoginInfo;
 import com.ssafy.tosi.user.dto.UserInfo;
 import com.ssafy.tosi.user.entity.Child;
 import com.ssafy.tosi.user.entity.User;
@@ -77,11 +78,10 @@ public class UserService {
     }
 
     // 로그인
-    public Integer login (User user) {
-        System.out.println(user);
-        User foundUser = userRepository.findByEmail(user.getEmail());
+    public Integer login (LoginInfo loginInfo) {
+        User foundUser = userRepository.findByEmail(loginInfo.getEmail());
         System.out.println(foundUser);
-        if(foundUser != null && foundUser.getPassword().equals(user.getPassword())) {
+        if(foundUser != null && foundUser.getPassword().equals(loginInfo.getPassword())) {
             return foundUser.getUserId();
         }
         return null;
