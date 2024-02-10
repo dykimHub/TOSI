@@ -1,9 +1,13 @@
 <template>
   <div>
-    <button @click="showFavoriteList">즐겨찾기 동화 목록</button>
-    <button @click="showCustomList">내가 만든 동화 목록</button>
-    <FavoriteCustomList v-if="renderingList === 'FavoriteCustomList'" />
-    <FavoriteTaleList v-if="renderingList === 'FavoriteTaleList'" />
+    <div class="buttonContainer">
+      <button @click="showFavoriteList" class="favoriteListButton">즐겨찾기 동화 목록</button>
+      <button @click="showCustomList" class="customListButton">내가 만든 동화 목록</button>
+    </div>
+    <div class="talelist-container">
+      <FavoriteTaleList v-if="renderingList === 'FavoriteTaleList'" class="taleList"/>
+      <FavoriteCustomList v-if="renderingList === 'FavoriteCustomList'" class="taleList"/>
+    </div>
   </div>
 </template>
 
@@ -24,4 +28,57 @@ const showFavoriteList = () => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px;
+  position: relative;
+  width: calc(15% - 10px);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.favoriteListButton {
+  background-color: #c4ecb0;
+}
+
+.customListButton {
+  background-color: #d6b0ec;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  bottom: -5px;
+  left: 0;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+button:hover::before {
+  transform: scaleX(1);
+}
+
+.talelist-container {
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  justify-content: center;
+  width: calc(100% - 70px);
+}
+
+.taleList {
+  margin-top: 0px;
+}
+</style>

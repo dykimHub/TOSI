@@ -79,6 +79,10 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+TheHeaderNav {
+    width: 100%; /* Header의 너비를 화면 전체로 설정 */
+}
+
 .mainContainer {
     display: flex;
     flex-direction: column;
@@ -164,8 +168,15 @@ a {
     color: black;
 }
 
-.sideBar {
+/* .sideBar {
     display: flex;
+    width: 15em;
+} */
+.sideBar {
+    position: fixed; /* 왼쪽에 고정 */
+    left: 0; /* 왼쪽에 정렬 */
+    top: 220px; /* 위쪽에 정렬 */
+    height: 100%; /* 화면 전체 높이로 설정 */
     width: 15em;
 }
 
@@ -176,11 +187,6 @@ a {
 a {
     text-decoration: none;
     color: black;
-}
-
-.sideBar {
-    display: flex;
-    width: 15em;
 }
 
 .content {

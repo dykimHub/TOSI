@@ -42,12 +42,12 @@
             <ChildItem v-for="(child, index) in childrenList" :key="index" :child="child" @deleteChild="deleteChild" />
           </ul>
         </div> -->
-        <ul class="children-ul">
+        <!-- <ul class="children-ul">
           <li v-for="(child, index) in userInfo.childrenList" :key="index" class="children-li">
             <ChildItem :key="index" :child="child"/>
             <button @click="deleteChild(index)">삭제</button>
           </li>
-        </ul>
+        </ul> -->
         <!-- <ul class="children-ul">
           <li v-for="(child, index) in userInfo.childrenList" :key="index" class="children-li">
             {{ child.childName }} - 성별: {{ child.gender }} - 내 아이 여부: {{ child.myBaby }}
@@ -62,7 +62,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "@/stores/userStore";
-import ChildItem from "@/components/user/ChildItem.vue";
 const store = useUserStore();
 const userInfo = ref({ email: '', bookshelfName: '', childrenList: [] });
 const child = ref({ childName: '', gender: 0, myBaby: false });
@@ -103,4 +102,34 @@ const deleteChild = function(index) {
   userInfo.value.childrenList.splice(index, 1);
 };
 </script>
-<style scoped></style>
+<style scoped>
+.regist-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.regist-label {
+  width: 150px;
+  /* 레이블의 너비를 줄임 */
+  margin-right: 10px;
+}
+
+.regist-input {
+  flex: 1;
+  /* 입력 칸이 남은 공간을 모두 차지하도록 설정 */
+  padding: 5px;
+  max-width: 300px;
+  /* 최대 가로길이 설정 */
+}
+
+.children-li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.children-li button {
+  margin-left: 10px;
+}
+</style>

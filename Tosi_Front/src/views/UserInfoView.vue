@@ -1,37 +1,41 @@
 <template>
-  <div class="set">
+  <div class="password-check-container">
     <div>비밀번호를 입력해주세요</div>
     <div class="login-div">
       <input type="password" class="set-inp" placeholder=" " v-model="password">
-      <label for="" class="label">비밀번호</label>
     </div>
     <input type="submit" class="set-btn" value="확인" @click="checkPassword">
+  </div>
+  <div class="user-info-container">
+    <UserInfoUpdate v-if = "passwordCheck == true" />
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useUserStore } from "@/stores/userStore";
+import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 
 const store = useUserStore()
 
 const password = ref("");
+const passwordCheck = ref();
 
-const checkPassword = () => {
+const checkPassword = async function () {
   if (
     password.value === ""
   ) {
     alert("비밀번호를 입력해주세요");
     return;
   }
-  store.getPasswordCheck(password);
+  await store.getPasswordCheck(password);
+  passwordCheck.value = store.passwordCheck.value
 };
-
 
 </script>
 
 <style scoped>
-.set {
+.password-check-container {
   width: 500px;
   background-color: var(--header);
   text-align: center;
