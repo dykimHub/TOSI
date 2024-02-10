@@ -21,27 +21,33 @@ import UserInfoView from "@/views/UserInfoView.vue";
 import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 import BookshelfView from "@/views/BookshelfView.vue";
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes: [
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: "/",
+      name: "NonMemberMainView",
+      component: NonMemberMainView,
+      meta: { requiresGuest: true },
+    },
+    {
+      path: "/tosi",
+      name: "tosi",
+      component: HomeView,
+      meta: { requiresAuth: true },
+      children: [
         {
-            path: "/",
-            name: "NonMemberMainView",
-            component: NonMemberMainView,
-            meta: { requiresGuest: true },
+          path: "/tales",
+          name: "tales",
+          component: TalesView,
+          meta: { requiresAuth: true },
         },
         {
-            path: "/tosi",
-            name: "tosi",
-            component: HomeView,
-            meta: { requiresAuth: true },
-            children: [
-            {
-                path: "/tales",
-                name: "tales",
-                component: TalesView,
-                meta: { requiresAuth: true },
-            },
-            {
+          path: "/search",
+          name: "search",
+          component: SearchView,
+          meta: { requiresAuth: true },
+        },
+        {
           path: "/tales/:taleId",
           name: "taleDetail",
           component: TaleDetail,

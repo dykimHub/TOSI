@@ -14,30 +14,21 @@
             </div>
     </header>
 </template>
-
 <script setup>
 import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
-import { useCookieStore } from "@/stores/cookieStore";
-
 const store = useUserStore()
-const cookieStore = useCookieStore();
-
 const isLoggedIn = ref('');
-
 onMounted(() => {
-    if(sessionStorage.getItem('isLoggedIn') != null || cookieStore.getCookieValue('isLogggedIn') != null) {
+    if (localStorage.getItem('isLoggedIn') != null) {
         isLoggedIn.value = 'true';
     }
     console.log("Is Authenticated:", isLoggedIn.value);
 });
-
 const logout = () => {
     store.getLogout();
 };
-
 </script>
-
 <style scoped>
 .headerContainer {
     display: flex;
@@ -45,7 +36,6 @@ const logout = () => {
     justify-content: center;
     /* align-items: center; */
 }
-
 .logo {
     flex-grow: 1;
     width: 300px;
@@ -53,12 +43,10 @@ const logout = () => {
     margin-left: auto;
     margin-right: auto;
 }
-
 a {
     text-decoration: none;
     color: black;
 }
-
 .homeMenus {
     display: flex;
     flex-direction: column;

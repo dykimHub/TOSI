@@ -155,16 +155,11 @@ onMounted(() => {
   justify-content: space-around;
 }
 
-ul {
-margin: 0;
-padding: 0;
-}
-
 .talelistContainer {
   background-color: white;
   border-radius: 20px;
   margin: 35px;
-  /* padding-top: 40px; */
+  padding-top: 40px;
   opacity: 0.95;
 }
 
@@ -175,6 +170,7 @@ padding: 0;
 .oneTale {
   width: 13em;
   text-align: center;
+  margin: 3em;
 }
 
 .selecSort {
