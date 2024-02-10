@@ -160,7 +160,8 @@ const autoAudio = (text) => {
 };
 // 오디오 재생이 끝날 때 실행되는 콜백 함수
 const onAudioEnded = () => {
-    if (currentPageIndex.value < pages.length) flipPage(currentPageIndex.value, true);
+    if (currentPageIndex.value < pages.length - 1) flipPage(currentPageIndex.value, true);
+    else console.log("동화 끝");
 };
 // //페이지 변화를 감지해서 틈
 watch(pages, (newPages, oldPages) => {
