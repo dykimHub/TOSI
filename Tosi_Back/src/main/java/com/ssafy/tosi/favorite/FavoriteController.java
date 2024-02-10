@@ -90,8 +90,6 @@ public class FavoriteController {
         try {
             List<TaleDto> favoriteList = favoriteService.getFavoriteList(userId);
             return new ResponseEntity<List<TaleDto>>(favoriteList, HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
