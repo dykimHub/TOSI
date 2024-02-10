@@ -11,4 +11,8 @@ p {
     text-align: center;
 }
 
+.footerContainer {
+    margin-top: auto;
+}
+
 </style>

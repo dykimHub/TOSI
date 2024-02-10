@@ -1,6 +1,5 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import router from '@/router'
 import axios from "@/util/http-common";
 
 export const useTaleStore = defineStore('tale', () => {

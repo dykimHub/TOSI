@@ -5,19 +5,19 @@
             <div class="slotMachine">슬롯머신</div>
             <div class="toMenus">
                 <RouterLink to="/tales" class="toMenu">
-                    <img class="icon" src="@/assets/talelist.png" />
+                    <img class="icon" src="@/assets/Play.png" />
                     전체 책 보기
                 </RouterLink>
                 <RouterLink to="/customtale/create" class="toMenu">
-                    <img class="icon" src="@/assets/custom.png" />
+                    <img class="icon" src="@/assets/Maker.png" />
                     나만의 동화 만들기
                 </RouterLink>
-                <RouterLink :to="`/`" class="toMenu">
-                    <img class="icon" src="@/assets/favorite.png" />
+                <RouterLink :to="`/bookshelf`" class="toMenu">
+                    <img class="icon" src="@/assets/Mine.png" />
                     나의 책장
                 </RouterLink>
             </div>
-            <p>지금 인기있어요!</p>
+            <h5>지금 인기있어요!</h5>
             <div class="top3">
                 <ul v-for="tale in Talestore.taleList.slice(0, 3)" :key="tale.taleId">
                     <div class="oneTale">
@@ -54,8 +54,6 @@ const Talestore = useTaleStore();
 const router = useRouter();
 
 const isMain = ref(true);
-
-//TODO 필요없는 코드 삭제
 const sortOption = ref("likeCnt");
 const sortedTaleList = ref([]);
 
@@ -142,9 +140,8 @@ TheHeaderNav {
     height: 100px;
 }
 
-p {
+h5 {
     text-align: center;
-    display: inline;
     text-shadow: -1px -1px 2px white, 1px -1px 2px white, -1px 1px 2px white, 1px 1px 2px white;
 }
 

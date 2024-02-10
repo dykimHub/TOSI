@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import TalesView from "@/views/TalesView.vue";
+import TalesView from '@/components/tale/TaleList.vue';
+import SearchView from '@/components/tale/SearchTale.vue';
 import HomeView from "@/views/HomeView.vue";
 import NonMemberMainView from "@/views/NonMemberMainView.vue";
 import CustomTaleView from "@/views/CustomTaleView.vue";
