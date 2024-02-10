@@ -55,7 +55,7 @@ const router = createRouter({
           meta: { requiresAuth: true },
         },
         {
-          path: "/tales/play/:taleId/:speaker",
+          path: "/tales/:taleId/:speaker",
           name: "talePlay",
           component: TalePlay,
           meta: { requiresAuth: true },

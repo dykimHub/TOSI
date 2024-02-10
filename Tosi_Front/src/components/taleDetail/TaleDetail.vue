@@ -171,7 +171,7 @@ const navigateToTalePlay = () => {
   const selectedSpeaker = items.value.find((item) => item.speaker === speaker.value);
   router.push({
     name: "talePlay",
-    params: { speaker: selectedSpeaker.speaker },
+    params: { speaker: selectedSpeaker.speaker, taleId: taleDetailStore.taleId },
   });
 };
 </script>
