@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import TalesView from "@/views/TalesView.vue";
+import TalesView from '@/components/tale/TaleList.vue';
+import SearchView from '@/components/tale/SearchTale.vue';
 import HomeView from "@/views/HomeView.vue";
 import NonMemberMainView from "@/views/NonMemberMainView.vue";
 import CustomTaleView from "@/views/CustomTaleView.vue";
@@ -40,6 +41,12 @@ const router = createRouter({
                     path: "/tales",
                     name: "tales",
                     component: TalesView,
+                    meta: { requiresAuth: true },
+                },
+                {
+                    path: "/search",
+                    name: "search",
+                    component: SearchView,
                     meta: { requiresAuth: true },
                 },
                 {
@@ -170,16 +177,16 @@ const router = createRouter({
         },
     ],
 });
-router.beforeEach((to, from, next) => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
-        alert("메인 페이지로 이동합니다.");
-        next("/");
-    } else if (to.matched.some((record) => record.meta.requiresGuest) && isLoggedIn) {
-        alert("이미 로그인 되어있습니다.");
-        next("/tosi");
-    } else {
-        next();
-    }
-});
+// router.beforeEach((to, from, next) => {
+//     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+//     if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
+//         alert("로그인이 필요합니다. 메인 페이지로 이동합니다.");
+//         next("/");
+//     } else if (to.matched.some((record) => record.meta.requiresGuest) && isLoggedIn) {
+//         alert("이미 로그인 되어있습니다.");
+//         next("/tosi");
+//     } else {
+//         next();
+//     }
+// });
 export default router;

@@ -1,19 +1,17 @@
 <template>
     <header>
-        <div></div>
-        <div>
-            <RouterLink to="/tosi">
-                <img src="@/assets/logo.png" class="logo" alt="Logo"/>
-            </RouterLink>   
-        </div>
-        <div>
-            <div>
-                <RouterLink to="/tosi">홈</RouterLink>
-                <br>
-                <a v-if="isLoggedIn" @click="logout">로그아웃&nbsp;&nbsp;</a>
+        <div class="headerContainer">
+            <div class="empty"></div>
+            <div class="logo-container">
+                <RouterLink to="/tosi">
+                    <img src="@/assets/logo.png" class="logo" alt="Logo" />
+                </RouterLink>
             </div>
-            <div>검색</div>
-        </div>
+            <div class="homeMenus">
+                <RouterLink to="/tosi">홈</RouterLink>
+                <a v-if="isLoggedIn" @click="logout">로그아웃</a>
+            </div>
+            </div>
     </header>
 </template>
 
@@ -26,39 +24,46 @@ const store = useUserStore()
 const isLoggedIn = ref('');
 
 onMounted(() => {
-    if(localStorage.getItem('isLoggedIn') != null) {
+    if (localStorage.getItem('isLoggedIn') != null) {
         isLoggedIn.value = 'true';
     }
-  console.log("Is Authenticated:", isLoggedIn.value);
+    console.log("Is Authenticated:", isLoggedIn.value);
 });
 
 const logout = () => {
-  store.getLogout();
+    store.getLogout();
 };
 
 </script>
 
 <style scoped>
-header {
-    display: flex; 
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-}
-
-img {
-    width: 200px;
+.headerContainer {
+    display: flex;
+    margin-top: 25px;
+    justify-content: center;
+    /* align-items: center; */
 }
 
 .logo {
+    flex-grow: 1;
     width: 300px;
-    margin-top: 25px;
+    justify-self: center;
+    margin-left: auto;
+    margin-right: auto;
 }
-
 
 a {
-  text-decoration: none;
-  color: black;
+    text-decoration: none;
+    color: black;
 }
 
+.homeMenus {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.empty, .homeMenus, .headerContainer {
+    flex: 1;
+}
 </style>
