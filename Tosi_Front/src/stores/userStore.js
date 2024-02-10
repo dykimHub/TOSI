@@ -74,16 +74,37 @@ export const useUserStore = defineStore("user", () => {
       console.log(searchResult.value);
     });
   };
+// // 로그인
+// const postLogin = function(loginInfo) {
+//   axios({
+//     method: "POST",
+//     url: `/users/login`,
+//     data: loginInfo,
+//   })
+//     .then((response) => {
+//       let loginType = '';
+//       if(loginInfo.autoLogin == true) {
+//         localStorage.setItem('isLoggedIn', 'true');
+//       } else {
+//         sessionStorage.setItem('isLoggedIn', 'true');
+//       }
+//       alert("환영합니다.")
+//       window.location.replace(`http://localhost:5173/tosi`);
+//     })
+//     .catch(() => {
+//       // 로그인 실패 처리
+//       return false;
+//     });
+// };
 // 로그인
 const postLogin = function(loginInfo) {
-  axios({
-    method: "POST",
-    url: `/users/login`,
-    data: loginInfo,
-  })
-    .then((response) => {
-      let loginType = '';
+  axios.post(`/users/login`, loginInfo)
+    .then(response => {
       if(loginInfo.autoLogin == true) {
+        const accessToken = response.data['access-token'];
+        const refreshToken = response.data['refresh-token'];
+        cookieStore.setCookie('access-token', accessToken, 1);
+        cookieStore.setCookie('refresh-token', refreshToken, 7);
         localStorage.setItem('isLoggedIn', 'true');
       } else {
         sessionStorage.setItem('isLoggedIn', 'true');
