@@ -17,17 +17,22 @@
 <script setup>
 import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
+
 const store = useUserStore()
+
 const isLoggedIn = ref('');
+
 onMounted(() => {
-    if (localStorage.getItem('isLoggedIn') != null) {
+    if(sessionStorage.getItem('isLoggedIn') != null || localStorage.getItem('isLoggedIn') != null) {
         isLoggedIn.value = 'true';
     }
     console.log("Is Authenticated:", isLoggedIn.value);
 });
+
 const logout = () => {
     store.getLogout();
 };
+
 </script>
 <style scoped>
 .headerContainer {

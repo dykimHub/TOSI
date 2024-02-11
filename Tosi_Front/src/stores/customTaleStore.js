@@ -22,16 +22,16 @@ export const useCustomTaleStore = defineStore("customtale", () => {
 
   //나의책장 - 커스텀동화
   const myCustomTalesList = ref([]);
-  const getMyCustomTalesList = function () {
-    axios.get(`/customtale/user`, { withCredentials: true }).then((response) => {
+  const getMyCustomTalesList = async function () {
+    await axios.get(`/customtale/user`, { withCredentials: true }).then((response) => {
       myCustomTalesList.value = response.data;
       console.log(myCustomTalesList.value);
     });
   };
 
-  //나의책장 - 커스텀동화
-  const deleteCustomTale = function (customTaleId) {
-    axios.delete(`/customtale/${customTaleId}`,customTaleId, { withCredentials: true }).then((response) => {
+  //나의책장 - 커스텀동화 삭제
+  const deleteCustomTale = async function (customTaleId) {
+    await axios.delete(`/customtale/${customTaleId}`,customTaleId, { withCredentials: true }).then((response) => {
     });
   };
 
