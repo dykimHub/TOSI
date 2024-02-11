@@ -139,7 +139,7 @@ const chatStart = () => {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  animation: popUp 0.8s ease-out forwards;
+  animation: popUp 1s ease-out forwards;
 }
 .randomc {
   width: 300px;
@@ -171,6 +171,26 @@ const chatStart = () => {
   height: 300px;
   margin-top: -30px;
   margin-bottom: 60px;
+  animation: shake 3s forwards;
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: rotate(-3deg);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: rotate(3deg);
+  }
 }
 .chat {
   width: 450px;

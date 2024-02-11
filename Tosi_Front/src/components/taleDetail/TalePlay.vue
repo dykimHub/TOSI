@@ -7,9 +7,10 @@
                     <img class="like" src="@/assets/like.png" @click="deleteFavorite()" />
                 </div>
                 <div v-else>
-                    <img class="like" src="@/assets/unlike.png" @click="postFavorite()" />
+                    <img class="like" src="@/assets/dislike.png" @click="postFavorite()" />
                 </div>
             </div>
+            <div class="page-progress">< {{ currentPageNum }} / {{ pages.length }} ></div>
             <div class="book">
                 <div class="cover"><img :src="taleDetailStore.tale.thumbnail" class="coverImg" /></div>
                 <div class="flip-book">
@@ -48,16 +49,9 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="container">
-          <div
-            v-for="index in pages.length"
-            :key="index"
-            :class="{ 'active-bar': index === pages.length - currentPageIndex }"
-            class="bar"
-          >
-            <div class="bar-elem" @click="goSessino(index)">{{ index }}</div>
-          </div>
-        </div> -->
+            <img v-if="isPaused" src="@/assets/playaudio.png" @click="audioPause" class="start" />
+            <img v-else src="@/assets/pause.png" @click="audioPause" class="pause" />
+            <img src="@/assets/stop.png" class="stop" @click="replay()" />
         </div>
     </div>
     <div v-else>is Loading...</div>
@@ -71,11 +65,13 @@ import { generateTTS } from "@/util/ttsSpeakerUtil";
 import axios from "axios";
 const taleDetailStore = useTaleDetailStore();
 const router = useRouter();
-const pages = taleDetailStore.pages.reverse();
+const pages = [...taleDetailStore.pages].reverse();
 const userStore = useUserStore();
 const props = defineProps({
     speaker: String,
+    taleId: Number,
 });
+
 const goToEnd = () => {
     router.push({ name: "taleEnd", params: { taleId: taleDetailStore.taleId } });
 };
@@ -87,6 +83,7 @@ const zIndexes = reactive(pages.map((_, index) => index + 1));
 const currentPageIndex = ref(pages.length - 1);
 // index: 뒤집을 페이지의 인덱스
 // flip: true; 뒤집은 상태, false; 이전 페이지 펼친 상태
+const currentPageNum = ref(1); // 현재 페이지 번호
 function flipPage(index, flip) {
     pages[index].flipped = flip;
     // 페이지를 뒤집을 때
@@ -99,6 +96,7 @@ function flipPage(index, flip) {
             }
             // 배열리스트의 현재 인덱스
             currentPageIndex.value = index - 1;
+            currentPageNum.value = pages.length - currentPageIndex.value;
             console.log("true플립에서 감지한 인덱스 : ", currentPageIndex.value, " index: ", index);
         });
     } else {
@@ -114,33 +112,11 @@ function flipPage(index, flip) {
         });
         // 배열리스트의 현재 인덱스
         currentPageIndex.value = index;
+        currentPageNum.value = pages.length - currentPageIndex.value;
         console.log("false플립에서 감지한 인덱스 : ", currentPageIndex.value, " index: ", index);
     }
 }
-//하단 바를 위한 발악
-const goSessino = (index) => {
-    if (index > currentPageIndex.value) {
-        console.log(
-            "*******click index : ",
-            index,
-            "\n currPageIndex: ",
-            currentPageIndex.value,
-            "\n pages.lenght : ",
-            pages.length
-        );
-        flipPage(index, false);
-    } else {
-        console.log(
-            "*******click index : ",
-            index,
-            "\n currPageIndex: ",
-            currentPageIndex.value,
-            "\n pages.lenght : ",
-            pages.length
-        );
-        flipPage(index, true);
-    }
-};
+
 // tts
 const items = ref([
     { name: "다인", speaker: "vdain", emotion: 3, "emotion-strength": 1 },
@@ -152,6 +128,7 @@ const items = ref([
 ]);
 const audioRef = ref(null); //오디오 재생을 위한 객체
 const audioSrcCache = {}; // 캐시를 저장하는 객체
+const isPaused = ref(false);
 const ttsMaker = async (text) => {
     //speaker정보
     const selectedSpeaker = items.value.find((item) => item.speaker == props.speaker);
@@ -176,6 +153,7 @@ const ttsMaker = async (text) => {
 const autoAudio = (text) => {
     //기존 오디오 끊기
     if (audioRef.value != null) {
+        isPaused.value = true;
         audioRef.value.pause();
     }
     console.log("라디오 끊은 후, audioRef.value: ", audioRef.value, "\n text: ", text);
@@ -189,6 +167,7 @@ const autoAudio = (text) => {
             onAudioEnded();
             resolve();
         };
+        isPaused.value = false;
         audioRef.value.play(); // 재생
     } else {
         console.log("ttsMaker() 호출, text: ", text);
@@ -201,26 +180,38 @@ const autoAudio = (text) => {
                     onAudioEnded();
                     //resolve();
                 };
+                isPaused.value = false;
                 audioRef.value.play(); // 재생
             }
         });
     }
-    //캐쉬값 확인용
-    // for (const key in audioSrcCache) {
-    //     console.log(`Key: ${key}, Value: ${audioSrcCache[key]}`);
-    // }
 };
 // 오디오 재생이 끝날 때 실행되는 콜백 함수
 const onAudioEnded = () => {
-    if (currentPageIndex.value < pages.length) flipPage(currentPageIndex.value, true);
+    if (currentPageIndex.value < pages.length) {
+        flipPage(currentPageIndex.value, true);
+    }
 };
 // 페이지 변화를 감지해서 틈
-// watch(pages, (newPages, oldPages) => {
-//   if (newPages && newPages.length > 0) {
-//     console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
-//     autoAudio(newPages[currentPageIndex.value].right);
-//   }
-// });
+watch(pages, (newPages, oldPages) => {
+    if (newPages && newPages.length > 0) {
+        // 페이지 배열이 변경되었을 때 실행할 코드 작성
+        console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
+        autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
+    }
+});
+const audioPause = () => {
+    if (audioRef.value != null) {
+        if (isPaused.value) {
+            audioRef.value.play();
+            isPaused.value = false;
+        } else {
+            audioRef.value.pause();
+            isPaused.value = true;
+        }
+    }
+};
+
 onMounted(async () => {
     try {
         getFavorite();
@@ -236,7 +227,7 @@ onMounted(async () => {
 userStore.getUser();
 const favorite = ref({
     userId: userStore.userInfo.userId,
-    taleId: parseInt(taleDetailStore.taleId),
+    taleId: props.taleId,
 });
 console.log(favorite.value);
 const postFavorite = () => {
@@ -265,31 +256,12 @@ const deleteFavorite = () => {
         })
         .catch((err) => console.log(err));
 };
+const replay = () => {
+    audioRef.value.pause();
+    router.push({ name: "taleDetail", params: { taleId: props.taleId } });
+};
 </script>
 <style scoped>
-.container {
-    display: flex;
-}
-.bar {
-    flex: 1; /* 각 요소가 동일한 너비를 가지도록 함 */
-    padding: 10px;
-    border: 1px solid #342121;
-    margin-right: 0px; /* 각 요소 사이의 간격을 위해 사용 */
-    background-color: aquamarine;
-    height: 2px;
-    justify-content: center; /* 수평 정렬 */
-    align-items: center; /* 수직 정렬 */
-}
-.active-bar {
-    background-color: red; /* 원하는 색상으로 변경 */
-    /* 기타 스타일 설정 */
-}
-.bar:last-child {
-    margin-right: 0; /* 마지막 요소의 오른쪽 마진 제거 */
-}
-.bar-elem {
-    font-size: 12px;
-}
 .play {
     width: 1180px;
     height: 800px;
@@ -301,20 +273,24 @@ const deleteFavorite = () => {
 .info {
     display: flex;
     justify-content: space-between;
+    width: 1050px;
+    margin: 45px 0 0 45px;
 }
 .title {
     text-decoration: none;
     display: inline-block;
     box-shadow: inset 0 -20px 0 #ffd3d3;
     font-size: 40px;
-    margin: 60px 0px 40px 70px;
     line-height: 1;
 }
 .like {
     width: 50px;
     height: 50px;
-    margin: 50px 70px 0px 0px;
     cursor: pointer;
+}
+.page-progress {
+    font-size: 30px;
+    margin: -50px 0 40px 490px;
 }
 .cover {
     background-color: #fff;
@@ -424,6 +400,15 @@ const deleteFavorite = () => {
     height: 100%;
     background: linear-gradient(to bottom, #f5f5f5 0%, #dcdcdc 100%);
 }
+.back::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 10px;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(to bottom, #f5f5f5 0%, #dcdcdc 100%);
+}
 .flip.flipped {
     transform: rotateY(-180deg);
 }
@@ -459,6 +444,29 @@ const deleteFavorite = () => {
     bottom: 13px;
     right: 13px;
     border-radius: 50%;
+}
+.content {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    height: 100%;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+.start,
+.pause {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    margin: 20px 0px 0px 530px;
+}
+.stop {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 50%;
+    border: 1px solid black;
 }
 .content {
     display: flex;

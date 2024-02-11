@@ -84,12 +84,36 @@ console.log(userStore.userInfo);
 //tts
 const speaker = ref("vdain");
 const items = ref([
-    { name: "다인", speaker: "vdain", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdain.mp3" },
-    { name: "고은", speaker: "vgoeun", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vgoeun.mp3" },
-    { name: "미경", speaker: "vmikyung", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vmikyung.mp3" },
-    { name: "이안", speaker: "vian", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vian.mp3" },
-    { name: "대성", speaker: "vdaeseong", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdaeseong.mp3" },
-    { name: "원탁", speaker: "nwontak", url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/nwontak.mp3" },
+    {
+        name: "다인",
+        speaker: "vdain",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdain.mp3",
+    },
+    {
+        name: "고은",
+        speaker: "vgoeun",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vgoeun.mp3",
+    },
+    {
+        name: "미경",
+        speaker: "vmikyung",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vmikyung.mp3",
+    },
+    {
+        name: "이안",
+        speaker: "vian",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vian.mp3",
+    },
+    {
+        name: "대성",
+        speaker: "vdaeseong",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/vdaeseong.mp3",
+    },
+    {
+        name: "원탁",
+        speaker: "nwontak",
+        url: "https://talebucket.s3.ap-northeast-2.amazonaws.com/nwontak.mp3",
+    },
 ]);
 const audioRef = ref(null);
 const playVoice = (url) => {
@@ -139,7 +163,7 @@ const navigateToTalePlay = () => {
     const selectedSpeaker = items.value.find((item) => item.speaker === speaker.value);
     router.push({
         name: "talePlay",
-        params: { speaker: selectedSpeaker.speaker },
+        params: { speaker: selectedSpeaker.speaker, taleId: taleDetailStore.taleId },
     });
 };
 </script>

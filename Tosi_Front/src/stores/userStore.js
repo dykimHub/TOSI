@@ -82,12 +82,15 @@ export const useUserStore = defineStore("user", () => {
         });
     };
 
-    // 로그인
     const postLogin = function (loginInfo) {
         axios
             .post(`/users/login`, loginInfo)
             .then((response) => {
                 if (loginInfo.autoLogin == true) {
+                    const accessToken = response.data["access-token"];
+                    const refreshToken = response.data["refresh-token"];
+                    cookieStore.setCookie("access-token", accessToken, 1);
+                    cookieStore.setCookie("refresh-token", refreshToken, 7);
                     localStorage.setItem("isLoggedIn", "true");
                 } else {
                     sessionStorage.setItem("isLoggedIn", "true");
@@ -100,7 +103,6 @@ export const useUserStore = defineStore("user", () => {
                 return false;
             });
     };
-
     //로그아웃
     const getLogout = () => {
         axios.get(`/users/logout`, { withCredentials: true });
