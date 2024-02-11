@@ -1,9 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import { useCookieStore } from "@/stores/cookieStore";
-
 import axios from "@/util/http-common";
-
 export const useUserStore = defineStore("user", () => {
   const userInfo = ref({ email: "", bookshelfName: "", childrenList: [] });
   const searchResult = ref(false);
@@ -13,7 +11,6 @@ export const useUserStore = defineStore("user", () => {
   const isLoggedIn = ref(false); // 로그인 했으면 true / false
   const isAuthenticated = computed(() => isLoggedIn.value);
   const cookieStore = useCookieStore();
-
   //회원 가입
   const postUser = (userInfo) => {
     axios
@@ -32,7 +29,6 @@ export const useUserStore = defineStore("user", () => {
         console.error("에러 발생:", error);
       });
   };
-
   //회원 정보 조회
   const getUser = function () {
     axios({
@@ -46,7 +42,6 @@ export const useUserStore = defineStore("user", () => {
       console.log(userInfo.value.childrenList);
     });
   };
-
   //회원정보 수정
   const updateUser = function (data) {
     axios.put(`/users`, data, { withCredentials: true }).then(() => {
@@ -56,7 +51,6 @@ export const useUserStore = defineStore("user", () => {
       router.push({ name: "userInfoUpdate" });
     });
   };
-
   //회원 탈퇴
   const deleteUser = function () {
     axios({
@@ -67,7 +61,6 @@ export const useUserStore = defineStore("user", () => {
       window.location.replace("/tosi");
     });
   };
-
   //이메일 중복 확인
   const getUserSearch = async function (email) {
     await axios({
@@ -81,7 +74,6 @@ export const useUserStore = defineStore("user", () => {
       console.log(searchResult.value);
     });
   };
-
 const postLogin = function(loginInfo) {
   axios.post(`/users/login`, loginInfo)
     .then(response => {
@@ -112,19 +104,16 @@ const postLogin = function(loginInfo) {
     alert("로그아웃 했습니다.");
     window.location.replace(`http://localhost:5173/`);
   };
-
   //비밀번호 확인
   const getPasswordCheck = function (password) {
     axios
       .post(`/users/password-check`, { password }, { withCredentials: true })
       .then((response) => {
         console.log(response);
-
         router.push({ name: "userInfoUpdate" });
       })
       .catch(() => {});
   };
-
   //아이 목록 조회
   const getChildrenList = function () {
     axios({
@@ -135,7 +124,6 @@ const postLogin = function(loginInfo) {
       userInfo.value = response.data;
     });
   };
-
   return {
     postUser,
     getUser,

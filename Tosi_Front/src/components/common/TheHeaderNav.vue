@@ -32,6 +32,7 @@ onMounted(() => {
 const logout = () => {
   store.getLogout();
 };
+
 </script>
 <style scoped>
 .headerContainer {

@@ -95,7 +95,8 @@ onMounted(() => {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  margin-left: 5vw;
 }
 .title {
   text-decoration: none;

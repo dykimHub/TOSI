@@ -32,7 +32,7 @@
                                     id="prompt0"
                                     v-model="prompt[0]"
                                     class="form-control"
-                                    placeholder="예) 집, 놀이터 ..."
+                                    placeholder="예) 놀이터 ..."
                                 />
                             </div>
                         </div>
@@ -133,7 +133,7 @@ const generateCustomTale = async function () {
             " is the background and " +
             prompt.value[1] +
             "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image.";
-        await customTaleStore.getCustomTaleImage(imagePrompt);
+        // await customTaleStore.getCustomTaleImage(imagePrompt);
 
         const gptPrompt =
             selectedChild.value.childName +
@@ -230,10 +230,8 @@ onMounted(() => {
     background-color: white;
     border-radius: 20px;
     margin: 35px;
-    /* padding-top: 40px;
-    padding-bottom: 40px; */
     opacity: 0.95;
-    padding: 40px 60px;
+    padding: 40px 0px 60px 0px;
     border: 5px solid #cee8e8;
 }
 
@@ -265,6 +263,9 @@ onMounted(() => {
     align-items: center;
     flex-wrap: wrap;
 }
+.input{
+    width: 100%;
+}
 
 .book-column {
     width: 50%;
@@ -281,6 +282,8 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    margin: 10px;
+    width: 20vw;
 }
 
 .input {
@@ -288,15 +291,18 @@ onMounted(() => {
 }
 
 .book {
-    width: 100%;
+    width: 30vw;
     display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
+    padding-left: 10px;
+    margin-left: 30px;
+    background-image: url("@/assets/bookstart.png");
 }
 
 .book img {
-    width: 80%;
+    width: 70%;
     height: 80%;
 }
 
