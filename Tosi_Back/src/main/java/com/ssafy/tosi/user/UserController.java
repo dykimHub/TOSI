@@ -4,19 +4,23 @@ import com.ssafy.tosi.cookieUtil.CookieUtil;
 import com.ssafy.tosi.jwt.JwtUtil;
 import com.ssafy.tosi.jwt.RefreshToken;
 import com.ssafy.tosi.jwt.service.RefreshTokenService;
+import com.ssafy.tosi.user.dto.LoginInfo;
 import com.ssafy.tosi.user.dto.UserInfo;
 import com.ssafy.tosi.user.dto.UserInfoResponse;
 import com.ssafy.tosi.user.entity.Child;
 import com.ssafy.tosi.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -38,17 +42,17 @@ public class UserController {
 
     // 회원 정보 조회
     @GetMapping
-    public ResponseEntity<UserInfoResponse> getUser(HttpServletRequest request) {
+    public ResponseEntity<User> getUser(HttpServletRequest request) {
 
         Integer userId = (Integer) request.getAttribute("userId");
         User user = userService.selectUser(userId);
-        UserInfoResponse userInfoResponse = UserInfoResponse.builder()
-                .email(user.getEmail())
-                .bookshelfName((user.getBookshelfName()))
-                .childrenList(user.getChildrenList())
-                .build();
+//        UserInfoResponse userInfoResponse = UserInfoResponse.builder()
+//                .email(user.getEmail())
+//                .bookshelfName((user.getBookshelfName()))
+//                .childrenList(user.getChildrenList())
+//                .build();
 
-        return new ResponseEntity<UserInfoResponse>(userInfoResponse, HttpStatus.OK);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     // 회원 정보 수정
@@ -78,15 +82,20 @@ public class UserController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> postLogin(@RequestBody User user, HttpServletResponse response) {
-        System.out.println(user);
-//
-        System.out.println(user.toString());
+    public ResponseEntity<?> postLogin(@RequestBody LoginInfo loginInfo, HttpServletResponse response, HttpSession session) {
 
-        Integer userId = userService.login(user);
+        Integer userId = userService.login(loginInfo);
 
-        HttpStatus status = null;
-        String message = "";
+        if(userId == null) {
+            return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+        }
+
+        if(loginInfo.getAutoLogin() == false) {
+            session.setAttribute("isLoggedIn", "true");
+            String accessToken = jwtUtil.generateToken(userId, Duration.ofDays(1));
+            cookieUtil.addCookie(response, "access-token", accessToken, (int) Duration.ofDays(1).toSeconds());
+            return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+        }
 
         System.out.println(userId);
         String accessToken = jwtUtil.generateToken(userId, Duration.ofDays(1));
@@ -94,12 +103,12 @@ public class UserController {
         System.out.println(accessToken);
         RefreshToken refreshTokenEntity = RefreshToken.builder().userId(userId).refreshToken(refreshToken).build();
         refreshTokenService.updateRefreshToken(refreshTokenEntity);
-        cookieUtil.addCookie(response, "access-token", accessToken, (int) Duration.ofDays(1).toSeconds());
-        cookieUtil.addCookie(response, "refresh-token", refreshToken, (int) Duration.ofDays(7).toSeconds());
 
-        status = HttpStatus.ACCEPTED;
+        Map<String, String> map = new HashMap<>();
+        map.put("access-token", accessToken);
+        map.put("refresh-token", refreshToken);
 
-        return new ResponseEntity<String>(message, status);
+        return new ResponseEntity<Map>(map, HttpStatus.ACCEPTED);
     }
 
     // 로그아웃

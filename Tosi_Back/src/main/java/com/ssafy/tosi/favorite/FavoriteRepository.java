@@ -1,9 +1,16 @@
 package com.ssafy.tosi.favorite;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
-    List<Favorite> findByUserId(Integer userId);
+    @Query("SELECT f.favoriteId FROM Favorite f WHERE f.userId=:userId AND f.taleId=:taleId")
+    int getFavorite(int userId, int taleId);
+
+    @Query("SELECT f FROM Favorite f WHERE f.userId=:userId")
+    List<Favorite> getByUserId(int userId);
+
+    // List<Favorite> findByUserId(Integer userId);
 }

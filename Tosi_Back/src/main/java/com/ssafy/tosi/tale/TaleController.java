@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
+//@CrossOrigin
 public class TaleController {
 
     private final TaleService taleService;
@@ -33,8 +33,8 @@ public class TaleController {
     /**
      * 이름으로 검색
      */
-    @GetMapping("/tales/search")
-    public ResponseEntity<?> searchTale(@RequestParam String title) {
+    @GetMapping("/search")
+    public ResponseEntity<?> searchTale(@RequestParam(required = false) String title) {
         try {
             if(title == null || title.trim().isEmpty()) {
                 throw new IllegalArgumentException("검색어를 입력하세요.");

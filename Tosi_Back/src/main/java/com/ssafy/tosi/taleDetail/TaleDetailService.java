@@ -12,4 +12,5 @@ public interface TaleDetailService {
     String[] split_sentences(TaleDto taleDto) throws IOException;
     String[] changeName(String[] contents) throws Exception;
     List<Page> paging(String[] changedContents, TaleDto taleDto);
+    boolean updateLikeCnt(int taleId);
 }

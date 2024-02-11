@@ -7,6 +7,7 @@ import com.ssafy.tosi.taleDetail.morpheme.NameChanger;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.util.*;
@@ -51,8 +52,7 @@ public class TaleDetailServiceImpl implements TaleDetailService {
                 .likeCnt(tale.getLikeCnt())
                 .build();
 
-        // 주인공 - 이름 매핑 공간 초기화
-        // 순서 기억해야 다른 주인공 이름에 주인공 이름이 포함될 때 replace 가능
+        // 이름 담을 공간 초기화
         nameMap = new LinkedHashMap<>();
         for (String c : characters) {
             nameMap.put(c, c);
@@ -155,7 +155,16 @@ public class TaleDetailServiceImpl implements TaleDetailService {
 
         }
 
+        for(Page pp : pages){
+            System.out.println(pp);
+        }
+
         return pages;
+    }
+
+    @Override
+    public boolean updateLikeCnt(int taleId) {
+        return taleDetailRepository.updateLikeCnt(taleId) > 0;
     }
 
 
