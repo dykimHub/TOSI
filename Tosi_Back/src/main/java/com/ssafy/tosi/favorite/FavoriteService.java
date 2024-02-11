@@ -77,7 +77,7 @@ public class FavoriteService {
     public List<TaleDto> getFavoriteList(int userId) {
         List<Favorite> favorites = favoriteRepository.getByUserId(userId);
         if (favorites == null || favorites.size() == 0)
-            throw new EntityNotFoundException();
+            return new ArrayList<>();
 
         List<TaleDto> favoriteTales = new ArrayList<>();
         for (Favorite favorite : favorites)
