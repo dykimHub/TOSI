@@ -3,8 +3,12 @@
         <div class="play">
             <div class="info">
                 <div class="title">{{ taleDetailStore.tale.title }}</div>
-                <!-- <img class="like" src="@/assets/like.png" /> -->
-                <img class="like" src="@/assets/unlike.png" />
+                <div v-if="favoriteId">
+                    <img class="like" src="@/assets/like.png" @click="deleteFavorite()" />
+                </div>
+                <div v-else>
+                    <img class="like" src="@/assets/unlike.png" @click="postFavorite()" />
+                </div>
             </div>
             <div class="book">
                 <div class="cover"><img :src="taleDetailStore.tale.thumbnail" class="coverImg" /></div>
@@ -28,7 +32,7 @@
                         </div>
                         <div class="front pre-wrap">
                             <div class="page-separator-right"></div>
-                            {{ pages[index].right }}
+                            <div class="content">{{ pages[index].right }}</div>
                             <div v-if="index === 0">
                                 <img src="@/assets/end.gif" class="end" @click="goToEnd" />
                             </div>
@@ -44,17 +48,16 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <!-- 배열의 각 요소에 대해 반복하며 div를 생성 -->
-                <div
-                    v-for="index in pages.length"
-                    :key="index"
-                    :class="{ 'active-bar': index === pages.length - currentPageIndex }"
-                    class="bar"
-                >
-                    <div class="bar-elem" @click="goSessino(index)">{{ index }}</div>
-                </div>
-            </div>
+            <!-- <div class="container">
+          <div
+            v-for="index in pages.length"
+            :key="index"
+            :class="{ 'active-bar': index === pages.length - currentPageIndex }"
+            class="bar"
+          >
+            <div class="bar-elem" @click="goSessino(index)">{{ index }}</div>
+          </div>
+        </div> -->
         </div>
     </div>
     <div v-else>is Loading...</div>
@@ -65,12 +68,11 @@ import { useTaleDetailStore } from "@/stores/taleDetailStore";
 import { useUserStore } from "@/stores/userStore";
 import { useRouter } from "vue-router";
 import { generateTTS } from "@/util/ttsSpeakerUtil";
-
+import axios from "axios";
 const taleDetailStore = useTaleDetailStore();
 const router = useRouter();
 const pages = taleDetailStore.pages.reverse();
-
-//url의 param 받기
+const userStore = useUserStore();
 const props = defineProps({
     speaker: String,
 });
@@ -197,7 +199,7 @@ const autoAudio = (text) => {
                 // 재생이 끝나면 Promise를 resolve하도록 설정
                 audioRef.value.onended = () => {
                     onAudioEnded();
-                    resolve();
+                    //resolve();
                 };
                 audioRef.value.play(); // 재생
             }
@@ -212,17 +214,16 @@ const autoAudio = (text) => {
 const onAudioEnded = () => {
     if (currentPageIndex.value < pages.length) flipPage(currentPageIndex.value, true);
 };
-// //페이지 변화를 감지해서 틈
-watch(pages, (newPages, oldPages) => {
-    if (newPages && newPages.length > 0) {
-        // 페이지 배열이 변경되었을 때 실행할 코드 작성
-        console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
-        autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
-    }
-});
+// 페이지 변화를 감지해서 틈
+// watch(pages, (newPages, oldPages) => {
+//   if (newPages && newPages.length > 0) {
+//     console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
+//     autoAudio(newPages[currentPageIndex.value].right);
+//   }
+// });
 onMounted(async () => {
-    console.log("TalePlay component is mounted");
     try {
+        getFavorite();
         if (pages.length > 0) {
             console.log("onMounted's currentPageIndex: ", currentPageIndex.value);
             await autoAudio(pages[currentPageIndex.value].right);
@@ -232,43 +233,37 @@ onMounted(async () => {
     }
     console.log("마운트 끝");
 });
-
 userStore.getUser();
-
 const favorite = ref({
-  userId: userStore.userInfo.userId,
-  taleId: parseInt(taleDetailStore.taleId),
+    userId: userStore.userInfo.userId,
+    taleId: parseInt(taleDetailStore.taleId),
 });
-
 console.log(favorite.value);
-
 const postFavorite = () => {
-  axios
-    .post("http://localhost:8080/favorites", favorite.value)
-    .then((res) => {
-      console.log(res.data);
-      getFavorite();
-    })
-    .catch((err) => console.log(err));
+    axios
+        .post("http://localhost:8080/favorites", favorite.value)
+        .then((res) => {
+            console.log(res.data);
+            getFavorite();
+        })
+        .catch((err) => console.log(err));
 };
-
 const favoriteId = ref(null);
 const getFavorite = () => {
-  axios
-    .get(`http://localhost:8080/favorites/${userStore.userInfo.userId}/${taleDetailStore.taleId}`)
-    .then((res) => {
-      favoriteId.value = res.data;
-    })
-    .catch((err) => console.log(err));
+    axios
+        .get(`http://localhost:8080/favorites/${userStore.userInfo.userId}/${taleDetailStore.taleId}`)
+        .then((res) => {
+            favoriteId.value = res.data;
+        })
+        .catch((err) => console.log(err));
 };
-
 const deleteFavorite = () => {
-  axios
-    .delete(`http://localhost:8080/favorites/${favoriteId.value}`)
-    .then((res) => {
-      favoriteId.value = null;
-    })
-    .catch((err) => console.log(err));
+    axios
+        .delete(`http://localhost:8080/favorites/${favoriteId.value}`)
+        .then((res) => {
+            favoriteId.value = null;
+        })
+        .catch((err) => console.log(err));
 };
 </script>
 <style scoped>
@@ -319,6 +314,7 @@ const deleteFavorite = () => {
     width: 50px;
     height: 50px;
     margin: 50px 70px 0px 0px;
+    cursor: pointer;
 }
 .cover {
     background-color: #fff;
@@ -332,7 +328,7 @@ const deleteFavorite = () => {
     width: 450px;
     height: 450px;
     margin-top: 25px;
-    margin-left: 5px;
+    margin-left: 25px;
 }
 .book {
     margin: 0px 0px 0px 45px;
@@ -341,6 +337,8 @@ const deleteFavorite = () => {
     background-color: #21364d;
     width: 1050px;
     height: 520px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
 }
 .flip-book {
     width: 500px;
@@ -371,7 +369,17 @@ const deleteFavorite = () => {
     box-sizing: border-box;
     padding: 0 13px;
     border-radius: 40px 0px 0px 40px;
-    box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5); /* 내부 그림자 추가 */
+    box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
+    background-image: url(@/assets/floral.png);
+}
+.front::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 10px;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(to bottom, #f5f5f5 0%, #dcdcdc 100%);
 }
 .page-separator-right {
     position: absolute;
@@ -406,6 +414,15 @@ const deleteFavorite = () => {
     transform: rotateY(180deg);
     border-radius: 0px 40px 40px 0px;
     box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
+}
+.back::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 10px;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(to bottom, #f5f5f5 0%, #dcdcdc 100%);
 }
 .flip.flipped {
     transform: rotateY(-180deg);
@@ -442,5 +459,13 @@ const deleteFavorite = () => {
     bottom: 13px;
     right: 13px;
     border-radius: 50%;
+}
+.content {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    height: 100%;
+    margin-left: 20px;
+    margin-right: 10px;
 }
 </style>

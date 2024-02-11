@@ -11,20 +11,24 @@
                 <RouterLink to="/tosi">홈</RouterLink>
                 <a v-if="isLoggedIn" @click="logout">로그아웃</a>
             </div>
-            </div>
+        </div>
     </header>
 </template>
 <script setup>
 import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
-const store = useUserStore()
-const isLoggedIn = ref('');
+
+const store = useUserStore();
+
+const isLoggedIn = ref("");
+
 onMounted(() => {
-    if (localStorage.getItem('isLoggedIn') != null) {
-        isLoggedIn.value = 'true';
+    if (sessionStorage.getItem("isLoggedIn") != null || localStorage.getItem("isLoggedIn") != null) {
+        isLoggedIn.value = "true";
     }
     console.log("Is Authenticated:", isLoggedIn.value);
 });
+
 const logout = () => {
     store.getLogout();
 };
@@ -53,7 +57,9 @@ a {
     justify-content: center;
     align-items: center;
 }
-.empty, .homeMenus, .headerContainer {
+.empty,
+.homeMenus,
+.headerContainer {
     flex: 1;
 }
 </style>
