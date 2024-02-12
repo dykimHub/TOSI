@@ -242,15 +242,9 @@ const postFavorite = () => {
     .catch((err) => console.log(err));
 };
 const favoriteId = ref(null);
-<<<<<<< HEAD
-const getFavorite = () => {
-  axios
-    .get(`http://localhost:8080/favorites/${taleDetailStore.taleId}`)
-=======
 const getFavorite = async () => {
   await axios
     .get(`/favorites/${taleDetailStore.taleId}`, { withCredentials: true })
->>>>>>> frontend/feature/newuser
     .then((res) => {
       favoriteId.value = res.data;
     })
