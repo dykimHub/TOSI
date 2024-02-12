@@ -56,5 +56,16 @@ public class TaleDetailController {
 
     }
 
+    @GetMapping("/tales/like/{taleId}")
+    public ResponseEntity<?> getLikeCnt(@PathVariable int taleId) {
+        try {
+            int likeCnt = taleDetailService.updateLikeCnt(taleId);
+            return new ResponseEntity<Integer>(likeCnt, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
 }

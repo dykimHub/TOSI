@@ -163,8 +163,8 @@ public class TaleDetailServiceImpl implements TaleDetailService {
     }
 
     @Override
-    public boolean updateLikeCnt(int taleId) {
-        return taleDetailRepository.updateLikeCnt(taleId) > 0;
+    public int updateLikeCnt(int taleId) {
+        return taleDetailRepository.updateLikeCnt(taleId);
     }
 
 

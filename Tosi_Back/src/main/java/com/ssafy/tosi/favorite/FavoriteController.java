@@ -52,11 +52,7 @@ public class FavoriteController {
             Integer userId = (Integer) request.getAttribute("userId");
             favorite.setUserId(userId);
             Favorite savedFavorite = favoriteService.insertFavorite(favorite);
-            boolean result = taleDetailService.updateLikeCnt(favorite.getTaleId());
-
-            Map<Favorite, Boolean> map = new HashMap<>();
-            map.put(savedFavorite, result);
-            return new ResponseEntity<Map>(map, HttpStatus.OK);
+            return new ResponseEntity<Favorite>(savedFavorite, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
