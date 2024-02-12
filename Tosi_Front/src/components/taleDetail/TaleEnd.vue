@@ -28,7 +28,7 @@
             </option>
           </select>
           <div class="select">
-            <img class="titleimg" src="@/assets/child.png" />
+            <img class="titleimg" src="@/assets/girl.png" />
             <div class="selecttitle">내 이름</div>
           </div>
           <select class="form-select" aria-label="Default select example" v-model="selectedName">

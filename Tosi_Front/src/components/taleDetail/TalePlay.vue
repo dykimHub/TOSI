@@ -263,18 +263,18 @@ const replay = () => {
 </script>
 <style scoped>
 .play {
-  width: 1180px;
-  height: 800px;
+  width: 1050px;
+  height: 780px;
   border: 15px solid #cee8e8;
-  margin: 20px 0px 30px 40px;
+  margin: 20px 0px 30px 0px;
   border-radius: 50px;
   background-color: #f5f5f5;
 }
 .info {
   display: flex;
   justify-content: space-between;
-  width: 1050px;
-  margin: 45px 0 0 45px;
+  width: 950px;
+  margin: 45px 10px 0 45px;
 }
 .title {
   text-decoration: none;
@@ -287,10 +287,11 @@ const replay = () => {
   width: 50px;
   height: 50px;
   cursor: pointer;
+  margin-right: 10px;
 }
 .page-progress {
   font-size: 30px;
-  margin: -50px 0 40px 490px;
+  margin: -50px 0 40px 440px;
 }
 .cover {
   background-color: #fff;
@@ -301,17 +302,17 @@ const replay = () => {
 }
 .coverImg,
 .leftImg {
-  width: 450px;
+  width: 435px;
   height: 450px;
   margin-top: 25px;
-  margin-left: 25px;
+  margin-left: 10px;
 }
 .book {
-  margin: 0px 0px 0px 45px;
+  margin: 0px 0px 0px 35px;
   padding: 10px 10px 0px 25px;
   display: flex;
   background-color: #21364d;
-  width: 1050px;
+  width: 950px;
   height: 520px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
@@ -348,15 +349,6 @@ const replay = () => {
   box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
   background-image: url(@/assets/floral.png);
 }
-.front::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 10px;
-  right: 0;
-  height: 100%;
-  background: linear-gradient(to bottom, #f5f5f5 0%, #dcdcdc 100%);
-}
 .page-separator-right {
   position: absolute;
   top: 6.5%;
@@ -390,15 +382,6 @@ const replay = () => {
   transform: rotateY(180deg);
   border-radius: 0px 40px 40px 0px;
   box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
-}
-.back::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 10px;
-  left: 0;
-  height: 100%;
-  background: linear-gradient(to bottom, #f5f5f5 0%, #dcdcdc 100%);
 }
 .flip.flipped {
   transform: rotateY(-180deg);
@@ -449,7 +432,7 @@ const replay = () => {
   width: 70px;
   height: 70px;
   cursor: pointer;
-  margin: 20px 0px 0px 530px;
+  margin: 20px 0px 0px 450px;
 }
 .stop {
   width: 70px;
