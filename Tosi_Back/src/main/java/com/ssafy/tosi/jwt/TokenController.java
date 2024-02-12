@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @RequestMapping("/jwt")
 @RestController
@@ -22,9 +24,15 @@ public class TokenController {
     public ResponseEntity<?> postNewAccessToken(HttpServletRequest request) {
 
         String refreshToken = cookieUtil.getTokenFromCookie(request, "refresh-token");
-        String newAccessToken = tokenService.generateNewAccessToken(refreshToken);
+        System.out.println("TokenController_리프레쉬토큰:" + refreshToken);
 
-        return new ResponseEntity<String>(newAccessToken, HttpStatus.CREATED);
+        Map<String, String> map = tokenService.generateNewAccessToken(refreshToken);
+
+        if(map == null) {
+            return new ResponseEntity<Void>(HttpStatus.FOUND);
+        }
+
+        return new ResponseEntity<Map>(map, HttpStatus.CREATED);
     }
 
 }

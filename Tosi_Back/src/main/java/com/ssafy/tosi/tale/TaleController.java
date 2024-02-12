@@ -1,5 +1,6 @@
 package com.ssafy.tosi.tale;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class TaleController {
      * 일반 정렬
      */
     @GetMapping("/tales")
-    public ResponseEntity<List<TaleDto>> getAllTales() {
+    public ResponseEntity<List<TaleDto>> getAllTales(HttpServletRequest request) {
         return new ResponseEntity<>(taleService.selectAllTales(), HttpStatus.OK);
     }
 
@@ -26,7 +27,7 @@ public class TaleController {
      * taleId 기준으로 하나만 조회
      */
     @GetMapping("/tale/{taleId}")
-    public ResponseEntity<Tale> getTale(@PathVariable int taleId) {
+    public ResponseEntity<Tale> getTale(HttpServletRequest request, @PathVariable int taleId) {
         return new ResponseEntity<>(taleService.selectOneTale(taleId), HttpStatus.OK);
     }
 
@@ -34,7 +35,7 @@ public class TaleController {
      * 이름으로 검색
      */
     @GetMapping("/search")
-    public ResponseEntity<?> searchTale(@RequestParam(required = false) String title) {
+    public ResponseEntity<?> searchTale(HttpServletRequest request, @RequestParam(required = false) String title) {
         try {
             if(title == null || title.trim().isEmpty()) {
                 throw new IllegalArgumentException("검색어를 입력하세요.");
