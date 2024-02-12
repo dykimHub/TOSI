@@ -113,12 +113,10 @@ div {
     padding: 40px;
     border-radius: 8px;
     width: 600px;
-    overflow-y: auto;
     height: min-content;
     /* max-width: 90%; 최대 너비 설정 */
-    /* max-height: 90%; 최대 높이 설정 */
-    /* overflow: auto; 내용이 넘칠 경우 스크롤바 표시 */
-    /*z-index: 9999;  숫자가 클수록 앞에 위치 */
+    max-height: 90%;
+    overflow-y: auto;
 }
 
 /* RegistForm {

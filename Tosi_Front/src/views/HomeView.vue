@@ -31,7 +31,7 @@
                 </ul>
             </div>
         </article>
-        <div v-else>
+        <div v-else class="splitView">
             <div class="sideBar">
                 <TheSideBar />
             </div>
@@ -85,6 +85,8 @@ TheHeaderNav {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+    width: 100%; /* 화면 전체 너비를 차지하도록 설정 */
 }
 
 .logo {
@@ -165,20 +167,22 @@ a {
     color: black;
 }
 
-/* .sideBar {
+.splitView {
     display: flex;
-    width: 15em;
-} */
+}
+
 .sideBar {
     position: fixed; /* 왼쪽에 고정 */
     left: 0; /* 왼쪽에 정렬 */
     top: 220px; /* 위쪽에 정렬 */
     height: 100%; /* 화면 전체 높이로 설정 */
     width: 15em;
+    z-index: 1; /* 사이드바가 제일 앞쪽에 렌더링되도록 */
 }
 
 .content {
-    margin-left: 13em;
+    margin-left: 15em; /* 사이드바 너비만큼 */
+    flex-grow: 1; /* 남은 공간 차지 */
 }
 
 a {

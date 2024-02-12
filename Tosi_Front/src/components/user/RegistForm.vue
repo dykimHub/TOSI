@@ -92,8 +92,14 @@ const regist = () => {
     return;
   }
 
-  userStore.getUserSearch(email.value);
+  // 이메일 유효성 검사
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.value.trim())) {
+    alert("올바른 이메일 주소를 입력하세요.");
+    return;
+  }
 
+  userStore.getUserSearch(email.value);
   if (userStore.searchResult == true) {
     alert("이미 등록된 이메일입니다.");
     return;
@@ -114,9 +120,34 @@ const regist = () => {
   userStore.postUser(userInfo);
 };
 
+// const checkEmailDuplication = async function () {
+//   if (email.value.trim() === "") {
+//     return; // 이메일이 비어있을 경우 건너뛰기
+//   }
+
+//   try {
+//     await userStore.getUserSearch(email.value);
+
+//     if (userStore.searchResult == true) {
+//       alert("이미 등록된 이메일입니다.");
+//     } else if (userStore.searchResult == false) {
+//       alert("사용 가능한 이메일입니다.");
+//     }
+//   } catch (error) {
+//     console.error("에러 발생:", error);
+//   }
+// };
+
 const checkEmailDuplication = async function () {
   if (email.value.trim() === "") {
     return; // 이메일이 비어있을 경우 건너뛰기
+  }
+
+  // 이메일 유효성 검사
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.value.trim())) {
+    alert("올바른 이메일 주소를 입력하세요.");
+    return;
   }
 
   try {
@@ -207,7 +238,7 @@ const deleteChild = function (index) {
 .children-list-container {
   border: 1px solid #ccc;
   padding: 5px;
-  overflow: auto;
+  overflow-y: auto;
   width: 500px;
   /* background-color: #eee58a; */
 }
@@ -247,4 +278,5 @@ const deleteChild = function (index) {
   /* 텍스트 크기 설정 */
   cursor: pointer;
   /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
-}</style>
+}
+</style>

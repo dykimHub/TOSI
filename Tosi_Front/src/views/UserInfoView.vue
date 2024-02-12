@@ -1,5 +1,5 @@
 <template>
-  <div class="password-check-container">
+  <div class="password-check-container" v-if = "passwordCheck == false">
     <div>비밀번호를 입력해주세요</div>
     <div class="login-div">
       <input type="password" class="set-inp" placeholder=" " v-model="password">
@@ -7,7 +7,7 @@
     <input type="submit" class="set-btn" value="확인" @click="checkPassword">
   </div>
   <div class="user-info-container">
-    <UserInfoUpdate v-if = "passwordCheck == true" />
+    <UserInfoUpdate v-if = "passwordCheck == true" :userInfo="userInfo"/>
   </div>
 </template>
 
@@ -18,8 +18,9 @@ import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 
 const store = useUserStore()
 
+const userInfo = ref({ email: '', bookshelfName: '', childrenList: [] });
 const password = ref("");
-const passwordCheck = ref();
+const passwordCheck = ref(false);
 
 const checkPassword = async function () {
   if (
@@ -28,8 +29,8 @@ const checkPassword = async function () {
     alert("비밀번호를 입력해주세요");
     return;
   }
-  await store.getPasswordCheck(password);
-  passwordCheck.value = store.passwordCheck.value
+  await store.getPasswordCheck(password.value);
+  passwordCheck.value = store.passwordCheck
 };
 
 </script>
