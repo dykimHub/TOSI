@@ -2,7 +2,7 @@
     <TheHeaderNav />
     <div class="mainContainer">
         <article v-if="isMain">
-            <div class="slotMachine">슬롯머신</div>
+            <!-- <div class="slotMachine">슬롯머신</div> -->
             <div class="toMenus">
                 <RouterLink to="/tales" class="toMenu">
                     <img class="icon" src="@/assets/Play.png" />
