@@ -59,14 +59,14 @@
 <script setup>
 import { ref, computed, reactive, onMounted, watch } from "vue";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
-import { useUserStore } from "@/stores/userStore";
+// import { useUserStore } from "@/stores/userStore";
 import { useRouter } from "vue-router";
 import { generateTTS } from "@/util/ttsSpeakerUtil";
-import axios from "axios";
+import axios from "@/util/http-common";
 const taleDetailStore = useTaleDetailStore();
 const router = useRouter();
 const pages = [...taleDetailStore.pages].reverse();
-const userStore = useUserStore();
+// const userStore = useUserStore();
 const props = defineProps({
   speaker: String,
   taleId: Number,
@@ -216,7 +216,7 @@ const audioPause = () => {
 
 onMounted(async () => {
   try {
-    getFavorite();
+    await getFavorite();
     if (pages.length > 0) {
       console.log("onMounted's currentPageIndex: ", currentPageIndex.value);
       await autoAudio(pages[currentPageIndex.value].right);
@@ -226,7 +226,7 @@ onMounted(async () => {
   }
   console.log("마운트 끝");
 });
-userStore.getUser();
+// userStore.getUser();
 const favorite = ref({
   // userId: userStore.userInfo.userId,
   taleId: props.taleId,
@@ -234,7 +234,7 @@ const favorite = ref({
 console.log(favorite.value);
 const postFavorite = () => {
   axios
-    .post("http://localhost:8080/favorites", favorite.value)
+    .post("/favorites", favorite.value, { withCredentials: true })
     .then((res) => {
       console.log(res.data);
       getFavorite();
@@ -242,9 +242,15 @@ const postFavorite = () => {
     .catch((err) => console.log(err));
 };
 const favoriteId = ref(null);
+<<<<<<< HEAD
 const getFavorite = () => {
   axios
     .get(`http://localhost:8080/favorites/${taleDetailStore.taleId}`)
+=======
+const getFavorite = async () => {
+  await axios
+    .get(`/favorites/${taleDetailStore.taleId}`, { withCredentials: true })
+>>>>>>> frontend/feature/newuser
     .then((res) => {
       favoriteId.value = res.data;
     })
@@ -252,7 +258,7 @@ const getFavorite = () => {
 };
 const deleteFavorite = () => {
   axios
-    .delete(`http://localhost:8080/favorites/${favoriteId.value}`)
+    .delete(`/favorites/${favoriteId.value}`, { withCredentials: true } )
     .then((res) => {
       favoriteId.value = null;
     })

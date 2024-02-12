@@ -198,7 +198,11 @@ onMounted(() => {
 .topOfTaleList {
   display: flex;
   justify-content: space-between;
+<<<<<<< HEAD
   /* margin-left: 10%;
+=======
+    /* margin-left: 10%;
+>>>>>>> frontend/feature/newuser
     margin-right: 10%; */
 }
 

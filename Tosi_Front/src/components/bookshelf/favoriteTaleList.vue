@@ -1,10 +1,10 @@
 <template>
   <div class="talelistContainer">
     <div class="topOfTaleList">
-      <h2>즐겨찾기 동화 목록</h2>
+      <h2 class="title">{{ bookshelfName }}</h2>
       <div class="selecSort">
-        <label>정렬 기준</label>
-        <select v-model="sortOptionC">
+        <label>정렬 기준</label>&nbsp;&nbsp;
+        <select v-model="sortOptionT">
           <option value="title">이름순</option>
           <option value="likeCnt">인기순</option>
           <option value="random">랜덤</option>
@@ -14,7 +14,7 @@
       <button v-if="deleteButton" @click="deactivateDeleteButton" class="deleteButton">삭제 취소</button>
     </div>
     <div class="taleContainer">
-      <ul v-for="favorite in favorites" :key="favorite.id">
+      <ul v-for="favorite in currentPageBoardList" :key="favorite.taleId">
         <div class="oneTale">
           <RouterLink :to="`/tales/${favorite.taleId}`"><img class="thumbnail" :src="favorite.thumbnail" /></RouterLink>
           <br />
@@ -24,58 +24,36 @@
         </div>
         <button v-if="deleteButton" @click="deleteFavorite(favorite.taleId)">×</button>
       </ul>
-<!-- 
-      <ul v-for="favorite in favoriteStore.myFavoriteTalesList" :key="favorite.favoriteId">
-        <div class="oneTale">
-          <RouterLink :to="`/tales/${favorite.taleDto.taleId}`"><img class="thumbnail"
-              :src="favorite.taleDto.thumbnail" /></RouterLink>
-          <br>
-          <RouterLink :to="`/tales/${favorite.taleDto.taleId}`">{{ favorite.taleDto.title }}</RouterLink>
-          <br>
-          재생 시간: {{ favorite.taleDto.time }}
-        </div>
-        <button v-if="deleteButton" @click="deleteTale(favorite.favoriteId)">×</button>
-      </ul> -->
+    </div>
+    <div>
+      <nav aria-label="Page navigation" style="padding: 15px;">
+      <ul class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success ">
+        <li class="page-item">
+          <a class="page-link" :class="{ disabled: currentPage <= 1 }" href="#" @click.prevent="currentPage--">&lt;</a>
+        </li>
+        <li :class="{ active: currentPage === page }" class="page-item" v-for="page in pageCount" :key="page">
+          <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
+            page
+          }}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" :class="{ disabled: currentPage >= pageCount }" href="#"
+            @click.prevent="currentPage++">&gt;</a>
+        </li>
+      </ul>
+    </nav>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useFavoriteStore } from '@/stores/favoriteStore';
 import { onMounted, ref, watch, computed } from "vue";
-import { useUserStore } from "@/stores/userStore";
-import axios from "axios";
-
+import { useUserStore } from '@/stores/userStore';
 const userStore = useUserStore();
-userStore.getUser();
-
-const favoriteList = ref([]);
-const favorites = computed(() => favoriteList.value);
-
-watch(
-  () => userStore.userInfo,
-  (userInfo) => {
-    if (userInfo && userInfo.userId) {
-      axios
-        .get(`http://localhost:8080/favorites`)
-        .then((res) => (favoriteList.value = res.data))
-        .catch((err) => console.error(err));
-    }
-  },
-  { immediate: true }
-);
-
-const deleteFavorite = (taleId) => {
-  axios
-    .get(`http://localhost:8080/favorites/${taleId}`)
-    .then((res) => {
-      const favoriteId = res.data;
-      return axios.delete(`http://localhost:8080/favorites/${favoriteId}`);
-    })
-    .then(() => {
-      favoriteList.value = favoriteList.value.filter((favorite) => favorite.taleId !== taleId);
-    })
-    .catch((err) => console.error(err));
-};
+const bookshelfName = ref("");
+const favoriteStore = useFavoriteStore();
+const favoriteTalesList = ref([]);
 
 const deleteButton = ref(false);
 const activateDeleteButton = () => {
@@ -85,107 +63,92 @@ const deactivateDeleteButton = () => {
   deleteButton.value = false;
 }
 
-// console.log(favoriteList.value);
+const sortOptionT = ref('title');
+const sortedTaleList = ref([]);
 
-// import { useFavoriteStore } from '@/stores/favoriteStore';
-// import { onMounted, ref, watch } from 'vue';
+const sortTaleList = () => {
+  switch (sortOptionT.value) {
+    case 'title':
+      sortedTaleList.value = favoriteTalesList.value.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    case 'likeCnt':
+      sortedTaleList.value = favoriteTalesList.value.sort((a, b) => b.likeCnt - a.likeCnt);
+      break;
+    case 'random':
+      sortedTaleList.value = favoriteTalesList.value.sort(() => Math.random() - 0.5);
+      break;
+    default:
+      break;
+  }
+};
 
-// const favoriteStore = useFavoriteStore();
+const deleteFavorite = async function (taleId) {
+  alert("나의 책장에서 삭제하시겠습니까?")
+  await favoriteStore.deleteMyFavoriteTale(taleId);
+  favoriteTalesList.value = favoriteTalesList.value.filter((favorite) => favorite.taleId !== taleId);
+}
 
-// const sortOptionC = ref('title');
-// const sortedTaleList = ref([]);
+//page
+const perPage = 9;
+const currentPage = ref(1);
 
-// const sortTaleList = () => {
-//   switch (sortOptionC.value) {
-//     case 'title':
-//       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => a.taleDto.title.localeCompare(b.taleDto.title));
-//       break;
-//     case 'likeCnt':
-//       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => b.taleDto.likeCnt - a.taleDto.likeCnt);
-//       break;
-//     case 'random':
-//       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort(() => Math.random() - 0.5);
-//       break;
-//     default:
-//       break;
-//   }
-// };
+const pageCount = computed(() => {
+  return Math.ceil(favoriteStore.myFavoriteTalesList.length / perPage);
+});
 
-// const deleteTale = function (favoriteId) {
-//   favoriteStore.deleteMyFavoriteTale(favoriteId);
-//   // sortedTaleList.value.splice(taleId, taleId);
-//   // sortedTaleList.value = sortedTaleList.value.filter(tale => favorite.favoriteId !== taleId);
-//   // window.location.reload()
-// }
+const clickPage = function (page) {
+  currentPage.value = page;
+};
 
-// onMounted(() => {
-//   favoriteStore.getMyFavoriteTalesList();
-//   // console.log(tale.title.value);
-//   watch(() => favoriteStore.myFavoriteTalesList, sortTaleList, { immediate: true });
-//   watch(sortOptionC, sortTaleList);
-// });
+const currentPageBoardList = computed(() => {
+  return favoriteTalesList.value.slice(
+    (currentPage.value - 1) * perPage,
+    currentPage.value * perPage
+  );
+});
 
-// const sortOptionC = ref('title');
-// const sortedTaleList = ref([]);
+onMounted(async () => {
+  await userStore.getUser();
+  bookshelfName.value = userStore.userInfo.bookshelfName;
 
-// const sortTaleList = () => {
-//   switch (sortOptionC.value) {
-//     case 'title':
-//       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => a.taleDto.title.localeCompare(b.taleDto.title));
-//       break;
-//     case 'likeCnt':
-//       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort((a, b) => b.taleDto.likeCnt - a.taleDto.likeCnt);
-//       break;
-//     case 'random':
-//       sortedTaleList.value = favoriteStore.myFavoriteTalesList.sort(() => Math.random() - 0.5);
-//       break;
-//     default:
-//       break;
-//   }
-// };
-
-// const deleteTale = function (favoriteId) {
-//   favoriteStore.deleteMyFavoriteTale(favoriteId);
-//   // sortedTaleList.value.splice(taleId, taleId);
-//   // sortedTaleList.value = sortedTaleList.value.filter(tale => favorite.favoriteId !== taleId);
-//   // window.location.reload()
-// }
-
-// onMounted(() => {
-//   favoriteStore.getMyFavoriteTalesList();
-//   // console.log(tale.title.value);
-//   watch(() => favoriteStore.myFavoriteTalesList, sortTaleList, { immediate: true });
-//   watch(sortOptionC, sortTaleList);
-// });
+  await favoriteStore.getMyFavoriteTalesList();
+  favoriteTalesList.value = favoriteStore.myFavoriteTalesList;
+  console.log("즐겨찾기 목록:" + favoriteTalesList.value)
+  watch(() => favoriteTalesList, sortTaleList, { immediate: true });
+  watch(sortOptionT, sortTaleList);
+});
 </script>
 
 <style scoped>
+.title {
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: inset 0 -20px 0 #eee58a;
+    font-size: 40px;
+    margin: 30px 0px 0px 50px;
+    margin-bottom: 40px;
+    line-height: 1;
+    text-align: left;
+}
+
 ul {
   position: relative;
 }
 
 .deleteButton {
-  background-color: #c4ecb0;
+  background-color: #eee58a;
   border: none;
   color: white;
   font-size: 16px;
   padding: 8px 16px;
+  margin-left: 5px;
+  margin-right: 49px;
   cursor: pointer;
   border-radius: 4px;
 }
 
 .deleteButton:hover {
-  background-color: #c4ecb0;
-}
-
-.taleContainer {
-  position: relative;
-}
-
-.taleContainer button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  background-color: #eee58a;
 }
 
 .topOfTaleList {
@@ -214,23 +177,52 @@ ul {
   /* 텍스트 색상 설정 */
 }
 
-.taleContainer {
+/* .taleContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+} */
+
+/* .taleContainer {
+  position: relative;
   display: flex;
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
+} */
+
+.taleContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 5vw;
+}
+
+.taleContainer button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .talelistContainer {
+  justify-content: center;
+  /* justify-content: space-around; */
   background-color: white;
   border-radius: 20px;
   margin: 35px;
   padding-top: 40px;
   opacity: 0.95;
-  max-width: calc(100% - 70px);
-  /* 화면 너비에서 좌우 마진값만큼 뺀 값으로 최대 너비 설정 */
+  /* max-width: calc(100% - 70px); */
+  border: 5px solid #cee8e8;
+  width: 80vw;
 }
 
 .thumbnail {
@@ -241,21 +233,54 @@ ul {
   width: 13em;
   text-align: center;
   margin: 2em;
+  margin-right: 55px;
 }
 
 .selecSort {
   display: flex;
-  flex-direction: column;
+  /* flex-wrap: wrap;
+  flex-direction: column; */
+  flex-direction: row;
+  justify-content: center;
   margin: 1em;
+  margin-left: auto;
 }
-
+/* 
 .topOfTaleList {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-}
+} */
 
 a {
   text-decoration: none;
   color: black;
-}</style>
+}
+
+.pagination,
+ .jsgrid .jsgrid-pager {
+     display: flex;
+     padding-left: 0;
+     list-style: none;
+     border-radius: 0.25rem
+ }
+ 
+ .page-link {
+     color: black
+ }
+ 
+ .pagination.pagination-rounded-flat .page-item {
+     margin: 0 .30rem
+ }
+ 
+
+ .pagination-success .page-item.active .page-link
+  {
+     background: #d8eef2;
+ }
+ 
+ .pagination.pagination-rounded-flat .page-item .page-link{
+    border: none;
+    border-radius: 50px;
+}
+</style>

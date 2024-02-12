@@ -5,8 +5,8 @@ import axios from "@/util/http-common";
 export const useTaleStore = defineStore('tale', () => {
   //동화 목록
   const taleList = ref([])
-  const getTaleList = function () {
-    axios.get(`/tales`, { withCredentials: true })
+  const getTaleList = async function () {
+    await axios.get(`/tales`, { withCredentials: true })
       .then((response) => {
         console.log(response.data)
         taleList.value = response.data
