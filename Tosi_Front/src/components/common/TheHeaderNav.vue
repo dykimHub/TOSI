@@ -14,25 +14,28 @@
     </div>
   </header>
 </template>
+
 <script setup>
 import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
 
-const store = useUserStore();
+const store = useUserStore()
 
-const isLoggedIn = ref("");
+const isLoggedIn = ref('');
 
 onMounted(() => {
-  if (sessionStorage.getItem("isLoggedIn") != null || localStorage.getItem("isLoggedIn") != null) {
-    isLoggedIn.value = "true";
-  }
-  console.log("Is Authenticated:", isLoggedIn.value);
+    if(sessionStorage.getItem('isLoggedIn') != null || localStorage.getItem('isLoggedIn') != null) {
+        isLoggedIn.value = 'true';
+    }
+    console.log("Is Authenticated:", isLoggedIn.value);
 });
 
 const logout = () => {
-  store.getLogout();
+    store.getLogout();
 };
+
 </script>
+
 <style scoped>
 .headerContainer {
   display: flex;
