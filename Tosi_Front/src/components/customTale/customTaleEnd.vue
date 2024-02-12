@@ -142,6 +142,7 @@ a {
   overflow: hidden;
   display: flex;
   justify-content: center;
+
 }
 
 .info {
@@ -166,6 +167,7 @@ a {
   flex-wrap: wrap;
   align-content: center;
   flex-direction: column;
+  /* background-image: url('~@/assets/bookend.png'); */
 }
 
 .book img {
@@ -226,12 +228,7 @@ a {
   padding: 0 10px;
   margin-top: 20px;
 }
-/* .othercustom {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-} */
+
 .twoColumns {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2개의 열로 설정 */

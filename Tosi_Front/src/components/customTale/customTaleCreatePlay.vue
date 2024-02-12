@@ -227,6 +227,8 @@ onMounted(async () => {
   background-color: #21364d;
   width: 1050px;
   height: 520px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
 }
 .flip-book {
   width: 500px;
