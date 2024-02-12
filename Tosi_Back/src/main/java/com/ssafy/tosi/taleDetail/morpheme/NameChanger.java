@@ -40,6 +40,7 @@ public class NameChanger {
         for (String sent : sentences) {
             String sentCopy = sent;
             Kiwi.Token[] tokens = getKiwi().tokenize(sent, Kiwi.Match.allWithNormalizing); // 형태소 분석
+            System.out.println(Arrays.toString(tokens));
 
             for (int i = tokens.length - 3; i >= 0; i--) {
                 String word = "";
@@ -47,7 +48,7 @@ public class NameChanger {
                 if (!tokens[i].form.equals("*"))
                     continue;
 
-                if (tokens[i + 2].form.equals("님") || (tokens[i + 2].form.equals("니") && tokens[i + 3].form.equals("ㅁ")))
+                if (tokens[i + 2].form.equals("님") || (tokens[i + 2].form.equals("니") && tokens[i + 3].form.equals("ᆷ")))
                     continue;
 
                 word = nameMap.get(cnames.get(Integer.parseInt(tokens[i + 1].form)));
@@ -59,12 +60,17 @@ public class NameChanger {
                 sentCopy = sentCopy.substring(0, start) + myjosa + sentCopy.substring(end);
 
                 if (KiwiTag.toString(tokens[i + 2].tag).equals("VCP")) {
+                    System.out.print("토큰" + tokens[i + 4]);
+                    System.out.println(tokens[i + 4].form.equals("ᆷ"));
+
                     start = tokens[i + 2].position;
                     end = start + tokens[i + 3].length + 1;
                     if (tokens[i + 3].form.equals("아") || tokens[i + 3].form.equals("야")) {
                         myjosa = josa.aYa(word);
                     } else if (KiwiTag.toString(tokens[i + 3].tag).equals("ETM") || KiwiTag.toString(tokens[i + 3].tag).equals("EF") || KiwiTag.toString(tokens[i + 3].tag).equals("EP") || KiwiTag.toString(tokens[i + 3].tag).equals("JX")) {
                         myjosa = josa.eNoE(word) + tokens[i + 3].form;
+                    } else if (tokens[i + 3].form.equals("님") || (tokens[i + 3].form.equals("니") && tokens[i + 4].form.equals("ᆷ"))) {
+                        myjosa = "님";
                     } else {
                         myjosa = josa.eNoE(word);
                     }
@@ -96,6 +102,9 @@ public class NameChanger {
             case "JKS":
             case "ETM":
                 return form.equals("이") || form.equals("가") ? josa.iGa(word) : josa.eunNeun(word);
+            case "MM":
+                if(form.equals("이") || form.equals("가"))
+                    return josa.iGa(word);
             case "JX":
                 if (form.equals("아") || form.equals("야")) {
                     return josa.aYa(word);

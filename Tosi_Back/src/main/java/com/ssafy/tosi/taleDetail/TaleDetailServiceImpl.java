@@ -155,10 +155,6 @@ public class TaleDetailServiceImpl implements TaleDetailService {
 
         }
 
-        for(Page pp : pages){
-            System.out.println(pp);
-        }
-
         return pages;
     }
 
