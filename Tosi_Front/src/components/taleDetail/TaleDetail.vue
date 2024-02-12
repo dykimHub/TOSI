@@ -1,6 +1,15 @@
 <template>
   <div v-if="taleDetailStore.tale">
     <div class="play">
+      <div class="likes">
+        <div v-if="favoriteId">
+          <img class="like" src="@/assets/like.png" @click="deleteFavorite()" />
+        </div>
+        <div v-else>
+          <img class="like" src="@/assets/dislike.png" @click="postFavorite()" />
+        </div>
+        <div class="likecnt">{{ likeCnt }}</div>
+      </div>
       <div class="container">
         <div class="leftImg">
           <div class="title">{{ taleDetailStore.tale.title }}</div>
@@ -98,7 +107,7 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
 import { useUserStore } from "@/stores/userStore";
 import axios from "axios";
@@ -198,6 +207,60 @@ const navigateToTalePlay = () => {
     params: { speaker: selectedSpeaker.speaker, taleId: taleDetailStore.taleId },
   });
 };
+const favorite = ref({
+  // userId: userStore.userInfo.userId,
+  taleId: props.taleId,
+});
+console.log(favorite.value);
+const postFavorite = () => {
+  axios
+    .post("http://localhost:8080/favorites", favorite.value)
+    .then((res) => {
+      console.log(res.data);
+      getFavorite();
+      getLikeCnt();
+    })
+    .catch((err) => console.log(err));
+};
+const favoriteId = ref(null);
+const getFavorite = () => {
+  axios
+    .get(`http://localhost:8080/favorites/${props.taleId}`)
+    .then((res) => {
+      favoriteId.value = res.data;
+    })
+    .catch((err) => console.log(err));
+};
+const deleteFavorite = () => {
+  axios
+    .delete(`http://localhost:8080/favorites/${favoriteId.value}`)
+    .then((res) => {
+      favoriteId.value = null;
+      getFavorite();
+      getLikeCnt();
+    })
+    .catch((err) => console.log(err));
+};
+const likeCnt = ref(null);
+const getLikeCnt = () => {
+  axios
+    .get(`http://localhost:8080/tales/like/${props.taleId}`)
+    .then((res) => {
+      return axios.get(`http://localhost:8080/tales/${props.taleId}`);
+    })
+    .then((res) => {
+      likeCnt.value = res.data.likeCnt;
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+onMounted(() => {
+  getFavorite();
+  getLikeCnt();
+});
 </script>
 <style scoped>
 .play {
@@ -211,7 +274,7 @@ const navigateToTalePlay = () => {
 .container {
   display: flex;
   width: 1050px;
-  margin: 80px 0 0 30px;
+  margin: 0px 0 0 30px;
 }
 .title {
   margin: 30px 0px 25px 0px;
@@ -261,7 +324,7 @@ const navigateToTalePlay = () => {
   margin-bottom: 20px;
 }
 .selectbox {
-  border: 10px solid #ebffdf;
+  border: 5px solid #ebffdf;
   border-radius: 30px;
   background-color: aliceblue;
   width: 250px;
@@ -269,7 +332,7 @@ const navigateToTalePlay = () => {
   padding: 0px 15px 10px 15px;
 }
 .selectedbox {
-  border: 10px solid #ebffdf;
+  border: 5px solid #ebffdf;
   border-radius: 30px;
   background-color: aliceblue;
   width: 250px;
@@ -304,10 +367,10 @@ const navigateToTalePlay = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 10px solid #ebffdf;
+  border: 5px solid #ebffdf;
   border-radius: 30px;
   width: 180px;
-  height: 60px;
+  height: 55px;
   text-align: center;
   margin: 0 0 -35px 35px;
   background-color: white;
@@ -365,19 +428,19 @@ const navigateToTalePlay = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 10px solid #ebffdf;
+  border: 5px solid #ebffdf;
   border-radius: 30px;
   width: 193px;
-  height: 60px;
+  height: 55px;
   text-align: center;
-  margin: -40px 0px 0px 80px;
+  margin: -30px 0px 0px 80px;
   background-color: white;
   position: relative;
   z-index: 5;
   font-size: 23px;
 }
 .voicebox {
-  border: 10px solid #ebffdf;
+  border: 5px solid #ebffdf;
   border-radius: 30px;
   background-color: aliceblue;
   font-size: 20px;
@@ -407,5 +470,18 @@ const navigateToTalePlay = () => {
     transform: translate(300px, -300px) rotate(45deg); /* 대각선 이동 및 회전 */
     opacity: 0; /* 사라지는 효과 */
   }
+}
+.likes {
+  display: flex;
+  margin: 30px 0 25px 30px;
+}
+.like {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.likecnt {
+  font-size: 30px;
 }
 </style>

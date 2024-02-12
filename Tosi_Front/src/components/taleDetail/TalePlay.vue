@@ -73,6 +73,7 @@ const props = defineProps({
 });
 
 const goToEnd = () => {
+  audioRef.value.pause();
   router.push({ name: "taleEnd", params: { taleId: taleDetailStore.taleId } });
 };
 // 페이지 배열의 인덱스를 저장해서 zindex 배열로 만듦
@@ -153,7 +154,7 @@ const ttsMaker = async (text) => {
 const autoAudio = (text) => {
   //기존 오디오 끊기
   if (audioRef.value != null) {
-    isPaused.value = true;
+    // isPaused.value = true;
     audioRef.value.pause();
   }
   console.log("라디오 끊은 후, audioRef.value: ", audioRef.value, "\n text: ", text);
@@ -167,7 +168,7 @@ const autoAudio = (text) => {
       onAudioEnded();
       resolve();
     };
-    isPaused.value = false;
+    // isPaused.value = false;
     audioRef.value.play(); // 재생
   } else {
     console.log("ttsMaker() 호출, text: ", text);
@@ -180,7 +181,7 @@ const autoAudio = (text) => {
           onAudioEnded();
           //resolve();
         };
-        isPaused.value = false;
+        // isPaused.value = false;
         audioRef.value.play(); // 재생
       }
     });
@@ -196,6 +197,7 @@ const onAudioEnded = () => {
 watch(pages, (newPages, oldPages) => {
   if (newPages && newPages.length > 0) {
     // 페이지 배열이 변경되었을 때 실행할 코드 작성
+    isPaused.value = false;
     console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
     autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
   }
@@ -226,7 +228,7 @@ onMounted(async () => {
 });
 userStore.getUser();
 const favorite = ref({
-  userId: userStore.userInfo.userId,
+  // userId: userStore.userInfo.userId,
   taleId: props.taleId,
 });
 console.log(favorite.value);
@@ -242,7 +244,7 @@ const postFavorite = () => {
 const favoriteId = ref(null);
 const getFavorite = () => {
   axios
-    .get(`http://localhost:8080/favorites/${userStore.userInfo.userId}/${taleDetailStore.taleId}`)
+    .get(`http://localhost:8080/favorites/${taleDetailStore.taleId}`)
     .then((res) => {
       favoriteId.value = res.data;
     })
@@ -291,7 +293,9 @@ const replay = () => {
 }
 .page-progress {
   font-size: 30px;
-  margin: -50px 0 40px 440px;
+  margin: -50px 0 40px 35px;
+  width: 950px;
+  text-align: center;
 }
 .cover {
   background-color: #fff;

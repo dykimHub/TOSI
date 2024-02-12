@@ -143,7 +143,7 @@ const chatStart = () => {
 }
 .randomc {
   width: 300px;
-  font-size: 38px;
+  font-size: 2.5vw;
   margin-top: 130px;
   margin-left: 130px;
   text-align: center;
@@ -151,7 +151,7 @@ const chatStart = () => {
 }
 .randomg {
   width: 360px;
-  font-size: 33.3px;
+  font-size: 2.3vw;
   margin-left: 95px;
   margin-top: 5px;
   text-align: center;

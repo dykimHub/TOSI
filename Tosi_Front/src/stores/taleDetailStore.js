@@ -12,6 +12,7 @@ export const useTaleDetailStore = defineStore("taleDetail", () => {
       .get(`http://localhost:8080/tales/${taleId.value}`, { withCredentials: true })
       .then((response) => {
         tale.value = response.data;
+        console.log("첫번째");
       })
       .catch((error) => {
         console.error("Error fetching:", error);
