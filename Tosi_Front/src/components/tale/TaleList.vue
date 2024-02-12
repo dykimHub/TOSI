@@ -1,16 +1,15 @@
 <template>
   <div class="talelistContainer">
     <div class="topOfTaleList">
-      <div class="box1"></div>
-      <div class="box2">
-        <h2>전체 책 보기</h2>
-      </div>
+      <!-- <div class="box1"></div> -->
+      <!-- <div class="box2"> -->
+        <div class="title">전체 책 보기</div>
+      <!-- </div> -->
       <div class="box3">
-        <div class="searchContainer">
+        <!-- <div class="searchContainer">
           <input v-model="searchQuery" type="text" />
-          <button @click="searchTales">검색</button>
-          <!-- <router-link :to="{ path: '/search', query: { title: searchQuery } }">검색</router-link> -->
-        </div>
+          <button @click="searchTaleByTitle">검색</button>
+        </div> -->
         <div class="selecSort">
           <label>정렬 기준</label>
           <select v-model="sortOption">
@@ -63,7 +62,7 @@ const sortOption = ref("title");
 const sortedTaleList = ref([]);
 const router = useRouter();
 
-const searchQuery = ref("");
+const title = ref("");
 const sortTaleList = () => {
   switch (sortOption.value) {
     case "title":
@@ -99,26 +98,21 @@ const currentPageBoardList = computed(() => {
   );
 }); //page
 
-// const searchAndUpdateList = () => {
-//   if (searchQuery.value.trim() !== "") {
-//     sortedTaleList.value = Talestore.taleList.filter((tale) =>
-//       tale.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-//     );
-//   } else {
-//     sortTaleList();
-//   }
-// };
+const searchQuery = ref("");
 
-const searchTales = () => {
-  if (searchQuery.value.trim() !== "") {
-    sortedTaleList.value = Talestore.taleList.filter((tale) =>
-      tale.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-  } else {
-    sortTaleList();
+const searchTaleByTitle = async () => {
+  try {
+    title.value = searchQuery.value;
+    const response = await Talestore.searchTaleByTitle(title.value);
+
+    // 검색 결과 확인
+      Talestore.searchList = response.data;
+
+      // 검색 결과를 업데이트한 후 결과 페이지로 이동
+      router.push({ name: "searchTale", query: { title: title.value } });
+  } catch (error) {
+    console.error("검색 오류:", error);
   }
-
-  router.push({ path: "/search", query: { title: searchQuery.value } });
 };
 
 onMounted(() => {
@@ -129,19 +123,10 @@ onMounted(() => {
   // Extract search query from URL
   const route = router.currentRoute.value;
   if (route.query.title) {
-    searchQuery.value = route.query.title.toString();
+    title.value = route.query.title.toString();
   }
 
-  // Filter and display search results
-  if (searchQuery.value.trim() !== "") {
-    sortedTaleList.value = Talestore.taleList.filter((tale) =>
-      tale.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-  } else {
-    sortTaleList();
-  }
 });
-
 </script>
 
 
@@ -155,12 +140,24 @@ onMounted(() => {
   justify-content: space-around;
 }
 
+.title {
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: inset 0 -20px 0 #f1a8bc;
+    font-size: 40px;
+    margin: 30px 0px 0px 50px;
+    margin-bottom: 40px;
+    line-height: 1;
+    text-align: left;
+}
+
 .talelistContainer {
   background-color: white;
   border-radius: 20px;
   margin: 35px;
-  padding-top: 40px;
   opacity: 0.95;
+  padding: 40px 60px;
+  border: 5px solid #cee8e8;
 }
 
 .thumbnail {
@@ -187,32 +184,14 @@ onMounted(() => {
 
 .topOfTaleList {
   display: flex;
-  flex-direction: row;
-  /* justify-content: space-around; */
+    justify-content: space-between;
+    /* margin-left: 10%;
+    margin-right: 10%; */
 }
 
 a {
   text-decoration: none;
   color: black;
-}
-
-.box1, .box2, .box3 {
-  flex: 1;
-}
-
-input {
-  width: 100px;
-}
-
-.box2 {
-  display: flex;
-  justify-content: center;
-}
-
-.box3{
-  display: flex;
-  flex-direction: column;
-  /* justify-content: end; */
 }
 
 .pagination,
@@ -226,7 +205,7 @@ input {
  .page-link {
      color: black
  }
-
+ 
  .pagination.pagination-rounded-flat .page-item {
      margin: 0 .30rem
  }

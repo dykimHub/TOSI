@@ -17,16 +17,15 @@ export const useTaleStore = defineStore('tale', () => {
   }
 
   //동화 검색
+  const searchList = ref([])
   const searchTaleByTitle = function (title) {
-    axios.get(`/search`, {
-      params: { title }
-    }, { withCredentials: true })
+    axios.get(`/search?title=${title}`, { withCredentials: true })
       .then((response) => {
-        taleList.value = response.data
+        searchList.value = response.data
     }).catch((error) => {
       console.error('Error fetching search:', error)
     })
   }
 
-  return { taleList, getTaleList, searchTaleByTitle }
+  return {searchList, taleList, getTaleList, searchTaleByTitle }
 })

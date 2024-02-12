@@ -24,7 +24,7 @@ export const useUserStore = defineStore("user", () => {
         let loginInfo = {
           email: userInfo.email,
           password: userInfo.password,
-          autoLogin: false
+          autoLogin: false,
         };
         console.log(loginInfo)
         postLogin(loginInfo);
@@ -61,7 +61,7 @@ export const useUserStore = defineStore("user", () => {
       url: `/users`,
       withCredentials: true,
     }).then(() => {
-      window.location.replace("/tosi")
+      window.location.replace("/tosi");
     });
   };
   //이메일 중복 확인
@@ -107,7 +107,7 @@ const postLogin = function(loginInfo) {
     cookieStore.deleteCookie("isLoggedIn");
     console.log(localStorage.getItem("isLoggedIn"));
     alert("로그아웃 했습니다.");
-    window.location.replace(`http://localhost:5173/`)
+    window.location.replace(`http://localhost:5173/`);
   };
   
   //비밀번호 확인
