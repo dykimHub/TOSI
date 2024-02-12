@@ -1,51 +1,62 @@
 <template>
-  <div id="app" class="talelistContainer">
-    <div class="topOfTaleList">
-      <div class="title">{{ customTaleStore.customTale.title }}</div>
-    </div>
-    <div class="twoContainer">
-      <div class="info-column">
-        <div class="info">
-          <h3>목소리 선택</h3>
-          <div class="itemform-container">
-            <div v-for="item in items" :key="item.speaker" class="itemform">
-              <label style="display: flex; flex-direction: row"
-                ><input
-                  type="radio"
-                  :value="item.speaker"
-                  v-model="speaker"
-                  :name="item.name"
-                />
-                {{ item.name }}
-                <img
-                  src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
-                  alt="Speaker Image"
-                  class="speaker-image"
-                  @click="playVoice(item.url)"
-                />
-              </label>
+  <div v-if="customTaleStore.customTale">
+    <div class="play">
+      <div class="container">
+        <div class="topOfTaleList">
+          <div class="bigtitle">{{ customTaleStore.customTale.title }}</div>
+          <div class="taleinfo">
+            <div class="leftImg">
+              <div class="title">{{ customTaleStore.customTale.title }}</div>
+              <img
+                class="thumbnail"
+                :src="customTaleStore.customTale.thumbnail"
+              />
+            </div>
+
+            <div class="chat">
+              <div class="startbox">
+                <div class="voicebox">
+                  <div class="voicetitle">
+                    <img class="mic" src="@/assets/mic.png" />목소리 선택
+                  </div>
+                  <div class="align-items-center grid-container">
+                    <div
+                      v-for="item in items"
+                      :key="item.speaker"
+                      class="form-wrapper align-items-center"
+                    >
+                      <label
+                        ><input
+                          type="radio"
+                          :value="item.speaker"
+                          v-model="speaker"
+                          :name="item.name"
+                        />
+                        {{ item.name }}
+                        <img
+                          src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+                          alt="Speaker Image"
+                          class="speaker-image"
+                          @click="playVoice(item.url)"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="infobtn">
+                  <button class="button" @click="readBook">재생</button>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="infobtn">
-            <button class="button" @click="readBook">재생</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="book-column">
-        <div class="book">
-          <img
-            :src="customTaleStore.customTale.thumbnail"
-            class="img-fluid"
-            style="height: 300px"
-            alt="커스텀이미지"
-          />
         </div>
       </div>
     </div>
   </div>
+  <div v-else>
+    <div>is Loading...</div>
+  </div>
 </template>
-
 <script setup>
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, computed, ref } from "vue";
@@ -152,107 +163,129 @@ onMounted(async () => {
   getRandomCustomTales.value = randomCustomTales;
 });
 </script>
-
 <style scoped>
-.talelistContainer {
-  background-color: white;
-  border-radius: 20px;
-  margin: 35px;
-  opacity: 0.95;
-  padding: 40px 0px 60px 0px;
+.play {
+  width: 70vw;
   border: 5px solid #cee8e8;
-  width: 80vw;
+  margin: 20px 0px 30px 0px;
+  border-radius: 50px;
+  background-color: #f5f5f5;
 }
-
-.twoContainer {
+.container {
   display: flex;
-  justify-content: space-between;
-  margin-left: 10%;
-  margin-right: 10%;
-  height: 350px;
+  width: 70vw;
+  margin: 40px 0 0 60px;
 }
-.title {
+.bigtitle {
   text-decoration: none;
   display: inline-block;
   box-shadow: inset 0 -20px 0 #d3e4ff;
   font-size: 40px;
-  margin: 30px 0px 30px 50px;
+  /* margin: 30px 0px 30px 50px; */
   margin-bottom: 40px;
   line-height: 1;
   text-align: left;
 }
-.info-column {
-  width: 45%;
-  display: flex;
-  align-items: center;
+.taleinfo{
+    display: flex;
 }
-
-.inputgroup {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.book-column {
-  width: 50%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-}
-
-.info {
-  background-color: #ffffff;
-  border: 3px solid #cee8e8;
-  border-radius: 20px;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 10px;
-  width: 30vw;
-}
-
-.input {
-  margin-bottom: 10px;
-}
-
-.book {
-  width: 30vw;
-  display: flex;
+.title {
+  margin: 30px 0px 25px 0px;
+  font-size: 35px;
+  width: 300px;
   text-align: center;
-  justify-content: center;
+  overflow: hidden; /* 글자가 넘칠 경우 숨김 처리 */
+  white-space: nowrap; /* 글자가 한 줄에 표시되도록 설정 */
+  text-overflow: ellipsis;
+}
+.leftImg {
+  width: 400px;
+  height: 450px;
+  background-image: url(@/assets/cover.png);
+  background-size: cover;
+  padding: 10px 10px 0px 57px;
+  margin-right: 25px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+.thumbnail {
+  width: 300px;
+  height: 300px;
+  border: 5px solid white;
+}
+
+.align-items-center {
+  display: flex;
   align-items: center;
-  padding-left: 10px;
-  margin-left: 30px;
-  background-image: url("@/assets/bookstart.png");
+  justify-content: center;
+  text-align: center;
 }
-
-.book img {
-  width: 70%;
-  height: 80%;
-}
-
-.loading-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
+.form-wrapper {
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  max-width: 28rem;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 15px 15px 0 15px;
+}
+.chat {
+  width: 520px;
+  height: 500px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000;
+  justify-content: center;
+}
+.titleimg {
+  width: 40px;
+  height: 40px;
+  margin: 25px 10px 0 0;
+}
+.selecttitle {
+  font-size: 20px;
+  margin: 30px 10px 0 0;
+}
+.form-select {
+  font-size: 18px;
 }
 
-.loading-content {
+.speaker-image {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+.startbox {
+  display: flex;
+  flex-direction: column;
+}
+.mic {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
+.voicetitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #cee8e8;
+  border-radius: 30px;
+  width: 193px;
+  height: 60px;
   text-align: center;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
+  margin: -40px 0px 0px 80px;
+  background-color: #ebffdf;
+  position: relative;
+  z-index: 5;
+  font-size: 23px;
 }
-
+.voicebox {
+  border: 5px solid #cee8e8;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  font-size: 20px;
+  width: 370px;
+  height: 150px;
+}
 .button {
   margin-top: 20px;
   width: 130px;
@@ -273,16 +306,5 @@ onMounted(async () => {
 
 .infobtn {
   text-align: center;
-}
-
-.itemform-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-.itemform {
-  flex: 0 0 33.33%;
-  box-sizing: border-box;
-  padding: 0 10px;
-  margin-top: 20px;
 }
 </style>
