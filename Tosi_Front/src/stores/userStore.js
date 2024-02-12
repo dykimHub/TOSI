@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import { useCookieStore } from "@/stores/cookieStore";
 import router from "@/router";
 import axios from "@/util/http-common";
+
 export const useUserStore = defineStore("user", () => {
   const userInfo = ref({ email: "", bookshelfName: "", childrenList: [] });
   const searchResult = ref(false);
@@ -79,24 +80,25 @@ export const useUserStore = defineStore("user", () => {
   };
 
 // 로그인
-const postLogin = function(loginInfo) {
-  axios.post(`/users/login`, loginInfo)
+const postLogin = async function(loginInfo) {
+  await axios.post(`/users/login`, loginInfo)
     .then(response => {
       if(loginInfo.autoLogin == true) {
-        const accessToken = response.data['access-token'];
-        const refreshToken = response.data['refresh-token'];
-        cookieStore.setCookie('access-token', accessToken, 1);
-        cookieStore.setCookie('refresh-token', refreshToken, 7);
         localStorage.setItem('isLoggedIn', 'true');
+        console.log(localStorage.getItem('isLoggedIn'));
       } else {
         sessionStorage.setItem('isLoggedIn', 'true');
       }
       alert("환영합니다.")
+      // router.push({ name: 'tosi' });
       window.location.replace(`http://localhost:5173/tosi`);
     })
-    .catch(() => {
-      // 로그인 실패 처리
-      return false;
+    .catch((error) => {
+      if (error.response && error.response.status === 401) {
+        alert("존재하지 않는 회원입니다.")
+      } else {
+        console.error('응답 실패:', error);
+      }
     });
 };
   //로그아웃

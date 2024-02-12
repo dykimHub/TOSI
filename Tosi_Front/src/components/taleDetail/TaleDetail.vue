@@ -101,7 +101,7 @@
 import { ref, computed, watch } from "vue";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
 import { useUserStore } from "@/stores/userStore";
-import axios from "axios";
+import axios from "@/util/http-common";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const props = defineProps({
@@ -179,9 +179,9 @@ const readBook = async () => {
     console.log("요청 보냄");
     // 이름 바꾸기
     for (const [cname, bname] of nameMap.value) {
-      axios.post(`http://localhost:8080/tales/${cname}/${bname}`);
+      axios.post(`/tales/${cname}/${bname}`, { withCredentials: true });
     }
-    const response = await axios.post("http://localhost:8080/tales/read", taleDetailStore.tale);
+    const response = await axios.post("/tales/read", taleDetailStore.tale, { withCredentials: true });
     taleDetailStore.pages = response.data;
     // 요청이 성공적으로 완료된 후에 navigateToTalePlay 호출
     console.log("요청이 성공적으로 완료된 후에 navigateToTalePlay 호출");

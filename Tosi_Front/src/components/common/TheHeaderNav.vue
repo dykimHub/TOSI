@@ -9,7 +9,7 @@
       </div>
       <div class="homeMenus">
         <RouterLink to="/tosi">홈</RouterLink>
-        <a v-if="isLoggedIn" @click="logout">로그아웃</a>
+        <button v-if="isLoggedIn" @click="logout" class="logoutButton">로그아웃</button>
       </div>
     </div>
   </header>
@@ -60,9 +60,15 @@ a {
   justify-content: center;
   align-items: center;
 }
+
 .empty,
 .homeMenus,
 .headerContainer {
   flex: 1;
+}
+
+.logoutButton {
+  background-color: transparent;
+  border: none;
 }
 </style>

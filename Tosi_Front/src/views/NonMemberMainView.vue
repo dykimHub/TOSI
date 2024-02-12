@@ -1,7 +1,7 @@
 <template>
     <div class="nonMemberContainer">
         <div class="black-bg" v-if="showRegistForm == true || showLoginForm == true">
-        <!-- <div class="white-bg"> -->
+            <!-- <div class="white-bg"> -->
             <div class="modal" v-if="showRegistForm === true">
                 <button @click="closeRegistForm">×</button>
                 <RegistForm @closeRegistForm="closeRegistForm" />
@@ -10,14 +10,14 @@
                 <button @click="closeLoginForm">×</button>
                 <LoginForm @closeLoginForm="closeLoginForm" />
             </div>
-        <!-- </div> -->
-    </div>
-        <img src="@/assets/logo.png" class="logo" alt="Logo"/>
-            <div class="sign">
-                <button @click="[openRegistForm(), closeLoginForm()]">회원가입</button>
-                <button @click="[openLoginForm(), closeRegistForm()]">로그인</button>
-            </div>
-            <div v-if="showRegistForm == false && showLoginForm == false" class="toMenus">
+            <!-- </div> -->
+        </div>
+        <img src="@/assets/logo.png" class="logo" alt="Logo" />
+        <div class="sign">
+            <button @click="[openRegistForm(), closeLoginForm()]" class="regist-button">회원가입</button>
+            <button @click="[openLoginForm(), closeRegistForm()]" class="login-button">로그인</button>
+        </div>
+        <div v-if="showRegistForm == false && showLoginForm == false" class="toMenus">
             <img class="icon" @click="toggleIcon('Play')" :class="{ 'active': activeIcon === 'Play' }"
                 src="@/assets/Play.png" />
             <img class="icon" @click="toggleIcon('Maker')" :class="{ 'active': activeIcon === 'Maker' }"
@@ -32,7 +32,7 @@
         <h5 v-if="activeIcon === 'Maker'">동화 만들기</h5>
         <h5 v-if="activeIcon === 'Talk'">등장인물과의 대화</h5>
         <h5 v-if="activeIcon === 'Mine'">나의 책장</h5>
-            <TheFooter/>
+        <TheFooter />
     </div>
 </template>
 
@@ -116,7 +116,7 @@ div {
     height: min-content;
     /* max-width: 90%; 최대 너비 설정 */
     max-height: 90%;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 
 /* RegistForm {
@@ -187,4 +187,25 @@ h5 {
     margin-bottom: 50px;
     text-shadow: -1px -1px 2px white, 1px -1px 2px white, -1px 1px 2px white, 1px 1px 2px white;
 }
-</style>
+
+.regist-button,
+.login-button {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    color: rgb(25, 30, 50);
+    padding: 7.5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 5px;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+.regist-button:hover,
+.login-button:hover {
+    transform: translateY(-3px); /* 마우스를 올렸을 때 아래로 이동하는 효과 */
+}</style>

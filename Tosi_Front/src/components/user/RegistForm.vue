@@ -2,7 +2,6 @@
   <div class="regist-form">
     <form action="" class="form" @submit.prevent="onsubmit">
       <h1 class="form__title">회원가입</h1>
-
       <div class="info-form">
         <div class="regist-div">
           <label class="regist-label">이메일</label>
@@ -78,7 +77,7 @@ const childrenList = ref([]);
 const registerChild = function () {
   childrenList.value.push({ ...child.value });
   console.log(childrenList.value);
-  child.childName = "";
+  child.value.childName = "";
 }
 
 const regist = () => {
@@ -119,24 +118,6 @@ const regist = () => {
 
   userStore.postUser(userInfo);
 };
-
-// const checkEmailDuplication = async function () {
-//   if (email.value.trim() === "") {
-//     return; // 이메일이 비어있을 경우 건너뛰기
-//   }
-
-//   try {
-//     await userStore.getUserSearch(email.value);
-
-//     if (userStore.searchResult == true) {
-//       alert("이미 등록된 이메일입니다.");
-//     } else if (userStore.searchResult == false) {
-//       alert("사용 가능한 이메일입니다.");
-//     }
-//   } catch (error) {
-//     console.error("에러 발생:", error);
-//   }
-// };
 
 const checkEmailDuplication = async function () {
   if (email.value.trim() === "") {
@@ -219,6 +200,10 @@ const deleteChild = function (index) {
 
 .one-child button {
   margin-left: 10px;
+}
+
+form {
+  width: fit-content;
 }
 
 .info-form,

@@ -1,10 +1,10 @@
 <template>
   <div class="talelistContainer">
     <div class=topOfTaleList>
-      <h2>내가 만든 동화 목록</h2>
+      <h2 class="title">{{ bookshelfName }}</h2>
       <div class="selecSort">
-        <label>정렬 기준</label>
-        <select v-model="sortOptionT">
+        <label>정렬 기준</label>&nbsp;&nbsp;
+        <select v-model="sortOptionC">
           <option value="title">이름순</option>
           <option value="regDate">날짜순</option>
           <option value="random">랜덤</option>
@@ -16,9 +16,9 @@
     <div class="taleContainer">
       <ul v-for="tale in currentPageBoardList" :key="tale.customTaleId">
         <div class="oneTale">
-          <RouterLink :to="`/customTale/${tale.taleId}`"><img class="thumbnail" :src="tale.thumbnail" /></RouterLink>
+          <RouterLink :to="`/customTale/${tale.customTaleId}`"><img class="thumbnail" :src="tale.thumbnail" /></RouterLink>
           <br>
-          <RouterLink :to="`/customTale/${tale.taleId}`">{{ tale.title }}</RouterLink>
+          <RouterLink :to="`/customTale/${tale.customTaleId}`">{{ tale.title }}</RouterLink>
           <br>
           재생 시간: {{ tale.time }}
         </div>
@@ -27,7 +27,8 @@
     </div>
     <div>
       <nav aria-label="Page navigation" style="padding: 15px;">
-      <ul class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success ">
+      <ul class="pagination d-flex justify-content-center flex-wrap
+       pagination-rounded-flat pagination-success ">
         <li class="page-item">
           <a class="page-link" :class="{ disabled: currentPage <= 1 }" href="#" @click.prevent="currentPage--">&lt;</a>
         </li>
@@ -48,7 +49,9 @@
 <script setup>
 import { useCustomTaleStore } from '@/stores/customTaleStore';
 import { onMounted, ref, watch, computed } from 'vue';
-import axios from "@/util/http-common";
+import { useUserStore } from '@/stores/userStore';
+const userStore = useUserStore();
+const bookshelfName = ref("");
 
 const customTaleStore = useCustomTaleStore();
 const myCustomTalesList = ref([]);
@@ -61,10 +64,10 @@ const deactivateDeleteButton = () => {
   deleteButton.value = false;
 }
 
-const sortOptionT = ref('title');
+const sortOptionC = ref('title');
 const sortedTaleList = ref([]);
 const sortTaleList = () => {
-  switch (sortOptionT.value) {
+  switch (sortOptionC.value) {
     case 'title':
       sortedTaleList.value = myCustomTalesList.value.sort((a, b) => a.title.localeCompare(b.title));
       break;
@@ -133,40 +136,46 @@ const currentPageBoardList = computed(() => {
 
 
 onMounted(async () => {
+  await userStore.getUser();
+  bookshelfName.value = userStore.userInfo.bookshelfName;
+
   await customTaleStore.getMyCustomTalesList();
   myCustomTalesList.value = customTaleStore.myCustomTalesList;
   watch(() => myCustomTalesList, sortTaleList, { immediate: true });
-  watch(sortOptionT, sortTaleList);
+  watch(sortOptionC, sortTaleList);
 });
 
 </script>
 <style scoped>
+.title {
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: inset 0 -20px 0  #c4ecb0;
+    font-size: 40px;
+    margin: 30px 0px 0px 50px;
+    margin-bottom: 40px;
+    line-height: 1;
+    text-align: left;
+}
+
 ul {
   position: relative;
 }
 
 .deleteButton {
-  background-color: #d6b0ec;
+  background-color:  #c4ecb0;
   border: none;
   color: white;
   font-size: 16px;
   padding: 8px 16px;
+  margin-left: 5px;
+  margin-right: 49px;
   cursor: pointer;
   border-radius: 4px;
 }
 
 .deleteButton:hover {
-  background-color: #d6b0ec;
-}
-
-.taleContainer {
-  position: relative;
-}
-
-.taleContainer button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  background-color:  #c4ecb0;
 }
 
 .topOfTaleList {
@@ -186,21 +195,44 @@ ul {
     right: 10px; /* 오른쪽 여백 설정 */
     color: rgb(0,0,0); /* 텍스트 색상 설정 */
 }
-.taleContainer {
+/* .taleContainer {
+  position: relative;
   display: flex;
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
+} */
+
+.taleContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 5vw;
+}
+
+.taleContainer button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .talelistContainer {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
   background-color: white;
   border-radius: 20px;
   margin: 35px;
   padding-top: 40px;
   opacity: 0.95;
+  border: 5px solid #cee8e8;
+  width: 80vw;
 }
 
 .thumbnail {
@@ -210,22 +242,46 @@ ul {
   width: 13em;
   text-align: center;
   margin: 2em;
+  margin-right: 55px;
 }
 
 .selecSort {
   display: flex;
-  flex-direction: column;
-  margin: 1em;
-}
-
-.topOfTaleList {
-  display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
+  margin: 1em;
+  margin-left: auto;
 }
 
 a {
   text-decoration: none;
   color: black;
+}
+
+.pagination,
+ .jsgrid .jsgrid-pager {
+     display: flex;
+     padding-left: 0;
+     list-style: none;
+     border-radius: 0.25rem
+ }
+ 
+ .page-link {
+     color: black
+ }
+ 
+ .pagination.pagination-rounded-flat .page-item {
+     margin: 0 .30rem
+ }
+ 
+
+ .pagination-success .page-item.active .page-link
+  {
+     background: #d8eef2;
+ }
+ 
+ .pagination.pagination-rounded-flat .page-item .page-link{
+    border: none;
+    border-radius: 50px;
 }
 </style>
