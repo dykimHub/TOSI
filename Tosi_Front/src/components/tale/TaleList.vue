@@ -6,10 +6,10 @@
         <div class="title">전체 책 보기</div>
       <!-- </div> -->
       <div class="box3">
-        <!-- <div class="searchContainer">
+        <div class="searchContainer">
           <input v-model="searchQuery" type="text" />
-          <button @click="searchTaleByTitle">검색</button>
-        </div> -->
+          <a @click="searchTaleByTitle">검색</a>
+        </div>
         <div class="selecSort">
           <label>정렬 기준</label>
           <select v-model="sortOption">
@@ -61,6 +61,7 @@ const Talestore = useTaleStore();
 const sortOption = ref("title");
 const sortedTaleList = ref([]);
 const router = useRouter();
+const searchResults = ref([]);
 
 const title = ref("");
 const sortTaleList = () => {
@@ -99,19 +100,18 @@ const currentPageBoardList = computed(() => {
 }); //page
 
 const searchQuery = ref("");
-
 const searchTaleByTitle = async () => {
   try {
     title.value = searchQuery.value;
+
     const response = await Talestore.searchTaleByTitle(title.value);
-
-    // 검색 결과 확인
-      Talestore.searchList = response.data;
-
-      // 검색 결과를 업데이트한 후 결과 페이지로 이동
-      router.push({ name: "searchTale", query: { title: title.value } });
+    console.log('Response:', response);
+    searchResults.value = response.data;
+    // 라우터로 이동
+    router.push({ name: "search", query: { title: title.value } });
+    
   } catch (error) {
-    console.error("검색 오류:", error);
+    console.error('검색 오류:', error);
   }
 };
 
@@ -121,10 +121,10 @@ onMounted(() => {
   watch(sortOption, sortTaleList);
 
   // Extract search query from URL
-  const route = router.currentRoute.value;
-  if (route.query.title) {
-    title.value = route.query.title.toString();
-  }
+  // const route = router.currentRoute.value;
+  // if (route.query.title) {
+  //   title.value = route.query.title.toString();
+  // }
 
 });
 </script>
