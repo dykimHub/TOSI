@@ -22,14 +22,14 @@ public class CustomTaleController {
     private final S3Controller s3Controller;
 
     @Autowired
-    public CustomTaleController(CustomTaleService customTaleService,S3Controller s3Controller) {
+    public CustomTaleController(HttpServletRequest request, CustomTaleService customTaleService,S3Controller s3Controller) {
         this.customTaleService = customTaleService;
         this.s3Controller = s3Controller;
     }
 
     @Operation(summary="커스텀 동화 상세조회")
     @GetMapping("/customtale/{customTaleId}")
-    public ResponseEntity<?> getCustomTale(@PathVariable Integer customTaleId) {
+    public ResponseEntity<?> getCustomTale(HttpServletRequest request, @PathVariable Integer customTaleId) {
             Optional<CustomTale> customTale = customTaleService.getCustomTale(customTaleId);
             return ResponseEntity.ok(customTale);
     }
@@ -48,7 +48,7 @@ public class CustomTaleController {
 
     @Operation(summary="공개중인 커스텀 동화 목록")
     @GetMapping("/customtale")
-    public ResponseEntity<?> getCustomTales() {
+    public ResponseEntity<?> getCustomTales(HttpServletRequest request) {
             List<CustomTale> customTales = customTaleService.getCustomTales();
             return ResponseEntity.ok(customTales);
 
@@ -69,7 +69,7 @@ public class CustomTaleController {
 
     @Operation(summary="내가 만든 동화 공개여부 수정")
     @PutMapping("/customtale/{customTaleId}")
-    public ResponseEntity<?> updateCustomTale(@PathVariable Integer customTaleId, @RequestParam boolean isPublic) {
+    public ResponseEntity<?> updateCustomTale(HttpServletRequest request, @PathVariable Integer customTaleId, @RequestParam boolean isPublic) {
             CustomTale updatedCustomTale = customTaleService.putCustomTale(customTaleId, isPublic);
             return ResponseEntity.ok(updatedCustomTale);
 
@@ -77,13 +77,13 @@ public class CustomTaleController {
 
     @Operation(summary="내가 만든 동화 삭제")
     @DeleteMapping("/customtale/{customTaleId}")
-    public ResponseEntity<?> deleteCustomTale(@PathVariable Integer customTaleId) {
+    public ResponseEntity<?> deleteCustomTale(HttpServletRequest request, @PathVariable Integer customTaleId) {
         customTaleService.deleteCustomTale(customTaleId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/customtale/read")
-    public ResponseEntity<?> read(@RequestBody String string) {
+    public ResponseEntity<?> read(HttpServletRequest request, @RequestBody String string) {
         try {
             if(string.charAt(0)=='"' && string.charAt(string.length()-1)=='"'){
                 string = string.substring(1, string.length() - 1);

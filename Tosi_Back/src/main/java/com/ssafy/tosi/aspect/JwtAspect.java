@@ -2,9 +2,11 @@ package com.ssafy.tosi.aspect;
 
 import com.ssafy.tosi.cookieUtil.CookieUtil;
 import com.ssafy.tosi.jwt.JwtUtil;
+import com.ssafy.tosi.jwt.TokenController;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -13,16 +15,17 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class JwtAspect {
-
     private final JwtUtil jwtUtil;
     private final CookieUtil cookieUtil;
 
-    @Before("execution(* com.ssafy.tosi.*..*Controller.*(..)) && !execution(* com.ssafy.tosi.user.UserController.postUser(..)) " +
+    private final TokenController tokenController;
+
+    @Around("execution(* com.ssafy.tosi.*..*Controller.*(..)) && !execution(* com.ssafy.tosi.user.UserController.postUser(..)) " +
             "&& !execution(* com.ssafy.tosi.user.UserController.post*Login(..)) " +
             "&& !execution(* com.ssafy.tosi.user.UserController.get*Logout(..)) " +
             "&& !execution(* com.ssafy.tosi.user.UserController.getEmailCheck(..)) " +
             "&& !execution(* com.ssafy.tosi.jwt.TokenController.postNewAccessToken(..)) && args(request, ..)")
-    public void beforeControllerMethod(HttpServletRequest request) throws Exception {
+    public Object aroundServiceMethod2(ProceedingJoinPoint joinPoint, HttpServletRequest request) throws Throwable {
 
         String accessToken = cookieUtil.getTokenFromCookie(request, "access-token");
 
@@ -30,18 +33,24 @@ public class JwtAspect {
         System.out.println(request.getCookies());
 
         if (accessToken == null) {
-            throw new Exception("토큰이 없습니다.");
+            System.out.println("토큰이 존재하지 않습니다.");
+            return tokenController.postNewAccessToken(request);
         }
 
         boolean tokenValidity = jwtUtil.validateToken(accessToken);
 
         if (!tokenValidity) {
-            throw new Exception("토큰이 유효하지 않습니다.");
+            System.out.println("토큰이 만료되었습니다.");
+            return tokenController.postNewAccessToken(request);
         }
 
         Integer userId = jwtUtil.getUserId(accessToken);
 
         System.out.println("userId: " + userId);
         request.setAttribute("userId", userId);
+
+        return joinPoint.proceed();
+
     }
+
 }
