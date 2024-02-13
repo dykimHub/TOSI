@@ -12,5 +12,4 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
     @Query("SELECT f FROM Favorite f WHERE f.userId=:userId")
     List<Favorite> getByUserId(int userId);
 
-    // List<Favorite> findByUserId(Integer userId);
 }

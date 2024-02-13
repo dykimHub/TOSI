@@ -47,7 +47,6 @@ public class UserController {
 
         Integer userId = (Integer) request.getAttribute("userId");
         User user = userService.selectUser(userId);
-        System.out.println(user.toString());
         UserInfoResponse userInfoResponse = UserInfoResponse.builder()
                 .email(user.getEmail())
                 .bookshelfName((user.getBookshelfName()))
@@ -61,7 +60,6 @@ public class UserController {
     @PutMapping
     public ResponseEntity<Void> putUser(HttpServletRequest request, @RequestBody UserInfo userInfo) {
         Integer userId = (Integer) request.getAttribute("userId");
-        System.out.println("userId : " + userId);
         userInfo.setUserId(userId);
 
         userService.updateUser(userInfo);
@@ -98,10 +96,8 @@ public class UserController {
             return new ResponseEntity<Map>(map, HttpStatus.ACCEPTED);
         }
 
-        System.out.println(userId);
         String accessToken = jwtUtil.generateToken(userId, Duration.ofDays(1));
         String refreshToken = jwtUtil.generateToken(userId, Duration.ofDays(7));
-        System.out.println(accessToken);
         RefreshToken refreshTokenEntity = RefreshToken.builder().userId(userId).refreshToken(refreshToken).build();
         refreshTokenService.updateRefreshToken(refreshTokenEntity);
 
@@ -131,7 +127,6 @@ public class UserController {
     @GetMapping("/children-list")
     public ResponseEntity<List<Child>> getChildrenList(HttpServletRequest request) {
         Integer userId = (Integer) request.getAttribute("userId");
-//        System.out.println("컨트롤러:" + userId);
         List<Child> childrenList = userService.selectChildrenList(userId);
         return new ResponseEntity<List<Child>>(childrenList, HttpStatus.OK);
     }
@@ -140,7 +135,6 @@ public class UserController {
     @PostMapping("/password-check")
     public ResponseEntity<?> postPasswordCheck(HttpServletRequest request, @RequestBody Password password) {
         Integer userId = (Integer) request.getAttribute("userId");
-        System.out.println(userId);
 
         boolean result = userService.checkPassword(userId, password.getPassword());
         return new ResponseEntity<Boolean>(result, HttpStatus.OK);
