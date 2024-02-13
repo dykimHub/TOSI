@@ -239,7 +239,7 @@ onMounted(async () => {
   margin-top: 35px;
   padding: 40px 60px;
   border: 5px solid #cee8e8;
-  width: 80vw;
+  /* width: 80vw; */
 }
 .info {
   display: flex;
@@ -252,7 +252,8 @@ onMounted(async () => {
   display: inline-block;
   box-shadow: inset 0 -20px 0 #c4ecb0;
   font-size: 40px;
-  margin: 60px 0px 40px 70px;
+  margin-bottom: 40px;
+  margin-top: 20px;
   line-height: 1;
 }
 .cover {
@@ -270,7 +271,7 @@ onMounted(async () => {
   margin-left: 10px;
 }
 .book {
-  margin: 0px 0px 0px 45px;
+  margin: 0px 0px 0px 20px;
   padding: 10px 10px 0px 25px;
   display: flex;
   background-color: #21364d;

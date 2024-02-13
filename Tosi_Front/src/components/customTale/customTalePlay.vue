@@ -240,9 +240,8 @@ onMounted(async () => {
   background-color: white;
   border-radius: 50px;
   margin-top: 35px;
-  padding: 40px 60px;
+  padding: 40px 30px;
   border: 5px solid #cee8e8;
-  width: 80vw;
 }
 .info {
   display: flex;

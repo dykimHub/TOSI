@@ -129,9 +129,9 @@ const nosave = function () {
   background-color: white;
   border-radius: 50px;
   margin-top: 35px;
-  padding: 40px 60px;
+  padding: 40px 30px;
   border: 5px solid #cee8e8;
-  width: 80vw;
+  /* width: 80vw; */
 }
 .container {
   display: flex;
@@ -198,7 +198,7 @@ const nosave = function () {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 60px;
+  /* padding-right: 60px; */
 }
 .titleimg {
   width: 40px;
