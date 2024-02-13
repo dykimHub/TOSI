@@ -7,9 +7,9 @@ import { useS3Store } from "@/stores/S3Store";
 export const useCustomTaleStore = defineStore("customtale", () => {
   //공개 중인 모든 커스텀동화
   const customTalesList = ref([]);
-  const getCustomTalesList = function (isPublic) {
+  const getCustomTalesList = function (opened) {
     axios
-      .get(`/customtale?isPublic=${isPublic}`,isPublic, { withCredentials: true })
+      .get(`/customtale?isPublic=${opened}`,opened, { withCredentials: true })
       .then((response) => {
         // console.log(response.data);
         customTalesList.value = response.data;

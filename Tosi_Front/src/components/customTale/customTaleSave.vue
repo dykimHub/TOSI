@@ -32,7 +32,7 @@
                     <label for="isPublic">
                       <input
                         type="radio"
-                        v-model="customTale.public"
+                        v-model="customTale.opened"
                         :value="true"
                         id="isPublic"
                       />
@@ -41,7 +41,7 @@
                     <label for="isNotPublic" style="margin-left: 15px">
                       <input
                         type="radio"
-                        v-model="customTale.public"
+                        v-model="customTale.opened"
                         :value="false"
                         id="isNotPublic"
                       />
@@ -77,7 +77,7 @@ const loading = ref(false);
 const customTale = ref({
   title: "",
   content: customTaleStore.customTaleText.gptMessage,
-  public: true,
+  opened: true,
   thumbnail: customTaleStore.customTaleImage,
   time: "1",
 });
