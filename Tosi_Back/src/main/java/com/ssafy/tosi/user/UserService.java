@@ -54,7 +54,11 @@ public class UserService {
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            System.out.println(user.toString());
+            System.out.println("UserServier:" + user.toString());
+            if(userInfo.getPassword() == null || userInfo.getPassword() == ""){
+                String password = user.getPassword();
+                userInfo.setPassword(password);
+            }
             user.update(userInfo);
         } else {
             // 예외 던지기
@@ -99,20 +103,22 @@ public class UserService {
 
     // 비밀번호 확인
     public boolean checkPassword (Integer userId, String password) {
-        System.out.println(userId);
+        System.out.println("userService:" + userId);
+        System.out.println("userService:" + password);
         Optional<User> optionalUser = userRepository.findById(userId);
-        
+        System.out.println(optionalUser.toString());
 //        User user = null;
-        
+
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
+            System.out.println(user.toString());
             if(user.getPassword().equals(password)) {
-                System.out.println(user.getPassword().equals(password));
+                System.out.println("비밀번호 일치");
                 return true;
             }
         }
         return false;
-        
+
     }
 
     // 아이 목록 조회

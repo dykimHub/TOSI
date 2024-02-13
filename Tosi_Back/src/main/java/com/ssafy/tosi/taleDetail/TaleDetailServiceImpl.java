@@ -155,16 +155,12 @@ public class TaleDetailServiceImpl implements TaleDetailService {
 
         }
 
-        for(Page pp : pages){
-            System.out.println(pp);
-        }
-
         return pages;
     }
 
     @Override
-    public boolean updateLikeCnt(int taleId) {
-        return taleDetailRepository.updateLikeCnt(taleId) > 0;
+    public int updateLikeCnt(int taleId) {
+        return taleDetailRepository.updateLikeCnt(taleId);
     }
 
 

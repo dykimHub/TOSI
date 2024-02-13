@@ -2,6 +2,7 @@ package com.ssafy.tosi.taleDetail;
 
 import com.ssafy.tosi.tale.TaleDto;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class TaleDetailController {
     private final TaleDetailService taleDetailService;
 
     @GetMapping("/tales/{taleId}")
-    public ResponseEntity<?> getTaleDetail(@PathVariable int taleId) {
+    public ResponseEntity<?> getTaleDetail(HttpServletRequest request, @PathVariable int taleId) {
         try {
             TaleDto taleDto = taleDetailService.getTaleDetail(taleId);
             return new ResponseEntity<TaleDto>(taleDto, HttpStatus.OK);
@@ -31,7 +32,7 @@ public class TaleDetailController {
     }
 
     @PostMapping("/tales/{CName}/{BName}")
-    public ResponseEntity<?> selectName(@PathVariable String CName, @PathVariable String BName) {
+    public ResponseEntity<?> selectName(HttpServletRequest request, @PathVariable String CName, @PathVariable String BName) {
         try {
             taleDetailService.selectName(CName, BName);
             return new ResponseEntity<Void>(HttpStatus.OK);
@@ -42,7 +43,7 @@ public class TaleDetailController {
     }
 
     @PostMapping("/tales/read")
-    public ResponseEntity<?> readBook(@RequestBody TaleDto taleDto) {
+    public ResponseEntity<?> readBook(HttpServletRequest request, @RequestBody TaleDto taleDto) {
         try {
             String[] contents = {taleDto.getContent1(), taleDto.getContent2(), taleDto.getContent3(), taleDto.getContent4()};
             String[] changedContents = taleDetailService.changeName(contents); // 이름 바꾸기
@@ -50,6 +51,17 @@ public class TaleDetailController {
             return new ResponseEntity<List<Page>>(pages, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @GetMapping("/tales/like/{taleId}")
+    public ResponseEntity<?> getLikeCnt(@PathVariable int taleId) {
+        try {
+            int likeCnt = taleDetailService.updateLikeCnt(taleId);
+            return new ResponseEntity<Integer>(likeCnt, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -21,40 +21,13 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
     private final TaleDetailService taleDetailService;
 
-//    // 즐겨찾기 등록
-//    @PostMapping
-//    public ResponseEntity<?> postFavorite(HttpServletRequest request, @RequestBody Favorite favorite) {
-//        Integer userId = (Integer) request.getAttribute("userId");
-//        favorite.setUserId(userId);
-//        favoriteService.insertFavorite(favorite);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//
-//    // 즐겨찾기 삭제
-//    @DeleteMapping
-//    public ResponseEntity<?> deleteFavorite(HttpServletRequest request, @RequestParam Integer favoriteId) {
-//        Integer userId = (Integer) request.getAttribute("userId");
-//        favoriteService.deleteFavorite(favoriteId);
-//        return new ResponseEntity<Void>(HttpStatus.OK);
-//    }
-//
-//    // 즐겨찾기 목록 조회
-//    @GetMapping
-//    public ResponseEntity<?> getFavoritesList(HttpServletRequest request) {
-//        Integer userId = (Integer) request.getAttribute("userId");
-//        List<FavoriteDto> result = favoriteService.selectFavoriteList(userId);
-//        return new ResponseEntity<List<FavoriteDto>>(result, HttpStatus.OK);
-//    }
-
     @PostMapping
-    public ResponseEntity<?> postFavorite(@RequestBody Favorite favorite) {
+    public ResponseEntity<?> postFavorite(HttpServletRequest request, @RequestBody Favorite favorite) {
         try {
+            Integer userId = (Integer) request.getAttribute("userId");
+            favorite.setUserId(userId);
             Favorite savedFavorite = favoriteService.insertFavorite(favorite);
-            boolean result = taleDetailService.updateLikeCnt(favorite.getTaleId());
-
-            Map<Favorite, Boolean> map = new HashMap<>();
-            map.put(savedFavorite, result);
-            return new ResponseEntity<Map>(map, HttpStatus.OK);
+            return new ResponseEntity<Favorite>(savedFavorite, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -63,9 +36,10 @@ public class FavoriteController {
 
     }
 
-    @GetMapping("/{userId}/{taleId}")
-    public ResponseEntity<?> getFavorite(@PathVariable int userId, @PathVariable int taleId) {
+    @GetMapping("/{taleId}")
+    public ResponseEntity<?> getFavorite(HttpServletRequest request, @PathVariable int taleId) {
         try {
+            Integer userId = (Integer) request.getAttribute("userId");
             int result = favoriteService.getFavorite(userId, taleId);
             return new ResponseEntity<Integer>(result, HttpStatus.OK);
         } catch (Exception e) {
@@ -75,7 +49,7 @@ public class FavoriteController {
     }
 
     @DeleteMapping("/{favoriteId}")
-    public ResponseEntity<?> deleteFavorite(@PathVariable int favoriteId) {
+    public ResponseEntity<?> deleteFavorite(HttpServletRequest request, @PathVariable int favoriteId) {
         try {
             favoriteService.deleteFavorite(favoriteId);
             return new ResponseEntity<Void>(HttpStatus.OK);
@@ -85,11 +59,14 @@ public class FavoriteController {
 
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<?> getFavoritesList(@PathVariable int userId) {
+    @GetMapping
+    public ResponseEntity<?> getFavoritesList(HttpServletRequest request) {
         try {
+            Integer userId = (Integer) request.getAttribute("userId");
             List<TaleDto> favoriteList = favoriteService.getFavoriteList(userId);
             return new ResponseEntity<List<TaleDto>>(favoriteList, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

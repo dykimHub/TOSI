@@ -5,6 +5,7 @@ import com.ssafy.tosi.jwt.JwtUtil;
 import com.ssafy.tosi.jwt.RefreshToken;
 import com.ssafy.tosi.jwt.service.RefreshTokenService;
 import com.ssafy.tosi.user.dto.LoginInfo;
+import com.ssafy.tosi.user.dto.Password;
 import com.ssafy.tosi.user.dto.UserInfo;
 import com.ssafy.tosi.user.dto.UserInfoResponse;
 import com.ssafy.tosi.user.entity.Child;
@@ -42,17 +43,18 @@ public class UserController {
 
     // 회원 정보 조회
     @GetMapping
-    public ResponseEntity<User> getUser(HttpServletRequest request) {
+    public ResponseEntity<UserInfoResponse> getUser(HttpServletRequest request) {
 
         Integer userId = (Integer) request.getAttribute("userId");
         User user = userService.selectUser(userId);
-//        UserInfoResponse userInfoResponse = UserInfoResponse.builder()
-//                .email(user.getEmail())
-//                .bookshelfName((user.getBookshelfName()))
-//                .childrenList(user.getChildrenList())
-//                .build();
+        System.out.println(user.toString());
+        UserInfoResponse userInfoResponse = UserInfoResponse.builder()
+                .email(user.getEmail())
+                .bookshelfName((user.getBookshelfName()))
+                .childrenList(user.getChildrenList())
+                .build();
 
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        return new ResponseEntity<UserInfoResponse>(userInfoResponse, HttpStatus.OK);
     }
 
     // 회원 정보 수정
@@ -60,7 +62,6 @@ public class UserController {
     public ResponseEntity<Void> putUser(HttpServletRequest request, @RequestBody UserInfo userInfo) {
         Integer userId = (Integer) request.getAttribute("userId");
         System.out.println("userId : " + userId);
-
         userInfo.setUserId(userId);
 
         userService.updateUser(userInfo);
@@ -92,9 +93,9 @@ public class UserController {
 
         if(loginInfo.getAutoLogin() == false) {
             session.setAttribute("isLoggedIn", "true");
-            String accessToken = jwtUtil.generateToken(userId, Duration.ofDays(1));
-            cookieUtil.addCookie(response, "access-token", accessToken, (int) Duration.ofDays(1).toSeconds());
-            return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+            Map<String, String> map = new HashMap<>();
+            map.put("access-token", jwtUtil.generateToken(userId, Duration.ofDays(1)));
+            return new ResponseEntity<Map>(map, HttpStatus.ACCEPTED);
         }
 
         System.out.println(userId);
@@ -137,11 +138,11 @@ public class UserController {
 
     // 비밀번호 확인
     @PostMapping("/password-check")
-    public ResponseEntity<?> postPasswordCheck(HttpServletRequest request, @RequestBody String password) {
+    public ResponseEntity<?> postPasswordCheck(HttpServletRequest request, @RequestBody Password password) {
         Integer userId = (Integer) request.getAttribute("userId");
         System.out.println(userId);
 
-        boolean result = userService.checkPassword(userId, password);
+        boolean result = userService.checkPassword(userId, password.getPassword());
         return new ResponseEntity<Boolean>(result, HttpStatus.OK);
     }
 }
