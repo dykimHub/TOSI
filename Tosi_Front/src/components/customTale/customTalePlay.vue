@@ -17,7 +17,7 @@
             :class="{ flipped: page.flipped }"
             :style="{ zIndex: zIndexes[index] }"
           >
-            <div class="back" v-if="index > 1">
+            <div class="back" v-if="index >= 1">
               <img
                 :src="customTaleStore.customTale.thumbnail"
                 class="leftImg"
