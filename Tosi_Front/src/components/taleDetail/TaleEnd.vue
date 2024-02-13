@@ -1,50 +1,53 @@
 <template>
   <div v-if="taleDetailStore.tale && userStore.userInfo">
-    <div class="end">
-      <div class="book">
-        <img src="@/assets/sticker.png" class="sticker" />
-        <div class="random">
-          <div class="randomc">FROM. {{ randomC }}</div>
-          <div class="randomg">{{ randomG }}</div>
+    <div class="play">
+      <div class="end">
+        <div class="book">
+          <img src="@/assets/sticker.png" class="sticker" />
+          <div class="random">
+            <div class="randomc">FROM. {{ randomC }}</div>
+            <div class="randomg">{{ randomG }}</div>
+          </div>
+          <div class="btns">
+            <button class="replaybtn" @click="replay">다시 보기</button>
+            <button class="listbtn" @click="list">나가기</button>
+          </div>
         </div>
-        <div class="btns">
-          <button class="replaybtn" @click="replay">다시 보기</button>
-          <button class="listbtn" @click="list">나가기</button>
+        <div class="chat">
+          <div class="chattitle">등장인물을 만나보아요</div>
+          <div class="selectbox">
+            <div class="select">
+              <img class="titleimg" src="@/assets/rabbit.png" />
+              <div class="selecttitle">등장인물</div>
+            </div>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              v-model="selectedCharacter"
+            >
+              <option v-for="character in taleDetailStore.tale.characters" :key="character.id">
+                {{ character }}
+              </option>
+            </select>
+            <div class="select">
+              <img class="titleimg" src="@/assets/girl.png" />
+              <div class="selecttitle">내 이름</div>
+            </div>
+            <select class="form-select" aria-label="Default select example" v-model="selectedName">
+              <option v-for="child in userStore.userInfo.childrenList" :key="child.id">
+                {{ child.childName }}
+              </option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-light btn-primary chatstart" @click="chatStart">
+            대화 시작하기
+          </button>
         </div>
       </div>
-      <div class="chat">
-        <div class="chattitle">등장인물을 만나보아요</div>
-        <div class="selectbox">
-          <div class="select">
-            <img class="titleimg" src="@/assets/rabbit.png" />
-            <div class="selecttitle">등장인물</div>
-          </div>
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            v-model="selectedCharacter"
-          >
-            <option v-for="character in taleDetailStore.tale.characters" :key="character.id">
-              {{ character }}
-            </option>
-          </select>
-          <div class="select">
-            <img class="titleimg" src="@/assets/girl.png" />
-            <div class="selecttitle">내 이름</div>
-          </div>
-          <select class="form-select" aria-label="Default select example" v-model="selectedName">
-            <option v-for="child in userStore.userInfo.childrenList" :key="child.id">
-              {{ child.childName }}
-            </option>
-          </select>
-        </div>
-        <button type="button" class="btn btn-light btn-primary chatstart" @click="chatStart">
-          대화 시작하기
-        </button>
-      </div>
+      <!-- <img class="unfolded" src="@/assets/bookend.png" /> -->
     </div>
-    <!-- <img class="unfolded" src="@/assets/bookend.png" /> -->
   </div>
+
   <div v-else>is Loading...</div>
 </template>
 
@@ -108,13 +111,20 @@ const chatStart = () => {
 </script>
 
 <style scoped>
+.play {
+  width: 1050px;
+  height: 590px;
+  border: 5px solid #cee8e8;
+  margin: 20px 0px 50px 0px;
+  border-radius: 50px;
+  background-color: white;
+}
 .end {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 430px;
   width: 1000px;
-  margin-top: 50px;
-  margin-bottom: 100px;
+  margin: 50px 0 100px 20px;
 }
 @keyframes popUp {
   0% {
@@ -219,13 +229,13 @@ const chatStart = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 5px solid #ebffdf;
+  border: 5px solid #cee8e8;
+  background-color: #ebffdf;
   border-radius: 30px;
   width: 350px;
   height: 62px;
   text-align: center;
   margin-bottom: -35px;
-  background-color: white;
   position: relative;
   z-index: 5;
   font-size: 27px;
@@ -233,10 +243,10 @@ const chatStart = () => {
   margin-top: 20px;
 }
 .selectbox {
-  border: 5px solid #ebffdf;
+  border: 5px solid #cee8e8;
+  background-color: white;
   border-radius: 30px;
   padding: 30px 50px;
-  background-color: aliceblue;
   height: 350px;
   width: 420px;
 }
@@ -266,7 +276,8 @@ const chatStart = () => {
   width: 200px;
   height: 60px;
   font-size: 25px;
-  border: 3px solid #b5ff43;
+  border: 5px solid #cee8e8;
+  background-color: #ebffdf;
   border-radius: 30px;
 }
 </style>
