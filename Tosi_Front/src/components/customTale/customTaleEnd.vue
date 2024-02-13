@@ -91,7 +91,7 @@ a {
   border-radius: 30px;
   background-color: rgb(255, 255, 255);
   font-size: 20px;
-  margin-right: 70px;
+  /* margin-right: 70px; */
 }
 .startbox {
   display: flex;
@@ -106,16 +106,17 @@ a {
   margin-top: 35px;
   padding: 40px 30px;
   border: 5px solid #cee8e8;
+  margin-bottom: 20px;
 }
 .container {
   display: flex;
-  width: 70vw;
+  /* width: 70vw; */
   margin: 40px 0 0 60px;
 }
 .bigtitle {
   text-decoration: none;
   display: inline-block;
-  box-shadow: inset 0 -20px 0 #c4ecb0;
+  box-shadow: inset 0 -20px 0 #d3e4ff;
   font-size: 40px;
   /* margin: 30px 0px 30px 50px; */
   margin-bottom: 40px;

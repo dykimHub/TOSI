@@ -161,7 +161,7 @@ const generateCustomTale = async function () {
       " is the background and " +
       prompt.value[1] +
       "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image.";
-    // await customTaleStore.getCustomTaleImage(imagePrompt);
+    await customTaleStore.getCustomTaleImage(imagePrompt);
 
     const gptPrompt =
       selectedChild.value.childName +

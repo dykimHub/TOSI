@@ -164,13 +164,23 @@ onMounted(async () => {
 });
 </script>
 <style scoped>
+.infobox {
+  border: 5px solid #cee8e8;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  font-size: 20px;
+  width: 350px;
+  height: 370px;
+}
+.inputgroup{
+    padding: 10px;
+}
 .play {
   background-color: white;
   border-radius: 50px;
   margin-top: 35px;
-  padding: 40px 0px 60px 40px;
+  padding: 40px 0px;
   border: 5px solid #cee8e8;
-  width: 80vw;
 }
 .container {
   display: flex;
@@ -180,15 +190,15 @@ onMounted(async () => {
 .bigtitle {
   text-decoration: none;
   display: inline-block;
-  box-shadow: inset 0 -20px 0 #d3e4ff;
+  box-shadow: inset 0 -20px 0 #d3e4ff;;
   font-size: 40px;
   /* margin: 30px 0px 30px 50px; */
   margin-bottom: 40px;
   line-height: 1;
   text-align: left;
 }
-.taleinfo{
-    display: flex;
+.taleinfo {
+  display: flex;
 }
 .title {
   margin: 30px 0px 25px 0px;
