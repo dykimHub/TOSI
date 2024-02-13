@@ -340,7 +340,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 60px;
+  /* padding-right: 60px; */
 }
 .titleimg {
   width: 40px;
