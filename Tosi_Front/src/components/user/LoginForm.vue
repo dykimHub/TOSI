@@ -27,6 +27,7 @@
 <script setup>
 import { ref } from "vue";
 import { useUserStore } from "@/stores/userStore";
+import router from "@/router";
 
 const store = useUserStore()
 

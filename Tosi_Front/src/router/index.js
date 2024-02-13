@@ -44,6 +44,7 @@ const router = createRouter({
         {
           path: "/search",
           name: "search",
+          props: (route) => ({ title: route.query.title }),
           component: SearchView,
           meta: { requiresAuth: true },
         },

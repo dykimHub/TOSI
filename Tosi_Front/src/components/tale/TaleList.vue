@@ -3,13 +3,13 @@
     <div class="topOfTaleList">
       <!-- <div class="box1"></div> -->
       <!-- <div class="box2"> -->
-        <div class="title">전체 책 보기</div>
+      <div class="title">전체 책 보기</div>
       <!-- </div> -->
       <div class="box3">
-        <!-- <div class="searchContainer">
+        <div class="searchContainer">
           <input v-model="searchQuery" type="text" />
-          <button @click="searchTaleByTitle">검색</button>
-        </div> -->
+          <a @click="searchTaleByTitle">검색</a>
+        </div>
         <div class="selecSort">
           <label>정렬 기준</label>
           <select v-model="sortOption">
@@ -23,7 +23,9 @@
     <div class="taleContainer">
       <ul v-for="tale in currentPageBoardList" :key="tale.taleId">
         <div class="oneTale">
-          <RouterLink :to="`/tales/${tale.taleId}`"><img class="thumbnail" :src="tale.thumbnail" /></RouterLink>
+          <RouterLink :to="`/tales/${tale.taleId}`"
+            ><img class="thumbnail" :src="tale.thumbnail"
+          /></RouterLink>
           <br />
           <RouterLink :to="`/tales/${tale.taleId}`">{{ tale.title }}</RouterLink>
           <br />
@@ -32,22 +34,38 @@
       </ul>
     </div>
     <div>
-      <nav aria-label="Page navigation" style="padding: 15px;">
-      <ul class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success ">
-        <li class="page-item">
-          <a class="page-link" :class="{ disabled: currentPage <= 1 }" href="#" @click.prevent="currentPage--">&lt;</a>
-        </li>
-        <li :class="{ active: currentPage === page }" class="page-item" v-for="page in pageCount" :key="page">
-          <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
-            page
-          }}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" :class="{ disabled: currentPage >= pageCount }" href="#"
-            @click.prevent="currentPage++">&gt;</a>
-        </li>
-      </ul>
-    </nav>
+      <nav aria-label="Page navigation" style="padding: 15px">
+        <ul
+          class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success"
+        >
+          <li class="page-item">
+            <a
+              class="page-link"
+              :class="{ disabled: currentPage <= 1 }"
+              href="#"
+              @click.prevent="currentPage--"
+              >&lt;</a
+            >
+          </li>
+          <li
+            :class="{ active: currentPage === page }"
+            class="page-item"
+            v-for="page in pageCount"
+            :key="page"
+          >
+            <a class="page-link" href="#" @click.prevent="clickPage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item">
+            <a
+              class="page-link"
+              :class="{ disabled: currentPage >= pageCount }"
+              href="#"
+              @click.prevent="currentPage++"
+              >&gt;</a
+            >
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </template>
@@ -61,6 +79,7 @@ const Talestore = useTaleStore();
 const sortOption = ref("title");
 const sortedTaleList = ref([]);
 const router = useRouter();
+const searchResults = ref([]);
 
 const title = ref("");
 const sortTaleList = () => {
@@ -92,26 +111,22 @@ const clickPage = function (page) {
 };
 
 const currentPageBoardList = computed(() => {
-  return Talestore.taleList.slice(
-    (currentPage.value - 1) * perPage,
-    currentPage.value * perPage
-  );
+  return Talestore.taleList.slice((currentPage.value - 1) * perPage, currentPage.value * perPage);
 }); //page
 
 const searchQuery = ref("");
-
 const searchTaleByTitle = async () => {
   try {
     title.value = searchQuery.value;
+    Talestore.searchList = response.data;
     const response = await Talestore.searchTaleByTitle(title.value);
-
-    // 검색 결과 확인
-      Talestore.searchList = response.data;
-
-      // 검색 결과를 업데이트한 후 결과 페이지로 이동
-      router.push({ name: "searchTale", query: { title: title.value } });
+    console.log('Response:', response);
+    searchResults.value = response.data;
+    // 라우터로 이동
+    router.push({ name: "search", query: { title: title.value } });
+    
   } catch (error) {
-    console.error("검색 오류:", error);
+    console.error('검색 오류:', error);
   }
 };
 
@@ -121,14 +136,13 @@ onMounted(() => {
   watch(sortOption, sortTaleList);
 
   // Extract search query from URL
-  const route = router.currentRoute.value;
-  if (route.query.title) {
-    title.value = route.query.title.toString();
-  }
+  // const route = router.currentRoute.value;
+  // if (route.query.title) {
+  //   title.value = route.query.title.toString();
+  // }
 
 });
 </script>
-
 
 <style scoped>
 .taleContainer {
@@ -141,14 +155,14 @@ onMounted(() => {
 }
 
 .title {
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: inset 0 -20px 0 #f1a8bc;
-    font-size: 40px;
-    margin: 30px 0px 0px 50px;
-    margin-bottom: 40px;
-    line-height: 1;
-    text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: inset 0 -20px 0 #f1a8bc;
+  font-size: 40px;
+  margin: 30px 0px 0px 50px;
+  margin-bottom: 40px;
+  line-height: 1;
+  text-align: left;
 }
 
 .talelistContainer {
@@ -184,8 +198,8 @@ onMounted(() => {
 
 .topOfTaleList {
   display: flex;
-    justify-content: space-between;
-    /* margin-left: 10%;
+  justify-content: space-between;
+  /* margin-left: 10%;
     margin-right: 10%; */
 }
 
@@ -195,30 +209,27 @@ a {
 }
 
 .pagination,
- .jsgrid .jsgrid-pager {
-     display: flex;
-     padding-left: 0;
-     list-style: none;
-     border-radius: 0.25rem
- }
- 
- .page-link {
-     color: black
- }
- 
- .pagination.pagination-rounded-flat .page-item {
-     margin: 0 .30rem
- }
- 
-
- .pagination-success .page-item.active .page-link
-  {
-     background: #d8eef2;
- }
- 
- .pagination.pagination-rounded-flat .page-item .page-link{
-    border: none;
-    border-radius: 50px;
+.jsgrid .jsgrid-pager {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.25rem;
 }
 
+.page-link {
+  color: black;
+}
+
+.pagination.pagination-rounded-flat .page-item {
+  margin: 0 0.3rem;
+}
+
+.pagination-success .page-item.active .page-link {
+  background: #d8eef2;
+}
+
+.pagination.pagination-rounded-flat .page-item .page-link {
+  border: none;
+  border-radius: 50px;
+}
 </style>

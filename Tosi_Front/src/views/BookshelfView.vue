@@ -31,7 +31,8 @@ const showFavoriteList = () => {
 <style scoped>
 .buttonContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end; /* 왼쪽으로 정렬 */
+  margin-right: 220px; /* 왼쪽으로 간격 추가 */
 }
 
 button {
@@ -47,11 +48,11 @@ button {
 }
 
 .favoriteListButton {
-  background-color: #c4ecb0;
+  background-color: #eee58a;
 }
 
 .customListButton {
-  background-color: #d6b0ec;
+  background-color: #c4ecb0;
 }
 
 button::before {
@@ -75,10 +76,11 @@ button:hover::before {
   padding-right: 40px;
   display: flex;
   justify-content: center;
-  width: calc(100% - 70px);
+  width: 85vw;
 }
 
 .taleList {
   margin-top: 0px;
 }
+
 </style>

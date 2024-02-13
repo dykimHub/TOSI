@@ -151,6 +151,7 @@ const retry = function(){
   background-color: #ffffff;
   border: 3px solid #cee8e8;
   border-radius: 20px;
+  height: 270px;
 }
 
 .inputgroup {

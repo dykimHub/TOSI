@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <header>
         <div class="headerContainer">
             <div class="empty"></div>
@@ -13,6 +14,22 @@
             </div>
         </div>
     </header>
+=======
+  <header>
+    <div class="headerContainer">
+      <div class="empty"></div>
+      <div class="logo-container">
+        <RouterLink to="/tosi">
+          <img src="@/assets/logo.png" class="logo" alt="Logo" />
+        </RouterLink>
+      </div>
+      <div class="homeMenus">
+        <RouterLink to="/tosi">홈</RouterLink>
+        <button v-if="isLoggedIn" @click="logout" class="logoutButton">로그아웃</button>
+      </div>
+    </div>
+  </header>
+>>>>>>> 2dbaaa2cf80aaeb187b40dafb0e9623980f53e94
 </template>
 
 <script setup>
@@ -59,9 +76,15 @@ a {
     justify-content: center;
     align-items: center;
 }
+
 .empty,
 .homeMenus,
 .headerContainer {
     flex: 1;
+}
+
+.logoutButton {
+  background-color: transparent;
+  border: none;
 }
 </style>
