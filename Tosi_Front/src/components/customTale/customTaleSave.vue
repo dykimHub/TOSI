@@ -74,7 +74,7 @@ import router from "@/router";
 
 const loading = ref(false);
 const customTale = ref({
-  userId: "0",
+  userId: "3",
   title: "",
   content: customTaleStore.customTaleText.gptMessage,
   public: true,

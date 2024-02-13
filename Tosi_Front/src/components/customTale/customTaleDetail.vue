@@ -9,7 +9,7 @@
           <h3>목소리 선택</h3>
           <div class="itemform-container">
             <div v-for="item in items" :key="item.speaker" class="itemform">
-              <label style="display: flex; flex-direction: row;"
+              <label style="display: flex; flex-direction: row"
                 ><input
                   type="radio"
                   :value="item.speaker"
@@ -103,11 +103,11 @@ const playVoice = (url) => {
 //start go customPlay
 const readBook = async () => {
   try {
-    console.log("요청 보냄");
+    // console.log("요청 보냄");
     await customTaleStore.readCustomTale(customTaleStore.customTale.content);
-    console.log(customTaleStore.pages);
+    // console.log(customTaleStore.pages);
     // 요청이 성공적으로 완료된 후에 navigateToTalePlay 호출
-    console.log("요청이 성공적으로 완료된 후에 navigateToTalePlay 호출");
+    // console.log("요청이 성공적으로 완료된 후에 navigateToTalePlay 호출");
     navigateToTalePlay();
   } catch (error) {
     console.error("Error fetching:", error);
@@ -115,7 +115,7 @@ const readBook = async () => {
 };
 
 const navigateToTalePlay = () => {
-  console.log("다음페이지 보내기");
+  //   console.log("다음페이지 보내기");
   const selectedSpeaker = items.value.find(
     (item) => item.speaker === speaker.value
   );
@@ -158,11 +158,10 @@ onMounted(async () => {
   background-color: white;
   border-radius: 20px;
   margin: 35px;
-  /* padding-top: 40px;
-    padding-bottom: 40px; */
   opacity: 0.95;
-  padding: 40px 60px;
+  padding: 40px 0px 60px 0px;
   border: 5px solid #cee8e8;
+  width: 80vw;
 }
 
 .twoContainer {
@@ -175,9 +174,10 @@ onMounted(async () => {
 .title {
   text-decoration: none;
   display: inline-block;
-  box-shadow: inset 0 -20px 0 #D3E4FF;
+  box-shadow: inset 0 -20px 0 #d3e4ff;
   font-size: 40px;
   margin: 30px 0px 30px 50px;
+  margin-bottom: 40px;
   line-height: 1;
   text-align: left;
 }
@@ -209,6 +209,8 @@ onMounted(async () => {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  margin: 10px;
+  width: 30vw;
 }
 
 .input {
@@ -216,15 +218,18 @@ onMounted(async () => {
 }
 
 .book {
-  width: 100%;
+  width: 30vw;
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
+  padding-left: 10px;
+  margin-left: 30px;
+  background-image: url("@/assets/bookstart.png");
 }
 
 .book img {
-  width: 80%;
+  width: 70%;
   height: 80%;
 }
 

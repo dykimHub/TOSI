@@ -148,12 +148,6 @@ const router = createRouter({
           meta: { requiresAuth: true },
         },
         {
-          path: "/userInfo/update",
-          name: "userInfoUpdate",
-          component: UserInfoUpdate,
-          meta: { requiresAuth: true },
-        },
-        {
           path: "/bookshelf",
           name: "bookshelf",
           component: BookshelfView,

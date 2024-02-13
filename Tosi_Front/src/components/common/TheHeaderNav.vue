@@ -14,6 +14,7 @@
         </div>
     </header>
 </template>
+
 <script setup>
 import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
@@ -33,6 +34,7 @@ const logout = () => {
     store.getLogout();
 };
 </script>
+
 <style scoped>
 .headerContainer {
     display: flex;

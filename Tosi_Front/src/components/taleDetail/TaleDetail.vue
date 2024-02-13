@@ -1,61 +1,88 @@
 <template>
     <div v-if="taleDetailStore.tale">
         <div class="play">
-            <div class="book">
-                <div class="info">
-                    <div class="title">{{ taleDetailStore.tale.title }}</div>
+            <div class="likes">
+                <div v-if="favoriteId">
+                    <img class="like" src="@/assets/like.png" @click="deleteFavorite()" />
                 </div>
-                <div class="container">
-                    <div class="imgNselect leftImg">
-                        <img :src="taleDetailStore.tale.thumbnail" />
-                    </div>
-                    <div class="imgNselect">
-                        <div class="selected">
-                            <h1>오늘의 주인공</h1>
-                            <div class="selectbox">
-                                <select
-                                    class="form-select"
-                                    aria-label="Default select example"
-                                    v-model="selectedCharacter"
+                <div v-else>
+                    <img class="like" src="@/assets/dislike.png" @click="postFavorite()" />
+                </div>
+                <div class="likecnt">{{ likeCnt }}</div>
+            </div>
+            <div class="container">
+                <div class="leftImg">
+                    <div class="title">{{ taleDetailStore.tale.title }}</div>
+                    <img class="thumbnail" :src="taleDetailStore.tale.thumbnail" />
+                </div>
+                <div class="chat">
+                    <div class="smallbox">
+                        <div class="selectbox">
+                            <div class="select">
+                                <img class="titleimg" src="@/assets/rabbit.png" />
+                                <div class="selecttitle">등장인물</div>
+                            </div>
+                            <select class="form-select" aria-label="Default select example" v-model="selectedCharacter">
+                                <option
+                                    v-for="character in taleDetailStore.tale.characters"
+                                    :key="character"
+                                    :value="character"
+                                    :disabled="isCharacterSelected(character)"
+                                    class="character"
                                 >
-                                    <option
-                                        v-for="character in taleDetailStore.tale.characters"
-                                        :key="character"
-                                        :value="character"
-                                        :disabled="isCharacterSelected(character)"
-                                        class="character"
-                                    >
-                                        {{ character }}
-                                    </option>
-                                </select>
-                                <select class="form-select" aria-label="Default select example" v-model="selectedName">
-                                    <option v-for="(child, index) in userStore.userInfo.childrenList" :key="index">
-                                        {{ child.childName }}
-                                    </option>
-                                </select>
+                                    {{ character }}
+                                </option>
+                            </select>
+                            <div class="select">
+                                <img class="titleimg" src="@/assets/boy.png" />
+                                <div class="selecttitle">오늘의 주인공</div>
                             </div>
-                            <div v-for="(name, index) in nameMap" :key="index">
-                                <h2 class="nameMap">
-                                    {{ name[0] }} -> {{ name[1] }} <button @click="deleteName(index)">삭제</button>
-                                </h2>
+                            <select class="form-select" aria-label="Default select example" v-model="selectedName">
+                                <option v-for="(child, index) in userStore.userInfo.childrenList" :key="index">
+                                    {{ child.childName }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="changedbox">
+                            <div class="chattitle"><img src="@/assets/surprise.png" class="surprise" />변신 상자</div>
+                            <div class="selectedbox">
+                                <div v-for="(name, index) in nameMap" :key="index">
+                                    <div class="namebox">
+                                        <div class="namemap">
+                                            {{ name[0] }} <img class="change" src="@/assets/change.png" /> {{ name[1] }}
+                                        </div>
+                                        <img src="@/assets/delete.png" @click="deleteName(index)" class="delete" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <h1>목소리 선택</h1>
-                        <div class="align-items-center grid-container">
-                            <div v-for="item in items" :key="item.speaker" class="form-wrapper align-items-center">
-                                <label
-                                    ><input type="radio" :value="item.speaker" v-model="speaker" :name="item.name" />
-                                    {{ item.name }}
-                                    <img
-                                        src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
-                                        alt="Speaker Image"
-                                        class="speaker-image"
-                                        @click="playVoice(item.url)"
-                                    />
-                                </label>
+                    </div>
+                    <div class="startbox">
+                        <div class="voicebox">
+                            <div class="voicetitle"><img class="mic" src="@/assets/mic.png" />목소리 선택</div>
+                            <div class="align-items-center grid-container">
+                                <div v-for="item in items" :key="item.speaker" class="form-wrapper align-items-center">
+                                    <label
+                                        ><input
+                                            type="radio"
+                                            :value="item.speaker"
+                                            v-model="speaker"
+                                            :name="item.name"
+                                        />
+                                        {{ item.name }}
+                                        <img
+                                            src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+                                            alt="Speaker Image"
+                                            class="speaker-image"
+                                            @click="playVoice(item.url)"
+                                        />
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary" type="submit" @click="readBook">동화 시작하기</button>
+                        <div class="rocketborder" @click="readBook">
+                            <img src="@/assets/rocket.png" class="rocket" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,10 +93,10 @@
     </div>
 </template>
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
 import { useUserStore } from "@/stores/userStore";
-import axios from "axios";
+import axios from "@/util/http-common";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const props = defineProps({
@@ -147,9 +174,9 @@ const readBook = async () => {
         console.log("요청 보냄");
         // 이름 바꾸기
         for (const [cname, bname] of nameMap.value) {
-            axios.post(`http://localhost:8080/tales/${cname}/${bname}`);
+            axios.post(`/tales/${cname}/${bname}`, { withCredentials: true });
         }
-        const response = await axios.post("http://localhost:8080/tales/read", taleDetailStore.tale);
+        const response = await axios.post("/tales/read", taleDetailStore.tale, { withCredentials: true });
         taleDetailStore.pages = response.data;
         // 요청이 성공적으로 완료된 후에 navigateToTalePlay 호출
         console.log("요청이 성공적으로 완료된 후에 navigateToTalePlay 호출");
@@ -166,21 +193,96 @@ const navigateToTalePlay = () => {
         params: { speaker: selectedSpeaker.speaker, taleId: taleDetailStore.taleId },
     });
 };
+const favorite = ref({
+    // userId: userStore.userInfo.userId,
+    taleId: props.taleId,
+});
+console.log(favorite.value);
+const postFavorite = () => {
+    axios
+        .post("http://localhost:8080/favorites", favorite.value)
+        .then((res) => {
+            console.log(res.data);
+            getFavorite();
+            getLikeCnt();
+        })
+        .catch((err) => console.log(err));
+};
+const favoriteId = ref(null);
+const getFavorite = () => {
+    axios
+        .get(`http://localhost:8080/favorites/${props.taleId}`)
+        .then((res) => {
+            favoriteId.value = res.data;
+        })
+        .catch((err) => console.log(err));
+};
+const deleteFavorite = () => {
+    axios
+        .delete(`http://localhost:8080/favorites/${favoriteId.value}`)
+        .then((res) => {
+            favoriteId.value = null;
+            getFavorite();
+            getLikeCnt();
+        })
+        .catch((err) => console.log(err));
+};
+const likeCnt = ref(null);
+const getLikeCnt = () => {
+    axios
+        .get(`http://localhost:8080/tales/like/${props.taleId}`)
+        .then((res) => {
+            return axios.get(`http://localhost:8080/tales/${props.taleId}`);
+        })
+        .then((res) => {
+            likeCnt.value = res.data.likeCnt;
+            console.log(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+onMounted(() => {
+    getFavorite();
+    getLikeCnt();
+});
 </script>
 <style scoped>
+.play {
+    width: 1050px;
+    height: 630px;
+    border: 10px solid #cee8e8;
+    margin: 20px 0px 30px 0px;
+    border-radius: 50px;
+    background-color: #f5f5f5;
+}
 .container {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: center;
-    padding: 0 4px;
-}
-.selectbox {
     display: flex;
+    width: 1050px;
+    margin: 0px 0 0 30px;
 }
-.selected {
+.title {
+    margin: 30px 0px 25px 0px;
+    font-size: 35px;
+    width: 300px;
+    text-align: center;
+}
+.leftImg {
+    width: 400px;
+    height: 450px;
+    background-image: url(@/assets/cover.png);
+    background-size: cover;
+    padding: 10px 10px 0px 57px;
+    margin-right: 25px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+.thumbnail {
+    width: 300px;
     height: 300px;
-    background-color: #f3f0cb;
+    border: 5px solid white;
 }
+
 .align-items-center {
     display: flex;
     align-items: center;
@@ -191,58 +293,181 @@ const navigateToTalePlay = () => {
     width: 100%;
     max-width: 28rem;
 }
-.play {
-    width: 1180px;
-    height: 800px;
-    border: 15px solid #cee8e8;
-    margin: 20px 0px 30px 40px;
-    border-radius: 50px;
-    background-color: #f5f5f5;
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 15px 15px 0 15px;
 }
-.info {
+.chat {
+    width: 520px;
+    height: 500px;
+}
+.smallbox {
     display: flex;
     justify-content: space-between;
+    font-size: 25px;
+    margin-bottom: 20px;
 }
-.title {
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: inset 0 -20px 0 #ffd3d3;
-    font-size: 40px;
-    margin: 60px 0px 40px 70px;
-    line-height: 1;
+.selectbox {
+    border: 5px solid #ebffdf;
+    border-radius: 30px;
+    background-color: aliceblue;
+    width: 250px;
+    height: 260px;
+    padding: 0px 15px 10px 15px;
 }
-.cover {
-    background-color: #fff;
-    box-sizing: border-box;
-    width: 500px;
-    height: 500px;
-    border-radius: 0px 40px 40px 0px;
+.selectedbox {
+    border: 5px solid #ebffdf;
+    border-radius: 30px;
+    background-color: aliceblue;
+    width: 250px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.coverImg,
-.leftImg {
-    width: 450px;
-    height: 450px;
-    margin-top: 25px;
-    margin-left: 5px;
+.select {
+    display: flex;
 }
-.imgNselect {
-    float: left;
-    margin: 0 10px;
+.titleimg {
+    width: 40px;
+    height: 40px;
+    margin: 25px 10px 0 0;
+}
+.selecttitle {
+    font-size: 20px;
+    margin: 30px 10px 0 0;
+}
+.form-select {
+    font-size: 18px;
+}
+
+.surprise {
+    width: 27px;
+    height: 27px;
+    margin-right: 10px;
+}
+.chattitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid #ebffdf;
+    border-radius: 30px;
+    width: 180px;
+    height: 55px;
+    text-align: center;
+    margin: 0 0 -35px 35px;
+    background-color: white;
+    position: relative;
+    z-index: 5;
+    font-size: 23px;
+}
+@keyframes swing {
+    0% {
+        transform: translateX(-3px);
+    }
+    50% {
+        transform: translateX(3px);
+    }
+    100% {
+        transform: translateX(-3px);
+    }
+}
+.change {
+    animation: swing 1s ease-in-out infinite;
+    width: 35px;
+    height: 35px;
+}
+.namebox {
+    display: flex;
+}
+.namemap {
+    background-color: white;
+    border-radius: 10px;
+    padding: 0px 10px 0px 10px;
+    margin-bottom: 10px;
+    font-size: 22px;
+    border: 1px solid yellow;
+}
+.delete {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    margin-top: 3px;
 }
 .speaker-image {
     height: 25px;
     width: 25px;
+    cursor: pointer;
 }
-.character {
-    border: blue;
+.startbox {
+    display: flex;
 }
-.nameMap {
-    color: rgb(31, 28, 35);
-    border-radius: 4px solid blue;
+.mic {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
 }
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 세 개의 열을 가진 그리드 생성 */
-    gap: 10px; /* 열 사이의 간격 설정 */
+.voicetitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid #ebffdf;
+    border-radius: 30px;
+    width: 193px;
+    height: 55px;
+    text-align: center;
+    margin: -30px 0px 0px 80px;
+    background-color: white;
+    position: relative;
+    z-index: 5;
+    font-size: 23px;
+}
+.voicebox {
+    border: 5px solid #ebffdf;
+    border-radius: 30px;
+    background-color: aliceblue;
+    font-size: 20px;
+    width: 370px;
+    height: 150px;
+    margin: 30px 20px 0 0;
+}
+.rocketborder {
+    width: 120px;
+    height: 120px;
+    border: 2px solid black;
+    border-radius: 50%;
+    margin: 50px 0 0 0;
+}
+.rocket {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    margin: 20px 0 0 20px;
+    transition: transform 0.5s ease-in-out; /* 애니메이션 효과 부드럽게 */
+}
+.rocket:hover {
+    animation: rocketLaunch 3s forwards; /* 마우스 호버 시 애니메이션 실행 */
+}
+@keyframes rocketLaunch {
+    to {
+        transform: translate(300px, -300px) rotate(45deg); /* 대각선 이동 및 회전 */
+        opacity: 0; /* 사라지는 효과 */
+    }
+}
+.likes {
+    display: flex;
+    margin: 30px 0 25px 30px;
+}
+.like {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.likecnt {
+    font-size: 30px;
 }
 </style>

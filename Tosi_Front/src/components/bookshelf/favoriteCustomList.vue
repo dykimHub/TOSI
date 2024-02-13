@@ -14,7 +14,7 @@
       <button v-if="deleteButton" @click="deactivateDeleteButton" class="deleteButton">삭제 취소</button>
     </div>
     <div class="taleContainer">
-      <ul v-for="tale in customTaleStore.myCustomTalesList" :key="tale.customTaleId">
+      <ul v-for="tale in currentPageBoardList" :key="tale.customTaleId">
         <div class="oneTale">
           <RouterLink :to="`/customTale/${tale.taleId}`"><img class="thumbnail" :src="tale.thumbnail" /></RouterLink>
           <br>
@@ -22,18 +22,38 @@
           <br>
           재생 시간: {{ tale.time }}
         </div>
-        <button v-if="deleteButton == true" @click="deleteTale(favorite.favoriteId)">×</button>
+        <button v-if="deleteButton == true" @click="deleteCustomTale(tale.customTaleId)">×</button>
       </ul>
+    </div>
+    <div>
+      <nav aria-label="Page navigation" style="padding: 15px;">
+      <ul class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success ">
+        <li class="page-item">
+          <a class="page-link" :class="{ disabled: currentPage <= 1 }" href="#" @click.prevent="currentPage--">&lt;</a>
+        </li>
+        <li :class="{ active: currentPage === page }" class="page-item" v-for="page in pageCount" :key="page">
+          <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
+            page
+          }}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" :class="{ disabled: currentPage >= pageCount }" href="#"
+            @click.prevent="currentPage++">&gt;</a>
+        </li>
+      </ul>
+    </nav>
     </div>
   </div>
 </template>
 <script setup>
 import { useCustomTaleStore } from '@/stores/customTaleStore';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, computed } from 'vue';
+import axios from "@/util/http-common";
+
 const customTaleStore = useCustomTaleStore();
+const myCustomTalesList = ref([]);
 
 const deleteButton = ref(false);
-
 const activateDeleteButton = () => {
   deleteButton.value = true;
 }
@@ -46,16 +66,16 @@ const sortedTaleList = ref([]);
 const sortTaleList = () => {
   switch (sortOptionT.value) {
     case 'title':
-      sortedTaleList.value = customTaleStore.myCustomTalesList.sort((a, b) => a.title.localeCompare(b.title));
+      sortedTaleList.value = myCustomTalesList.value.sort((a, b) => a.title.localeCompare(b.title));
       break;
     // case 'likeCnt':
-    //   sortedTaleList.value = customTaleStore.myCustomTalesList.sort((a, b) => b.likeCnt - a.likeCnt);
+    //   sortedTaleList.value = myCustomTalesList.sort((a, b) => b.likeCnt - a.likeCnt);
     //   break;
       case 'regDate':
-      sortedTaleList.value = customTaleStore.myCustomTalesList.sort(sortByDate);
+      sortedTaleList.value = myCustomTalesList.value.sort(sortByDate);
       break;
     case 'random':
-      sortedTaleList.value = customTaleStore.myCustomTalesList.sort(() => Math.random() - 0.5);
+      sortedTaleList.value = myCustomTalesList.value.sort(() => Math.random() - 0.5);
       break;
     default:
       break;
@@ -68,18 +88,54 @@ const sortByDate = (a, b) => {
   return dateB - dateA; // 내림차순 정렬
 };
 
-const deleteCustomTale = function (customTaleId) {
+const deleteCustomTale = async function (customTaleId) {
   alert("나의 책장에서 삭제하시겠습니까?")
-  customTaleStore.deleteCustomTale(customTaleId);
+  await customTaleStore.deleteCustomTale(customTaleId);
+  // myCustomTalesList.value = customTaleStore.myCustomTalesList;
   // sortedTaleList.value.splice(customTaleId, customTaleId);
-  // sortedTaleList.value = sortedTaleList.value.filter(tale => tale.customTaleId !== customTaleId);
+  myCustomTalesList.value = myCustomTalesList.value.filter(tale => tale.customTaleId !== customTaleId);
   // window.location.reload()
 }
+// const deleteCustomTale = function (customTaleId) {
+//   alert("나의 책장에서 삭제하시겠습니까?")
+//   axios.delete(`/customtale/${customTaleId}`,customTaleId, { withCredentials: true }).then((response) => {
+//     });
+//   // myCustomTalesList.value = customTaleStore.myCustomTalesList;
+//   // sortedTaleList.value.splice(customTaleId, customTaleId);
+//   sortedTaleList.value = sortedTaleList.value.filter(tale => tale.customTaleId !== customTaleId);
+//   // window.location.reload()
+// }
+
+  // //나의책장 - 커스텀동화 삭제
+  // const deleteCustomTale = async function (customTaleId) {
+  //   await axios.delete(`/customtale/${customTaleId}`,customTaleId, { withCredentials: true }).then((response) => {
+  //   });
+  // };
+
+//page
+const perPage = 9;
+const currentPage = ref(1);
+
+const pageCount = computed(() => {
+  return Math.ceil(customTaleStore.myCustomTalesList.length / perPage);
+});
+
+const clickPage = function (page) {
+  currentPage.value = page;
+};
+
+const currentPageBoardList = computed(() => {
+  return myCustomTalesList.value.slice(
+    (currentPage.value - 1) * perPage,
+    currentPage.value * perPage
+  );
+}); 
 
 
-onMounted(() => {
-  customTaleStore.getMyCustomTalesList();
-  watch(() => customTaleStore.myCustomTalesList, sortTaleList, { immediate: true });
+onMounted(async () => {
+  await customTaleStore.getMyCustomTalesList();
+  myCustomTalesList.value = customTaleStore.myCustomTalesList;
+  watch(() => myCustomTalesList, sortTaleList, { immediate: true });
   watch(sortOptionT, sortTaleList);
 });
 

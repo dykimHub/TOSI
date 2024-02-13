@@ -95,7 +95,8 @@ onMounted(() => {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  margin-left: 5vw;
 }
 .title {
   text-decoration: none;
@@ -115,6 +116,7 @@ onMounted(() => {
   opacity: 0.95;
   padding: 40px 60px;
   border: 5px solid #cee8e8;
+  width: 80vw;
 }
 .thumbnail {
   width: 200px;

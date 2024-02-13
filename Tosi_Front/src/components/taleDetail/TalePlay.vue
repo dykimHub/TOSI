@@ -73,6 +73,7 @@ const props = defineProps({
 });
 
 const goToEnd = () => {
+    audioRef.value.pause();
     router.push({ name: "taleEnd", params: { taleId: taleDetailStore.taleId } });
 };
 // 페이지 배열의 인덱스를 저장해서 zindex 배열로 만듦
@@ -153,7 +154,7 @@ const ttsMaker = async (text) => {
 const autoAudio = (text) => {
     //기존 오디오 끊기
     if (audioRef.value != null) {
-        isPaused.value = true;
+        // isPaused.value = true;
         audioRef.value.pause();
     }
     console.log("라디오 끊은 후, audioRef.value: ", audioRef.value, "\n text: ", text);
@@ -167,7 +168,7 @@ const autoAudio = (text) => {
             onAudioEnded();
             resolve();
         };
-        isPaused.value = false;
+        // isPaused.value = false;
         audioRef.value.play(); // 재생
     } else {
         console.log("ttsMaker() 호출, text: ", text);
@@ -180,7 +181,7 @@ const autoAudio = (text) => {
                     onAudioEnded();
                     //resolve();
                 };
-                isPaused.value = false;
+                // isPaused.value = false;
                 audioRef.value.play(); // 재생
             }
         });
@@ -196,6 +197,7 @@ const onAudioEnded = () => {
 watch(pages, (newPages, oldPages) => {
     if (newPages && newPages.length > 0) {
         // 페이지 배열이 변경되었을 때 실행할 코드 작성
+        isPaused.value = false;
         console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
         autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
     }
@@ -226,7 +228,7 @@ onMounted(async () => {
 });
 userStore.getUser();
 const favorite = ref({
-    userId: userStore.userInfo.userId,
+    // userId: userStore.userInfo.userId,
     taleId: props.taleId,
 });
 console.log(favorite.value);
@@ -242,7 +244,7 @@ const postFavorite = () => {
 const favoriteId = ref(null);
 const getFavorite = () => {
     axios
-        .get(`http://localhost:8080/favorites/${userStore.userInfo.userId}/${taleDetailStore.taleId}`)
+        .get(`http://localhost:8080/favorites/${taleDetailStore.taleId}`)
         .then((res) => {
             favoriteId.value = res.data;
         })
@@ -263,18 +265,18 @@ const replay = () => {
 </script>
 <style scoped>
 .play {
-    width: 1180px;
-    height: 800px;
+    width: 1050px;
+    height: 780px;
     border: 15px solid #cee8e8;
-    margin: 20px 0px 30px 40px;
+    margin: 20px 0px 30px 0px;
     border-radius: 50px;
     background-color: #f5f5f5;
 }
 .info {
     display: flex;
     justify-content: space-between;
-    width: 1050px;
-    margin: 45px 0 0 45px;
+    width: 950px;
+    margin: 45px 10px 0 45px;
 }
 .title {
     text-decoration: none;
@@ -287,10 +289,13 @@ const replay = () => {
     width: 50px;
     height: 50px;
     cursor: pointer;
+    margin-right: 10px;
 }
 .page-progress {
     font-size: 30px;
-    margin: -50px 0 40px 490px;
+    margin: -50px 0 40px 35px;
+    width: 950px;
+    text-align: center;
 }
 .cover {
     background-color: #fff;
@@ -301,17 +306,17 @@ const replay = () => {
 }
 .coverImg,
 .leftImg {
-    width: 450px;
+    width: 435px;
     height: 450px;
     margin-top: 25px;
-    margin-left: 25px;
+    margin-left: 10px;
 }
 .book {
-    margin: 0px 0px 0px 45px;
+    margin: 0px 0px 0px 35px;
     padding: 10px 10px 0px 25px;
     display: flex;
     background-color: #21364d;
-    width: 1050px;
+    width: 950px;
     height: 520px;
     position: relative;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
@@ -348,15 +353,6 @@ const replay = () => {
     box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
     background-image: url(@/assets/floral.png);
 }
-.front::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 10px;
-    right: 0;
-    height: 100%;
-    background: linear-gradient(to bottom, #f5f5f5 0%, #dcdcdc 100%);
-}
 .page-separator-right {
     position: absolute;
     top: 6.5%;
@@ -390,24 +386,6 @@ const replay = () => {
     transform: rotateY(180deg);
     border-radius: 0px 40px 40px 0px;
     box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
-}
-.back::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 10px;
-    left: 0;
-    height: 100%;
-    background: linear-gradient(to bottom, #f5f5f5 0%, #dcdcdc 100%);
-}
-.back::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 10px;
-    left: 0;
-    height: 100%;
-    background: linear-gradient(to bottom, #f5f5f5 0%, #dcdcdc 100%);
 }
 .flip.flipped {
     transform: rotateY(-180deg);
@@ -458,7 +436,7 @@ const replay = () => {
     width: 70px;
     height: 70px;
     cursor: pointer;
-    margin: 20px 0px 0px 530px;
+    margin: 20px 0px 0px 450px;
 }
 .stop {
     width: 70px;
@@ -467,13 +445,5 @@ const replay = () => {
     margin-top: 20px;
     border-radius: 50%;
     border: 1px solid black;
-}
-.content {
-    display: flex;
-    align-items: center;
-    font-size: 30px;
-    height: 100%;
-    margin-left: 20px;
-    margin-right: 10px;
 }
 </style>
