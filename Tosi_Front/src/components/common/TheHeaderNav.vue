@@ -8,7 +8,7 @@
         </RouterLink>
       </div>
       <div class="homeMenus">
-        <RouterLink to="/tosi">홈</RouterLink>
+        <RouterLink to="/tosi"  class="homeButton">홈으로</RouterLink>
         <button v-if="isLoggedIn" @click="logout" class="logoutButton">로그아웃</button>
       </div>
     </div>
@@ -59,6 +59,7 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 
 .empty,
@@ -70,5 +71,11 @@ a {
 .logoutButton {
   background-color: transparent;
   border: none;
+  margin-left: 15em;
+}
+
+.homeButton{
+  margin-left: 15em;
+
 }
 </style>
