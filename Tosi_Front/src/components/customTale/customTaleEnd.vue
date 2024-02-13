@@ -57,11 +57,6 @@
 <script setup>
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, computed, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import LoadingModal from "@/components/customTale/loadingModal.vue";
-
-const route = useRoute();
-const router = useRouter();
 
 const customTaleStore = useCustomTaleStore();
 
@@ -75,15 +70,10 @@ function shuffleArray(array) {
   return shuffledArray;
 }
 
-const loading = ref(false);
 
 onMounted(async () => {
-  // 비동기로 데이터를 먼저 로드
   await customTaleStore.getCustomTalesList(true);
-  // await  customTaleStore.getCustomTale(route.params.customTaleId);
 
-  // console.log(customTaleStore.customTalesList);
-  // 로드된 데이터를 기반으로 랜덤 아이템 선택
   const randomCustomTales = shuffleArray(customTaleStore.customTalesList).slice(
     0,
     4
@@ -111,11 +101,12 @@ a {
   padding: 10px;
 }
 .play {
-  width: 70vw;
-  border: 5px solid #cee8e8;
-  margin: 20px 0px 30px 0px;
+  background-color: white;
   border-radius: 50px;
-  background-color: #f5f5f5;
+  margin-top: 35px;
+  padding: 40px 60px;
+  border: 5px solid #cee8e8;
+  width: 80vw;
 }
 .container {
   display: flex;

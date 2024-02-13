@@ -154,7 +154,7 @@ onMounted(async () => {
     customTaleStore.getCustomTalesList(true),
     customTaleStore.getCustomTale(route.params.customTaleId),
   ]);
-  console.log(customTaleStore.customTalesList);
+  // console.log(customTaleStore.customTalesList);
   // 로드된 데이터를 기반으로 랜덤 아이템 선택
   const randomCustomTales = shuffleArray(customTaleStore.customTalesList).slice(
     0,
@@ -165,12 +165,12 @@ onMounted(async () => {
 </script>
 <style scoped>
 .play {
-  width: 70vw;
-  border: 5px solid #cee8e8;
-  margin: 20px 0px 30px 0px;
+  background-color: white;
   border-radius: 50px;
-  background-color: #f5f5f5;
-  padding-bottom: 50px;
+  margin-top: 35px;
+  padding: 40px 0px 60px 40px;
+  border: 5px solid #cee8e8;
+  width: 80vw;
 }
 .container {
   display: flex;

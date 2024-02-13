@@ -145,10 +145,10 @@ const generateCustomTale = async function () {
       return;
     }
 
-    const forbiddenWords = ["바보", "멍청이", "병신"];
+    const forbiddenWords = ["바보", "멍청이", "병신","시발","씨발","ㅅㅂ","ㅂㅅ","죽어"];
 
     if (forbiddenWords.some((word) => prompt.value.includes(word))) {
-      alert("나쁜 말 안돼요.");
+      alert("나쁜 말은 안돼요!!");
       return;
     }
     const genderText = selectedChild.value.gender === 0 ? "girl" : "boy";
@@ -161,7 +161,7 @@ const generateCustomTale = async function () {
       " is the background and " +
       prompt.value[1] +
       "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image.";
-    await customTaleStore.getCustomTaleImage(imagePrompt);
+    // await customTaleStore.getCustomTaleImage(imagePrompt);
 
     const gptPrompt =
       selectedChild.value.childName +
@@ -269,11 +269,12 @@ onMounted(() => {
     padding: 10px;
 }
 .play {
-  width: 70vw;
-  border: 5px solid #cee8e8;
-  margin: 20px 0px 30px 0px;
+  background-color: white;
   border-radius: 50px;
-  background-color: #f5f5f5;
+  margin-top: 35px;
+  padding: 40px 60px;
+  border: 5px solid #cee8e8;
+  width: 80vw;
 }
 .container {
   display: flex;

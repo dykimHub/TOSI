@@ -44,6 +44,21 @@
           </div>
         </div>
       </div>
+      <div class="stopbtn">
+        <img
+          v-if="isPaused"
+          src="@/assets/playaudio.png"
+          @click="audioPause"
+          class="start"
+        />
+        <img
+          v-else
+          src="@/assets/pause.png"
+          @click="audioPause"
+          class="pause"
+        />
+        <img src="@/assets/stop.png" class="stop" @click="replay()" />
+      </div>
     </div>
   </div>
   <div v-else>is Loading...</div>
@@ -64,6 +79,7 @@ const props = defineProps({
 });
 
 const goToEnd = () => {
+  audioRef.value.pause();
   router.push({ name: "customTaleSave" });
 };
 
@@ -119,6 +135,7 @@ const items = ref([
 ]);
 const audioRef = ref(null); //오디오 재생을 위한 객체
 const audioSrcCache = {}; // 캐시를 저장하는 객체
+const isPaused = ref(false);
 const ttsMaker = async (text) => {
   //speaker정보
   const selectedSpeaker = items.value.find(
@@ -147,6 +164,7 @@ const ttsMaker = async (text) => {
 const autoAudio = (text) => {
   //기존 오디오 끊기
   if (audioRef.value != null) {
+    isPaused.value = true;
     audioRef.value.pause();
   }
   // 이미 캐시된 결과가 있는지 확인
@@ -158,6 +176,7 @@ const autoAudio = (text) => {
       onAudioEnded();
       resolve();
     };
+    isPaused.value = false;
     audioRef.value.play(); // 재생
   } else {
     ttsMaker(text).then((url) => {
@@ -166,8 +185,9 @@ const autoAudio = (text) => {
         // 재생이 끝나면 Promise를 resolve하도록 설정
         audioRef.value.onended = () => {
           onAudioEnded();
-          resolve();
+          // resolve();
         };
+        isPaused.value = false;
         audioRef.value.play(); // 재생
       }
     });
@@ -185,6 +205,22 @@ watch(pages, (newPages, oldPages) => {
     autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
   }
 });
+const audioPause = () => {
+  if (audioRef.value != null) {
+    if (isPaused.value) {
+      audioRef.value.play();
+      isPaused.value = false;
+    } else {
+      audioRef.value.pause();
+      isPaused.value = true;
+    }
+  }
+};
+const replay = () => {
+  alert("동화를 멈출게요.");
+  audioRef.value.pause();
+  router.push({ name: "customTaleSave" });
+};
 onMounted(async () => {
   try {
     if (pages.length > 0) {
@@ -198,12 +234,12 @@ onMounted(async () => {
 
 <style scoped>
 .play {
-  width: 1050px;
-  height: 780px;
-  border: 5px solid #cee8e8;
-  margin: 20px 0px 30px 40px;
+  background-color: white;
   border-radius: 50px;
-  background-color: #f5f5f5;
+  margin-top: 35px;
+  padding: 40px 60px;
+  border: 5px solid #cee8e8;
+  width: 80vw;
 }
 .info {
   display: flex;
@@ -357,5 +393,25 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   margin: -10px 0px 20px 0px;
+}
+.start,
+.pause {
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.stop {
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 20px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+.stopbtn{
+    display: flex;
+    justify-content: center;
 }
 </style>

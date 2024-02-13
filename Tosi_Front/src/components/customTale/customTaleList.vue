@@ -110,9 +110,7 @@ onMounted(() => {
 .talelistContainer {
   background-color: white;
   border-radius: 50px;
-  margin: 35px;
-  /* padding-top: 40px;
-  padding-bottom: 40px; */
+  margin-top: 35px;
   opacity: 0.95;
   padding: 40px 60px;
   border: 5px solid #cee8e8;

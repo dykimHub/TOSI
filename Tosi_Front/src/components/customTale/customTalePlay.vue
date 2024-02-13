@@ -47,14 +47,21 @@
           </div>
         </div>
       </div>
-      <img
-        v-if="isPaused"
-        src="@/assets/playaudio.png"
-        @click="audioPause"
-        class="start"
-      />
-      <img v-else src="@/assets/pause.png" @click="audioPause" class="pause" />
-      <img src="@/assets/stop.png" class="stop" @click="replay()" />
+      <div class="stopbtn">
+        <img
+          v-if="isPaused"
+          src="@/assets/playaudio.png"
+          @click="audioPause"
+          class="start"
+        />
+        <img
+          v-else
+          src="@/assets/pause.png"
+          @click="audioPause"
+          class="pause"
+        />
+        <img src="@/assets/stop.png" class="stop" @click="replay()" />
+      </div>
     </div>
   </div>
   <div v-else>is Loading...</div>
@@ -213,8 +220,9 @@ const audioPause = () => {
   }
 };
 const replay = () => {
+  alert("동화를 멈출게요.");
   audioRef.value.pause();
-  router.push(`/customtale/${customTaleStore.customTale.customTaleId}`);
+  router.push({ name: "customTaleEnd" });
 };
 onMounted(async () => {
   try {
@@ -229,12 +237,12 @@ onMounted(async () => {
 
 <style scoped>
 .play {
-  width: 1050px;
-  height: 780px;
-  border: 5px solid #cee8e8;
-  margin: 20px 0px 30px 40px;
+  background-color: white;
   border-radius: 50px;
-  background-color: #f5f5f5;
+  margin-top: 35px;
+  padding: 40px 60px;
+  border: 5px solid #cee8e8;
+  width: 80vw;
 }
 .info {
   display: flex;
@@ -394,14 +402,19 @@ onMounted(async () => {
   width: 70px;
   height: 70px;
   cursor: pointer;
-  margin: 20px 0px 0px 530px;
+  margin-top: 20px;
 }
 .stop {
   width: 70px;
   height: 70px;
   cursor: pointer;
   margin-top: 20px;
+  margin-left: 20px;
   border-radius: 50%;
   border: 1px solid black;
+}
+.stopbtn{
+    display: flex;
+    justify-content: center;
 }
 </style>

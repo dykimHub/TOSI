@@ -68,7 +68,6 @@
 </template>
 <script setup>
 import { useCustomTaleStore } from "@/stores/customTaleStore";
-import { useS3Store } from "@/stores/S3Store";
 import { onMounted, ref } from "vue";
 const customTaleStore = useCustomTaleStore();
 import LoadingModal from "@/components/customTale/loadingModal.vue";
@@ -76,7 +75,6 @@ import router from "@/router";
 
 const loading = ref(false);
 const customTale = ref({
-  userId: "3",
   title: "",
   content: customTaleStore.customTaleText.gptMessage,
   public: true,
@@ -128,11 +126,12 @@ const nosave = function () {
   padding: 10px;
 }
 .play {
-  width: 70vw;
-  border: 5px solid #cee8e8;
-  margin: 20px 0px 30px 0px;
+  background-color: white;
   border-radius: 50px;
-  background-color: #f5f5f5;
+  margin-top: 35px;
+  padding: 40px 60px;
+  border: 5px solid #cee8e8;
+  width: 80vw;
 }
 .container {
   display: flex;
