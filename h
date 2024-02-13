@@ -1,0 +1,1310 @@
+[33mcommit cea45d1fa79e7837f1d1472c1ebf188157bbf693[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackend/feature/taledetail1[m[33m, [m[1;31morigin/backend/feature/taledetail1[m[33m)[m
+Merge: b022455 b62352b
+Author: 우지민 <0542say@naver.com>
+Date:   Sun Feb 11 22:27:32 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/taledetail1
+    
+    Change-Id: Ib1b74c5c24a3101bf56d73808c2ac3c09d1303ef
+
+[33mcommit b022455d72f338ee7b39f0d1794adc838625a858[m
+Author: 우지민 <0542say@naver.com>
+Date:   Sun Feb 11 22:26:30 2024 +0900
+
+    Merge file
+    
+    Change-Id: I1ae08f5c789b022bfbf20682afc1d1b6dd95d765
+
+[33mcommit b62352b6be66fa984c1273c761ab2a7b33cc2357[m
+Author: dykim <kdayun@daum.net>
+Date:   Sun Feb 11 01:29:09 2024 +0900
+
+    Fix: error logic
+    
+    Change-Id: I95b64d490e29e9381e2064634f25e6f98944af77
+
+[33mcommit 85f7ab940d81d0c42720950d9a03023b95ebc175[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Sat Feb 10 17:08:11 2024 +0900
+
+    Fix: User Error
+    
+    Change-Id: I4fbfe719f1a03c5d5db138250ab0321f454ee575
+
+[33mcommit 194c1ab8da93136947424a93e5da19942dbebcd7[m
+Merge: c06272e d9237cb
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sat Feb 10 12:01:03 2024 +0900
+
+    Merge: user
+    
+    Change-Id: I05ed701721774f88901176af158873a559d0fb0a
+
+[33mcommit c06272efffb7e3dadce156ad29fae11a14300b16[m
+Merge: 5c8569c 0d19a6a
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sat Feb 10 11:49:00 2024 +0900
+
+    Merge: Tale
+    
+    Change-Id: Ic1612b9277772b15f487238a6e8d9be5c5df3c06
+
+[33mcommit 5c8569c8f85803490024fd037feb64a7b8f4cac9[m
+Merge: 3a56e2f 4881bf2
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sat Feb 10 11:44:57 2024 +0900
+
+    Merge: custom
+    
+    Change-Id: Iea9270fba5bb9f1deb73515229355a966d3bd65d
+
+[33mcommit 0d19a6a7314620e59ea0e6d7be16f13e496f87f6[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sat Feb 10 10:55:51 2024 +0900
+
+    Fix: TaleController
+    
+    Change-Id: I2e94e6aab4a5e1a75cff0f2765357166e6eea5e5
+
+[33mcommit d9237cb154485948ee4d993e184a50b7e1ac65f9[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Sat Feb 10 05:52:51 2024 +0900
+
+    Feat: 자동로그인
+    
+    Change-Id: Ic171035eb66be94c1872635fcf09894a5cbd3e18
+
+[33mcommit 3a56e2fabfa47e8b2269d18d6c6f2cea4aca2f3b[m
+Author: dykim <kdayun@daum.net>
+Date:   Sat Feb 10 00:49:12 2024 +0900
+
+    Fix: edit method name
+    
+    Change-Id: I6d67913a3665218f32caecfbaab3d0f01a2ed4d3
+
+[33mcommit 4881bf241019c040ff6af4bf1433033708d31d66[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Sat Feb 10 00:26:46 2024 +0900
+
+    Fix: customTaleService Paging flipped 추가
+    
+    Change-Id: Ie707edd76f4bdfdf88e07e9286e54211681db47f
+
+[33mcommit 730faca095335241c3cf8885bde7597b3ed52e8f[m
+Author: dykim <kdayun@daum.net>
+Date:   Fri Feb 9 22:24:27 2024 +0900
+
+    Feat: update likecnt
+    
+    Change-Id: I25f5f4a6421b43ad2584fb2e4f9925a72c7db09b
+
+[33mcommit 015a2abe77f56ab7a2b52fddaf5bd0a3167357cb[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Feb 9 11:37:11 2024 +0900
+
+    Remove: @CrossOrigin
+    
+    Change-Id: I39e0ba18b1024f467bcdfd0771d3959e571341ff
+
+[33mcommit e775edc4098e721bd923461b1bc1a81a003bc5f1[m
+Merge: 88c5013 0bbf264
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Thu Feb 8 12:53:03 2024 +0900
+
+    Merge: custom
+    
+    Change-Id: I06a8714c41802fae035156e7b78da78bbc363f43
+
+[33mcommit 88c501379343dafb191280ecadd1f8d12afd8bad[m
+Merge: 13a8d9e ae803d1
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Thu Feb 8 12:50:00 2024 +0900
+
+    Merge: user
+    
+    Change-Id: I45d376bda8ef3894d2cca5d250d5657855d3cdcd
+
+[33mcommit 0bbf26477f6b5e4e98b5fe4ed306240387b7e3d7[m[33m ([m[1;31morigin/backend/feature/customtale[m[33m)[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Thu Feb 8 10:31:02 2024 +0900
+
+    Fix: customTaleController read
+    
+    Change-Id: Ia878d66500a5afc264cee13213746a6abe45e51c
+
+[33mcommit 13a8d9e524114ab64f19089d9bf2084643279f2b[m[33m ([m[1;31morigin/backend/feature/gptconversation[m[33m)[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Thu Feb 8 10:25:37 2024 +0900
+
+    Add: 마지막 응답 서비스를 호출하는 putByeMessage 메소드 추가
+    
+    Change-Id: I8f50939d0178154c9ecdd37384b56da0a222e0c7
+
+[33mcommit ae803d12717e951561ae81647a0338a49880659c[m[33m ([m[1;31morigin/backend/feature/user[m[33m)[m
+Merge: 5bff032 b322ebb
+Author: ssafy04 <qpqpqp0102@naver.com>
+Date:   Thu Feb 8 01:25:18 2024 +0000
+
+    Merge "Fix: 비밀번호 조회 제외" into backend/feature/user
+
+[33mcommit 7555667f01d10f9da28e0d2910b61b0402fb846e[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Thu Feb 8 10:24:58 2024 +0900
+
+    Add: 대화 끝맺을 때 호출하는 sendBye method 추가
+    
+    Change-Id: Ia86b60428ff3d1952a4e987ce9b44ece12b70eec
+
+[33mcommit 81fed0519fdf4616b50a625696917b3f997c8b01[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Thu Feb 8 10:24:03 2024 +0900
+
+    Remove: ChatCount 변수 제거. GPT가 인식하지 않음
+    
+    Change-Id: I9b4a375cf88a0cb4ea9307d5dbe0b85355c499d0
+
+[33mcommit b322ebbda8c960916c0c9f96466ce82f7c0ac69a[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Thu Feb 8 10:19:22 2024 +0900
+
+    Fix: 비밀번호 조회 제외
+    
+    Change-Id: I93db3a2e7076b3c338593a34868a45211b173f82
+
+[33mcommit eab718db900eccc8e1cc8215f4816c6916d10c15[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Wed Feb 7 15:35:17 2024 +0900
+
+    Add: 추가 userName. GPT가 대화하는 상대방의 이름을 인식하기 위함
+    
+    Change-Id: I7b7d56c0f508ed36ba32c42debfa035292fabebb
+
+[33mcommit c46b07d7bc5385ea62ada52fa9f01fd3d98822f9[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Wed Feb 7 15:35:01 2024 +0900
+
+    Add: 추가 프롬프트 엔지니어링 스크립트, CORS 에러 해결을 위해 annotation 제거
+    
+    Change-Id: I040949e84f26738ca0be76e170cf02ee38ba4f7a
+
+[33mcommit 5bff0320477860f435ba77a84143d9b95ff0312d[m
+Merge: 43e019b e46f224
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Wed Feb 7 14:20:05 2024 +0900
+
+    Merge: taledetail2
+    
+    Change-Id: I8be33748e469bfc3671ed676b879c411165344e6
+
+[33mcommit 43e019b9511f9aa42201f3cbc379d34bf37db662[m
+Merge: a2b4907 03cd449
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Wed Feb 7 14:16:40 2024 +0900
+
+    Merge: customtale
+    
+    Change-Id: Ib196c61b09d07c8fec4717fdc79bab90be920936
+
+[33mcommit a2b49076e36b6c4a8de590a1cbcd82be184a2f68[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Wed Feb 7 13:08:17 2024 +0900
+
+    Fix: customTale 내가만든동화 Mapping 수정
+    
+    Change-Id: I92dbc3e6916b37d2493aaff0ce1f21279f5aa853
+
+[33mcommit 03cd44905d6c27a32e50a82080b74f0a34a7bf0d[m
+Author: 우지민 <0542say@naver.com>
+Date:   Wed Feb 7 10:07:52 2024 +0900
+
+    Fix: TosiBackApplication.java
+    
+    Change-Id: I7a75b60a9a3cba4fc1ebddae5620962e2f1cbdd2
+
+[33mcommit d78ed51a684a0a790d8061cf33ac74350a54a21e[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Wed Feb 7 08:57:30 2024 +0900
+
+    Fix: CustsomTaleController, generateCustomTaleController Crossorigin 어노테이션 제거
+    
+    Change-Id: I51567166d3c500ad75dbb498a30e83a22814f542
+
+[33mcommit e46f224b211050bb47cf05fb2a9b04dc0b184897[m[33m ([m[1;31morigin/backend/feature/taledetail2[m[33m)[m
+Author: dykim <kdayun@daum.net>
+Date:   Wed Feb 7 00:36:07 2024 +0900
+
+    Feat: add flipped
+    
+    Change-Id: I72d4910dcbb236d66e3ccc1efdc7f6b8cb207825
+
+[33mcommit 58c16926af1490382231e4623420d3510b1c9cc9[m
+Merge: 2d4eaa7 cfaabe8
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Wed Feb 7 00:03:29 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/customtale
+    
+    Change-Id: Id442f1c8d6c803ce81bd26abefda39d181529842
+
+[33mcommit 2d4eaa781de95d0b83440f4944ed751b7a3d5649[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Wed Feb 7 00:02:45 2024 +0900
+
+    Feat: customTale Paging
+    
+    Change-Id: I9b957f88e070bcb9aa8a051fadcc4c03f868ef42
+
+[33mcommit cfaabe8239dabbf5592c5666d81e6d28220dd322[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Tue Feb 6 14:49:02 2024 +0900
+
+    Add User
+    
+    Change-Id: I3e4459bb73f8ba30f5348c314ce3223de1f4c8e3
+
+[33mcommit e52123ef0a803a330670e87af4cb9da02bbefcc9[m
+Merge: 055b5ad 053a705
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Tue Feb 6 11:27:10 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/S10P12B306 into backend/feature/user
+    
+    Change-Id: Iebfa7ba59b09087d54243bbdb33bd32a5aac0ff5
+
+[33mcommit 053a705da2ba9ea836de550da1b766e8227c3968[m[33m ([m[1;32mbackend/develop[m[33m)[m
+Merge: 46e9b83 060bad6
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:49:30 2024 +0900
+
+    Merge branch 'backend/feature/customtale' into backend/develop
+    Merge: cumstomtale -> develop
+    
+    Change-Id: I51f6aed039b335dc02664848b222e5b1d37e81ff
+
+[33mcommit 060bad6fd053bd8b85cc1cf5dc575844e437a37b[m
+Merge: 88010c3 daedcac
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:48:44 2024 +0900
+
+    Merge: taledetail2
+    
+    Change-Id: I96d01d5fedf883f917d93f79a2d02d5a16ddd74c
+
+[33mcommit 46e9b8361f6c105bfefb04c914ddd8457fc15339[m
+Merge: 05d0236 7410e6e
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:42:30 2024 +0900
+
+    Merge branch 'backend/feature/customtale' into backend/develop
+    Merge: cumstomtale -> develop
+    
+    Change-Id: Id4b6948a4d513b4e216480273de83ba7bfca43c3
+
+[33mcommit 7410e6e1dcc8240f1158478584d0769092439eec[m
+Merge: c74e92d af8dd38
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:40:08 2024 +0900
+
+    Merge branch 'backend/feature/customtale' into backend/develop
+    Merge: cumstomtale -> develop
+    
+    Change-Id: Ide8a4287ac95d803d0e33f334e46ebf6c4b79b05
+
+[33mcommit 05d0236afca40c28c8041b6549ce5d9e054ab105[m
+Merge: a4bcef1 88010c3
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:34:51 2024 +0900
+
+    Resolve: Conflict taledetail2
+    
+    Change-Id: I3907e0d78e5cb2602f7dbb987e45be3777123aa0
+
+[33mcommit 88010c3941a50a19661b95652e51bc314bd05af9[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:33:13 2024 +0900
+
+    Resolve: Conflict kiwi.jar
+    
+    Change-Id: Iaab7103cd0bdceb3a69b62b80af775edf2f963d9
+
+[33mcommit a4bcef1e2ef770d3c6be1f40f3187576942c3b88[m
+Merge: 4b6f0eb c74e92d
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:30:06 2024 +0900
+
+    Feat: Custom paging
+    
+    Change-Id: I005fbd98f00be721a41d619f4742867179da49f9
+
+[33mcommit c74e92d37784ed97b92cff217a5f6bce32e8ee59[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:26:03 2024 +0900
+
+    Feat: Custom Paging
+    
+    Change-Id: I7bcafd074448638144004f077b474bafd9c63c53
+
+[33mcommit 4b6f0eb6e7a35b0f7d031822a5de4c06941dd406[m
+Merge: d4a8434 1852aa4
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:19:50 2024 +0900
+
+    Resolve Conflict
+    
+    Change-Id: I3e628c53bf27f22f4ea50833ee555b43e0f8a292
+
+[33mcommit d4a843411b1c15ea99d30ea40461ab63b4d50efd[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Feb 6 10:16:30 2024 +0900
+
+    Resolve Conflict: kiwi.jar
+    
+    Change-Id: I00323b0657d4e0bee29525c2efb95d7acb09d760
+
+[33mcommit daedcac78adfcde990d23090620c3b8f7436ff2e[m
+Author: dykim <kdayun@daum.net>
+Date:   Mon Feb 5 20:25:17 2024 +0900
+
+    Fix: NameChange
+    
+    Change-Id: Ifabcdc788c7ae2a65d69d04385d6bd0584f36a34
+
+[33mcommit af8dd38c29132f08825580767f2cd8445ef29d96[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Mon Feb 5 17:44:15 2024 +0900
+
+    Feat: customTale paging 기능 추가
+    
+    Change-Id: Ia7eef3f67be90a0de70a8d58b7ab07293e0be7eb
+
+[33mcommit 1852aa4a9e6dd34cc42bf66cc6257e575003283d[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Feb 5 17:00:33 2024 +0900
+
+    Remove: 수정 docker 관련 option
+    
+    Change-Id: If1b11567e3929a1a3fb7ea91dbfb79d99cdc59fc
+
+[33mcommit 4f8b74ec302f9c73d007c7d63eb04ca68e5da8f3[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Feb 5 15:51:14 2024 +0900
+
+    Add: 추가 백엔드 ì컨테이너 동시 관리 파일
+    
+    Change-Id: I49fb51bd00a747da9ad63b840d003496409163ab
+
+[33mcommit 8219a0f888f3b56e376918382ae3b6cc94f76c45[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Feb 5 15:48:08 2024 +0900
+
+    Add: 추가 dependency
+    
+    Change-Id: I38b8d404444c3e1a1e216affa80ba24014415ec4
+
+[33mcommit 055b5ad3537498d6bdf04b13fba9acef608d5ecd[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Sun Feb 4 21:17:48 2024 +0900
+
+    Feat: User, Jwt 전체
+    
+    Change-Id: I64137f3b7fe9dd0dcaba5fef2b939b27bb41cd0a
+
+[33mcommit 65e1528cf3f8c10c7a6b00203fe8bbdb74f319d0[m
+Merge: 968074a 28b771e
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Feb 4 17:28:40 2024 +0900
+
+    Fix: kiwi dependency
+    
+    Change-Id: I52391f2f73311c35dcff81ba969c8a57336aa125
+
+[33mcommit 968074a14f187b37ef922989aee62786966ee39e[m
+Merge: f9d15b6 ac0e28a
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Feb 4 17:24:42 2024 +0900
+
+    Remove: unnecessary files
+    
+    Change-Id: Ie2d4d6a4360a5c0386efdcc91a30247f9619bfa7
+
+[33mcommit f9d15b68e7003a1155f3cf5e1859f888bf31a431[m
+Merge: 99f26af 79dae5a
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Feb 4 17:22:40 2024 +0900
+
+    Remove: unnecessary files
+    
+    Change-Id: I41fd8c697aef852e2211bfae97a8e9eac1693aa2
+
+[33mcommit 99f26afa428607b9e6e687f1710ad132cb664ae2[m
+Merge: 86ff149 b790f14
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Feb 4 17:15:32 2024 +0900
+
+    Update: Dockerfile
+    
+    Change-Id: I2d21cb983dbbaae70caa0434c7c80e23dabbfb3a
+
+[33mcommit 28b771ee6c82fafa3babadd2750f1e296887b7a9[m[33m ([m[1;31morigin/backend/feature/tale[m[33m)[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Feb 4 16:47:47 2024 +0900
+
+    Fix: kiwi dependency
+    
+    Change-Id: Ie7e5bcd7ad659d306b8ccd96933be5469ff46884
+
+[33mcommit 79dae5aeeb6a72b87145e2200227aea644b095c4[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Sun Feb 4 02:24:46 2024 +0900
+
+    Feat: S3 커스텀 이미지 url S3업로드, SwaggerConfig 수정
+    
+    Change-Id: I3cd4e0d709af73292dc932af8d0df525de397510
+
+[33mcommit b790f147e18625b6f9860ebdec2ed2d3ad9cab2f[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Fri Feb 2 12:53:03 2024 +0900
+
+    Add: 추가 jar build시 필요한 Main class 설정 파일
+    
+    Change-Id: I723e63b8677a0978bf09f42a3de71ba41b7dfb28
+
+[33mcommit e21b1564995b2ba935df385376d8a6cd1e490382[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Fri Feb 2 12:52:32 2024 +0900
+
+    Updated: 변경 Dockerfile base image version
+    
+    Change-Id: I5aa2d2576a2042d794621885e38080ec4033842c
+
+[33mcommit ac0e28a73d9d58fdb9f6f5d1bc88724742249851[m
+Author: 우지민 <0542say@naver.com>
+Date:   Fri Feb 2 10:34:36 2024 +0900
+
+    backend/feature 파일정리
+    
+    Change-Id: Ic0b76ed4a4d436607fa5b202f8b674d26ac6f710
+
+[33mcommit 86ff149eb13add50d432b2fa6c64f707abd0e40f[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Feb 2 07:05:33 2024 +0900
+
+    Remove: Front Files
+    
+    Change-Id: Ia37aadf5d2ce83a42a79abe49cad58ead5c9655f
+
+[33mcommit 9754d1999bc8e9b5ce70b53a6d857cb40e9ffa26[m
+Merge: 6565b7e 690bd8b
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Feb 2 06:48:06 2024 +0900
+
+    Fix: TaleContorller, ServiceImpl
+    
+    Change-Id: I4d62b90c9fdfcea8a1040a2386fab25df63fcf41
+
+[33mcommit 6565b7ed9fb6191dee9537fea86ac3ebe4244a80[m
+Merge: 0b26dcd 9a34b5e
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Feb 2 06:39:15 2024 +0900
+
+    Fix: Tald Reposotiry -> Dto
+    
+    Change-Id: Id4672b875bbe5c4e23cec9303ff6ad630e9b9594
+
+[33mcommit 0b26dcdbc5f8693480c030248c77bde48b9294e2[m
+Merge: 2ce44dc 39baf2c
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Feb 2 06:34:17 2024 +0900
+
+    Fix: application.properties
+    
+    Change-Id: I468553de060568a981bd8ef9dea43e71c6c26ed7
+
+[33mcommit 39baf2caf809872a112405fc84c8894c983bba1a[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Feb 2 05:55:24 2024 +0900
+
+    Design: CSS, nested routing
+    
+    Change-Id: I49fb94a98b949c27fed8530b3095b10fde56a983
+
+[33mcommit 690bd8bd395fa1dc4c3772d12d9cbe048e9d283d[m
+Author: dykim <kdayun@daum.net>
+Date:   Thu Feb 1 17:46:59 2024 +0900
+
+    Refactor: Refactor TaleDetail
+    
+    Change-Id: I863251745b36ec1c4278243936f54ce03d46eb35
+
+[33mcommit 9a34b5e1bbd28c8711d19c035b433872f3b5b14a[m
+Merge: 279ceb6 e729581
+Author: 우지민 <0542say@naver.com>
+Date:   Thu Feb 1 16:56:38 2024 +0900
+
+    Chore: 머지용 커밋
+    
+    Change-Id: I26affbe90d6946aa900602c3c203e728e9fc5bbe
+
+[33mcommit 11b0eb702217287bfddbe1a65bf5e68a087f4a37[m
+Merge: 2cffb1e e729581
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Thu Feb 1 11:08:35 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/tale
+    
+    Change-Id: Ic2d4052a76091e6e6f7999529c09acc8b82bdc45
+
+[33mcommit 2ce44dc72aa99f829c174f02c6429950974d2a6b[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Thu Feb 1 11:06:56 2024 +0900
+
+    Add: 추가 gpt 대화 맥락 이해 기능
+    
+    Change-Id: I9241cb2c5035fd4e1eddd75951b846e520c0c525
+
+[33mcommit f4ade194269c190f2a7f5be1b846664317c49e47[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Thu Feb 1 11:04:25 2024 +0900
+
+    Fix: 고침 application.properties 충돌
+    
+    Change-Id: I0d3b6ebcc34d00ced8a152e2c891f46529213df8
+
+[33mcommit e7295810e57a7e89ec46bbec08ce593c7be3ebe8[m
+Merge: 4da18e3 1354b15
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Wed Jan 31 20:59:38 2024 +0900
+
+    Fix: pom.xml
+    
+    Change-Id: I03ef5311e4c29d56ded8a7cc6719b92ddd2871d5
+
+[33mcommit 4da18e3807cc526a0bbe873b4711446ea5b900d8[m
+Merge: ef49fd0 324d687
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Wed Jan 31 20:44:09 2024 +0900
+
+    Add: TaleDatail
+    
+    Change-Id: I1f5579f0310ed274d87156e1a786965b2495e51c
+
+[33mcommit 2cffb1efe7d77015be512c858aeaeb565916f960[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Wed Jan 31 16:09:47 2024 +0900
+
+    Remove: testtest.txt
+    
+    Change-Id: I275e312fa7d9316b6fad72fbdf6d20ff66575d9f
+
+[33mcommit 279ceb6332ac109fb14d69274c2550c1bb2f8321[m
+Author: 우지민 <0542say@naver.com>
+Date:   Wed Jan 31 15:51:45 2024 +0900
+
+    Feat: Add TTS Controller
+    
+    Change-Id: Ibf1ce8ee174c89ebf08ffc91b81eb5b0440fd554
+
+[33mcommit 7cd507375b2fd029d6c4c9b38fc21d2e9991a2eb[m
+Author: 우지민 <0542say@naver.com>
+Date:   Wed Jan 31 15:51:08 2024 +0900
+
+    Feat: Add TTS Service
+    
+    Change-Id: Ib49bca39308ddddef05483b7eabc7c459323b0ec
+
+[33mcommit 9a760f492d9c646d130b3af68d8e65513eab1b7f[m
+Author: 우지민 <0542say@naver.com>
+Date:   Wed Jan 31 15:50:32 2024 +0900
+
+    Feat: Add TTS DTO
+    
+    Change-Id: I6115f2faea1e81efad10a965920f7520a8081373
+
+[33mcommit 2c1258a116f3c4e640b1c0b6fedadf089c702937[m
+Author: 우지민 <0542say@naver.com>
+Date:   Wed Jan 31 15:46:22 2024 +0900
+
+    Remove: 코드 정리
+    
+    Change-Id: Ic889c10bfba89530ffab00716914a3560dab1a6f
+
+[33mcommit 1354b159d855cea86cb9b43ef0e332b78e9f4bda[m
+Merge: bca1a30 3680bed
+Author: ssafy03 <kdayun@daum.net>
+Date:   Wed Jan 31 01:59:01 2024 +0000
+
+    Merge "Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/taledetail2" into backend/feature/taledetail2
+
+[33mcommit 3680bed8c76037f89c4d74def6c30e51354562f0[m
+Merge: bca1a30 ef49fd0
+Author: dykim <kdayun@daum.net>
+Date:   Wed Jan 31 10:57:40 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/taledetail2
+    
+    Change-Id: I240a0a44f8393acf4e05a0cb9d56d84ccf1248b3
+
+[33mcommit ef49fd02539a2e6a3e20b9f20b3724402afab9c2[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Jan 30 21:04:20 2024 +0900
+
+    Remove: testtest.txt
+    
+    Change-Id: Ief863190f8df76c755004c3e9e60a7078dcdde84
+
+[33mcommit bca1a3015f0cda4de5e54f43f85aebc346618df8[m
+Author: dykim <kdayun@daum.net>
+Date:   Tue Jan 30 16:14:05 2024 +0900
+
+    Fix: merge conflict
+    
+    Change-Id: Ie2c1f19c00d57981473ab5e76570976b23fbf919
+
+[33mcommit 92087328944661cd2fbcdfca21c6598d21e12b9f[m
+Merge: 4cb3563 3efacd0
+Author: dykim <kdayun@daum.net>
+Date:   Tue Jan 30 15:47:53 2024 +0900
+
+    Fix: Merge
+    
+    Change-Id: I69eac0806f1118429040235786c5e2bbce1583b8
+
+[33mcommit 3efacd05347bdf65d70909153451972181a0ae79[m
+Merge: ce46400 6fc963f
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Jan 30 15:35:53 2024 +0900
+
+    Merge branch 'backend/feature/customtale' into backend/develop
+    
+    Change-Id: Ib29aa77b1353068fb9ed79b6156bf60fa8bf40a5
+
+[33mcommit ce464003a9e7e3af1a74ad219d4e3bcb285452a7[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Jan 30 15:13:19 2024 +0900
+
+    Restore: to 0129
+    
+    Change-Id: I12a3e9cd6e5cfc2afa5f67d19afac885222478d3
+
+[33mcommit 367f140c04b41574701b6e96338fe4819cd24573[m
+Merge: 3b3af5f f15397b
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Tue Jan 30 15:12:24 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/develop
+    
+    Change-Id: Iba50d80add0c7f9c1bb075a67d34f0c58f3fdfc1
+
+[33mcommit 6fc963f964dfec2e48791501bd261d0c93da415c[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Tue Jan 30 14:32:34 2024 +0900
+
+    Refactor: generateCustomTale rename
+    
+    Change-Id: Icbfe5b23d1d561cf789218d266523777b7c46cbf
+
+[33mcommit 4cb3563a48ea0eaf6367f0cb5ee6d0aef209f398[m
+Merge: 765d88a 324d687
+Author: dykim <kdayun@daum.net>
+Date:   Tue Jan 30 14:19:51 2024 +0900
+
+    Fix: merge
+    
+    Change-Id: I1d96ea9332bb1e75b471bce7be47d695728ea379
+
+[33mcommit 765d88a16b431da3cf51c78bb807241761a9ddbe[m
+Author: dykim <kdayun@daum.net>
+Date:   Tue Jan 30 13:25:39 2024 +0900
+
+    Test: test
+    
+    Change-Id: I3c542e77821f7762157485cb22eabfd3e136b3fd
+
+[33mcommit 95ac0a2ddf922fc43d02d5803b8e6b8549f31360[m
+Merge: b8a758f 595b3b7
+Author: dykim <kdayun@daum.net>
+Date:   Tue Jan 30 13:11:37 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/taledetail2
+    
+    Change-Id: Iedc188db869211714a34556726b736a2fc5d4469
+
+[33mcommit b8a758ffc6acd06249f460c69f7c529075d70609[m
+Author: dykim <kdayun@daum.net>
+Date:   Tue Jan 30 13:09:06 2024 +0900
+
+    Feat: NameChange
+    
+    Change-Id: I556e634868ec0131d91ce1b657ede2146054ad54
+
+[33mcommit 37d10567ee81b7b4d09bb264b35ce908b85a806b[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Tue Jan 30 13:03:08 2024 +0900
+
+    Feat: customTale controller
+    
+    Change-Id: Idd76587e71fe6e1b33d9ab5dec37f1d06269807d
+
+[33mcommit bb61e66b09aff9975daffa58bdd244ea4c25a77f[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Tue Jan 30 12:56:33 2024 +0900
+
+    Feat: customTale back
+    
+    Change-Id: Ibe46324ef7147a3953255cf12e9d0406c4f056d4
+
+[33mcommit f15397ba2276d5ebb9cb15a626f40429dac1b6d3[m
+Merge: 7d27914 595b3b7
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Tue Jan 30 10:45:53 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/S10P12B306 into backend/feature/user
+    
+    Change-Id: Ie66487e28fa09e76c8144a556c2873f677911f87
+
+[33mcommit 3b3af5f3b1a3d59f220855c4e1b176a0c0868919[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Mon Jan 29 17:09:57 2024 +0900
+
+    Refactor: 정렬 관련 코드 삭제 -> Vue에서 구현
+    
+    Change-Id: I4f8c1054c99a0ae574f8afdbac7dd03bb941f7ac
+
+[33mcommit 595b3b742938d07ee83f6ed48fa3a9aa0aa27762[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Jan 29 14:15:30 2024 +0900
+
+    Feat: 추가 등장인물과의 대화 기능
+    
+    Change-Id: I53a31f974e803ba0fe3998d040dda27a6a5fd679
+
+[33mcommit fc9ff197f16b34e447080709aefd8c50cd5cb0bc[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Jan 29 14:14:35 2024 +0900
+
+    Add: 추가 Swagger Config
+    
+    Change-Id: I5c6e542757a03a46b9c661bb0ee601bb496a47e2
+
+[33mcommit 65ceb47a30b52b79e19b093777797cd49d746b05[m
+Merge: c76e9db a6c4180
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Jan 29 14:01:38 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/gptconversation
+    
+    Change-Id: I16558b3a3cd7e9626b6248a7007a99ecda04bb23
+
+[33mcommit 7d27914b4bcae1abcfd14f437b9255d218638510[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Mon Jan 29 13:21:44 2024 +0900
+
+    TEST
+    
+    Change-Id: I30457cc308e1d14dfe2adce8fd7c6656397ad9bb
+
+[33mcommit 87759fe06be056e1a432682f1aac09b322d4d025[m
+Merge: 452ed2b a6c4180
+Author: dykim <kdayun@daum.net>
+Date:   Mon Jan 29 12:49:36 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/taledetail2
+    
+    Change-Id: I9b41341ae3bcf258a34f45ee731745587e1aa058
+
+[33mcommit 324d687988fb085d8e1927f98c9110c2450fa5cc[m
+Merge: 794daed 452ed2b
+Author: ssafy05 <ztjdwnz@naver.com>
+Date:   Mon Jan 29 03:45:48 2024 +0000
+
+    Merge "test" into backend/feature/taledetail2
+
+[33mcommit 794daed8c73cccc6e474fd49a18f91aee05ab712[m
+Merge: 1a05645 92e60f1
+Author: ssafy05 <ztjdwnz@naver.com>
+Date:   Mon Jan 29 03:45:35 2024 +0000
+
+    Merge "test" into backend/feature/taledetail2
+
+[33mcommit 452ed2b4858a966dbdad8c4a19ae046a8a1f5ba7[m
+Author: dykim <kdayun@daum.net>
+Date:   Mon Jan 29 12:41:44 2024 +0900
+
+    test
+    
+    Change-Id: I949c3716d61835cd8a950efce9ced8d148802ec7
+
+[33mcommit 92e60f1b644746329b817b8fd105ca6b0d1a4a1f[m
+Author: dykim <kdayun@daum.net>
+Date:   Mon Jan 29 11:24:58 2024 +0900
+
+    test
+    
+    Change-Id: I389f6ffe7815f2fb0f4a659da2eaeaca3d981c44
+
+[33mcommit a6c41801e3205ad79838afb541653f81c6b700c7[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Mon Jan 29 10:49:53 2024 +0900
+
+    Fix: delete front files
+    
+    Change-Id: I4b81ebedf8ab823ed1049e3f9e2a6a1560587e72
+
+[33mcommit c76e9db057a1054174d56fbcc57fa1422c35d710[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Jan 29 10:30:51 2024 +0900
+
+    삼송빵집
+    
+    Change-Id: I521f83ce03baf234dc0f1b2ed518c4ae9122b7f4
+
+[33mcommit 48dcc1b9380847d9319ab24381ff499c1744814a[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Jan 29 10:23:51 2024 +0900
+
+    :cat:
+    
+    Change-Id: Ie0017ee12f02b82f69b182f29d45e04b548d9564
+
+[33mcommit 45ab4623a55869523520772b969123ff861009ad[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Jan 29 10:21:57 2024 +0900
+
+    :donut:
+    
+    Change-Id: I744c813de890c331cc462c134741888c92d06138
+
+[33mcommit 059d2ecd560d12de68b2d3a0f3dea7057f063088[m
+Author: azin Lee <nuestiloveyou@gmail.com>
+Date:   Mon Jan 29 10:12:36 2024 +0900
+
+    :bulb:
+    
+    Change-Id: If90f64cc856fe997d2151ec1e0a818d43f5868f8
+
+[33mcommit e09502ceab295ccee85140698f5beab3cec7644c[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Mon Jan 29 10:13:37 2024 +0900
+
+    test
+
+[33mcommit 44bcb508aa84b0a56562ab223825b553e224184c[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Mon Jan 29 10:11:44 2024 +0900
+
+    test
+
+[33mcommit 3910f490dfb5f9b9caa86fdc5d33faabbe9006b5[m
+Merge: 40bfcdc dfcf263
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Jan 28 20:14:37 2024 +0900
+
+    Resolve merge conflict in banner.txt
+    
+    Change-Id: I0bd70f9a0e34cc7861e17b2e80262347898bf69b
+
+[33mcommit 40bfcdc3088eac0321cbc1ecb92072a22c3ee165[m
+Merge: f9aa1f6 1c04cbc
+Author: Administrator <admin@example.com>
+Date:   Sun Jan 28 11:04:12 2024 +0000
+
+    Merge "Merge branch 'backend/feature/tale' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/tale" into backend/feature/tale
+
+[33mcommit f9aa1f61268437f949c212a65c91fd5235ddcd4d[m
+Merge: 196fb64 d46531a
+Author: Administrator <admin@example.com>
+Date:   Sun Jan 28 11:03:52 2024 +0000
+
+    Merge "Error Test" into backend/feature/tale
+
+[33mcommit 1c04cbc886f05b837685398840611ea55ed6e22c[m
+Merge: d46531a 196fb64
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Jan 28 20:01:47 2024 +0900
+
+    Merge branch 'backend/feature/tale' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/tale
+    
+    Change-Id: I28fdeeecbb075f0ae9bb1c28150e2c3028f4d3ea
+
+[33mcommit d46531acbef7b6e7b8b265ec0cf7f60ef554c966[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Jan 28 20:00:35 2024 +0900
+
+    Error Test
+    
+    Change-Id: I022fac2a38d273e1f12f4d16ce8ad8ea05f37cfc
+
+[33mcommit dfcf263396e23e9cde02bc627107b0d039651b0e[m
+Merge: 59f6552 564a36b
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Sun Jan 28 19:53:39 2024 +0900
+
+    Merge branch 'backend/develop' of https://i10b306.p.ssafy.io:8989/a/S10P12B306 into backend/feature/customtale
+    
+    Change-Id: I7ab1c353a959b6479397a34c6eb73c755596b258
+
+[33mcommit 564a36b147d599217d2735283becbe017bf29d7b[m
+Merge: 71df380 73eb8d0
+Author: ssafy05 <ztjdwnz@naver.com>
+Date:   Sun Jan 28 10:31:59 2024 +0000
+
+    Merge "docs: Add Dockerfile" into backend/feature/taledetail1
+
+[33mcommit 59f6552113cc9fde82c5286a01a3a0a673b46c52[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Sun Jan 28 19:29:04 2024 +0900
+
+    feat:banner.txt
+    
+    Change-Id: I62ae2b802aee03d59fc593aeada4cb1ea461a64f
+
+[33mcommit 73eb8d073fcde017ca48301d02fa466168e8d1e9[m
+Author: 우지민 <0542say@naver.com>
+Date:   Sun Jan 28 18:18:26 2024 +0900
+
+    docs: Add Dockerfile
+    
+    Change-Id: I80f165608a0e4e646a9a610c0bf164aff8ee71e6
+
+[33mcommit 196fb647699901f42b072841c07543209094b8c9[m
+Merge: f863bed 5ef6054
+Author: ssafy02 <0542say@naver.com>
+Date:   Sun Jan 28 10:10:53 2024 +0000
+
+    Merge "Remove: test.txt" into backend/feature/tale
+
+[33mcommit 5ef6054b10217b6219f0dd6d3f5cf8c59a0c4ce2[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Jan 28 18:36:52 2024 +0900
+
+    Remove: test.txt
+    
+    Change-Id: Iabce93613f7e5a5f09c4cb6fd4c39960b6fb6e87
+
+[33mcommit f863bedc7ca8f165f0d421f25fb2662cc1d4c82a[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Jan 28 18:36:52 2024 +0900
+
+    Remove: test.txt
+    
+    Change-Id: Iabce93613f7e5a5f09c4cb6fd4c39960b6fb6e87
+
+[33mcommit 71df380f3c457464d16a7a5012dc31e6a26ec0d1[m
+Author: 우지민 <0542say@naver.com>
+Date:   Sun Jan 28 18:18:26 2024 +0900
+
+    docs: Add Dockerfile
+
+[33mcommit 55f1f5f84a65df89d2e13e5b545ba3938d01dda6[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Jan 28 18:00:24 2024 +0900
+
+    Docs: test.txt
+
+[33mcommit eade99f4cc6bff13ce48b26fbe93e4a0ab2d65da[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Sun Jan 28 17:16:29 2024 +0900
+
+    Feat: First upload to gerrit
+
+[33mcommit cd065f9c344c9ac573659bab014c1d9d2861a13f[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Jan 26 16:27:47 2024 +0900
+
+    Fix: pom.xml, application.properties
+
+[33mcommit c8368b974d977debb6a95c1adc5d50d1c63703a2[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Jan 26 11:14:35 2024 +0900
+
+    Fix: ãmodify tale REST API
+
+[33mcommit 3d3f490dc95d10578c155e0dbbd9e60bccfebdb1[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Thu Jan 25 23:02:22 2024 +0900
+
+    Fix: 고침 Tale REST API 전반
+
+[33mcommit 1a0564552cdf94c2d180cf368599c3dc33531229[m
+Author: dykim <kdayun@daum.net>
+Date:   Thu Jan 25 16:48:11 2024 +0900
+
+    initial setting
+
+[33mcommit 0ff16003cd52313c5a7d788dd28368b4f624b71e[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Mon Jan 22 22:56:29 2024 +0900
+
+    Docs: modify ERD.png
+
+[33mcommit 06cbb97879839bb7a5a79f98d4faec69b7d69f63[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Mon Jan 22 22:29:37 2024 +0900
+
+    Docs: modify 기획서, 메뉴구조도
+
+[33mcommit b2559bbfc51b48ad0fadbfe0265512a8112f7ec8[m
+Author: 양성주 <ztjdwnz@naver.com>
+Date:   Mon Jan 22 22:24:07 2024 +0900
+
+    Docs: modify 체크리스트, 시퀀스 다이어그램
+
+[33mcommit 362eb96863ab85aa4eac7095d3ebb2a91ad34ee1[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Mon Jan 22 14:18:05 2024 +0900
+
+    Docs: modify README
+
+[33mcommit ebf81db686ef5874ff35cbcdb9651a79fdc3a2a5[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Mon Jan 22 14:16:40 2024 +0900
+
+    Docs: modify README
+
+[33mcommit db0d8e434162dc750669e22c6f6b4bfdcba821cd[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Mon Jan 22 14:16:08 2024 +0900
+
+    Docs: modify README
+
+[33mcommit 3bf79ec13280c95517cdc209b36612b1b84fd9ce[m
+Merge: 27c0aca bb74771
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Mon Jan 22 14:03:49 2024 +0900
+
+    Merge branch 'woojin' into 'master'
+    
+    Woojin
+    
+    See merge request s10-webmobile2-sub2/S10P12B306!6
+
+[33mcommit bb747710af36f81d741a0baf7d90cb7ec3195dd3[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Mon Jan 22 13:50:50 2024 +0900
+
+    Docs: modify 메뉴구조도
+
+[33mcommit 855e79977e4085e586ba301d6036791b5913aa9a[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Mon Jan 22 11:08:05 2024 +0900
+
+    Docs: modify 기획서
+
+[33mcommit fc83de7b8f423663aaafce91fb728d0d5e95c60b[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Mon Jan 22 11:05:26 2024 +0900
+
+    Docs: modify 기능정의서
+
+[33mcommit 27c0aca213b86763bba0cd1859cc5250c6633396[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Fri Jan 19 20:43:43 2024 +0900
+
+    Update README.md
+
+[33mcommit 5d75e364df1c0f08d0d38abbfd42cc23e139220c[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Fri Jan 19 20:31:25 2024 +0900
+
+    Update README.md
+
+[33mcommit 78878c57e3fd40bfa9385adb8fa2d15e5b7f13c2[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Fri Jan 19 20:30:39 2024 +0900
+
+    Update README.md
+
+[33mcommit 156344c07e1d55a76d4d1a789b759fa7643a7dcc[m
+Merge: 943bbf5 c1c040f
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Jan 19 17:29:27 2024 +0900
+
+    Merge branch 'first' into 'master'
+    
+    first update
+    
+    See merge request s10-webmobile2-sub2/S10P12B306!5
+
+[33mcommit c1c040f0a4de5fbcbc62a9f752a3e6a64fc89e97[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Jan 19 17:29:10 2024 +0900
+
+    first update
+
+[33mcommit 943bbf52796a9c94105b20f9364c7cda31f04f99[m
+Merge: 644d290 598bf8b
+Author: 우지민 <0542say@naver.com>
+Date:   Fri Jan 19 16:22:49 2024 +0900
+
+    Merge branch 'master' of https://lab.ssafy.com/s10-webmobile2-sub2/S10P12B306
+
+[33mcommit 644d290a6cf839075f4fc9d8868f50a0678becdd[m
+Author: 우지민 <0542say@naver.com>
+Date:   Fri Jan 19 16:22:17 2024 +0900
+
+    vue 프론트 틀
+
+[33mcommit 598bf8b57260f8b11d2541abba8bdb1bc438357d[m
+Author: dykim <kdayun@daum.net>
+Date:   Fri Jan 19 16:13:48 2024 +0900
+
+    modify
+
+[33mcommit c3e601ec5f83ce735548ff233cfb813d65d443ee[m
+Author: 김다윤 <kdayun@daum.net>
+Date:   Fri Jan 19 16:06:42 2024 +0900
+
+    Update 산출물/Mockup.pdf
+
+[33mcommit 7dc59342bd10a0835ac49607afc88fc1ce3b0622[m
+Author: 김다윤 <kdayun@daum.net>
+Date:   Fri Jan 19 16:06:09 2024 +0900
+
+    Deleted Mockup.pdf
+
+[33mcommit 59d54c6b8be0118d3721f2d545221d4bbf1bd146[m
+Author: 김다윤 <kdayun@daum.net>
+Date:   Fri Jan 19 16:04:17 2024 +0900
+
+    Update Mockup.pdf
+
+[33mcommit c6ada4fbcae685cd729b259ab81cbee75b4f0677[m
+Author: 김다윤 <kdayun@daum.net>
+Date:   Fri Jan 19 16:02:04 2024 +0900
+
+    Delete Mockup.pdf
+
+[33mcommit d8bf1bc849c8c16560fab1d89c7e142ee6db7806[m
+Merge: 6ee05f5 6a153a6
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Jan 19 15:20:42 2024 +0900
+
+    Merge branch 'woojin' into 'master'
+    
+    Replace Mockup, Architecture
+    
+    See merge request s10-webmobile2-sub2/S10P12B306!4
+
+[33mcommit 6a153a6682484dd22de1821005854861cef42184[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Jan 19 15:19:59 2024 +0900
+
+    Replace Mockup, Architecture
+
+[33mcommit 6ee05f5c3a5ee5847d22418e01c74a106516ec70[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Fri Jan 19 14:50:17 2024 +0900
+
+    Replace 체크케이스.xlsx
+
+[33mcommit 11112f944a0cda00565ed509928b3dcc89ab6933[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Fri Jan 19 14:31:26 2024 +0900
+
+    Replace 체크케이스.xlsx
+
+[33mcommit 9b682f006ab4dc498f27eef6954bcfaa648f9059[m
+Merge: f13cfdc 275a059
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Jan 19 09:26:49 2024 +0900
+
+    Merge branch 'woojin' into 'master'
+    
+    Woojin
+    
+    See merge request s10-webmobile2-sub2/S10P12B306!3
+
+[33mcommit 275a05967fe0ad2b2911e82f786991efbdc4ecb9[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Fri Jan 19 09:21:32 2024 +0900
+
+    mockup, check case update
+
+[33mcommit 8ee13b188bda08bec89f8f2dcf3ff9961e66ba40[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Thu Jan 18 16:40:31 2024 +0900
+
+    ERD update
+
+[33mcommit f13cfdc5a9ece18facd36eb7e368a6d1543afee4[m
+Merge: 4099513 bd148fb
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Thu Jan 18 14:48:44 2024 +0900
+
+    Merge branch 'woojin' into 'master'
+    
+    산출물 업데이트
+    
+    See merge request s10-webmobile2-sub2/S10P12B306!2
+
+[33mcommit bd148fb857dca89a353d7e440381cafd31669463[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Thu Jan 18 14:47:50 2024 +0900
+
+    산출물 업데이트
+
+[33mcommit 409951300b5812226b1691a9dacd96875b205b8c[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Thu Jan 18 14:28:14 2024 +0900
+
+    Update README.md
+
+[33mcommit f6f73d65240b3ca2881877c73758be9bd822b512[m
+Author: 천우진 <qpqpqp0102@naver.com>
+Date:   Thu Jan 18 14:26:43 2024 +0900
+
+    Deleted 산출물/1주차/컨벤션/Git_Commit_Message_컨벤션.docx, 산출물/1주차/컨벤션/JS_코딩_컨벤션.docx, 산출물/1주차/컨벤션/Java_코딩_컨벤션.docx, 산출물/1주차/ERD.png, 산출물/1주차/기능명세서.xlsx, 산출물/1주차/기획서.docx, 산출물/1주차/메뉴구조도.png, 산출물/1주차/페르소나.docx
+
+[33mcommit ae4d4ef0ea54f8568826e23c0327a8b1ea4dc40e[m
+Author: 김소연 <summerfallwin@naver.com>
+Date:   Tue Jan 16 15:53:01 2024 +0900
+
+    Update README.md
+
+[33mcommit ba79f261c267bdace3b4451bca85bb6d8d28833b[m
+Author: 우지민 <0542say@naver.com>
+Date:   Tue Jan 16 13:26:32 2024 +0900
+
+    Update README.md
+
+[33mcommit ea18b61887d35b34b53dfb077b74f3c5171ec296[m
+Author: 우지민 <0542say@naver.com>
+Date:   Tue Jan 16 13:24:16 2024 +0900
+
+    Update README.md
+
+[33mcommit 799047e87f3b6ae5cb3d048611d74d100a1d1bd8[m
+Author: 우지민 <0542say@naver.com>
+Date:   Tue Jan 16 13:17:32 2024 +0900
+
+    1주차 산출물-컨벤션,ERD,기능명세서,기획서,메뉴구조도,페르소나
+
+[33mcommit 5f3d960b8133727e0bb6b65481f516d78692c8a8[m
+Author: 우지민 <0542say@naver.com>
+Date:   Tue Jan 16 13:14:37 2024 +0900
+
+    add README
+
+[33mcommit 7d46b4a1c3db7623a2d3f3b550f3fdfcb3d417bf[m
+Author: 우지민 <0542say@naver.com>
+Date:   Tue Jan 16 13:13:28 2024 +0900
+
+    Delete md
+
+[33mcommit c44e6ae24c6a4d76c939082a533d39b686642373[m
+Author: 우지민 <0542say@naver.com>
+Date:   Tue Jan 16 13:13:11 2024 +0900
+
+    add README
+
+[33mcommit c3a4a644c2082380a2272b9d77df28c9df135ccb[m
+Author: 우지민 <0542say@naver.com>
+Date:   Tue Jan 16 13:11:05 2024 +0900
+
+    add README
+
+[33mcommit 54adb1eb209995871396f0102753a17a21e9e558[m
+Author: 우지민 <0542say@naver.com>
+Date:   Tue Jan 16 13:08:44 2024 +0900
+
+    Readme
