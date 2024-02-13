@@ -154,7 +154,7 @@ onMounted(async () => {
     customTaleStore.getCustomTalesList(true),
     customTaleStore.getCustomTale(route.params.customTaleId),
   ]);
-  console.log(customTaleStore.customTalesList);
+  // console.log(customTaleStore.customTalesList);
   // 로드된 데이터를 기반으로 랜덤 아이템 선택
   const randomCustomTales = shuffleArray(customTaleStore.customTalesList).slice(
     0,
@@ -164,12 +164,23 @@ onMounted(async () => {
 });
 </script>
 <style scoped>
-.play {
-  width: 70vw;
+.infobox {
   border: 5px solid #cee8e8;
-  margin: 20px 0px 30px 0px;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  font-size: 20px;
+  width: 350px;
+  height: 370px;
+}
+.inputgroup{
+    padding: 10px;
+}
+.play {
+  background-color: white;
   border-radius: 50px;
-  background-color: #f5f5f5;
+  margin-top: 35px;
+  padding: 40px 0px;
+  border: 5px solid #cee8e8;
 }
 .container {
   display: flex;
@@ -179,28 +190,24 @@ onMounted(async () => {
 .bigtitle {
   text-decoration: none;
   display: inline-block;
-  box-shadow: inset 0 -20px 0 #d3e4ff;
+  box-shadow: inset 0 -20px 0 #d3e4ff;;
   font-size: 40px;
   /* margin: 30px 0px 30px 50px; */
   margin-bottom: 40px;
   line-height: 1;
   text-align: left;
 }
-.taleinfo{
-    display: flex;
+.taleinfo {
+  display: flex;
 }
 .title {
   margin: 30px 0px 25px 0px;
   font-size: 35px;
   width: 300px;
   text-align: center;
-  overflow: hidden; /* 글자가 넘칠 경우 숨김 처리 */
-  white-space: nowrap; /* 글자가 한 줄에 표시되도록 설정 */
-  text-overflow: ellipsis;
 }
 .leftImg {
   width: 400px;
-  height: 450px;
   background-image: url(@/assets/cover.png);
   background-size: cover;
   padding: 10px 10px 0px 57px;
@@ -235,6 +242,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* padding-right: 60px; */
 }
 .titleimg {
   width: 40px;
@@ -293,7 +301,7 @@ onMounted(async () => {
   /* padding: 10px 25px; */
   border: 2px solid #d0d0d0;
   border-radius: 10px;
-  background: transparent;
+  background: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;

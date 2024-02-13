@@ -17,7 +17,7 @@
             :class="{ flipped: page.flipped }"
             :style="{ zIndex: zIndexes[index] }"
           >
-            <div class="back" v-if="index > 1">
+            <div class="back" v-if="index >= 1">
               <img
                 :src="customTaleStore.customTale.thumbnail"
                 class="leftImg"
@@ -47,14 +47,21 @@
           </div>
         </div>
       </div>
-      <img
-        v-if="isPaused"
-        src="@/assets/playaudio.png"
-        @click="audioPause"
-        class="start"
-      />
-      <img v-else src="@/assets/pause.png" @click="audioPause" class="pause" />
-      <img src="@/assets/stop.png" class="stop" @click="replay()" />
+      <div class="stopbtn">
+        <img
+          v-if="isPaused"
+          src="@/assets/playaudio.png"
+          @click="audioPause"
+          class="start"
+        />
+        <img
+          v-else
+          src="@/assets/pause.png"
+          @click="audioPause"
+          class="pause"
+        />
+        <img src="@/assets/stop.png" class="stop" @click="replay()" />
+      </div>
     </div>
   </div>
   <div v-else>is Loading...</div>
@@ -213,8 +220,9 @@ const audioPause = () => {
   }
 };
 const replay = () => {
+  alert("동화를 멈출게요.");
   audioRef.value.pause();
-  router.push(`/customtale/${customTaleStore.customTale.customTaleId}`);
+  router.push({ name: "customTaleEnd" });
 };
 onMounted(async () => {
   try {
@@ -229,12 +237,11 @@ onMounted(async () => {
 
 <style scoped>
 .play {
-  width: 1180px;
-  height: 800px;
-  border: 5px solid #cee8e8;
-  margin: 20px 0px 30px 40px;
+  background-color: white;
   border-radius: 50px;
-  background-color: #f5f5f5;
+  margin-top: 35px;
+  padding: 40px 30px;
+  border: 5px solid #cee8e8;
 }
 .info {
   display: flex;
@@ -249,11 +256,6 @@ onMounted(async () => {
   line-height: 1;
   text-align: left;
 }
-.like {
-  width: 50px;
-  height: 50px;
-  margin: 50px 70px 0px 0px;
-}
 .cover {
   background-color: #fff;
   box-sizing: border-box;
@@ -263,17 +265,17 @@ onMounted(async () => {
 }
 .coverImg,
 .leftImg {
-  width: 450px;
+  width: 435px;
   height: 450px;
   margin-top: 25px;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .book {
   margin: 0px 0px 0px 45px;
   padding: 10px 10px 0px 25px;
   display: flex;
   background-color: #21364d;
-  width: 1050px;
+  width: 950px;
   height: 520px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
@@ -399,14 +401,19 @@ onMounted(async () => {
   width: 70px;
   height: 70px;
   cursor: pointer;
-  margin: 20px 0px 0px 530px;
+  margin-top: 20px;
 }
 .stop {
   width: 70px;
   height: 70px;
   cursor: pointer;
   margin-top: 20px;
+  margin-left: 20px;
   border-radius: 50%;
   border: 1px solid black;
+}
+.stopbtn{
+    display: flex;
+    justify-content: center;
 }
 </style>

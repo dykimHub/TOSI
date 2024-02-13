@@ -1,20 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <header>
-        <div class="headerContainer">
-            <div class="empty"></div>
-            <div class="logo-container">
-                <RouterLink to="/tosi">
-                    <img src="@/assets/logo.png" class="logo" alt="Logo" />
-                </RouterLink>
-            </div>
-            <div class="homeMenus">
-                <RouterLink to="/tosi">홈</RouterLink>
-                <a v-if="isLoggedIn" @click="logout">로그아웃</a>
-            </div>
-        </div>
-    </header>
-=======
   <header>
     <div class="headerContainer">
       <div class="empty"></div>
@@ -29,7 +13,6 @@
       </div>
     </div>
   </header>
->>>>>>> 2dbaaa2cf80aaeb187b40dafb0e9623980f53e94
 </template>
 
 <script setup>

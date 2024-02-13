@@ -7,11 +7,11 @@ import { useS3Store } from "@/stores/S3Store";
 export const useCustomTaleStore = defineStore("customtale", () => {
   //공개 중인 모든 커스텀동화
   const customTalesList = ref([]);
-  const getCustomTalesList = function (isPublic) {
+  const getCustomTalesList = function (opened) {
     axios
-      .get(`/customtale?isPublic=${isPublic}`,isPublic, { withCredentials: true })
+      .get(`/customtale?isPublic=${opened}`,opened, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         customTalesList.value = response.data;
         customTalesList.value.sort((a, b) => b.customTaleId - a.customTaleId);
       })
@@ -46,11 +46,11 @@ export const useCustomTaleStore = defineStore("customtale", () => {
 
   const S3Store = useS3Store();
   //등록
-  const insertCustomTale = function (customTale) {
-    axios.post(`/customtale`, customTale, { withCredentials: true }).then(() => {
+  const insertCustomTale = async function (customTale) {
+   await axios.post(`/customtale`, customTale, { withCredentials: true }).then(() => {
       // console.log(customTale.value);
       router.push({name:'customTaleList'})
-      alert("저장되었습니다.")
+      alert("동화가 저장되었어요.")
     });
   };
 
