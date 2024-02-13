@@ -10,8 +10,8 @@
           <option value="random">랜덤</option>
         </select>
       </div>
-      <button v-if="!deleteButton" @click="activateDeleteButton" class="deleteButton">삭제</button>
-      <button v-if="deleteButton" @click="deactivateDeleteButton" class="deleteButton">삭제 취소</button>
+      <button v-if="!deleteButton" @click="activateDeleteButton" class="modifyButton">편집</button>
+      <button v-if="deleteButton" @click="deactivateDeleteButton" class="modifyButton">편집 취소</button>
     </div>
     <div class="taleContainer">
       <ul v-for="favorite in currentPageBoardList" :key="favorite.taleId">
@@ -135,20 +135,23 @@ ul {
   position: relative;
 }
 
-.deleteButton {
-  background-color: #eee58a;
-  border: none;
-  color: white;
+.modifyButton {
   font-size: 16px;
   padding: 8px 16px;
   margin-left: 5px;
   margin-right: 49px;
   cursor: pointer;
-  border-radius: 4px;
+  border: 2px solid #d0d0d0;
+  border-radius: 10px;
+  background: transparent;
+  transition: all 0.3s ease;
+  display: inline-block;
+  box-shadow: 3px 3px 5px 0px #0002;
 }
 
-.deleteButton:hover {
-  background-color: #eee58a;
+.modifyButton:hover {
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
+
 }
 
 .topOfTaleList {
@@ -156,45 +159,20 @@ ul {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .taleContainer button {
   background-color: transparent;
-  /* 배경색을 투명하게 설정 */
   border: none;
-  /* 테두리 제거 */
   font-size: 20px;
-  /* 텍스트 크기 설정 */
   cursor: pointer;
-  /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
   position: absolute;
-  /* 버튼을 모달 안에서 절대 위치로 설정 */
   top: 10px;
-  /* 위쪽 여백 설정 */
   right: 10px;
-  /* 오른쪽 여백 설정 */
   color: rgb(0, 0, 0);
-  /* 텍스트 색상 설정 */
 }
-
-/* .taleContainer {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-} */
-
-/* .taleContainer {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-} */
 
 .taleContainer {
   display: flex;
@@ -214,13 +192,11 @@ ul {
 
 .talelistContainer {
   justify-content: center;
-  /* justify-content: space-around; */
   background-color: white;
-  border-radius: 20px;
+  border-radius: 50px;
   margin: 35px;
   padding-top: 40px;
   opacity: 0.95;
-  /* max-width: calc(100% - 70px); */
   border: 5px solid #cee8e8;
   width: 80vw;
 }
@@ -238,19 +214,11 @@ ul {
 
 .selecSort {
   display: flex;
-  /* flex-wrap: wrap;
-  flex-direction: column; */
   flex-direction: row;
   justify-content: center;
   margin: 1em;
   margin-left: auto;
 }
-/* 
-.topOfTaleList {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-} */
 
 a {
   text-decoration: none;
@@ -272,7 +240,6 @@ a {
  .pagination.pagination-rounded-flat .page-item {
      margin: 0 .30rem
  }
- 
 
  .pagination-success .page-item.active .page-link
   {

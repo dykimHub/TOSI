@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="update-form">
       <form action="" class="form" @submit.prevent="onsubmit">
         <div class="info-form">
@@ -8,13 +7,13 @@
             <input type="email" class="update-input" placeholder="" v-model="userInfo.email" readonly>
           </div>
           <div class="update-div">
-            <label class="update-label">Password</label>
+            <label class="update-label">비밀번호</label>
             <input v-if="passwordForm == true" type="password" class="update-input" placeholder=" "
               v-model="userInfo.password">
             <button v-if="passwordForm == false" @click="exposePasswordForm" class="password-change-button">변경</button>
           </div>
           <div class="update-div" v-if="passwordForm == true">
-            <label class="update-label">Password Check</label>
+            <label class="update-label">비밀번호 확인</label>
             <input type="password" class="update-input" placeholder=" " v-model="passwordCheck">
           </div>
           <div class="update-div">
@@ -35,9 +34,9 @@
           <div class="update-div">
             <div>
               <label class="update-label">아이 성별</label>
-              <input type="radio" class="update-input" placeholder=" " v-model="child.gender" value="0">
-              여자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="radio" class="update-input" placeholder=" " v-model="child.gender" value="1"> 남자
+              <label><input type="radio" class="update-input" placeholder=" " v-model="child.gender" value="0">여자</label>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <label><input type="radio" class="update-input" placeholder=" " v-model="child.gender" value="1">남자</label>
             </div>
           </div>
           <div class="update-div">
@@ -60,11 +59,12 @@
           </div>
         </div>
 
-        <input type="submit" class="update-button" value="update" @click="update">
-        <button class="remove-user-button" @click="deleteUserInfo">회원탈퇴</button>
+        <div class="button-container">
+          <input type="submit" class="update-button" value="수정완료" @click="update">
+        </div>        
       </form>
     </div>
-  </div>
+  <button class="remove-user-button" @click="deleteUserInfo">회원탈퇴</button>
 </template>
 
 <script setup>
@@ -139,22 +139,20 @@ const deleteUserInfo = function () {
 
 .formContainer {
   justify-content: center;
-  /* justify-content: space-around; */
   background-color: white;
   border-radius: 20px;
   margin: 35px;
   padding-top: 40px;
   padding: 40px;
   opacity: 0.95;
-  /* max-width: calc(100% - 70px); */
   border: 5px solid #cee8e8;
   width: 80vw;
 }
 
 .update-form {
-  display: flex; /* flex 컨테이너로 설정 */
-  justify-content: center; /* 가로 방향 가운데 정렬 */
-  align-items: center; /* 세로 방향 가운데 정렬을 위한 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -170,16 +168,13 @@ form {
 
 .update-label {
   width: 150px;
-  /* 레이블의 너비를 줄임 */
   margin-right: 10px;
 }
 
 .update-input {
   flex: 1;
-  /* 입력 칸이 남은 공간을 모두 차지하도록 설정 */
   padding: 5px;
   max-width: 300px;
-  /* 최대 가로길이 설정 */
   margin-right: 10px;
 }
 
@@ -198,14 +193,12 @@ form {
   align-items: center;
   justify-content: center;
   margin-right: 10px;
-  /* 각 아이템 간 간격 조정 */
   margin-bottom: 10px;
   width: fit-content;
   width: max-content;
   height: 30px;
   border: 3px solid #eee58a;
   border-radius: 15px;
-  /* border-color: #eee58a; */
 }
 
 .one-child button {
@@ -215,6 +208,7 @@ form {
 .info-form,
 .child-form {
   border: 1px solid #000000;
+  border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
   width: 540px;
@@ -222,60 +216,55 @@ form {
 
 .children-ul {
   list-style-type: none;
-  /* 리스트 스타일 제거 */
   padding: 0;
-  /* 내부 여백 제거 */
   display: flex;
-  /* 수평으로 배치되도록 설정 */
   flex-wrap: wrap;
-  /* 넘칠 경우 줄 바꿈 */
 }
 
 .children-list-container {
   border: 1px solid #000000;
+  border-radius: 4px;
   padding: 5px;
   overflow: auto;
   width: 500px;
-  /* background-color: #eee58a; */
 }
 
 .password-change-button,
-.check-duplication-button,
 .register-child-button,
 .update-button {
-  background-color: #d6b0ec;
-  /* Green */
-  border: none;
-  color: white;
   padding: 7.5px 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   margin-right: 5px;
+  border: 2px solid #d0d0d0;
+  border-radius: 10px;
+  background: transparent;
   cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  box-shadow: 3px 3px 5px 0px #0002;
+}
+
+.password-change-button:hover,
+.register-child-button:hover,
+.update-button:hover {
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
+
 }
 
 .update-button {
   float: left;
-  /* 왼쪽으로 배치 */
   margin-right: 10px;
-  /* 오른쪽 여백 추가 */
 }
 
 .remove-user-button {
-  float: right;
-  /* 오른쪽으로 배치 */
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
   background-color: transparent;
-  /* 배경색을 투명하게 */
   border: none;
-  /* 테두리 제거 */
-}
-
-.check-duplication-button:hover,
-.register-child-button:hover,
-.update-button:hover {
-  background-color: #f1a8bc;
 }
 
 .register-child-button {
@@ -284,11 +273,13 @@ form {
 
 .childDeleteButton {
   background-color: transparent;
-  /* 배경색을 투명하게 설정 */
   border: none;
-  /* 테두리 제거 */
   font-size: 20px;
-  /* 텍스트 크기 설정 */
   cursor: pointer;
-  /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
-}</style>
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+</style>

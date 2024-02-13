@@ -64,18 +64,18 @@ const checkPassword = async function () {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-left:20px;
+  margin-right: 20px;
 }
 
 .formContainer {
   justify-content: center;
-  /* justify-content: space-around; */
   background-color: white;
-  border-radius: 20px;
+  border-radius: 50px;
   margin: 35px;
   padding-top: 40px;
   padding: 40px;
   opacity: 0.95;
-  /* max-width: calc(100% - 70px); */
   border: 5px solid #cee8e8;
   width: 80vw;
 }
@@ -85,12 +85,10 @@ form {
 }
 
 .content {
+  position: relative;
   display: flex;
-  /* flex 컨테이너로 설정 */
   justify-content: center;
-  /* 가로 방향 가운데 정렬 */
   align-items: center;
-  /* 세로 방향 가운데 정렬을 위한 설정 */
 }
 
 .password-change-button,
@@ -98,7 +96,6 @@ form {
 .register-child-button,
 .update-button {
   background-color: #d6b0ec;
-  /* Green */
   border: none;
   color: white;
   padding: 7.5px 15px;
@@ -129,17 +126,20 @@ form {
 }
 
 .set-btn {
-  background-color: #d6b0ec;
-  border: none;
   width: 150px;
   margin: 0 auto;
   padding: 5px;
+  border: 2px solid #d0d0d0;
   border-radius: 10px;
-  transition: 0.2s;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  box-shadow: 3px 3px 5px 0px #0002;
 }
 
 .set-btn:hover {
-  transform: translateY(-3px);
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
 }
 
 .label {

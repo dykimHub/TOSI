@@ -41,7 +41,6 @@ const logout = () => {
   display: flex;
   margin-top: 25px;
   justify-content: center;
-  /* align-items: center; */
 }
 .logo {
   flex-grow: 1;
