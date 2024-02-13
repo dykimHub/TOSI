@@ -40,7 +40,7 @@ public class NameChanger {
         for (String sent : sentences) {
             String sentCopy = sent;
             Kiwi.Token[] tokens = getKiwi().tokenize(sent, Kiwi.Match.allWithNormalizing); // 형태소 분석
-            System.out.println(Arrays.toString(tokens));
+            // System.out.println(Arrays.toString(tokens));
 
             for (int i = tokens.length - 3; i >= 0; i--) {
                 String word = "";
