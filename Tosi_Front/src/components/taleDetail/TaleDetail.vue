@@ -94,8 +94,12 @@
                 </div>
               </div>
             </div>
-            <div class="rocketborder" @click="readBook">
-              <img src="@/assets/rocket.png" class="rocket" />
+            <!-- <button type="button" class="readstart" @click="readBook">동화 읽기</button> -->
+            <div claass="startbtn">
+              <div class="rocketborder" @click="readBook">
+                <img src="@/assets/rocket.png" class="rocket" />
+              </div>
+              <div class="starttitle">시작</div>
             </div>
           </div>
         </div>
@@ -112,6 +116,7 @@ import { useTaleDetailStore } from "@/stores/taleDetailStore";
 import { useUserStore } from "@/stores/userStore";
 import axios from "@/util/http-common";
 import { useRouter } from "vue-router";
+
 const router = useRouter();
 const props = defineProps({
   taleId: String,
@@ -185,20 +190,23 @@ function deleteName(index) {
 }
 const readBook = async () => {
   try {
-    console.log("요청 보냄");
-    // 이름 바꾸기
-    for (const [cname, bname] of nameMap.value) {
-      axios.post(`/tales/${cname}/${bname}`, { withCredentials: true });
-    }
-    const response = await axios.post("/tales/read", taleDetailStore.tale, { withCredentials: true });
+    const requests = Array.from(nameMap.value).map(([cname, bname]) =>
+      axios.post(`/tales/${cname}/${bname}`, { withCredentials: true })
+    );
+
+    await Promise.all(requests);
+
+    const response = await axios.post("/tales/read", taleDetailStore.tale, {
+      withCredentials: true,
+    });
     taleDetailStore.pages = response.data;
-    // 요청이 성공적으로 완료된 후에 navigateToTalePlay 호출
     console.log("요청이 성공적으로 완료된 후에 navigateToTalePlay 호출");
     navigateToTalePlay();
   } catch (error) {
     console.error("Error fetching:", error);
   }
 };
+
 const navigateToTalePlay = () => {
   console.log("다음페이지 보내기");
   const selectedSpeaker = items.value.find((item) => item.speaker === speaker.value);
@@ -214,7 +222,7 @@ const favorite = ref({
 console.log(favorite.value);
 const postFavorite = () => {
   axios
-    .post("http://localhost:8080/favorites", favorite.value)
+    .post("/favorites", favorite.value, { withCredentials: true })
     .then((res) => {
       console.log(res.data);
       getFavorite();
@@ -225,7 +233,7 @@ const postFavorite = () => {
 const favoriteId = ref(null);
 const getFavorite = () => {
   axios
-    .get(`http://localhost:8080/favorites/${props.taleId}`)
+    .get(`/favorites/${props.taleId}`, { withCredentials: true })
     .then((res) => {
       favoriteId.value = res.data;
     })
@@ -233,7 +241,7 @@ const getFavorite = () => {
 };
 const deleteFavorite = () => {
   axios
-    .delete(`http://localhost:8080/favorites/${favoriteId.value}`)
+    .delete(`http://localhost:8080/favorites/${favoriteId.value}`, { withCredentials: true })
     .then((res) => {
       favoriteId.value = null;
       getFavorite();
@@ -244,9 +252,9 @@ const deleteFavorite = () => {
 const likeCnt = ref(null);
 const getLikeCnt = () => {
   axios
-    .get(`http://localhost:8080/tales/like/${props.taleId}`)
+    .get(`/tales/like/${props.taleId}`)
     .then((res) => {
-      return axios.get(`http://localhost:8080/tales/${props.taleId}`);
+      return axios.get(`/tales/${props.taleId}`, { withCredentials: true });
     })
     .then((res) => {
       likeCnt.value = res.data.likeCnt;
@@ -266,10 +274,10 @@ onMounted(() => {
 .play {
   width: 1050px;
   height: 630px;
-  border: 10px solid #cee8e8;
+  border: 5px solid #cee8e8;
   margin: 20px 0px 30px 0px;
   border-radius: 50px;
-  background-color: #f5f5f5;
+  background-color: white;
 }
 .container {
   display: flex;
@@ -324,17 +332,17 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 .selectbox {
-  border: 5px solid #ebffdf;
+  border: 5px solid #cee8e8;
+  background-color: white;
   border-radius: 30px;
-  background-color: aliceblue;
   width: 250px;
   height: 260px;
   padding: 0px 15px 10px 15px;
 }
 .selectedbox {
-  border: 5px solid #ebffdf;
+  border: 5px solid #cee8e8;
+  background-color: white;
   border-radius: 30px;
-  background-color: aliceblue;
   width: 250px;
   height: 240px;
   display: flex;
@@ -367,13 +375,13 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 5px solid #ebffdf;
+  border: 5px solid #cee8e8;
   border-radius: 30px;
   width: 180px;
   height: 55px;
   text-align: center;
   margin: 0 0 -35px 35px;
-  background-color: white;
+  background-color: #ebffdf;
   position: relative;
   z-index: 5;
   font-size: 23px;
@@ -428,21 +436,21 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 5px solid #ebffdf;
+  border: 5px solid #cee8e8;
   border-radius: 30px;
   width: 193px;
   height: 55px;
   text-align: center;
   margin: -30px 0px 0px 80px;
-  background-color: white;
+  background-color: #ebffdf;
   position: relative;
   z-index: 5;
   font-size: 23px;
 }
 .voicebox {
-  border: 5px solid #ebffdf;
+  border: 5px solid #cee8e8;
+  background-color: white;
   border-radius: 30px;
-  background-color: aliceblue;
   font-size: 20px;
   width: 370px;
   height: 150px;
@@ -453,7 +461,7 @@ onMounted(() => {
   height: 120px;
   border: 2px solid black;
   border-radius: 50%;
-  margin: 50px 0 0 0;
+  margin: 30px 0 0 0;
 }
 .rocket {
   width: 80px;
@@ -483,5 +491,26 @@ onMounted(() => {
 }
 .likecnt {
   font-size: 30px;
+}
+.starttitle {
+  font-size: 23px;
+  margin-left: 35px;
+}
+.readstart {
+  margin: 20px 10px 0 0;
+  width: 150px;
+  height: 150px;
+  border: 2px solid #d0d0d0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 5px 0px #0002;
+  background-color: white;
+  font-size: 25px;
 }
 </style>

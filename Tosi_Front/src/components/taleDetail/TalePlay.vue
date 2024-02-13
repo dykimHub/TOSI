@@ -10,7 +10,7 @@
           <img class="like" src="@/assets/dislike.png" @click="postFavorite()" />
         </div>
       </div>
-      <div class="page-progress">< {{ currentPageNum }} / {{ pages.length }} ></div>
+      <div class="page-progress">&lt {{ currentPageNum }} / {{ pages.length }} ></div>
       <div class="book">
         <div class="cover"><img :src="taleDetailStore.tale.thumbnail" class="coverImg" /></div>
         <div class="flip-book">
@@ -51,7 +51,7 @@
       </div>
       <img v-if="isPaused" src="@/assets/playaudio.png" @click="audioPause" class="start" />
       <img v-else src="@/assets/pause.png" @click="audioPause" class="pause" />
-      <img src="@/assets/stop.png" class="stop" @click="replay()" />
+      <img src="@/assets/stop.png" class="stop" @click="goToEnd()" />
     </div>
   </div>
   <div v-else>is Loading...</div>
@@ -252,22 +252,18 @@ const getFavorite = async () => {
 };
 const deleteFavorite = () => {
   axios
-    .delete(`/favorites/${favoriteId.value}`, { withCredentials: true } )
+    .delete(`/favorites/${favoriteId.value}`, { withCredentials: true })
     .then((res) => {
       favoriteId.value = null;
     })
     .catch((err) => console.log(err));
-};
-const replay = () => {
-  audioRef.value.pause();
-  router.push({ name: "taleDetail", params: { taleId: props.taleId } });
 };
 </script>
 <style scoped>
 .play {
   width: 1050px;
   height: 780px;
-  border: 15px solid #cee8e8;
+  border: 5px solid #cee8e8;
   margin: 20px 0px 30px 0px;
   border-radius: 50px;
   background-color: #f5f5f5;
@@ -351,7 +347,7 @@ const replay = () => {
   padding: 0 13px;
   border-radius: 40px 0px 0px 40px;
   box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
-  background-image: url(@/assets/floral.png);
+  /* background-image: url(@/assets/floral.png); */
 }
 .page-separator-right {
   position: absolute;
