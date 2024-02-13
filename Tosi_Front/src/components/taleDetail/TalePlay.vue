@@ -266,8 +266,7 @@ const deleteFavorite = () => {
   border: 5px solid #cee8e8;
   margin: 20px 0px 30px 0px;
   border-radius: 50px;
-  background-color: #f5f5f5;
-}
+  background-color: white;
 .info {
   display: flex;
   justify-content: space-between;
