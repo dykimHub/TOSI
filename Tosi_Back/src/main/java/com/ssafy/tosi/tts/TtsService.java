@@ -12,8 +12,8 @@ public class TtsService {
     private static final Logger LOGGER = Logger.getLogger(TtsController.class.getName());
 
     public byte[] convertTextToSpeech(TtsDto ttsDto) throws IOException {
-        String clientId = "xliphnhbz3";
-        String clientSecret = "0VebnrNTFHzzLQA04hANy4vJdO81JqVHJTNHwURq";
+        String clientId = "q4spv4r6xw";
+        String clientSecret = "cwuW0iAjfOdrvz5fjaOlqIEpyq1iQvwfo06d8kHL";
         String apiURL = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts";
 
         URL url = new URL(apiURL);
