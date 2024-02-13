@@ -161,7 +161,7 @@ const generateCustomTale = async function () {
       " is the background and " +
       prompt.value[1] +
       "are the main keywords, bright and lively background, simply express it as a modern character. Don't include any text in the image. only image.";
-    // await customTaleStore.getCustomTaleImage(imagePrompt);
+    await customTaleStore.getCustomTaleImage(imagePrompt);
 
     const gptPrompt =
       selectedChild.value.childName +
@@ -171,7 +171,7 @@ const generateCustomTale = async function () {
       prompt.value[0] +
       "을 배경, " +
       prompt.value[1] +
-      "를 이용해 500자 내외의 환상적인 동화를 만들어줘. 줄바꿈은 하지 말아줘. 성별언급은 하지말아줘. 자연스럽고 매끄러운 문맥.보내기전에 줄바꿈 모두 없애줘. 보내기전에 문맥이 자연스러운지 확인해줘.";
+      "를 이용해 500자 내외의 환상적인 동화를 만들어줘. 줄바꿈은 하지 말아줘. 성별언급은 하지말아줘. 자연스럽고 매끄러운 문맥.보내기전에 줄바꿈 모두 없애줘. 보내기전에 문맥이 자연스러운지 확인하고 부자연스러운부분은 자연스럽게 바꿔줘. 말투를 통일해줘.";
 
     // console.log(gptPrompt);
     // console.log(imagePrompt);
@@ -340,6 +340,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-right: 60px;
 }
 .titleimg {
   width: 40px;
@@ -398,7 +399,7 @@ onMounted(() => {
   /* padding: 10px 25px; */
   border: 2px solid #d0d0d0;
   border-radius: 10px;
-  background: transparent;
+  background: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;

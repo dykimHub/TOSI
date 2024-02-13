@@ -170,6 +170,7 @@ onMounted(async () => {
   margin: 20px 0px 30px 0px;
   border-radius: 50px;
   background-color: #f5f5f5;
+  padding-bottom: 50px;
 }
 .container {
   display: flex;
@@ -194,13 +195,9 @@ onMounted(async () => {
   font-size: 35px;
   width: 300px;
   text-align: center;
-  overflow: hidden; /* 글자가 넘칠 경우 숨김 처리 */
-  white-space: nowrap; /* 글자가 한 줄에 표시되도록 설정 */
-  text-overflow: ellipsis;
 }
 .leftImg {
   width: 400px;
-  height: 450px;
   background-image: url(@/assets/cover.png);
   background-size: cover;
   padding: 10px 10px 0px 57px;
@@ -235,6 +232,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-right: 60px;
 }
 .titleimg {
   width: 40px;
@@ -293,7 +291,7 @@ onMounted(async () => {
   /* padding: 10px 25px; */
   border: 2px solid #d0d0d0;
   border-radius: 10px;
-  background: transparent;
+  background: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;

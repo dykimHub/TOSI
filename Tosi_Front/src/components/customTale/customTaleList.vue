@@ -96,7 +96,7 @@ onMounted(() => {
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  margin-left: 5vw;
+  margin-left: 3vw;
 }
 .title {
   text-decoration: none;
@@ -109,7 +109,7 @@ onMounted(() => {
 }
 .talelistContainer {
   background-color: white;
-  border-radius: 20px;
+  border-radius: 50px;
   margin: 35px;
   /* padding-top: 40px;
   padding-bottom: 40px; */

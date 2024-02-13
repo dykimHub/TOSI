@@ -1,45 +1,50 @@
 <template>
   <div v-if="customTaleStore.pages">
-      <div class="play">
-          <div class="title">나만의 동화 만들기</div>
-          <div class="book">
-              <div class="cover"><img :src="customTaleStore.customTaleImage" class="coverImg" /></div>
-              <div class="flip-book">
-                  <div
-                      class="flip"
-                      v-for="(page, index) in pages"
-                      :key="`page-${index}`"
-                      :class="{ flipped: page.flipped }"
-                      :style="{ zIndex: zIndexes[index] }"
-                  >
-                      <div class="back" v-if="index > 1">
-                          <img :src="customTaleStore.customTaleImage" class="leftImg" />
-                          <img src="@/assets/leftarrow.gif" class="left" />
-                          <img
-                              src="@/assets/leftarrowstatic.png"
-                              class="leftstatic"
-                              @click="flipPage(index, false)"
-                          />
-                      </div>
-                      <div class="front pre-wrap">
-                          <div class="page-separator-right"></div>
-                          <div class="content">{{ pages[index].right }}</div>
-                          <div v-if="index === 0">
-                              <img src="@/assets/end.gif" class="end" @click="goToEnd" />
-                          </div>
-                          <div v-else>
-                              <img src="@/assets/rightarrow.gif" class="right" />
-                              <img
-                                  src="@/assets/rightarrowstatic.png"
-                                  class="rightstatic"
-                                  @click="flipPage(index, true)"
-                              />
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
+    <div class="play">
+      <div class="title">나만의 동화 만들기</div>
+      <div class="page-progress">
+        &lt; {{ currentPageNum }} / {{ pages.length }} >
       </div>
+      <div class="book">
+        <div class="cover">
+          <img :src="customTaleStore.customTaleImage" class="coverImg" />
+        </div>
+        <div class="flip-book">
+          <div
+            class="flip"
+            v-for="(page, index) in pages"
+            :key="`page-${index}`"
+            :class="{ flipped: page.flipped }"
+            :style="{ zIndex: zIndexes[index] }"
+          >
+            <div class="back" v-if="index > 1">
+              <img :src="customTaleStore.customTaleImage" class="leftImg" />
+              <img src="@/assets/leftarrow.gif" class="left" />
+              <img
+                src="@/assets/leftarrowstatic.png"
+                class="leftstatic"
+                @click="flipPage(index, false)"
+              />
+            </div>
+            <div class="front pre-wrap">
+              <div class="page-separator-right"></div>
+              <div class="content">{{ pages[index].right }}</div>
+              <div v-if="index === 0">
+                <img src="@/assets/end.gif" class="end" @click="goToEnd" />
+              </div>
+              <div v-else>
+                <img src="@/assets/rightarrow.gif" class="right" />
+                <img
+                  src="@/assets/rightarrowstatic.png"
+                  class="rightstatic"
+                  @click="flipPage(index, true)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div v-else>is Loading...</div>
 </template>
@@ -59,7 +64,7 @@ const props = defineProps({
 });
 
 const goToEnd = () => {
-  router.push({ name: "customTaleSave"});
+  router.push({ name: "customTaleSave" });
 };
 
 // 페이지 배열의 인덱스를 저장해서 zindex 배열로 만듦
@@ -70,34 +75,37 @@ const zIndexes = reactive(pages.map((_, index) => index + 1));
 const currentPageIndex = ref(pages.length - 1);
 // index: 뒤집을 페이지의 인덱스
 // flip: true; 뒤집은 상태, false; 이전 페이지 펼친 상태
+const currentPageNum = ref(1);
 function flipPage(index, flip) {
   pages[index].flipped = flip;
 
   // 페이지를 뒤집을 때
   if (flip) {
-      zIndexes.forEach((_, i) => {
-          if (i === index) {
-              // 페이지 인덱스가 클수록 z-index가 낮아야 함
-              // 제일 낮은 인덱스(첫페이지)가 맨 위에 있어야 해서
-              zIndexes[i] = pages.length - index;
-          }
-          // 배열리스트의 현재 인덱스
-          currentPageIndex.value = index - 1;
-      });
-  } else {
-      // 이전 상태로 되돌리면 해당 페이지가 제일 위에 와야함
-      // zindex의 max값에 1을 더한 값을 저장
-      const maxZIndex = Math.max(...zIndexes) + 1;
-      zIndexes[index] = maxZIndex;
-
-      // 다른 페이지들의 z-index 업데이트
-      zIndexes.forEach((z, i) => {
-          if (i !== index && pages[i].flipped) {
-              zIndexes[i] = z - 1;
-          }
-      });
+    zIndexes.forEach((_, i) => {
+      if (i === index) {
+        // 페이지 인덱스가 클수록 z-index가 낮아야 함
+        // 제일 낮은 인덱스(첫페이지)가 맨 위에 있어야 해서
+        zIndexes[i] = pages.length - index;
+      }
       // 배열리스트의 현재 인덱스
-      currentPageIndex.value = index;
+      currentPageIndex.value = index - 1;
+      currentPageNum.value = pages.length - currentPageIndex.value;
+    });
+  } else {
+    // 이전 상태로 되돌리면 해당 페이지가 제일 위에 와야함
+    // zindex의 max값에 1을 더한 값을 저장
+    const maxZIndex = Math.max(...zIndexes) + 1;
+    zIndexes[index] = maxZIndex;
+
+    // 다른 페이지들의 z-index 업데이트
+    zIndexes.forEach((z, i) => {
+      if (i !== index && pages[i].flipped) {
+        zIndexes[i] = z - 1;
+      }
+    });
+    // 배열리스트의 현재 인덱스
+    currentPageIndex.value = index;
+    currentPageNum.value = pages.length - currentPageIndex.value;
   }
 }
 // tts
@@ -113,77 +121,85 @@ const audioRef = ref(null); //오디오 재생을 위한 객체
 const audioSrcCache = {}; // 캐시를 저장하는 객체
 const ttsMaker = async (text) => {
   //speaker정보
-  const selectedSpeaker = items.value.find((item) => item.speaker == props.speaker);
+  const selectedSpeaker = items.value.find(
+    (item) => item.speaker == props.speaker
+  );
   if (selectedSpeaker) {
-      const speakerName = selectedSpeaker.speaker;
-      const emotion = selectedSpeaker.emotion;
-      const emotionStrength = selectedSpeaker["emotion-strength"];
-      try {
-          const blob = await generateTTS(text, speakerName, emotion, emotionStrength);
-          const url = URL.createObjectURL(blob);
-          audioSrcCache[text] = url; // 결과를 캐시에 저장
-          return url;
-      } catch (error) {
-          console.error("Error:", error);
-          return "";
-      }
+    const speakerName = selectedSpeaker.speaker;
+    const emotion = selectedSpeaker.emotion;
+    const emotionStrength = selectedSpeaker["emotion-strength"];
+    try {
+      const blob = await generateTTS(
+        text,
+        speakerName,
+        emotion,
+        emotionStrength
+      );
+      const url = URL.createObjectURL(blob);
+      audioSrcCache[text] = url; // 결과를 캐시에 저장
+      return url;
+    } catch (error) {
+      console.error("Error:", error);
+      return "";
+    }
   }
 };
 const autoAudio = (text) => {
   //기존 오디오 끊기
   if (audioRef.value != null) {
-      audioRef.value.pause();
+    audioRef.value.pause();
   }
   // 이미 캐시된 결과가 있는지 확인
   if (audioSrcCache[text] != null) {
-      audioRef.value = new Audio(audioSrcCache[text]);
-      // audioRef.value.play(); // 재생
-      // 재생이 끝나면 Promise를 resolve하도록 설정
-      audioRef.value.onended = () => {
+    audioRef.value = new Audio(audioSrcCache[text]);
+    // audioRef.value.play(); // 재생
+    // 재생이 끝나면 Promise를 resolve하도록 설정
+    audioRef.value.onended = () => {
+      onAudioEnded();
+      resolve();
+    };
+    audioRef.value.play(); // 재생
+  } else {
+    ttsMaker(text).then((url) => {
+      if (url) {
+        audioRef.value = new Audio(url); // 새로운 오디오를 할당
+        // 재생이 끝나면 Promise를 resolve하도록 설정
+        audioRef.value.onended = () => {
           onAudioEnded();
           resolve();
-      };
-      audioRef.value.play(); // 재생
-  } else {
-      ttsMaker(text).then((url) => {
-          if (url) {
-              audioRef.value = new Audio(url); // 새로운 오디오를 할당
-              // 재생이 끝나면 Promise를 resolve하도록 설정
-              audioRef.value.onended = () => {
-                  onAudioEnded();
-                  resolve();
-              };
-              audioRef.value.play(); // 재생
-          }
-      });
+        };
+        audioRef.value.play(); // 재생
+      }
+    });
   }
 };
 // 오디오 재생이 끝날 때 실행되는 콜백 함수
 const onAudioEnded = () => {
-  if (currentPageIndex.value < pages.length) flipPage(currentPageIndex.value, true);
+  if (currentPageIndex.value < pages.length)
+    flipPage(currentPageIndex.value, true);
 };
 // //페이지 변화를 감지해서 틈
 watch(pages, (newPages, oldPages) => {
-    if (newPages && newPages.length > 0) {
-        // 페이지 배열이 변경되었을 때 실행할 코드 작성
-        autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
-    }
+  if (newPages && newPages.length > 0) {
+    // 페이지 배열이 변경되었을 때 실행할 코드 작성
+    autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
+  }
 });
 onMounted(async () => {
   try {
-      if (pages.length > 0) {
-          await autoAudio(pages[currentPageIndex.value].right);
-      }
+    if (pages.length > 0) {
+      await autoAudio(pages[currentPageIndex.value].right);
+    }
   } catch (error) {
-      console.error("Error in onMounted:", error);
+    console.error("Error in onMounted:", error);
   }
 });
 </script>
 
 <style scoped>
 .play {
-  width: 1180px;
-  height: 800px;
+  width: 1050px;
+  height: 780px;
   border: 5px solid #cee8e8;
   margin: 20px 0px 30px 40px;
   border-radius: 50px;
@@ -192,19 +208,16 @@ onMounted(async () => {
 .info {
   display: flex;
   justify-content: space-between;
+  width: 950px;
+  margin: 45px 10px 0 45px;
 }
 .title {
   text-decoration: none;
   display: inline-block;
-  box-shadow: inset 0 -20px 0 #C4ECB0;
+  box-shadow: inset 0 -20px 0 #c4ecb0;
   font-size: 40px;
   margin: 60px 0px 40px 70px;
   line-height: 1;
-}
-.like {
-  width: 50px;
-  height: 50px;
-  margin: 50px 70px 0px 0px;
 }
 .cover {
   background-color: #fff;
@@ -215,17 +228,17 @@ onMounted(async () => {
 }
 .coverImg,
 .leftImg {
-  width: 450px;
+  width: 435px;
   height: 450px;
   margin-top: 25px;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .book {
   margin: 0px 0px 0px 45px;
   padding: 10px 10px 0px 25px;
   display: flex;
   background-color: #21364d;
-  width: 1050px;
+  width: 950px;
   height: 520px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
@@ -338,5 +351,11 @@ onMounted(async () => {
   height: 100%;
   margin-left: 20px;
   margin-right: 10px;
+}
+.page-progress {
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  margin: -10px 0px 20px 0px;
 }
 </style>

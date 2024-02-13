@@ -229,8 +229,8 @@ onMounted(async () => {
 
 <style scoped>
 .play {
-  width: 1180px;
-  height: 800px;
+  width: 1050px;
+  height: 780px;
   border: 5px solid #cee8e8;
   margin: 20px 0px 30px 40px;
   border-radius: 50px;
@@ -249,11 +249,6 @@ onMounted(async () => {
   line-height: 1;
   text-align: left;
 }
-.like {
-  width: 50px;
-  height: 50px;
-  margin: 50px 70px 0px 0px;
-}
 .cover {
   background-color: #fff;
   box-sizing: border-box;
@@ -263,17 +258,17 @@ onMounted(async () => {
 }
 .coverImg,
 .leftImg {
-  width: 450px;
+  width: 435px;
   height: 450px;
   margin-top: 25px;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .book {
   margin: 0px 0px 0px 45px;
   padding: 10px 10px 0px 25px;
   display: flex;
   background-color: #21364d;
-  width: 1050px;
+  width: 950px;
   height: 520px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 1);

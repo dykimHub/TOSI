@@ -1,74 +1,76 @@
 <template>
-  <div id="app" class="talelistContainer">
-    <div>
-      <div class="title">나만의 동화 만들기</div>
-    </div>
+  <loading-modal :is-loading="loading"></loading-modal>
+  <div class="play">
+    <div class="container">
+      <div class="topOfTaleList">
+        <div class="bigtitle">나만의 동화 만들기</div>
+        <div class="taleinfo">
+          <div class="leftImg">
+            <div class="bookbtn">
+              <button class="button" @click="retry">다시 만들래요!</button>
+              <button class="button" @click="nosave">나가기</button>
+            </div>
+          </div>
 
-    <loading-modal :is-loading="loading"></loading-modal>
-
-    <div class="twoContainer">
-
-      <div class="book-column">
-         <div class="btncolumn">
-            <button class="button" @click="retry">다시 만들래요!</button>
-          <RouterLink :to="`/customtale`">
-            <button class="button">나가기</button>
-          </RouterLink>
+          <div class="chat">
+            <div class="startbox">
+              <div class="infobox">
+                <div class="voicetitle">내가 만든 동화 저장하기</div>
+                <div class="inputgroup">
+                  <div>
+                    <label for="title" class="form-label">동화의 제목</label>
+                    <input
+                      v-model="customTale.title"
+                      type="text"
+                      class="form-control"
+                      id="title"
+                      required
+                      maxlength="20"
+                    />
+                  </div>
+                  <div class="publicbox">
+                    <label for="isPublic">
+                      <input
+                        type="radio"
+                        v-model="customTale.public"
+                        :value="true"
+                        id="isPublic"
+                      />
+                      친구들과 함께 보기
+                    </label>
+                    <label for="isNotPublic" style="margin-left: 15px">
+                      <input
+                        type="radio"
+                        v-model="customTale.public"
+                        :value="false"
+                        id="isNotPublic"
+                      />
+                      나만 보기
+                    </label>
+                  </div>
+                </div>
+                <div class="infobtn">
+                  <button
+                    @click="saveCustomTale"
+                    class="button"
+                    style="text-align: center"
+                  >
+                    동화 저장
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="info-column">
-        <p class="minititle">내가 만든 동화 저장하기</p>
-        <div class="savecustom">
-          <div>
-            <label for="title" class="form-label">동화의 제목</label>
-            <input
-              v-model="customTale.title"
-              type="text"
-              class="form-control"
-              id="title"
-              required
-              maxlength="30"
-            />
-          </div>
-          <div>
-            <label for="isPublic">
-              <input
-                type="radio"
-                v-model="customTale.public"
-                :value="true"
-                id="isPublic"
-              />
-              친구들과 함께 보기
-            </label>
-            <label for="isNotPublic">
-              <input
-                type="radio"
-                v-model="customTale.public"
-                :value="false"
-                id="isNotPublic"
-              />
-              나만 보기
-            </label>
-          </div>
-          <div style="display: flex; text-align: center;justify-content: center;">
-            <button @click="saveCustomTale" class="button" style="text-align: center;">
-              동화 저장
-            </button>
-          </div>
-          </div>
-      </div>
-
     </div>
   </div>
 </template>
-
 <script setup>
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { useS3Store } from "@/stores/S3Store";
 import { onMounted, ref } from "vue";
 const customTaleStore = useCustomTaleStore();
-const S3Store = useS3Store();
 import LoadingModal from "@/components/customTale/loadingModal.vue";
 import router from "@/router";
 
@@ -95,136 +97,168 @@ const saveCustomTale = async function () {
   }
 };
 
-const retry = function(){
-  customTaleStore.resetCustomTale();
-  router.push({name:'customTaleCreate'})
-}
+const retry = function () {
+  if (confirm("동화를 저장하지 않고 다시 만드시겠습니까?") == true) {
+    customTaleStore.resetCustomTale();
+    router.push({ name: "customTaleCreate" });
+  } else {
+    return false;
+  }
+};
+
+const nosave = function () {
+  if (confirm("동화를 저장하지 않고 나가시겠습니까?") == true) {
+    customTaleStore.resetCustomTale();
+    router.push({ name: "customTaleList" });
+  } else {
+    return false;
+  }
+};
 </script>
-
 <style scoped>
-.talelistContainer {
-  background-color: white;
-  border-radius: 20px;
-  margin: 35px;
-  /* padding-top: 40px;
-  padding-bottom: 40px; */
-  opacity: 0.95;
-  padding: 40px 0px 0px 50px;
+.infobox {
   border: 5px solid #cee8e8;
-  width: 800px;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  font-size: 20px;
+  width: 350px;
+  height: 270px;
 }
-
-.twoContainer {
+.inputgroup {
+  padding: 10px;
+}
+.play {
+  width: 70vw;
+  border: 5px solid #cee8e8;
+  margin: 20px 0px 30px 0px;
+  border-radius: 50px;
+  background-color: #f5f5f5;
+}
+.container {
   display: flex;
-  justify-content: space-between;
-  margin-left: 10%;
-  margin-right: 10%;
-  height: 250px;
-  margin-bottom: 50px;
+  width: 70vw;
+  margin: 40px 0 0 60px;
 }
-.title {
+.bigtitle {
   text-decoration: none;
   display: inline-block;
   box-shadow: inset 0 -20px 0 #c4ecb0;
   font-size: 40px;
-  margin: 30px 0px 30px 50px;
+  /* margin: 30px 0px 30px 50px; */
   margin-bottom: 40px;
   line-height: 1;
   text-align: left;
 }
-.minititle{
-  text-decoration: none;
-  display: inline-block;
-  box-shadow: inset 0 -10px 0 #c4ecb0;
+.taleinfo {
+  display: flex;
+}
+.title {
+  margin: 30px 0px 25px 0px;
+  font-size: 35px;
+  width: 300px;
+  text-align: center;
+  overflow: hidden; /* 글자가 넘칠 경우 숨김 처리 */
+  white-space: nowrap; /* 글자가 한 줄에 표시되도록 설정 */
+  text-overflow: ellipsis;
+}
+.leftImg {
+  width: 400px;
+  height: 450px;
+  background-image: url(@/assets/book_end.png);
+  background-size: cover;
+  padding: 10px 10px 0px 57px;
+  margin-right: 25px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+.thumbnail {
+  width: 300px;
+  height: 300px;
+  border: 5px solid white;
+  margin-top: 50px;
+}
+
+.align-items-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.form-wrapper {
+  width: 100%;
+  max-width: 28rem;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 15px 15px 0 15px;
+}
+.chat {
+  width: 520px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 60px;
+}
+.titleimg {
+  width: 40px;
+  height: 40px;
+  margin: 25px 10px 0 0;
+}
+.selecttitle {
   font-size: 20px;
-  /* margin: 30px 0px 0px 0px; */
-  margin-top: 30px;
-  margin-bottom: 40px;
-  line-height: 1;
-  text-align: left;
+  margin: 30px 10px 0 0;
 }
-.info-column {
-  width: 60%;
+.form-select {
+  font-size: 18px;
+}
+
+.speaker-image {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+.startbox {
   display: flex;
-  align-items: center;
   flex-direction: column;
-  background-color: #ffffff;
-  border: 3px solid #cee8e8;
-  border-radius: 20px;
-  height: 270px;
 }
-
-.inputgroup {
+.mic {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
+.voicetitle {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-}
-
-.book-column {
-  width: 50%;
-  overflow: hidden;
-  display: flex;
   justify-content: center;
-}
-
-.info {
-  background-color: #ffffff;
-  border: 3px solid #cee8e8;
-  border-radius: 20px;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-
-.input {
-  margin-bottom: 10px;
-}
-
-.book {
-  width: 100%;
-  display: flex;
+  border: 5px solid #cee8e8;
+  border-radius: 30px;
+  width: 260px;
+  height: 60px;
   text-align: center;
-  justify-content: center;
-  align-items: center;
+  margin: -40px 0px 0px 40px;
+  background-color: #ebffdf;
+  position: relative;
+  z-index: 5;
+  font-size: 23px;
 }
-
-.book img {
-  width: 80%;
-  height: 80%;
+.voicebox {
+  border: 5px solid #cee8e8;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  font-size: 20px;
+  width: 370px;
+  height: 150px;
 }
-
-.loading-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.loading-content {
-  text-align: center;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-}
-
 .button {
   margin-top: 20px;
-  margin-bottom: 50px;
   width: 130px;
   height: 40px;
   /* padding: 10px 25px; */
   border: 2px solid #d0d0d0;
   border-radius: 10px;
-  background: transparent;
+  background: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
@@ -234,30 +268,18 @@ const retry = function(){
 .button:hover {
   box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
 }
-.btncolumn {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-content: center;
-  flex-direction: column;
-}
+
 .infobtn {
   text-align: center;
 }
-
-.itemform-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-.itemform {
-  flex: 0 0 33.33%;
-  box-sizing: border-box;
-  padding: 0 10px;
+.publicbox {
   margin-top: 20px;
 }
-.savecustom{
-display: flex;
-flex-direction: column;
+.bookbtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 120px;
+  margin-right: 40px;
 }
 </style>
