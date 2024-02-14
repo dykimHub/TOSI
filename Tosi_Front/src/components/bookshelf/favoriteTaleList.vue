@@ -16,32 +16,34 @@
     <div class="taleContainer">
       <ul v-for="favorite in currentPageBoardList" :key="favorite.taleId">
         <div class="oneTale">
-          <RouterLink :to="`/tales/${favorite.taleId}`"><img class="thumbnail" :src="favorite.thumbnail" /></RouterLink>
-          <br />
-          <RouterLink :to="`/tales/${favorite.taleId}`">{{ favorite.title }}</RouterLink>
-          <br />
-          재생 시간: {{ favorite.time }}
+          <div>
+            <RouterLink :to="`/tales/${favorite.taleId}`"><img class="thumbnail" :src="favorite.thumbnail" /></RouterLink>
+            <br />
+            <RouterLink :to="`/tales/${favorite.taleId}`">{{ favorite.title }}</RouterLink>
+            <br />
+            재생 시간: {{ favorite.time }}
+          </div>
+          <button v-if="deleteButton" @click="deleteFavorite(favorite.taleId)" class="delete-button">×</button>
         </div>
-        <button v-if="deleteButton" @click="deleteFavorite(favorite.taleId)">×</button>
       </ul>
     </div>
     <div>
       <nav aria-label="Page navigation" style="padding: 15px;">
-      <ul class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success ">
-        <li class="page-item">
-          <a class="page-link" :class="{ disabled: currentPage <= 1 }" href="#" @click.prevent="currentPage--">&lt;</a>
-        </li>
-        <li :class="{ active: currentPage === page }" class="page-item" v-for="page in pageCount" :key="page">
-          <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
-            page
-          }}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" :class="{ disabled: currentPage >= pageCount }" href="#"
-            @click.prevent="currentPage++">&gt;</a>
-        </li>
-      </ul>
-    </nav>
+        <ul class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success ">
+          <li class="page-item">
+            <a class="page-link" :class="{ disabled: currentPage <= 1 }" href="#" @click.prevent="currentPage--">&lt;</a>
+          </li>
+          <li :class="{ active: currentPage === page }" class="page-item" v-for="page in pageCount" :key="page">
+            <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
+              page
+            }}</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" :class="{ disabled: currentPage >= pageCount }" href="#"
+              @click.prevent="currentPage++">&gt;</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </template>
@@ -121,14 +123,14 @@ onMounted(async () => {
 
 <style scoped>
 .title {
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: inset 0 -20px 0 #eee58a;
-    font-size: 40px;
-    margin: 30px 0px 0px 50px;
-    margin-bottom: 40px;
-    line-height: 1;
-    text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: inset 0 -20px 0 #eee58a;
+  font-size: 40px;
+  margin: 30px 0px 0px 50px;
+  margin-bottom: 40px;
+  line-height: 1;
+  text-align: left;
 }
 
 ul {
@@ -163,14 +165,14 @@ ul {
   margin-right: 50px;
 }
 
-.taleContainer button {
+.delete-button {
   background-color: transparent;
   border: none;
   font-size: 20px;
   cursor: pointer;
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 60px;
   color: rgb(0, 0, 0);
 }
 
@@ -182,12 +184,6 @@ ul {
   align-items: center;
   justify-content: flex-start;
   margin-left: 5vw;
-}
-
-.taleContainer button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }
 
 .talelistContainer {
@@ -209,7 +205,7 @@ ul {
   width: 13em;
   text-align: center;
   margin: 1em;
-  margin-right: 55px;
+  margin-right: 88px;
 }
 
 .selecSort {
@@ -226,28 +222,27 @@ a {
 }
 
 .pagination,
- .jsgrid .jsgrid-pager {
-     display: flex;
-     padding-left: 0;
-     list-style: none;
-     border-radius: 0.25rem
- }
- 
- .page-link {
-     color: black
- }
- 
- .pagination.pagination-rounded-flat .page-item {
-     margin: 0 .30rem
- }
+.jsgrid .jsgrid-pager {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.25rem
+}
 
- .pagination-success .page-item.active .page-link
-  {
-     background: #d8eef2;
- }
- 
- .pagination.pagination-rounded-flat .page-item .page-link{
-    border: none;
-    border-radius: 50px;
+.page-link {
+  color: black
+}
+
+.pagination.pagination-rounded-flat .page-item {
+  margin: 0 .30rem
+}
+
+.pagination-success .page-item.active .page-link {
+  background: #d8eef2;
+}
+
+.pagination.pagination-rounded-flat .page-item .page-link {
+  border: none;
+  border-radius: 50px;
 }
 </style>

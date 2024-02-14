@@ -33,6 +33,9 @@ const showFavoriteList = () => {
   display: flex;
   justify-content: flex-end;
   margin-right: 220px;
+  z-index: 100;
+  position: relative;
+  top: 5px;
 }
 
 button {
@@ -77,6 +80,7 @@ button:hover::before {
   display: flex;
   justify-content: center;
   width: 85vw;
+  /* position: relative; */
 }
 
 .taleList {

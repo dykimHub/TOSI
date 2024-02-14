@@ -111,10 +111,6 @@ const regist = () => {
     return;
   }
 
-  if (bookshelfName.value.trim() === "") {
-    bookshelfName.value = "나의 책장";
-  }
-
   const userInfo = {
     email: email.value,
     password: password.value,

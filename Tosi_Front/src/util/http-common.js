@@ -35,6 +35,8 @@ instance.interceptors.response.use(
   }
 );
 
+
+
 export default instance;
 
 function setCookie(name, value, days) {
@@ -43,6 +45,7 @@ function setCookie(name, value, days) {
   const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
   document.cookie = cookieString;
 }
+
 
 function getCookieValue(key) {
   const cookies = document.cookie.split(';');

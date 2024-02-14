@@ -16,27 +16,28 @@
     <div class="taleContainer">
       <ul v-for="tale in currentPageBoardList" :key="tale.customTaleId">
         <div class="oneTale">
-          <RouterLink :to="`/customTale/${tale.customTaleId}`"><img class="thumbnail" :src="tale.thumbnail" />
-          </RouterLink>
-          <br>
-          <RouterLink :to="`/customTale/${tale.customTaleId}`">{{ tale.title }}</RouterLink>
-          <br>
-          재생 시간: {{ tale.time }}
+          <div>
+            <RouterLink :to="`/customTale/${tale.customTaleId}`"><img class="thumbnail" :src="tale.thumbnail" />
+            </RouterLink>
+            <br>
+            <RouterLink :to="`/customTale/${tale.customTaleId}`">{{ tale.title }}</RouterLink>
+          </div>
+          <div v-if="deleteButton == true" class="opened-container">
+            <label>
+              <input type="radio" class="opened-input" placeholder=" " v-model="tale.opened" value="1"
+                :checked="tale.opened == 1">
+              공개
+            </label>
+            <label>
+              <input type="radio" class="opened-input" placeholder=" " v-model="tale.opened" value="0"
+                :checked="tale.opened == 0">
+              비공개
+            </label>
+            <button @click="updateOpened(tale.customTaleId, tale.opened)" class="update-opened-button">수정</button>
+          </div>
+          <button v-if="deleteButton == true" @click="deleteCustomTale(tale.customTaleId)"
+            class="delete-button">×</button>
         </div>
-        <div v-if="deleteButton == true" class="opened-container">
-          <label>
-            <input type="radio" class="opened-input" placeholder=" " v-model="tale.opened" value="1"
-              :checked="tale.opened == 1">
-            공개
-          </label>
-          <label>
-            <input type="radio" class="opened-input" placeholder=" " v-model="tale.opened" value="0"
-              :checked="tale.opened == 0">
-            비공개
-          </label>
-          <button @click="updateOpened(tale.customTaleId, tale.opened)" class="update-opened-button">수정</button>
-        </div>
-        <button v-if="deleteButton == true" @click="deleteCustomTale(tale.customTaleId)" class="delete-button">×</button>
       </ul>
     </div>
     <div>
@@ -188,7 +189,7 @@ ul {
   cursor: pointer;
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 60px;
   color: rgb(0, 0, 0);
 }
 
@@ -236,7 +237,7 @@ ul {
   width: 13em;
   text-align: center;
   margin: 1em;
-  margin-right: 55px;
+  margin-right: 88px;
 }
 
 .opened-container {
