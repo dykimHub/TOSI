@@ -114,7 +114,9 @@
                 <div class="rocketborder" @click="readBook">
                   <img src="@/assets/rocket.png" class="rocket" />
                 </div>
-                <div class="starttitle">시작</div>
+                <div class="graytext">
+                  로켓을 클릭해서 동화를 시작해보세요!
+                </div>
               </div>
             </div>
           </div>
