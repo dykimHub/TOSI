@@ -1,20 +1,17 @@
 <template>
   <div class="talelistContainer">
     <div class="topOfTaleList">
-      <!-- <div class="box1"></div> -->
-      <!-- <div class="box2"> -->
       <div class="title">전체 책 보기</div>
-      <!-- </div> -->
-      <div class="box3">
+      <div class="searchNsort">
         <div class="searchContainer">
-          <input v-model="searchQuery" type="text" />
-          <a @click="searchTaleByTitle">검색</a>
+          <input v-model="searchQuery" type="text" @keyup.enter="searchTaleByTitle"/>
+          <button @click="searchTaleByTitle">검색</button>
         </div>
         <div class="selecSort">
           <label>정렬 기준</label>
           <select v-model="sortOption">
-            <option value="title">이름순</option>
             <option value="likeCnt">인기순</option>
+            <option value="title">이름순</option>
             <option value="random">랜덤</option>
           </select>
         </div>
@@ -76,7 +73,7 @@ import { onMounted, ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 
 const Talestore = useTaleStore();
-const sortOption = ref("title");
+const sortOption = ref("likeCnt");
 const sortedTaleList = ref([]);
 const router = useRouter();
 const searchResults = ref([]);
@@ -118,7 +115,7 @@ const searchQuery = ref("");
 const searchTaleByTitle = async () => {
   try {
     title.value = searchQuery.value;
-    Talestore.searchList = response.data;
+
     const response = await Talestore.searchTaleByTitle(title.value);
     console.log('Response:', response);
     searchResults.value = response.data;
@@ -130,28 +127,33 @@ const searchTaleByTitle = async () => {
   }
 };
 
-onMounted(() => {
+onMounted(async() => {
   Talestore.getTaleList();
   watch(() => Talestore.taleList, sortTaleList, { immediate: true });
   watch(sortOption, sortTaleList);
 
-  // Extract search query from URL
-  // const route = router.currentRoute.value;
-  // if (route.query.title) {
-  //   title.value = route.query.title.toString();
-  // }
+  const route = router.currentRoute.value;
+  
+  if (route.query.title) {
+    title.value = route.query.title.toString();
+    let value = await Talestore.searchTaleByTitle(title.value);
+    searchResults.value = value.data;
+    console.log("TEST", JSON.stringify(searchResults.value));
+  }
 
 });
 </script>
 
 <style scoped>
+
 .taleContainer {
   display: flex;
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  margin-left: 5vw;
 }
 
 .title {
@@ -172,6 +174,7 @@ onMounted(() => {
   opacity: 0.95;
   padding: 40px 60px;
   border: 5px solid #cee8e8;
+  width: 80vw;
 }
 
 .thumbnail {
@@ -188,25 +191,52 @@ onMounted(() => {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 0.5em;
 }
-
 .searchContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-
 .topOfTaleList {
   display: flex;
   justify-content: space-between;
   /* margin-left: 10%;
     margin-right: 10%; */
 }
-
 a {
   text-decoration: none;
   color: black;
 }
+
+select {
+  margin-left: 1em;
+}
+
+input {
+  width: 7em;
+  height: 2em;
+}
+
+button {
+  width: 3em;
+  margin-left: 1em;
+  height: 2em;
+  /* padding: 10px 25px; */
+  border: 2px solid #d0d0d0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: 3px 3px 5px 0px #0002;
+}
+
+button:hover {
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
+}
+
 
 .pagination,
 .jsgrid .jsgrid-pager {

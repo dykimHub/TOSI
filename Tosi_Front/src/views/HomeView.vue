@@ -17,9 +17,9 @@
                     나의 책장
                 </RouterLink>
             </div>
-            <h5>지금 인기있어요!</h5>
+            <h5>최근에 친구들이 만든 이야기에요!</h5>
             <div class="top3">
-                <ul v-for="tale in Talestore.taleList.slice(0, 3)" :key="tale.taleId">
+                <ul v-for="tale in  CTalestore.customTalesList.slice(-3).reverse()" :key="tale.taleId">
                     <div class="oneTale">
                         <RouterLink :to="`/tales/${tale.taleId}`"
                             ><img class="thumbnail" :src="tale.thumbnail" />
@@ -47,10 +47,10 @@ import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
 import TheFooter from "@/components/common/TheFooter.vue";
 import TheSideBar from "@/components/common/TheSideBar.vue";
 
-import { useTaleStore } from "@/stores/taleStore";
+import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-const Talestore = useTaleStore();
+const CTalestore = useCustomTaleStore();
 const router = useRouter();
 
 const isMain = ref(true);
@@ -60,14 +60,14 @@ const sortedTaleList = ref([]);
 const sortTaleList = () => {
     switch (sortOption.value) {
         case "likeCnt":
-            sortedTaleList.value = Talestore.taleList.sort((a, b) => b.likeCnt - a.likeCnt);
+            sortedTaleList.value = CTalestore.customTalesList.sort((a, b) => b.likeCnt - a.likeCnt);
             break;
     }
 };
 
 onMounted(async () => {
-    Talestore.getTaleList();
-    watch(() => Talestore.taleList, sortTaleList, { immediate: true });
+    CTalestore.getCustomTalesList();
+    watch(() => CTalestore.getCustomTalesList, sortTaleList, { immediate: true });
     watch(sortOption, sortTaleList);
 
     await router.afterEach((to) => {

@@ -27,7 +27,7 @@ const searchTaleByTitle = function (title) {
         resolve(response); // Promise를 성공 상태로 처리하고 응답 데이터 전달
       })
       .catch((error) => {
-        window.alert('일치하는 검색 결과가 없습니다.')
+        window.alert('일치하는 검색 결과가 없어요.')
         console.error('API 호출 실패:', error);
         reject(error); // Promise를 실패 상태로 처리하고 에러 전달
       });

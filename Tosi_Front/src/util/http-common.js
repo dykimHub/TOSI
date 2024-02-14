@@ -12,7 +12,7 @@ const instance = axios.create({
 // 응답 Interceptor 설정
 instance.interceptors.response.use(
   async (response) => {
-    console.log('응답 받은 후:', response);
+    // console.log('응답 받은 후:', response);
     if (response.data['access-token']) {
       const accessToken = response.data['access-token'];
       await setCookie('access-token', accessToken, 1);

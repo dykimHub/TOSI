@@ -1,30 +1,26 @@
 <template>
   <div class="talelistContainer">
     <div class="topOfTaleList">
-      <!-- <div class="box1"></div> -->
-      <!-- <div class="box2"> -->
         <div class="title">검색 결과</div>
-      <!-- </div> -->
       <div class="box3">
         <div class="searchContainer">
-          <input v-model="searchQuery" type="text" />
-          <a @click="searchTaleByTitle">검색</a>
+          <input v-model="searchQuery" type="text" @keyup.enter="searchTaleByTitle"/>
+          <button @click="searchTaleByTitle">검색</button>
         </div>
       </div>
     </div>
     <div class="taleContainer">
-      <!-- <div v-if="searchResults.length > 0"> -->
         <ul v-for="tale in searchResults" :key="tale.taleId">
           <div class="oneTale">
-            <RouterLink :to="`/tales/${tale.taleId}`"><img class="thumbnail" :src="tale.thumbnail" /></RouterLink>
-            <br />
-            <RouterLink :to="`/tales/${tale.taleId}`">{{ tale.title }}</RouterLink>
-            <br />
-            재생 시간: {{ tale.time }}분
-          </div>
+          <RouterLink :to="`/tales/${tale.taleId}`"
+            ><img class="thumbnail" :src="tale.images[1]"
+          /></RouterLink>
+          <br />
+          <RouterLink :to="`/tales/${tale.taleId}`">{{ tale.title }}</RouterLink>
+          <br />
+          재생 시간: {{ tale.time }}분
+        </div>
         </ul>
-      <!-- </div> -->
-      <!-- <p v-else>일치하는 검색 결과가 없습니다.</p> -->
     </div>
   </div>
 </template>
@@ -48,7 +44,6 @@ const searchTaleByTitle = async () => {
     const response = await Talestore.searchTaleByTitle(title.value);
     console.log('Response:', response);
     searchResults.value = response.data;
-    // 라우터로 이동
     router.push({ name: "search", query: { title: title.value } });
     
   } catch (error) {
@@ -56,19 +51,18 @@ const searchTaleByTitle = async () => {
   }
 };
 
-onMounted(() => {
-  // 현재 라우터 정보 확인
+onMounted( async() => {
   const route = router.currentRoute.value;
   
   if (route.query.title) {
     title.value = route.query.title.toString();
+    let value = await Talestore.searchTaleByTitle(title.value);
+    searchResults.value = value.data;
+    // console.log("TEST", JSON.stringify(searchResults.value));
+    console.log(searchResults.value.thumbnail);
   }
-  Talestore.getTaleList(title.value);
-  console.log(title.value)
-  console.log("검색 결과: "+searchResults.value)
 });
 </script>
-
 
 <style scoped>
 .taleContainer {
@@ -77,7 +71,8 @@ onMounted(() => {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  margin-left: 5vw;
 }
 
 .title {
@@ -98,6 +93,7 @@ onMounted(() => {
   opacity: 0.95;
   padding: 40px 60px;
   border: 5px solid #cee8e8;
+  width: 80vw;
 }
 
 .thumbnail {
@@ -110,21 +106,52 @@ onMounted(() => {
   margin: 3em;
 }
 
+.selecSort {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 0.5em;
+}
 .searchContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-
 .topOfTaleList {
   display: flex;
-    justify-content: space-between;
-    /* margin-left: 10%;
-    margin-right: 10%; */
+  justify-content: space-between;
 }
-
 a {
   text-decoration: none;
   color: black;
 }
+
+select {
+  margin-left: 1em;
+}
+
+input {
+  width: 7em;
+  height: 2em;
+}
+
+button {
+  width: 3em;
+  margin-left: 1em;
+  height: 2em;
+  border: 2px solid #d0d0d0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: 3px 3px 5px 0px #0002;
+}
+
+button:hover {
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
+}
+
+
 </style>
