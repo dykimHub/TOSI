@@ -44,20 +44,42 @@
           </div>
         </div>
       </div>
-      <div class="stopbtn">
-        <img
-          v-if="isPaused"
-          src="@/assets/playaudio.png"
-          @click="audioPause"
-          class="start"
-        />
-        <img
-          v-else
-          src="@/assets/pause.png"
-          @click="audioPause"
-          class="pause"
-        />
-        <img src="@/assets/stop.png" class="stop" @click="replay()" />
+      <div class="controls-container">
+        <div class="volume-controls">
+          <img
+            src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+            alt="Speaker Image"
+            class="speaker-image"
+          />
+          <div class="volume-bar" @click="setVolume">
+            <div
+              class="volume-bar-active"
+              :style="{ width: volume + '%' }"
+            ></div>
+          </div>
+        </div>
+
+        <div class="playstop-controls stopbtn">
+          <img
+            v-if="isPaused"
+            src="@/assets/playaudio.png"
+            @click="audioPause"
+            class="start"
+          />
+          <img
+            v-else
+            src="@/assets/pause.png"
+            @click="audioPause"
+            class="pause"
+          />
+          <img src="@/assets/stop.png" class="stop" @click="replay()" />
+        </div>
+
+        <div class="speed-controls">
+          <button @click="changePlaybackRate(-0.25)"></button>
+          <span class="playback-rate">{{ playbackRate.toFixed(2) }}</span>
+          <button @click="changePlaybackRate(0.25)">>></button>
+        </div>
       </div>
     </div>
   </div>
@@ -170,7 +192,7 @@ const autoAudio = (text) => {
   // 이미 캐시된 결과가 있는지 확인
   if (audioSrcCache[text] != null) {
     audioRef.value = new Audio(audioSrcCache[text]);
-    // audioRef.value.play(); // 재생
+    audioVolume();
     // 재생이 끝나면 Promise를 resolve하도록 설정
     audioRef.value.onended = () => {
       onAudioEnded();
@@ -182,6 +204,7 @@ const autoAudio = (text) => {
     ttsMaker(text).then((url) => {
       if (url) {
         audioRef.value = new Audio(url); // 새로운 오디오를 할당
+        audioVolume();
         // 재생이 끝나면 Promise를 resolve하도록 설정
         audioRef.value.onended = () => {
           onAudioEnded();
@@ -221,6 +244,44 @@ const replay = () => {
   audioRef.value.pause();
   router.push({ name: "customTaleSave" });
 };
+
+//오디오 볼륨
+const volume = ref(50);
+const audioVolume = () => {
+  if (audioRef.value != null) {
+    audioRef.value.volume = volume.value / 100;
+    audioRef.value.playbackRate = playbackRate.value;
+  }
+};
+const setVolume = (event) => {
+  try {
+    const { offsetX } = event;
+    // 이벤트가 발생한 현재 요소를 사용해 항상 전체 볼륨 바의 너비를 가져옵니다.
+    const barWidth = event.currentTarget.offsetWidth;
+    const clickedVolume = (offsetX / barWidth) * 100;
+
+    volume.value = Math.max(10, Math.min(100, clickedVolume));
+    audioVolume();
+  } catch {
+    volume.value = 50;
+  }
+};
+//오디오 속도 조절
+const playbackRate = ref(1.0);
+// 배속을 조절하는 함수
+const changePlaybackRate = (change) => {
+  try {
+    // 배속을 0.25씩 증감하되, 0.5와 2.00 사이의 값을 유지합니다.
+    playbackRate.value = Math.max(
+      0.5,
+      Math.min(2.0, playbackRate.value + change)
+    );
+    audioRef.value.playbackRate = playbackRate.value;
+  } catch {
+    console.error("Error changing playback rate:", error);
+  }
+};
+
 onMounted(async () => {
   try {
     if (pages.length > 0) {
@@ -239,7 +300,7 @@ onMounted(async () => {
   margin-top: 35px;
   padding: 40px 60px;
   border: 5px solid #cee8e8;
-  /* width: 80vw; */
+  width: 80vw;
 }
 .info {
   display: flex;
@@ -252,7 +313,7 @@ onMounted(async () => {
   display: inline-block;
   box-shadow: inset 0 -20px 0 #c4ecb0;
   font-size: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   margin-top: 20px;
   line-height: 1;
 }
@@ -271,8 +332,8 @@ onMounted(async () => {
   margin-left: 10px;
 }
 .book {
-  margin: 0px 0px 0px 20px;
-  padding: 10px 10px 0px 25px;
+  margin: 0px 0px 0px 80px;
+  padding: 10px 10px 0px 5px;
   display: flex;
   background-color: #21364d;
   width: 950px;
@@ -397,22 +458,98 @@ onMounted(async () => {
 }
 .start,
 .pause {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
-  margin-top: 20px;
 }
 .stop {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
-  margin-top: 20px;
-  margin-left: 20px;
   border-radius: 50%;
   border: 1px solid black;
 }
-.stopbtn{
-    display: flex;
-    justify-content: center;
+.stopbtn {
+  display: flex;
+  justify-content: center;
+}
+
+.speaker-image {
+  width: 60px;
+  height: 60px;
+}
+.volume-bar {
+  position: relative;
+  width: 180px;
+  height: 15px;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.volume-bar::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    transparent 60%,
+    #fff 60%,
+    #fff 100%
+  );
+  background-size: 10px 15px;
+}
+
+.volume-bar-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #0e94ff;
+}
+.controls-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 요소들 사이에 균등한 공간을 만들어 줍니다 */
+  padding: 10px; /* 컨테이너의 내부 여백 */
+  margin: 10px;
+}
+.playstop-controls {
+  display: flex;
+  justify-content: center; /* 이 컨테이너 내의 버튼들을 가운데 정렬 */
+  gap: 1rem;
+  margin-top: 5px;
+}
+.volume-controls {
+  display: flex; /* flex 컨테이너 설정 */
+  align-items: center; /* 요소들을 세로 방향으로 중앙에 정렬 */
+  margin-left: 20px;
+}
+.speed-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.playback-rate {
+  margin: 0 10px;
+  font-size: 1.2rem;
+  background-color: #f5f5f5;
+  color: #000;
+  padding: 2px 8px;
+  min-width: 50px; /* 충분한 너비를 확보하여 숫자가 변동되어도 레이아웃이 바뀌지 않도록 합니다. */
+  text-align: center;
+}
+
+button {
+  background: none;
+  border: none;
+  width: 80px;
+  font-size: 1.7rem;
 }
 </style>

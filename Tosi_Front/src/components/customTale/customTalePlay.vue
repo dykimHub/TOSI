@@ -18,10 +18,7 @@
             :style="{ zIndex: zIndexes[index] }"
           >
             <div class="back" v-if="index >= 1">
-              <img
-                :src="customTaleStore.customTale.thumbnail"
-                class="leftImg"
-              />
+              <img :src="customTaleStore.customTale.thumbnail" class="leftImg" />
               <img src="@/assets/leftarrow.gif" class="left" />
               <img
                 src="@/assets/leftarrowstatic.png"
@@ -47,44 +44,59 @@
           </div>
         </div>
       </div>
-      <div class="stopbtn">
-        <img
-          v-if="isPaused"
-          src="@/assets/playaudio.png"
-          @click="audioPause"
-          class="start"
-        />
-        <img
-          v-else
-          src="@/assets/pause.png"
-          @click="audioPause"
-          class="pause"
-        />
-        <img src="@/assets/stop.png" class="stop" @click="replay()" />
+      <div class="controls-container">
+        <div class="volume-controls">
+          <img
+            src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+            alt="Speaker Image"
+            class="speaker-image"
+          />
+          <div class="volume-bar" @click="setVolume">
+            <div
+              class="volume-bar-active"
+              :style="{ width: volume + '%' }"
+            ></div>
+          </div>
+        </div>
+        <div class="playstop-controls stopbtn">
+          <img
+            v-if="isPaused"
+            src="@/assets/playaudio.png"
+            @click="audioPause"
+            class="start"
+          />
+          <img
+            v-else
+            src="@/assets/pause.png"
+            @click="audioPause"
+            class="pause"
+          />
+          <img src="@/assets/stop.png" class="stop" @click="replay()" />
+        </div>
+        <div class="speed-controls">
+          <button @click="changePlaybackRate(-0.25)"></button>
+          <span class="playback-rate">{{ playbackRate.toFixed(2) }}</span>
+          <button @click="changePlaybackRate(0.25)">>></button>
+        </div>
       </div>
     </div>
   </div>
   <div v-else>is Loading...</div>
 </template>
-
 <script setup>
 import { ref, computed, reactive, onMounted, watch } from "vue";
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { useRouter } from "vue-router";
 import { generateTTS } from "@/util/ttsSpeakerUtil";
-
 const customTaleStore = useCustomTaleStore();
 const router = useRouter();
 const pages = customTaleStore.pages.reverse();
-
 const props = defineProps({
-  speaker: String,
+    speaker: String,
 });
-
 const goToEnd = () => {
-  router.push({ name: "customTaleEnd" });
+    router.push({ name: "customTaleEnd" });
 };
-
 // 페이지 배열의 인덱스를 저장해서 zindex 배열로 만듦
 // zindex는 클수록 위쪽에 위치함
 // map함수로 pages를 돌면서 index + 1을 저장하고 있음
@@ -95,166 +107,191 @@ const currentPageIndex = ref(pages.length - 1);
 // flip: true; 뒤집은 상태, false; 이전 페이지 펼친 상태
 const currentPageNum = ref(1);
 function flipPage(index, flip) {
-  pages[index].flipped = flip;
-
-  // 페이지를 뒤집을 때
-  if (flip) {
-    zIndexes.forEach((_, i) => {
-      if (i === index) {
-        // 페이지 인덱스가 클수록 z-index가 낮아야 함
-        // 제일 낮은 인덱스(첫페이지)가 맨 위에 있어야 해서
-        zIndexes[i] = pages.length - index;
-      }
-      // 배열리스트의 현재 인덱스
-      currentPageIndex.value = index - 1;
-      currentPageNum.value = pages.length - currentPageIndex.value;
-    });
-  } else {
-    // 이전 상태로 되돌리면 해당 페이지가 제일 위에 와야함
-    // zindex의 max값에 1을 더한 값을 저장
-    const maxZIndex = Math.max(...zIndexes) + 1;
-    zIndexes[index] = maxZIndex;
-
-    // 다른 페이지들의 z-index 업데이트
-    zIndexes.forEach((z, i) => {
-      if (i !== index && pages[i].flipped) {
-        zIndexes[i] = z - 1;
-      }
-    });
-    // 배열리스트의 현재 인덱스
-    currentPageIndex.value = index;
-    currentPageNum.value = pages.length - currentPageIndex.value;
-  }
+    pages[index].flipped = flip;
+    // 페이지를 뒤집을 때
+    if (flip) {
+        zIndexes.forEach((_, i) => {
+            if (i === index) {
+                // 페이지 인덱스가 클수록 z-index가 낮아야 함
+                // 제일 낮은 인덱스(첫페이지)가 맨 위에 있어야 해서
+                zIndexes[i] = pages.length - index;
+            }
+            // 배열리스트의 현재 인덱스
+            currentPageIndex.value = index - 1;
+            currentPageNum.value = pages.length - currentPageIndex.value;
+        });
+    } else {
+        // 이전 상태로 되돌리면 해당 페이지가 제일 위에 와야함
+        // zindex의 max값에 1을 더한 값을 저장
+        const maxZIndex = Math.max(...zIndexes) + 1;
+        zIndexes[index] = maxZIndex;
+        // 다른 페이지들의 z-index 업데이트
+        zIndexes.forEach((z, i) => {
+            if (i !== index && pages[i].flipped) {
+                zIndexes[i] = z - 1;
+            }
+        });
+        // 배열리스트의 현재 인덱스
+        currentPageIndex.value = index;
+        currentPageNum.value = pages.length - currentPageIndex.value;
+    }
 }
 // tts
 const items = ref([
-  { name: "다인", speaker: "vdain", emotion: 3, "emotion-strength": 1 },
-  { name: "고은", speaker: "vgoeun", emotion: 3, "emotion-strength": 1 },
-  { name: "미경", speaker: "vmikyung", emotion: 3, "emotion-strength": 1 },
-  { name: "이안", speaker: "vian", emotion: "", "emotion-strength": "" },
-  { name: "대성", speaker: "vdaeseong", emotion: 3, "emotion-strength": 1 },
-  { name: "원탁", speaker: "nwontak", emotion: "", "emotion-strength": "" },
+    { name: "다인", speaker: "vdain", emotion: 3, "emotion-strength": 1 },
+    { name: "고은", speaker: "vgoeun", emotion: 3, "emotion-strength": 1 },
+    { name: "미경", speaker: "vmikyung", emotion: 3, "emotion-strength": 1 },
+    { name: "이안", speaker: "vian", emotion: "", "emotion-strength": "" },
+    { name: "대성", speaker: "vdaeseong", emotion: 3, "emotion-strength": 1 },
+    { name: "원탁", speaker: "nwontak", emotion: "", "emotion-strength": "" },
 ]);
 const audioRef = ref(null); //오디오 재생을 위한 객체
 const audioSrcCache = {}; // 캐시를 저장하는 객체
 const isPaused = ref(false);
 const ttsMaker = async (text) => {
-  //speaker정보
-  const selectedSpeaker = items.value.find(
-    (item) => item.speaker == props.speaker
-  );
-  if (selectedSpeaker) {
-    const speakerName = selectedSpeaker.speaker;
-    const emotion = selectedSpeaker.emotion;
-    const emotionStrength = selectedSpeaker["emotion-strength"];
-    try {
-      const blob = await generateTTS(
-        text,
-        speakerName,
-        emotion,
-        emotionStrength
-      );
-      const url = URL.createObjectURL(blob);
-      audioSrcCache[text] = url; // 결과를 캐시에 저장
-      return url;
-    } catch (error) {
-      console.error("Error:", error);
-      return "";
+    //speaker정보
+    const selectedSpeaker = items.value.find((item) => item.speaker == props.speaker);
+    if (selectedSpeaker) {
+        const speakerName = selectedSpeaker.speaker;
+        const emotion = selectedSpeaker.emotion;
+        const emotionStrength = selectedSpeaker["emotion-strength"];
+        try {
+            const blob = await generateTTS(text, speakerName, emotion, emotionStrength);
+            const url = URL.createObjectURL(blob);
+            audioSrcCache[text] = url; // 결과를 캐시에 저장
+            return url;
+        } catch (error) {
+            console.error("Error:", error);
+            return "";
+        }
     }
-  }
 };
 const autoAudio = (text) => {
-  //기존 오디오 끊기
-  if (audioRef.value != null) {
-    isPaused.value = true;
-    audioRef.value.pause();
-  }
-  // 이미 캐시된 결과가 있는지 확인
-  if (audioSrcCache[text] != null) {
-    audioRef.value = new Audio(audioSrcCache[text]);
-    // audioRef.value.play(); // 재생
-    // 재생이 끝나면 Promise를 resolve하도록 설정
-    audioRef.value.onended = () => {
-      onAudioEnded();
-      resolve();
-    };
-    isPaused.value = false;
-    audioRef.value.play(); // 재생
-  } else {
-    ttsMaker(text).then((url) => {
-      if (url) {
-        audioRef.value = new Audio(url); // 새로운 오디오를 할당
+    //기존 오디오 끊기
+    if (audioRef.value != null) {
+        isPaused.value = true;
+        audioRef.value.pause();
+    }
+    // 이미 캐시된 결과가 있는지 확인
+    if (audioSrcCache[text] != null) {
+        audioRef.value = new Audio(audioSrcCache[text]);
+        audioVolume();
         // 재생이 끝나면 Promise를 resolve하도록 설정
         audioRef.value.onended = () => {
-          onAudioEnded();
-          // resolve();
+            onAudioEnded();
+            resolve();
         };
         isPaused.value = false;
         audioRef.value.play(); // 재생
-      }
-    });
-  }
+    } else {
+        ttsMaker(text).then((url) => {
+            if (url) {
+                audioRef.value = new Audio(url); // 새로운 오디오를 할당
+                audioVolume();
+                // 재생이 끝나면 Promise를 resolve하도록 설정
+                audioRef.value.onended = () => {
+                    onAudioEnded();
+                    // resolve();
+                };
+                isPaused.value = false;
+                audioRef.value.play(); // 재생
+            }
+        });
+    }
 };
 // 오디오 재생이 끝날 때 실행되는 콜백 함수
 const onAudioEnded = () => {
-  if (currentPageIndex.value < pages.length)
-    flipPage(currentPageIndex.value, true);
-  // else console.log("동화 끝");
+    if (currentPageIndex.value < pages.length) flipPage(currentPageIndex.value, true);
+    // else console.log("동화 끝");
+};
+//오디오 볼륨
+const volume = ref(50);
+const audioVolume = () => {
+    if (audioRef.value != null) {
+        audioRef.value.volume = volume.value / 100;
+        audioRef.value.playbackRate = playbackRate.value;
+    }
+};
+const setVolume = (event) => {
+    try {
+        const { offsetX } = event;
+        // 이벤트가 발생한 현재 요소를 사용해 항상 전체 볼륨 바의 너비를 가져옵니다.
+        const barWidth = event.currentTarget.offsetWidth;
+        const clickedVolume = (offsetX / barWidth) * 100;
+        volume.value = Math.max(10, Math.min(100, clickedVolume));
+        audioVolume();
+    } catch {
+        volume.value = 50;
+    }
+};
+//오디오 속도 조절
+const playbackRate = ref(1.0);
+// 배속을 조절하는 함수
+const changePlaybackRate = (change) => {
+    try {
+        // 배속을 0.25씩 증감하되, 0.5와 2.00 사이의 값을 유지합니다.
+        playbackRate.value = Math.max(0.5, Math.min(2.0, playbackRate.value + change));
+        audioRef.value.playbackRate = playbackRate.value;
+    } catch {
+        console.error("Error changing playback rate:", error);
+    }
 };
 // //페이지 변화를 감지해서 틈
 watch(pages, (newPages, oldPages) => {
-  if (newPages && newPages.length > 0) {
-    // 페이지 배열이 변경되었을 때 실행할 코드 작성
-    autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
-  }
+    if (newPages && newPages.length > 0) {
+        // 페이지 배열이 변경되었을 때 실행할 코드 작성
+        autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
+    }
 });
 const audioPause = () => {
-  if (audioRef.value != null) {
-    if (isPaused.value) {
-      audioRef.value.play();
-      isPaused.value = false;
-    } else {
-      audioRef.value.pause();
-      isPaused.value = true;
+    if (audioRef.value != null) {
+        if (isPaused.value) {
+            audioRef.value.play();
+            isPaused.value = false;
+        } else {
+            audioRef.value.pause();
+            isPaused.value = true;
+        }
     }
-  }
 };
 const replay = () => {
-  alert("동화를 멈출게요.");
-  audioRef.value.pause();
-  router.push({ name: "customTaleEnd" });
+    alert("동화를 멈출게요.");
+    audioRef.value.pause();
+    router.push({ name: "customTaleEnd" });
 };
 onMounted(async () => {
-  try {
-    if (pages.length > 0) {
-      await autoAudio(pages[currentPageIndex.value].right);
+    try {
+        if (pages.length > 0) {
+            await autoAudio(pages[currentPageIndex.value].right);
+        }
+    } catch (error) {
+        console.error("Error in onMounted:", error);
     }
-  } catch (error) {
-    console.error("Error in onMounted:", error);
-  }
 });
 </script>
-
 <style scoped>
 .play {
   background-color: white;
   border-radius: 50px;
   margin-top: 35px;
-  padding: 40px 30px;
+  padding: 40px 60px;
   border: 5px solid #cee8e8;
+  width: 80vw;
 }
 .info {
   display: flex;
   justify-content: space-between;
+  width: 950px;
+  margin: 45px 10px 0 45px;
 }
 .title {
   text-decoration: none;
   display: inline-block;
   box-shadow: inset 0 -20px 0 #d3e4ff;
   font-size: 40px;
-  margin: 30px 0px 30px 50px;
+  margin-bottom: 10px;
+  margin-top: 20px;
   line-height: 1;
-  text-align: left;
 }
 .cover {
   background-color: #fff;
@@ -271,8 +308,8 @@ onMounted(async () => {
   margin-left: 10px;
 }
 .book {
-  margin: 0px 0px 0px 45px;
-  padding: 10px 10px 0px 25px;
+  margin: 0px 0px 0px 80px;
+  padding: 10px 10px 0px 5px;
   display: flex;
   background-color: #21364d;
   width: 950px;
@@ -389,7 +426,6 @@ onMounted(async () => {
   margin-left: 20px;
   margin-right: 10px;
 }
-
 .page-progress {
   font-size: 30px;
   display: flex;
@@ -398,22 +434,93 @@ onMounted(async () => {
 }
 .start,
 .pause {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
-  margin-top: 20px;
 }
 .stop {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
-  margin-top: 20px;
-  margin-left: 20px;
   border-radius: 50%;
   border: 1px solid black;
 }
-.stopbtn{
-    display: flex;
-    justify-content: center;
+.stopbtn {
+  display: flex;
+  justify-content: center;
+}
+.speaker-image {
+  width: 60px;
+  height: 60px;
+}
+.volume-bar {
+  position: relative;
+  width: 180px;
+  height: 15px;
+  background-color: #ddd;
+  cursor: pointer;
+}
+.volume-bar::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    transparent 60%,
+    #fff 60%,
+    #fff 100%
+  );
+  background-size: 10px 15px;
+}
+.volume-bar-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #0e94ff;
+}
+.controls-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 요소들 사이에 균등한 공간을 만들어 줍니다 */
+  padding: 10px; /* 컨테이너의 내부 여백 */
+  margin: 10px;
+}
+.playstop-controls {
+  display: flex;
+  justify-content: center; /* 이 컨테이너 내의 버튼들을 가운데 정렬 */
+  gap: 1rem;
+  margin-top: 5px;
+}
+.volume-controls {
+  display: flex; /* flex 컨테이너 설정 */
+  align-items: center; /* 요소들을 세로 방향으로 중앙에 정렬 */
+  margin-left: 20px;
+}
+.speed-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+.playback-rate {
+  margin: 0 10px;
+  font-size: 1.2rem;
+  background-color: #f5f5f5;
+  color: #000;
+  padding: 2px 8px;
+  min-width: 50px; /* 충분한 너비를 확보하여 숫자가 변동되어도 레이아웃이 바뀌지 않도록 합니다. */
+  text-align: center;
+}
+button {
+  background: none;
+  border: none;
+  width: 80px;
+  font-size: 1.7rem;
 }
 </style>
