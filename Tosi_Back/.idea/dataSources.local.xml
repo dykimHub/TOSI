@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-233.13135.103">
+    <data-source name="ssafy@localhost" uuid="9a1043b8-a443-4009-8af3-533e9552c853">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <user-name>ssafy</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ac4b7490-d445-41eb-b797-8e7f68201781" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2c4HlJ0pPtXk9WrA83ejL1I3eGL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.tosi [package].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.TosiBackApplication.executor": "Run",
+    "git-widget-placeholder": "frontend/feature/taledetail2",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/SSAFY/Desktop/폴더/참고자료/dropbox/07_Vue/제공BackEnd/SpringBootBoard_API",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="TosiBackApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="tosi" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ssafy.tosi.TosiBackApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-azul-17.0.10-f644763e9732-59acb15f" />
+        <option value="jdk-17.0.9-corretto-17.0.9-f644763e9732-ebaef533" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ac4b7490-d445-41eb-b797-8e7f68201781" name="Changes" comment="" />
+      <created>1707364080818</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1707364080818</updated>
+      <workItem from="1707364082553" duration="257000" />
+      <workItem from="1707364347773" duration="542000" />
+      <workItem from="1707364898143" duration="1792000" />
+      <workItem from="1707367058606" duration="2991000" />
+      <workItem from="1707434577853" duration="860000" />
+      <workItem from="1707446059101" duration="391000" />
+      <workItem from="1707446696187" duration="1303000" />
+      <workItem from="1707448474822" duration="19000" />
+      <workItem from="1707448512031" duration="241000" />
+      <workItem from="1707448940090" duration="5357000" />
+      <workItem from="1707532957071" duration="1175000" />
+      <workItem from="1707534157060" duration="2000" />
+      <workItem from="1707534230366" duration="723000" />
+      <workItem from="1707538017450" duration="616000" />
+      <workItem from="1707576406811" duration="69000" />
+      <workItem from="1707576557879" duration="639000" />
+      <workItem from="1707644947090" duration="3399000" />
+      <workItem from="1707649600217" duration="606000" />
+      <workItem from="1707650762550" duration="49000" />
+      <workItem from="1707652859012" duration="4164000" />
+      <workItem from="1707696828287" duration="11000" />
+      <workItem from="1707696870127" duration="161000" />
+      <workItem from="1707697181622" duration="282000" />
+      <workItem from="1707697476214" duration="304000" />
+      <workItem from="1707697982015" duration="184000" />
+      <workItem from="1707728003148" duration="280000" />
+      <workItem from="1707728329361" duration="1156000" />
+      <workItem from="1707778306726" duration="78000" />
+      <workItem from="1707781980044" duration="670000" />
+      <workItem from="1707787407970" duration="2478000" />
+      <workItem from="1707805472594" duration="494000" />
+      <workItem from="1707808323546" duration="599000" />
+      <workItem from="1707812320098" duration="1577000" />
+      <workItem from="1707869992878" duration="390000" />
+      <workItem from="1707870464423" duration="11000" />
+      <workItem from="1707870503002" duration="144000" />
+      <workItem from="1707870816850" duration="886000" />
+      <workItem from="1707873012395" duration="17000" />
+      <workItem from="1707873116522" duration="48000" />
+      <workItem from="1707873173015" duration="3000" />
+      <workItem from="1707873202230" duration="292000" />
+      <workItem from="1707873856550" duration="20000" />
+      <workItem from="1707873912785" duration="373000" />
+      <workItem from="1707874345243" duration="1297000" />
+      <workItem from="1707882339568" duration="79000" />
+      <workItem from="1707882467017" duration="563000" />
+      <workItem from="1707890068242" duration="200000" />
+      <workItem from="1707890301297" duration="1224000" />
+      <workItem from="1707896597667" duration="410000" />
+      <workItem from="1707897133058" duration="424000" />
+      <workItem from="1707912183554" duration="655000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
