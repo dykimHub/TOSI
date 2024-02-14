@@ -94,6 +94,7 @@ const props = defineProps({
 });
 
 const goToEnd = () => {
+    alert("동화를 멈출게요.");
     audioRef.value.pause();
     router.push({ name: "taleEnd", params: { taleId: taleDetailStore.taleId } });
 };
