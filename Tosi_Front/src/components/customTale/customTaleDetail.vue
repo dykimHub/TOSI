@@ -43,8 +43,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="infobtn">
-                  <button class="button" @click="readBook">재생</button>
+                <div class="startbtn">
+                  <div class="rocketborder" @click="readBook">
+                    <img src="@/assets/rocket.png" class="rocket" />
+                  </div>
+                  <div class="starttitle">시작</div>
                 </div>
               </div>
             </div>
@@ -172,8 +175,8 @@ onMounted(async () => {
   width: 350px;
   height: 370px;
 }
-.inputgroup{
-    padding: 10px;
+.inputgroup {
+  padding: 10px;
 }
 .play {
   background-color: white;
@@ -190,7 +193,7 @@ onMounted(async () => {
 .bigtitle {
   text-decoration: none;
   display: inline-block;
-  box-shadow: inset 0 -20px 0 #d3e4ff;;
+  box-shadow: inset 0 -20px 0 #d3e4ff;
   font-size: 40px;
   /* margin: 30px 0px 30px 50px; */
   margin-bottom: 40px;
@@ -314,5 +317,33 @@ onMounted(async () => {
 
 .infobtn {
   text-align: center;
+}
+.rocketborder {
+  width: 120px;
+  height: 120px;
+  border: 2px solid black;
+  border-radius: 50%;
+  margin: 30px 0 0 0;
+}
+.rocket {
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  margin: 20px 0 0 20px;
+  transition: transform 0.5s ease-in-out; /* 애니메이션 효과 부드럽게 */
+}
+.rocket:hover {
+  animation: rocketLaunch 3s forwards; /* 마우스 호버 시 애니메이션 실행 */
+}
+@keyframes rocketLaunch {
+  to {
+    transform: translate(300px, -300px) rotate(45deg); /* 대각선 이동 및 회전 */
+    opacity: 0; /* 사라지는 효과 */
+  }
+}
+.startbtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
