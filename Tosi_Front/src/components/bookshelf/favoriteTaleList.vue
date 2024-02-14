@@ -208,7 +208,7 @@ ul {
 .oneTale {
   width: 13em;
   text-align: center;
-  margin: 2em;
+  margin: 1em;
   margin-right: 55px;
 }
 

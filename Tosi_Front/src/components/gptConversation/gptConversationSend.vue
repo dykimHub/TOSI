@@ -1,51 +1,53 @@
 <template>
-    <div id="app" class="container">
-      <div id="top">
-      <h1 class="welcome">{{props.bname}}의 채팅방💬</h1>
-      </div>
-      <div id="Hi">
-            <p>{{props.cname}}님이 입장했습니다!</p>
-      </div>
-      <div id="body">
-        <ul style="list-style:none;">
-          <div class="bubble">
-            <p class="from-them">채팅 최대 횟수는 5회입니다. 등장인물과 대화를 시도해 보세요! 😊</p>
-          </div>
-          <li v-for="item in chatMemory">
-            <div class="bubble">
-              <p :class="[item.role=='user' ? 'from-me':'from-them']">{{item.message}}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div v-if="chatCount==6" id="Hi">
-            <p>{{props.cname}}님이 나갔습니다.</p>
+    <div class="talelistContainer">
+      <div id="app" class="container">
+        <div id="top">
+          <h1 class="welcome">{{props.bname}}의 채팅방💬</h1>
         </div>
-      <div class="mb-3">
-        <div class="input-group">
-          <input @keyup.enter="generateChat" type="text" id="message" v-model="message" class="form-control" placeholder="메세지를 입력하세요."/>
+        <div id="Hi">
+          <p>{{props.cname}}님이 입장했습니다!</p>
+        </div>
+        <div id="body">
+          <ul style="list-style:none;">
+            <div class="bubble">
+              <p class="from-them">채팅 최대 횟수는 5회입니다. 등장인물과 대화를 시도해 보세요! 😊</p>
+            </div>
+            <li v-for="item in chatMemory">
+              <div class="bubble">
+                <p :class="[item.role=='user' ? 'from-me':'from-them']">{{item.message}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div v-if="chatCount==6" id="Hi">
+          <p>{{props.cname}}님이 나갔습니다.</p>
+        </div>
+        <div class="mb-3">
+          <div class="input-group">
+            <input @keyup.enter="generateChat" type="text" id="message" v-model="message" class="form-control" placeholder="메세지를 입력하세요."/>
             <button @click="generateChat">
               <div class="svg-wrapper-1">
                 <div class="svg-wrapper">
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
                   >
-                    <path fill="none" d="M0 0h24v24H0z"></path>
-                    <path
-                      fill="currentColor"
-                      d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                    ></path>
-                  </svg>
-                </div>
+                  <path fill="none" d="M0 0h24v24H0z"></path>
+                  <path
+                  fill="currentColor"
+                  d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                  ></path>
+                </svg>
               </div>
-              <span></span>
-            </button>
+            </div>
+            <span></span>
+          </button>
         </div>
       </div>
     </div>
+  </div>
   </template>
   
   <script setup>
@@ -181,6 +183,7 @@
       rgb(255, 230, 230) 0px 2px 4px,
        rgb(231, 242, 255) 0px 2px 8px,
         rgb(141, 255, 238) 0px 0px 5px;
+        margin-bottom: 50px;
   }
 
   #top{
@@ -350,6 +353,7 @@
   
   .container {
     margin: 0 auto;
+    margin:-v;
     max-width: 600px;
     padding: 1rem;
   }
@@ -441,6 +445,18 @@ button:hover span {
 
 button:active {
   transform: scale(0.95);
+}
+
+
+.talelistContainer {
+  justify-content: center;
+  background-color: white;
+  border-radius: 50px;
+  margin: 35px;
+  padding-top: 40px;
+  opacity: 0.95;
+  border: 5px solid #cee8e8;
+  width: 80vw;
 }
 
 @keyframes fly-1 {
