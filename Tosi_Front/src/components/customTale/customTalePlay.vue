@@ -1,102 +1,94 @@
 <template>
-  <div v-if="customTaleStore.pages">
-    <div class="play">
-      <div class="title">{{ customTaleStore.customTale.title }}</div>
-      <div class="page-progress">
-        &lt; {{ currentPageNum }} / {{ pages.length }} >
-      </div>
-      <div class="book">
-        <div class="cover">
-          <img :src="customTaleStore.customTale.thumbnail" class="coverImg" />
-        </div>
-        <div class="flip-book">
-          <div
-            class="flip"
-            v-for="(page, index) in pages"
-            :key="`page-${index}`"
-            :class="{ flipped: page.flipped }"
-            :style="{ zIndex: zIndexes[index] }"
-          >
-            <div class="back" v-if="index >= 1">
-              <img :src="customTaleStore.customTale.thumbnail" class="leftImg" />
-              <img src="@/assets/leftarrow.gif" class="left" />
-              <img
-                src="@/assets/leftarrowstatic.png"
-                class="leftstatic"
-                @click="flipPage(index, false)"
-              />
+    <div v-if="customTaleStore.pages">
+        <div class="play">
+            <div class="title">{{ customTaleStore.customTale.title }}</div>
+            <div class="page-progress">&lt; {{ currentPageNum }} / {{ pages.length }} ></div>
+            <div class="book">
+                <div class="cover">
+                    <img :src="customTaleStore.customTale.thumbnail" class="coverImg" />
+                </div>
+                <div class="flip-book">
+                    <div
+                        class="flip"
+                        v-for="(page, index) in pages"
+                        :key="`page-${index}`"
+                        :class="{ flipped: page.flipped }"
+                        :style="{ zIndex: zIndexes[index] }"
+                    >
+                        <div class="back" v-if="index >= 1">
+                            <img :src="customTaleStore.customTale.thumbnail" class="leftImg" />
+                            <img src="@/assets/leftarrow.gif" class="left" />
+                            <img
+                                src="@/assets/leftarrowstatic.png"
+                                class="leftstatic"
+                                @click="flipPage(index, false)"
+                            />
+                        </div>
+                        <div class="front pre-wrap">
+                            <div class="page-separator-right"></div>
+                            <div class="content">{{ pages[index].right }}</div>
+                            <div v-if="index === 0">
+                                <img src="@/assets/end.gif" class="end" @click="goToEnd" />
+                            </div>
+                            <div v-else>
+                                <img src="@/assets/rightarrow.gif" class="right" />
+                                <img
+                                    src="@/assets/rightarrowstatic.png"
+                                    class="rightstatic"
+                                    @click="flipPage(index, true)"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="front pre-wrap">
-              <div class="page-separator-right"></div>
-              <div class="content">{{ pages[index].right }}</div>
-              <div v-if="index === 0">
-                <img src="@/assets/end.gif" class="end" @click="goToEnd" />
-              </div>
-              <div v-else>
-                <img src="@/assets/rightarrow.gif" class="right" />
-                <img
-                  src="@/assets/rightarrowstatic.png"
-                  class="rightstatic"
-                  @click="flipPage(index, true)"
-                />
-              </div>
+            <div class="controls-container">
+                <div class="volume-controls">
+                    <img
+                        src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+                        alt="Speaker Image"
+                        class="speaker-image"
+                    />
+                    <div class="volume-bar" @click="setVolume">
+                        <div class="volume-bar-active" :style="{ width: volume + '%' }"></div>
+                    </div>
+                </div>
+
+                <div class="playstop-controls stopbtn">
+                    <img v-if="isPaused" src="@/assets/playaudio.png" @click="audioPause" class="start" />
+                    <img v-else src="@/assets/pause.png" @click="audioPause" class="pause" />
+                    <img src="@/assets/stop.png" class="stop" @click="replay()" />
+                </div>
+
+                <div class="speed-controls">
+                    <button @click="changePlaybackRate(-0.25)"><<</button>
+                    <span class="playback-rate">{{ playbackRate.toFixed(2) }}</span>
+                    <button @click="changePlaybackRate(0.25)">>></button>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="controls-container">
-        <div class="volume-controls">
-          <img
-            src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
-            alt="Speaker Image"
-            class="speaker-image"
-          />
-          <div class="volume-bar" @click="setVolume">
-            <div
-              class="volume-bar-active"
-              :style="{ width: volume + '%' }"
-            ></div>
-          </div>
-        </div>
-        <div class="playstop-controls stopbtn">
-          <img
-            v-if="isPaused"
-            src="@/assets/playaudio.png"
-            @click="audioPause"
-            class="start"
-          />
-          <img
-            v-else
-            src="@/assets/pause.png"
-            @click="audioPause"
-            class="pause"
-          />
-          <img src="@/assets/stop.png" class="stop" @click="replay()" />
-        </div>
-        <div class="speed-controls">
-          <button @click="changePlaybackRate(-0.25)"></button>
-          <span class="playback-rate">{{ playbackRate.toFixed(2) }}</span>
-          <button @click="changePlaybackRate(0.25)">>></button>
-        </div>
-      </div>
     </div>
-  </div>
-  <div v-else>is Loading...</div>
+    <div v-else>is Loading...</div>
 </template>
+
 <script setup>
 import { ref, computed, reactive, onMounted, watch } from "vue";
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { useRouter } from "vue-router";
 import { generateTTS } from "@/util/ttsSpeakerUtil";
+
 const customTaleStore = useCustomTaleStore();
 const router = useRouter();
 const pages = customTaleStore.pages.reverse();
+
 const props = defineProps({
     speaker: String,
 });
+
 const goToEnd = () => {
     router.push({ name: "customTaleEnd" });
 };
+
 // 페이지 배열의 인덱스를 저장해서 zindex 배열로 만듦
 // zindex는 클수록 위쪽에 위치함
 // map함수로 pages를 돌면서 index + 1을 저장하고 있음
@@ -108,6 +100,7 @@ const currentPageIndex = ref(pages.length - 1);
 const currentPageNum = ref(1);
 function flipPage(index, flip) {
     pages[index].flipped = flip;
+
     // 페이지를 뒤집을 때
     if (flip) {
         zIndexes.forEach((_, i) => {
@@ -125,6 +118,7 @@ function flipPage(index, flip) {
         // zindex의 max값에 1을 더한 값을 저장
         const maxZIndex = Math.max(...zIndexes) + 1;
         zIndexes[index] = maxZIndex;
+
         // 다른 페이지들의 z-index 업데이트
         zIndexes.forEach((z, i) => {
             if (i !== index && pages[i].flipped) {
@@ -204,6 +198,7 @@ const onAudioEnded = () => {
     if (currentPageIndex.value < pages.length) flipPage(currentPageIndex.value, true);
     // else console.log("동화 끝");
 };
+
 //오디오 볼륨
 const volume = ref(50);
 const audioVolume = () => {
@@ -218,6 +213,7 @@ const setVolume = (event) => {
         // 이벤트가 발생한 현재 요소를 사용해 항상 전체 볼륨 바의 너비를 가져옵니다.
         const barWidth = event.currentTarget.offsetWidth;
         const clickedVolume = (offsetX / barWidth) * 100;
+
         volume.value = Math.max(10, Math.min(100, clickedVolume));
         audioVolume();
     } catch {
@@ -236,6 +232,7 @@ const changePlaybackRate = (change) => {
         console.error("Error changing playback rate:", error);
     }
 };
+
 // //페이지 변화를 감지해서 틈
 watch(pages, (newPages, oldPages) => {
     if (newPages && newPages.length > 0) {
@@ -269,258 +266,256 @@ onMounted(async () => {
     }
 });
 </script>
+
 <style scoped>
 .play {
-  background-color: white;
-  border-radius: 50px;
-  margin-top: 35px;
-  padding: 40px 60px;
-  border: 5px solid #cee8e8;
-  width: 80vw;
+    background-color: white;
+    border-radius: 50px;
+    margin-top: 35px;
+    padding: 40px 30px;
+    border: 5px solid #cee8e8;
 }
 .info {
-  display: flex;
-  justify-content: space-between;
-  width: 950px;
-  margin: 45px 10px 0 45px;
+    display: flex;
+    justify-content: space-between;
 }
 .title {
-  text-decoration: none;
-  display: inline-block;
-  box-shadow: inset 0 -20px 0 #d3e4ff;
-  font-size: 40px;
-  margin-bottom: 10px;
-  margin-top: 20px;
-  line-height: 1;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: inset 0 -20px 0 #d3e4ff;
+    font-size: 40px;
+    margin: 30px 0px 30px 50px;
+    line-height: 1;
+    text-align: left;
 }
 .cover {
-  background-color: #fff;
-  box-sizing: border-box;
-  width: 500px;
-  height: 500px;
-  border-radius: 0px 40px 40px 0px;
+    background-color: #fff;
+    box-sizing: border-box;
+    width: 500px;
+    height: 500px;
+    border-radius: 0px 40px 40px 0px;
 }
 .coverImg,
 .leftImg {
-  width: 435px;
-  height: 450px;
-  margin-top: 25px;
-  margin-left: 10px;
+    width: 435px;
+    height: 450px;
+    margin-top: 25px;
+    margin-left: 10px;
 }
 .book {
-  margin: 0px 0px 0px 80px;
-  padding: 10px 10px 0px 5px;
-  display: flex;
-  background-color: #21364d;
-  width: 950px;
-  height: 520px;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    margin: 0px 0px 0px 45px;
+    padding: 10px 10px 0px 25px;
+    display: flex;
+    background-color: #21364d;
+    width: 950px;
+    height: 520px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
 }
 .flip-book {
-  width: 500px;
-  height: 500px;
-  position: relative;
-  perspective: 1500px;
-  border-radius: 100px;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    perspective: 1500px;
+    border-radius: 100px;
 }
 .flip {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform-origin: left;
-  transform-style: preserve-3d;
-  transition: 0.5s;
-  color: #000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transform-style: preserve-3d;
+    transition: 0.5s;
+    color: #000;
 }
 .front {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  backface-visibility: hidden;
-  background-color: #fff;
-  box-sizing: border-box;
-  padding: 0 13px;
-  border-radius: 40px 0px 0px 40px;
-  box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5); /* 내부 그림자 추가 */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 0 13px;
+    border-radius: 40px 0px 0px 40px;
+    box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5); /* 내부 그림자 추가 */
 }
 .page-separator-right {
-  position: absolute;
-  top: 6.5%;
-  right: 100%;
-  width: 2px;
-  height: 88%;
-  /* background-color: #5d4037; */
-  background-color: #ede7e0;
-  transform: translateX(1px);
-  border-radius: 10px;
+    position: absolute;
+    top: 6.5%;
+    right: 100%;
+    width: 2px;
+    height: 88%;
+    /* background-color: #5d4037; */
+    background-color: #ede7e0;
+    transform: translateX(1px);
+    border-radius: 10px;
 }
 .page-separator-left {
-  position: absolute;
-  top: 6%;
-  left: 100%;
-  width: 2px;
-  height: 88%;
-  /* background-color: #5d4037; */
-  background-color: #ede7e0;
-  transform: translateX(-1px);
-  border-radius: 10px;
+    position: absolute;
+    top: 6%;
+    left: 100%;
+    width: 2px;
+    height: 88%;
+    /* background-color: #5d4037; */
+    background-color: #ede7e0;
+    transform: translateX(-1px);
+    border-radius: 10px;
 }
 .back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  backface-visibility: hidden;
-  background-color: #fff;
-  transform: rotateY(180deg);
-  border-radius: 0px 40px 40px 0px;
-  box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    background-color: #fff;
+    transform: rotateY(180deg);
+    border-radius: 0px 40px 40px 0px;
+    box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
 }
 .flip.flipped {
-  transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
 }
 .pre-wrap {
-  white-space: pre-wrap;
+    white-space: pre-wrap;
 }
 .left,
 .leftstatic,
 .right,
 .rightstatic {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  background: white;
-  cursor: pointer;
-  bottom: 13px;
-  right: 13px;
-  border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background: white;
+    cursor: pointer;
+    bottom: 13px;
+    right: 13px;
+    border-radius: 50%;
 }
 .rightstatic:hover,
 .leftstatic:hover {
-  width: 40px;
-  height: 40px;
-  opacity: 0;
-  cursor: pointer;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    cursor: pointer;
 }
 .end {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  background: white;
-  cursor: pointer;
-  bottom: 13px;
-  right: 13px;
-  border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background: white;
+    cursor: pointer;
+    bottom: 13px;
+    right: 13px;
+    border-radius: 50%;
 }
 .content {
-  display: flex;
-  align-items: center;
-  font-size: 30px;
-  height: 100%;
-  margin-left: 20px;
-  margin-right: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    height: 100%;
+    margin-left: 20px;
+    margin-right: 10px;
 }
+
 .page-progress {
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
-  margin: -10px 0px 20px 0px;
-}
-.start,
-.pause {
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
-}
-.stop {
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
-  border-radius: 50%;
-  border: 1px solid black;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin: -10px 0px 20px 0px;
 }
 .stopbtn {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
+}
+
+.start,
+.pause {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+}
+.stop {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 1px solid black;
 }
 .speaker-image {
-  width: 60px;
-  height: 60px;
+    width: 60px;
+    height: 60px;
 }
 .volume-bar {
-  position: relative;
-  width: 180px;
-  height: 15px;
-  background-color: #ddd;
-  cursor: pointer;
+    position: relative;
+    width: 180px;
+    height: 15px;
+    background-color: #ddd;
+    cursor: pointer;
 }
+
 .volume-bar::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(
-    90deg,
-    transparent,
-    transparent 60%,
-    #fff 60%,
-    #fff 100%
-  );
-  background-size: 10px 15px;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(90deg, transparent, transparent 60%, #fff 60%, #fff 100%);
+    background-size: 10px 15px;
 }
+
 .volume-bar-active {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: #0e94ff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #0e94ff;
 }
 .controls-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* 요소들 사이에 균등한 공간을 만들어 줍니다 */
-  padding: 10px; /* 컨테이너의 내부 여백 */
-  margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 요소들 사이에 균등한 공간을 만들어 줍니다 */
+    padding: 10px; /* 컨테이너의 내부 여백 */
+    margin: 10px;
 }
 .playstop-controls {
-  display: flex;
-  justify-content: center; /* 이 컨테이너 내의 버튼들을 가운데 정렬 */
-  gap: 1rem;
-  margin-top: 5px;
+    display: flex;
+    justify-content: center; /* 이 컨테이너 내의 버튼들을 가운데 정렬 */
+    gap: 1rem;
+    margin-top: 5px;
 }
 .volume-controls {
-  display: flex; /* flex 컨테이너 설정 */
-  align-items: center; /* 요소들을 세로 방향으로 중앙에 정렬 */
-  margin-left: 20px;
+    display: flex; /* flex 컨테이너 설정 */
+    align-items: center; /* 요소들을 세로 방향으로 중앙에 정렬 */
+    margin-left: 20px;
 }
 .speed-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
 }
+
 .playback-rate {
-  margin: 0 10px;
-  font-size: 1.2rem;
-  background-color: #f5f5f5;
-  color: #000;
-  padding: 2px 8px;
-  min-width: 50px; /* 충분한 너비를 확보하여 숫자가 변동되어도 레이아웃이 바뀌지 않도록 합니다. */
-  text-align: center;
+    margin: 0 10px;
+    font-size: 1.2rem;
+    background-color: #f5f5f5;
+    color: #000;
+    padding: 2px 8px;
+    min-width: 50px; /* 충분한 너비를 확보하여 숫자가 변동되어도 레이아웃이 바뀌지 않도록 합니다. */
+    text-align: center;
 }
+
 button {
-  background: none;
-  border: none;
-  width: 80px;
-  font-size: 1.7rem;
+    background: none;
+    border: none;
+    width: 80px;
+    font-size: 1.7rem;
 }
 </style>

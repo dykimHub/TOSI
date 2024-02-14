@@ -20,8 +20,7 @@
           <div class="chat">
             <div class="startbox">
               <div class="infobox">
-                <div class="voicetitle">
-                  <img class="mic" src="@/assets/othercustom.png" />친구들의 동화 보기</div>
+                <div class="voicetitle">친구들의 동화 보기</div>
                 <div class="inputgroup">
                   <div class="othercustom">
                     <div class="twoColumns">
@@ -87,17 +86,12 @@ a {
   color: black;
   text-decoration: none;
 }
-.topOfTaleList {
-  margin-left: 30px;
-}
 .infobox {
   border: 5px solid #cee8e8;
   border-radius: 30px;
   background-color: rgb(255, 255, 255);
   font-size: 20px;
-  width: 450px;
-  height: 450px;
-  margin-left: 50px;
+  /* margin-right: 70px; */
 }
 .startbox {
   display: flex;
@@ -110,15 +104,13 @@ a {
   background-color: white;
   border-radius: 50px;
   margin-top: 35px;
-  padding-top: 40px;
-  padding-bottom: 60px;
+  padding: 40px 30px;
   border: 5px solid #cee8e8;
-  margin-bottom: 30px;
-  width: 80vw;
+  margin-bottom: 20px;
 }
 .container {
   display: flex;
-  width: 70vw;
+  /* width: 70vw; */
   margin: 40px 0 0 60px;
 }
 .bigtitle {
@@ -133,7 +125,6 @@ a {
 }
 .taleinfo {
   display: flex;
-  margin-left: 30px;
 }
 .title {
   margin: 30px 0px 25px 0px;
@@ -208,7 +199,7 @@ a {
   width: 260px;
   height: 60px;
   text-align: center;
-  margin: -30px 0px 0px 90px;
+  margin: -40px 0px 0px 70px;
   background-color: #ebffdf;
   position: relative;
   z-index: 5;
@@ -256,9 +247,10 @@ a {
 .twoColumns {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2개의 열로 설정 */
+  gap: 20px; /* 열 사이의 간격 설정 */
 }
 .onetale {
-  margin: 10px 10px 10px 35px;
+  margin: 10px;
 }
 .othertitle {
   overflow: hidden;
