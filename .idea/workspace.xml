@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5095283-cb23-464b-a673-ebe2fab625c4" name="Changes" comment="Fix: pom.xml, application.properties">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +32,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "backend/feature/tale",
+    "git-widget-placeholder": "frontend/feature/taledetail2",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/SSAFY/Desktop/myfeature/Tosi_Back",
     "node.js.detected.package.eslint": "true",
@@ -58,6 +59,8 @@
       <workItem from="1706253439769" duration="279000" />
       <workItem from="1706253768204" duration="446000" />
       <workItem from="1706254222149" duration="97000" />
+      <workItem from="1707709622537" duration="7000" />
+      <workItem from="1707710115272" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="Fix: pom.xml, application.properties">
       <option name="closed" value="true" />
