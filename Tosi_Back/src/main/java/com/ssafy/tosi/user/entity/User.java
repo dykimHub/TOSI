@@ -33,8 +33,9 @@ public class User {
     @Column(name = "regDate", nullable = false)
     private LocalDateTime regDate;
 
+//    @ColumnDefault("나의 책장")
     @Column(name = "bookshelfName", nullable = false, columnDefinition = "나의 책장")
-    private String bookshelfName;
+    private String bookshelfName = "나의 책장";
 
     @OneToMany
     @JoinColumn(name = "userId")
