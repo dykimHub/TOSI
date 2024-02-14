@@ -76,7 +76,7 @@
         </div>
 
         <div class="speed-controls">
-          <button @click="changePlaybackRate(-0.25)"><<</button>
+          <button @click="changePlaybackRate(-0.25)"></button>
           <span class="playback-rate">{{ playbackRate.toFixed(2) }}</span>
           <button @click="changePlaybackRate(0.25)">>></button>
         </div>
