@@ -59,9 +59,14 @@
                     <img src="@/assets/stop.png" class="stop" @click="replay()" />
                 </div>
                 <div class="speed-controls">
-                    <button @click="changePlaybackRate(-0.25)"></button>
-                    <span class="playback-rate">{{ playbackRate.toFixed(2) }}</span>
-                    <button @click="changePlaybackRate(0.25)">>></button>
+                    <input type="radio" id="button1" name="buttons" v-model="selectedButton" value="button1" />
+                    <label for="button1" class="button" @click="changePlaybackRate(0.75)">느리게</label>
+
+                    <input type="radio" id="button2" name="buttons" v-model="selectedButton" value="button2" checked />
+                    <label for="button2" class="button" @click="changePlaybackRate(1)">보통</label>
+
+                    <input type="radio" id="button3" name="buttons" v-model="selectedButton" value="button3" />
+                    <label for="button3" class="button" @click="changePlaybackRate(1.25)">빠르게</label>
                 </div>
             </div>
         </div>
@@ -213,8 +218,7 @@ const playbackRate = ref(1.0);
 // 배속을 조절하는 함수
 const changePlaybackRate = (change) => {
     try {
-        // 배속을 0.25씩 증감하되, 0.5와 2.00 사이의 값을 유지합니다.
-        playbackRate.value = Math.max(0.5, Math.min(2.0, playbackRate.value + change));
+        playbackRate.value = change;
         audioRef.value.playbackRate = playbackRate.value;
     } catch {
         console.error("Error changing playback rate:", error);
@@ -433,6 +437,7 @@ onMounted(async () => {
     display: flex;
     justify-content: center;
 }
+
 .speaker-image {
     width: 60px;
     height: 60px;
@@ -444,6 +449,7 @@ onMounted(async () => {
     background-color: #ddd;
     cursor: pointer;
 }
+
 .volume-bar::after {
     content: "";
     display: block;
@@ -455,6 +461,7 @@ onMounted(async () => {
     background-image: linear-gradient(90deg, transparent, transparent 60%, #fff 60%, #fff 100%);
     background-size: 10px 15px;
 }
+
 .volume-bar-active {
     position: absolute;
     top: 0;
@@ -464,41 +471,59 @@ onMounted(async () => {
 }
 .controls-container {
     display: flex;
-    align-items: center;
-    justify-content: space-between; /* 요소들 사이에 균등한 공간을 만들어 줍니다 */
-    padding: 10px; /* 컨테이너의 내부 여백 */
-    margin: 10px;
+    justify-content: space-between;
+    width: 950px;
+    margin-left: 35px;
+    margin-top: 15px;
 }
 .playstop-controls {
     display: flex;
-    justify-content: center; /* 이 컨테이너 내의 버튼들을 가운데 정렬 */
+    justify-content: center;
     gap: 1rem;
     margin-top: 5px;
 }
 .volume-controls {
-    display: flex; /* flex 컨테이너 설정 */
-    align-items: center; /* 요소들을 세로 방향으로 중앙에 정렬 */
+    display: flex;
+    align-items: center;
     margin-left: 20px;
 }
 .speed-controls {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-right: 20px;
+    justify-content: space-around;
+    width: 250px;
+    margin-left: -10px;
 }
-.playback-rate {
-    margin: 0 10px;
-    font-size: 1.2rem;
-    background-color: #f5f5f5;
-    color: #000;
-    padding: 2px 8px;
-    min-width: 50px; /* 충분한 너비를 확보하여 숫자가 변동되어도 레이아웃이 바뀌지 않도록 합니다. */
+
+label {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 80px;
+    height: 30px;
+    margin-right: 5px;
+    box-shadow: 2px 2px 0 #d3e4ff;
     text-align: center;
 }
-button {
-    background: none;
-    border: none;
-    width: 80px;
-    font-size: 1.7rem;
+.button:hover {
+    background-color: #c4ecb0;
+    transition: 0.7s;
+}
+
+#button1:checked + label {
+    background-color: #d3e4ff; /* 선택된 버튼의 배경색 */
+}
+
+#button2:checked + label {
+    background-color: #d3e4ff; /* 선택된 버튼의 배경색 */
+}
+
+#button3:checked + label {
+    background-color: #d3e4ff; /* 선택된 버튼의 배경색 */
+}
+input[type="radio"] {
+    -webkit-appearance: none; /* Safari 및 Chrome 등의 웹킷 브라우저 */
+    -moz-appearance: none; /* Firefox */
+    appearance: none;
 }
 </style>
