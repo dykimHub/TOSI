@@ -92,7 +92,7 @@ const getCustomTaleText = async function (userInputMessage) {
   const getCustomTaleImage = async (imagePrompt) => {
     
   
-    const API_KEY = "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";
+    const API_KEY = "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";
     const API_URL = "https://api.openai.com/v1/images/generations";
   
     try {

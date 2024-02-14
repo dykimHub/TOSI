@@ -454,7 +454,6 @@ button:active {
   border-radius: 50px;
   margin: 35px;
   padding-top: 40px;
-  opacity: 0.95;
   border: 5px solid #cee8e8;
   width: 80vw;
 }

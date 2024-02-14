@@ -5,17 +5,41 @@
             <button @click="[openRegistForm(), closeLoginForm()]" class="regist-button">회원가입</button>
             <button @click="[openLoginForm(), closeRegistForm()]" class="login-button">로그인</button>
         </div>
-        <div  class="toMenus">
-            <img class="icon" @click="toggleIcon('Play')" :class="{ 'active': activeIcon === 'Play' }"
-                src="@/assets/Play.png" />
-            <img class="icon" @click="toggleIcon('Maker')" :class="{ 'active': activeIcon === 'Maker' }"
-                src="@/assets/Maker.png" />
-            <img class="icon" @click="toggleIcon('Talk')" :class="{ 'active': activeIcon === 'Talk' }"
-                src="@/assets/Talk.png" />
-            <img class="icon" @click="toggleIcon('Mine')" :class="{ 'active': activeIcon === 'Mine' }"
-                src="@/assets/Mine.png" />
-        </div>
-        <h5 v-if="!isPlaying">토씨의 특별한 기능에 대해서 알아보려면 누르세요</h5>
+        <div class="toMenus">
+    <img
+      class="icon"
+      @click="toggleIcon('Play')"
+      :class="{ 'active': isActiveIcon('Play') }"
+      @mouseover="setActiveIcon('Play')"
+      @mouseleave="resetActiveIcon"
+      src="@/assets/Play.png"
+    />
+    <img
+      class="icon"
+      @click="toggleIcon('Maker')"
+      :class="{ 'active': isActiveIcon('Maker') }"
+      @mouseover="setActiveIcon('Maker')"
+      @mouseleave="resetActiveIcon"
+      src="@/assets/Maker.png"
+    />
+    <img
+      class="icon"
+      @click="toggleIcon('Talk')"
+      :class="{ 'active': isActiveIcon('Talk') }"
+      @mouseover="setActiveIcon('Talk')"
+      @mouseleave="resetActiveIcon"
+      src="@/assets/Talk.png"
+    />
+    <img
+      class="icon"
+      @click="toggleIcon('Mine')"
+      :class="{ 'active': isActiveIcon('Mine') }"
+      @mouseover="setActiveIcon('Mine')"
+      @mouseleave="resetActiveIcon"
+      src="@/assets/Mine.png"
+    />
+  </div>
+        <h5 v-if="!activeIcon">토씨의 특별한 기능에 대해서 알아보려면 누르세요</h5>
         <h5 v-if="activeIcon === 'Play'">동화 재생하기</h5>
         <h5 v-if="activeIcon === 'Maker'">동화 만들기</h5>
         <h5 v-if="activeIcon === 'Talk'">등장인물과의 대화</h5>
@@ -53,6 +77,19 @@ const openLoginForm = () => {
 const closeLoginForm = () => {
     showLoginForm.value = false;
 };
+
+const isActiveIcon = (icon) => {
+  return activeIcon.value === icon;
+};
+
+const setActiveIcon = (icon) => {
+  activeIcon.value = icon;
+};
+
+const resetActiveIcon = () => {
+  activeIcon.value = '';
+};
+
 const isPlaying = ref(false);
 const activeIcon = ref('');
 const toggleIcon = async (icon) => {
