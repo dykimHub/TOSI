@@ -38,7 +38,7 @@ const props = defineProps(['isLoading']);
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.5); /* 흰색 배경에 투명도를 조절할 수 있습니다. */
+  background: rgba(255, 255, 255, 0.7); /* 흰색 배경에 투명도를 조절할 수 있습니다. */
   display: flex;
   justify-content: center;
   align-items: center;
