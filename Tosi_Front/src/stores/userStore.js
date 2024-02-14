@@ -12,69 +12,72 @@ export const useUserStore = defineStore("user", () => {
     const cookieStore = useCookieStore();
     const passwordCheck = ref(false);
 
-    //회원 가입
-    const postUser = (userInfo) => {
-        axios
-            .post(`/users/regist`, userInfo)
-            .then((response) => {
-                console.log(response.data);
-                console.log(userInfo);
-                let loginInfo = {
-                    email: userInfo.email,
-                    password: userInfo.password,
-                    autoLogin: false,
-                };
-                console.log(loginInfo);
-                postLogin(loginInfo);
-            })
-            .catch((error) => {
-                console.error("에러 발생:", error);
-            });
-    };
-    //회원 정보 조회
-    const getUser = async function () {
-        await axios({
-            method: "GET",
-            url: `/users`,
-            withCredentials: true,
-        }).then((response) => {
-            userInfo.value = response.data;
-            console.log(userInfo.value.email);
-            console.log(userInfo.value.bookshelfName);
-            console.log(userInfo.value.childrenList);
-        });
-    };
-    //회원정보 수정
-    const updateUser = function (data) {
-        axios.put(`/users`, data, { withCredentials: true }).then(() => {
-            console.log(data);
-            console.log("회원정보 수정 완료");
-            alert("회원 정보를 수정했습니다.");
-        });
-    };
-    //회원 탈퇴
-    const deleteUser = function () {
-        axios({
-            method: "delete",
-            url: `/users`,
-            withCredentials: true,
-        }).then(() => {
-            window.location.replace("/tosi");
-        });
-    };
-    //이메일 중복 확인
-    const getUserSearch = async function (email) {
-        await axios({
-            method: "GET",
-            url: `/users/email-check`,
-            params: {
-                email: email,
-            },
-        }).then((response) => {
-            searchResult.value = response.data;
-            console.log(searchResult.value);
-        });
-    };
+  //회원 가입
+  const postUser = (userInfo) => {
+    axios
+      .post(`/users/regist`, userInfo)
+      .then((response) => {
+        console.log(response.data);
+        console.log(userInfo);
+        let loginInfo = {
+          email: userInfo.email,
+          password: userInfo.password,
+          autoLogin: false,
+        };
+        console.log(loginInfo)
+        postLogin(loginInfo);
+      })
+      .catch((error) => {
+        console.error("에러 발생:", error);
+      });
+  };
+  //회원 정보 조회
+  const getUser = async function () {
+    await axios({
+      method: "GET",
+      url: `/users`,
+      withCredentials: true,
+    }).then((response) => {
+      userInfo.value = response.data;
+      console.log(userInfo.value.email);
+      console.log(userInfo.value.bookshelfName);
+      console.log(userInfo.value.childrenList);
+    });
+  };
+  //회원정보 수정
+  const updateUser = function (data) {
+    axios.put(`/users`, data, { withCredentials: true }).then(() => {
+      console.log(data);
+      console.log("회원정보 수정 완료");
+      alert("회원 정보를 수정했어요.");
+    });
+  };
+  //회원 탈퇴
+  const deleteUser = function () {
+    axios({
+      method: "delete",
+      url: `/users`,
+      withCredentials: true,
+    }).then(() => {
+      localStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("isLoggedIn");
+      cookieStore.deleteCookie("isLoggedIn");
+      window.location.replace("/tosi");
+    });
+  };
+  //이메일 중복 확인
+  const getUserSearch = async function (email) {
+    await axios({
+      method: "GET",
+      url: `/users/email-check`,
+      params: {
+        email: email,
+      },
+    }).then((response) => {
+      searchResult.value = response.data;
+      console.log(searchResult.value);
+    });
+  };
 
     // 로그인
     const postLogin = async function (loginInfo) {
