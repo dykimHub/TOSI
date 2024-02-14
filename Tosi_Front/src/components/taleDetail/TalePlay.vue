@@ -1,82 +1,84 @@
 <template>
     <div v-if="taleDetailStore.pages">
-        <div class="play">
-            <div class="info">
-                <div class="title">{{ taleDetailStore.tale.title }}</div>
-                <div v-if="favoriteId">
-                    <img class="like" src="@/assets/like.png" @click="deleteFavorite()" />
+      <div class="play">
+        <div class="info">
+          <div class="title">{{ taleDetailStore.tale.title }}</div>
+          <div v-if="favoriteId">
+            <img class="like" src="@/assets/like.png" @click="deleteFavorite()" />
+          </div>
+          <div v-else>
+            <img class="like" src="@/assets/dislike.png" @click="postFavorite()" />
+          </div>
+        </div>
+        <div class="page-progress">&lt {{ currentPageNum }} / {{ pages.length }} ></div>
+        <div class="book">
+          <div class="cover"><img :src="taleDetailStore.tale.thumbnail" class="coverImg" /></div>
+          <div class="flip-book">
+            <div
+              class="flip"
+              v-for="(page, index) in pages"
+              :key="`page-${index}`"
+              :class="{ flipped: page.flipped }"
+              :style="{ zIndex: zIndexes[index] }"
+            >
+              <div class="back" v-if="index >= 1">
+                <div class="page-separator-left"></div>
+                <img :src="pages[index - 1].left" class="leftImg" />
+                <img src="@/assets/leftarrow.gif" class="left" />
+                <img
+                  src="@/assets/leftarrowstatic.png"
+                  class="leftstatic"
+                  @click="flipPage(index, false)"
+                />
+              </div>
+              <div class="front pre-wrap">
+                <div class="page-separator-right"></div>
+                <div class="content">{{ pages[index].right }}</div>
+                <div v-if="index === 0">
+                  <img src="@/assets/end.gif" class="end" @click="goToEnd" />
                 </div>
                 <div v-else>
-                    <img class="like" src="@/assets/dislike.png" @click="postFavorite()" />
+                  <img src="@/assets/rightarrow.gif" class="right" />
+                  <img
+                    src="@/assets/rightarrowstatic.png"
+                    class="rightstatic"
+                    @click="flipPage(index, true)"
+                  />
                 </div>
+              </div>
             </div>
-            <div class="page-progress">&lt {{ currentPageNum }} / {{ pages.length }} ></div>
-            <div class="book">
-                <div class="cover"><img :src="taleDetailStore.tale.thumbnail" class="coverImg" /></div>
-                <div class="flip-book">
-                    <div
-                        class="flip"
-                        v-for="(page, index) in pages"
-                        :key="`page-${index}`"
-                        :class="{ flipped: page.flipped }"
-                        :style="{ zIndex: zIndexes[index] }"
-                    >
-                        <div class="back" v-if="index >= 1">
-                            <div class="page-separator-left"></div>
-                            <img :src="pages[index - 1].left" class="leftImg" />
-                            <img src="@/assets/leftarrow.gif" class="left" />
-                            <img
-                                src="@/assets/leftarrowstatic.png"
-                                class="leftstatic"
-                                @click="flipPage(index, false)"
-                            />
-                        </div>
-                        <div class="front pre-wrap">
-                            <div class="page-separator-right"></div>
-                            <div class="content">{{ pages[index].right }}</div>
-                            <div v-if="index === 0">
-                                <img src="@/assets/end.gif" class="end" @click="goToEnd" />
-                            </div>
-                            <div v-else>
-                                <img src="@/assets/rightarrow.gif" class="right" />
-                                <img
-                                    src="@/assets/rightarrowstatic.png"
-                                    class="rightstatic"
-                                    @click="flipPage(index, true)"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="controls-container">
-                <div class="volume-controls">
-                    <img
-                        src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
-                        alt="Speaker Image"
-                        class="speaker-image"
-                    />
-                    <div class="volume-bar" @click="setVolume">
-                        <div class="volume-bar-active" :style="{ width: volume + '%' }"></div>
-                    </div>
-                </div>
-
-                <div class="playstop-controls">
-                    <img v-if="isPaused" src="@/assets/playaudio.png" @click="audioPause" class="start" />
-                    <img v-else src="@/assets/pause.png" @click="audioPause" class="pause" />
-                    <img src="@/assets/stop.png" class="stop" @click="goToEnd()" />
-                </div>
-
-                <div class="speed-controls">
-                    <button @click="changePlaybackRate(-0.25)"><<</button>
-                    <span class="playback-rate">{{ playbackRate.toFixed(2) }}</span>
-                    <button @click="changePlaybackRate(0.25)">>></button>
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="controls-container">
+          <div class="volume-controls">
+            <img
+              src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+              alt="Speaker Image"
+              class="speaker-image"
+            />
+            <div class="volume-bar" @click="setVolume">
+              <div class="volume-bar-active" :style="{ width: volume + '%' }"></div>
+            </div>
+          </div>
+  
+          <div class="playstop-controls">
+            <img v-if="isPaused" src="@/assets/playaudio.png" @click="audioPause" class="start" />
+            <img v-else src="@/assets/pause.png" @click="audioPause" class="pause" />
+            <img src="@/assets/stop.png" class="stop" @click="goToEnd()" />
+          </div>
+  
+          <div class="speed-controls">
+            <button @click="changePlaybackRate(-0.25)"><<</button>
+            <span class="playback-rate">{{ playbackRate.toFixed(2) }}</span>
+            <button @click="changePlaybackRate(0.25)">>></button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div v-else>is Loading...</div>
-</template>
+    <div v-else>
+      is Loading...
+    </div>
+  </template>  
 <script setup>
 import { ref, computed, reactive, onMounted, watch } from "vue";
 import { useTaleDetailStore } from "@/stores/taleDetailStore";
@@ -94,7 +96,6 @@ const props = defineProps({
 });
 
 const goToEnd = () => {
-    alert("동화를 멈출게요.");
     audioRef.value.pause();
     router.push({ name: "taleEnd", params: { taleId: taleDetailStore.taleId } });
 };
@@ -215,57 +216,56 @@ const onAudioEnded = () => {
 
 // 페이지 변화를 감지해서 틈
 watch(pages, (newPages, oldPages) => {
-    if (newPages && newPages.length > 0) {
-        // 페이지 배열이 변경되었을 때 실행할 코드 작성
-        isPaused.value = false;
-        console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
-        autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
-    }
+  if (newPages && newPages.length > 0) {
+    // 페이지 배열이 변경되었을 때 실행할 코드 작성
+    isPaused.value = false;
+    console.log("watch에서 감지한 인덱스 : ", currentPageIndex.value);
+    autoAudio(newPages[currentPageIndex.value].right); // 첫 번째 페이지의 오른쪽 텍스트를 넘김
+  }
 });
 //재생-멈춤 버튼
 const audioPause = () => {
-    if (audioRef.value != null) {
-        if (isPaused.value) {
-            audioRef.value.play();
-            isPaused.value = false;
-        } else {
-            audioRef.value.pause();
-            isPaused.value = true;
-        }
+  if (audioRef.value != null) {
+    if (isPaused.value) {
+      audioRef.value.play();
+      isPaused.value = false;
+    } else {
+      audioRef.value.pause();
+      isPaused.value = true;
     }
-};
+}};
 //오디오 볼륨
 const volume = ref(50);
 const audioVolume = () => {
-    if (audioRef.value != null) {
-        audioRef.value.volume = volume.value / 100;
-        audioRef.value.playbackRate = playbackRate.value;
-    }
+  if (audioRef.value != null) {
+    audioRef.value.volume = volume.value / 100;
+    audioRef.value.playbackRate = playbackRate.value;
+  }
 };
 const setVolume = (event) => {
-    try {
-        const { offsetX } = event;
-        // 이벤트가 발생한 현재 요소를 사용해 항상 전체 볼륨 바의 너비를 가져옵니다.
-        const barWidth = event.currentTarget.offsetWidth;
-        const clickedVolume = (offsetX / barWidth) * 100;
+  try {
+    const { offsetX } = event;
+    // 이벤트가 발생한 현재 요소를 사용해 항상 전체 볼륨 바의 너비를 가져옵니다.
+    const barWidth = event.currentTarget.offsetWidth;
+    const clickedVolume = (offsetX / barWidth) * 100;
 
-        volume.value = Math.max(10, Math.min(100, clickedVolume));
-        audioVolume();
-    } catch {
-        volume.value = 50;
-    }
+    volume.value = Math.max(10, Math.min(100, clickedVolume));
+    audioVolume();
+  } catch {
+    volume.value = 50;
+  }
 };
 //오디오 속도 조절
 const playbackRate = ref(1.0);
 // 배속을 조절하는 함수
 const changePlaybackRate = (change) => {
-    try {
-        // 배속을 0.25씩 증감하되, 0.5와 2.00 사이의 값을 유지합니다.
-        playbackRate.value = Math.max(0.5, Math.min(2.0, playbackRate.value + change));
-        audioRef.value.playbackRate = playbackRate.value;
-    } catch {
-        console.error("Error changing playback rate:", error);
-    }
+  try {
+    // 배속을 0.25씩 증감하되, 0.5와 2.00 사이의 값을 유지합니다.
+    playbackRate.value = Math.max(0.5, Math.min(2.0, playbackRate.value + change));
+    audioRef.value.playbackRate = playbackRate.value;
+  } catch {
+    console.error("Error changing playback rate:", error);
+  }
 };
 
 onMounted(async () => {
@@ -305,12 +305,12 @@ const getFavorite = async () => {
         .catch((err) => console.log(err));
 };
 const deleteFavorite = () => {
-    axios
-        .delete(`/favorites/${favoriteId.value}`, { withCredentials: true })
-        .then((res) => {
-            favoriteId.value = null;
-        })
-        .catch((err) => console.log(err));
+  axios
+    .delete(`/favorites/${favoriteId.value}`, { withCredentials: true })
+    .then((res) => {
+      favoriteId.value = null;
+    })
+    .catch((err) => console.log(err));
 };
 const replay = () => {
     audioRef.value.pause();
@@ -319,12 +319,12 @@ const replay = () => {
 </script>
 <style scoped>
 .play {
-    width: 1050px;
-    height: 780px;
-    border: 5px solid #cee8e8;
-    margin: 20px 0px 30px 0px;
-    border-radius: 50px;
-    background-color: #f5f5f5;
+  width: 1050px;
+  height: 780px;
+  border: 5px solid #cee8e8;
+  margin: 20px 0px 30px 0px;
+  border-radius: 50px;
+  background-color: #f5f5f5;
 }
 .info {
     display: flex;
@@ -394,18 +394,18 @@ const replay = () => {
     color: #000;
 }
 .front {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    backface-visibility: hidden;
-    background-color: #fff;
-    box-sizing: border-box;
-    padding: 0 13px;
-    border-radius: 40px 0px 0px 40px;
-    box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
-    /* background-image: url(@/assets/floral.png); */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 0 13px;
+  border-radius: 40px 0px 0px 40px;
+  box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
+  /* background-image: url(@/assets/floral.png); */
 }
 .page-separator-right {
     position: absolute;
@@ -488,87 +488,87 @@ const replay = () => {
 
 .start,
 .pause {
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
 }
 .stop {
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
-    border-radius: 50%;
-    border: 1px solid black;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid black;
 }
 .speaker-image {
-    width: 60px;
-    height: 60px;
+  width: 60px;
+  height: 60px;
 }
 .volume-bar {
-    position: relative;
-    width: 180px;
-    height: 15px;
-    background-color: #ddd;
-    cursor: pointer;
+  position: relative;
+  width: 180px;
+  height: 15px;
+  background-color: #ddd;
+  cursor: pointer;
 }
 
 .volume-bar::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(90deg, transparent, transparent 60%, #fff 60%, #fff 100%);
-    background-size: 10px 15px;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(90deg, transparent, transparent 60%, #fff 60%, #fff 100%);
+  background-size: 10px 15px;
 }
 
 .volume-bar-active {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background-color: #0e94ff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #0e94ff;
 }
 .controls-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 요소들 사이에 균등한 공간을 만들어 줍니다 */
-    padding: 10px; /* 컨테이너의 내부 여백 */
-    margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 요소들 사이에 균등한 공간을 만들어 줍니다 */
+  padding: 10px; /* 컨테이너의 내부 여백 */
+  margin: 10px;
 }
 .playstop-controls {
-    display: flex;
-    justify-content: center; /* 이 컨테이너 내의 버튼들을 가운데 정렬 */
-    gap: 1rem;
-    margin-top: 5px;
+  display: flex;
+  justify-content: center; /* 이 컨테이너 내의 버튼들을 가운데 정렬 */
+  gap: 1rem;
+  margin-top: 5px;
 }
 .volume-controls {
-    display: flex; /* flex 컨테이너 설정 */
-    align-items: center; /* 요소들을 세로 방향으로 중앙에 정렬 */
-    margin-left: 20px;
+  display: flex; /* flex 컨테이너 설정 */
+  align-items: center; /* 요소들을 세로 방향으로 중앙에 정렬 */
+  margin-left: 20px;
 }
 .speed-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
 }
 
 .playback-rate {
-    margin: 0 10px;
-    font-size: 1.2rem;
-    background-color: #f5f5f5;
-    color: #000;
-    padding: 2px 8px;
-    min-width: 50px; /* 충분한 너비를 확보하여 숫자가 변동되어도 레이아웃이 바뀌지 않도록 합니다. */
-    text-align: center;
+  margin: 0 10px;
+  font-size: 1.2rem;
+  background-color: #f5f5f5;
+  color: #000;
+  padding: 2px 8px;
+  min-width: 50px; /* 충분한 너비를 확보하여 숫자가 변동되어도 레이아웃이 바뀌지 않도록 합니다. */
+  text-align: center;
 }
 
 button {
-    background: none;
-    border: none;
-    width: 80px;
-    font-size: 1.7rem;
+  background: none;
+  border: none;
+  width: 80px;
+  font-size: 1.7rem;
 }
 </style>
