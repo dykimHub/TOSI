@@ -59,6 +59,9 @@ export const useUserStore = defineStore("user", () => {
       url: `/users`,
       withCredentials: true,
     }).then(() => {
+      localStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("isLoggedIn");
+      cookieStore.deleteCookie("isLoggedIn");
       window.location.replace("/tosi");
     });
   };
