@@ -57,8 +57,8 @@ public class CustomTaleController {
     }
     @Operation(summary="내가 만든 동화 공개여부 수정")
     @PutMapping("/customtale/{customTaleId}")
-    public ResponseEntity<?> updateCustomTale(HttpServletRequest request, @PathVariable Integer customTaleId, @RequestParam boolean isPublic) {
-        CustomTale updatedCustomTale = customTaleService.putCustomTale(customTaleId, isPublic);
+    public ResponseEntity<?> updateCustomTale(HttpServletRequest request, @PathVariable Integer customTaleId, @RequestParam boolean opened) {
+        CustomTale updatedCustomTale = customTaleService.putCustomTale(customTaleId, opened);
         return ResponseEntity.ok(updatedCustomTale);
     }
     @Operation(summary="내가 만든 동화 삭제")
