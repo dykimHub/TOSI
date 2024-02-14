@@ -15,7 +15,10 @@
           <div class="chat">
             <div class="startbox">
               <div class="infobox">
-                <div class="voicetitle">내가 만든 동화 저장하기</div>
+                <div class="voicetitle">
+                  <img class="mic" src="@/assets/customsave.png" />내가 만든
+                  동화 저장하기
+                </div>
                 <div class="inputgroup">
                   <div>
                     <label for="title" class="form-label">동화의 제목</label>
@@ -53,7 +56,7 @@
                   <button
                     @click="saveCustomTale"
                     class="button"
-                    style="text-align: center"
+                    style="text-align: center; margin-top: 0px"
                   >
                     동화 저장
                   </button>
@@ -114,24 +117,34 @@ const nosave = function () {
 };
 </script>
 <style scoped>
+.topOfTaleList {
+  margin-left: 30px;
+}
 .infobox {
   border: 5px solid #cee8e8;
   border-radius: 30px;
   background-color: rgb(255, 255, 255);
   font-size: 20px;
-  width: 350px;
-  height: 270px;
+  width: 450px;
+  height: 300px;
+  margin-left: 50px;
+}
+.startbox {
+  display: flex;
+  justify-content: center;
 }
 .inputgroup {
-  padding: 10px;
+  padding: 30px;
 }
 .play {
   background-color: white;
   border-radius: 50px;
   margin-top: 35px;
-  padding: 40px 30px;
+  padding-top: 40px;
+  padding-bottom: 60px;
   border: 5px solid #cee8e8;
-  /* width: 80vw; */
+  margin-bottom: 30px;
+  width: 80vw;
 }
 .container {
   display: flex;
@@ -150,6 +163,7 @@ const nosave = function () {
 }
 .taleinfo {
   display: flex;
+  margin-left: 30px;
 }
 .title {
   margin: 30px 0px 25px 0px;
@@ -233,10 +247,10 @@ const nosave = function () {
   justify-content: center;
   border: 5px solid #cee8e8;
   border-radius: 30px;
-  width: 260px;
+  width: 300px;
   height: 60px;
   text-align: center;
-  margin: -40px 0px 0px 40px;
+  margin: -30px 0px 0px 70px;
   background-color: #ebffdf;
   position: relative;
   z-index: 5;

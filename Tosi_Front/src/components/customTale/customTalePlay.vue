@@ -464,14 +464,20 @@ onMounted(async () => {
 
 .volume-bar::after {
     content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(90deg, transparent, transparent 60%, #fff 60%, #fff 100%);
-    background-size: 10px 15px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    transparent 60%,
+    #fff 60%,
+    #fff 100%
+  );
+  background-size: 10px 15px;
 }
 
 .volume-bar-active {

@@ -17,7 +17,12 @@
           <div class="chat" v-if="!customTaleStore.customTaleText.gptMessage">
             <div class="startbox">
               <div class="infobox">
-                <div class="voicetitle">오늘의 이야기</div>
+                <div class="booktitle">
+                  <img class="mic" src="@/assets/custombook.png" />오늘의 이야기
+                </div>
+                <div class="graytext">
+                  키워드를 입력해서 동화를 만들어보세요!
+                </div>
                 <div class="inputgroup">
                   <div class="input">
                     <label for="prompt1" class="form-label">주인공</label>
@@ -271,23 +276,37 @@ onMounted(() => {
 });
 </script>
 <style scoped>
+.topOfTaleList {
+  margin-left: 30px;
+}
 .infobox {
   border: 5px solid #cee8e8;
   border-radius: 30px;
   background-color: rgb(255, 255, 255);
   font-size: 20px;
-  width: 350px;
-  height: 370px;
+  width: 450px;
+  height: 450px;
+  margin-left: 50px;
 }
 .inputgroup {
-  padding: 10px;
+  padding: 30px;
+  padding-top: 0px;
+}
+.input {
+  padding-bottom: 10px;
+}
+.form-label {
+  font-size: 25px;
 }
 .play {
   background-color: white;
   border-radius: 50px;
   margin-top: 35px;
-  padding: 40px 0px;
+  padding-top: 40px;
+  padding-bottom: 60px;
   border: 5px solid #cee8e8;
+  margin-bottom: 30px;
+  width: 80vw;
 }
 .container {
   display: flex;
@@ -306,6 +325,7 @@ onMounted(() => {
 }
 .taleinfo {
   display: flex;
+  margin-left: 30px;
 }
 .title {
   margin: 30px 0px 25px 0px;
@@ -350,7 +370,7 @@ onMounted(() => {
 }
 .chat {
   width: 520px;
-  height: 500px;
+  /* height: 500px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -392,7 +412,22 @@ onMounted(() => {
   width: 193px;
   height: 60px;
   text-align: center;
-  margin: -40px 0px 0px 80px;
+  margin: -30px 0px 0px 83px;
+  background-color: #ebffdf;
+  position: relative;
+  z-index: 5;
+  font-size: 23px;
+}
+.booktitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #cee8e8;
+  border-radius: 30px;
+  width: 210px;
+  height: 60px;
+  text-align: center;
+  margin: -30px 0px 0px 120px;
   background-color: #ebffdf;
   position: relative;
   z-index: 5;
@@ -407,7 +442,7 @@ onMounted(() => {
   height: 150px;
 }
 .button {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   width: 130px;
   height: 40px;
   /* padding: 10px 25px; */
@@ -454,5 +489,13 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.graytext {
+  color: #676767;
+  display: flex;
+  font-size: 15px;
+  justify-content: flex-end;
+  padding-right: 20px;
+  padding-top: 5px;
 }
 </style>

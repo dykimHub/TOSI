@@ -464,15 +464,21 @@ onMounted(async () => {
 }
 
 .volume-bar::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(90deg, transparent, transparent 60%, #fff 60%, #fff 100%);
-    background-size: 10px 15px;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    transparent 60%,
+    #fff 60%,
+    #fff 100%
+  );
+  background-size: 10px 15px;
 }
 
 .volume-bar-active {
@@ -517,6 +523,12 @@ label {
     margin-right: 5px;
     box-shadow: 2px 2px 0 #d3e4ff;
     text-align: center;
+}
+button {
+  background: none;
+  border: none;
+  width: 80px;
+  font-size: 1.7rem;
 }
 .button:hover {
     background-color: #c4ecb0;
