@@ -33,9 +33,9 @@ public class CustomTaleService {
         return customTaleRepository.findByUserId(userId);
     }
 
-    //isPublic이 true인 CustomTale 엔터티를 조회 (친구들이 만든 동화보기 목록)
+    //opened가 true인 CustomTale 엔터티를 조회 (친구들이 만든 동화보기 목록)
     public List<CustomTale> getCustomTales() {
-        return customTaleRepository.findByIsPublic(true);
+        return customTaleRepository.findByOpened(true);
     }
 
     //CustomTale 엔터티를 저장 (내가 만드는 동화 저장)
@@ -43,13 +43,13 @@ public class CustomTaleService {
         return customTaleRepository.save(customTale);
     }
 
-    //customTaleId에 해당하는 CustomTale 엔터티의 isPublic 값 변경 (나의 책장 - 내가 만든 동화)
-    public CustomTale putCustomTale(Integer customTaleId, boolean isPublic) {
+    //customTaleId에 해당하는 CustomTale 엔터티의 opened 값 변경 (나의 책장 - 내가 만든 동화)
+    public CustomTale putCustomTale(Integer customTaleId, boolean opened) {
         Optional<CustomTale> optionalCustomTale = customTaleRepository.findById(customTaleId);
 
         if (optionalCustomTale.isPresent()) {
             CustomTale customTale = optionalCustomTale.get();
-            customTale.setPublic(isPublic); //JavaBeans 규악에 따라 setIsPublic가 아니라 setPublic라는 세터 메소드를 생성합니다.
+            customTale.setOpened(opened);
             return customTaleRepository.save(customTale);
         } else {
             return null;

@@ -29,9 +29,6 @@ public class JwtAspect {
 
         String accessToken = cookieUtil.getTokenFromCookie(request, "access-token");
 
-        System.out.println(accessToken);
-        System.out.println(request.getCookies());
-
         if (accessToken == null) {
             System.out.println("토큰이 존재하지 않습니다.");
             return tokenController.postNewAccessToken(request);
@@ -46,7 +43,6 @@ public class JwtAspect {
 
         Integer userId = jwtUtil.getUserId(accessToken);
 
-        System.out.println("userId: " + userId);
         request.setAttribute("userId", userId);
 
         return joinPoint.proceed();

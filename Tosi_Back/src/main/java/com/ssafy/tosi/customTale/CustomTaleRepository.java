@@ -9,7 +9,7 @@ public interface CustomTaleRepository extends JpaRepository<CustomTale, Integer>
     // userId로 CustomTale 조회
     List<CustomTale> findByUserId(Integer userId);
 
-    // isPublic이 true인 CustomTale 조회
-    List<CustomTale> findByIsPublic(boolean isPublic);
+    // opened가 true인 CustomTale 조회
+    List<CustomTale> findByOpened(boolean opened);
 
 }
