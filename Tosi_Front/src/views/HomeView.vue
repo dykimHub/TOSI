@@ -19,13 +19,13 @@
             </div>
             <h5>최근에 친구들이 만든 이야기에요!</h5>
             <div class="top3">
-                <ul v-for="tale in  CTalestore.customTalesList.slice(0,3)" :key="tale.taleId">
+                <ul v-for="tale in  CTalestore.customTalesList.slice(0,3)" :key="tale.customTaleId">
                     <div class="oneTale">
-                        <RouterLink :to="`/tales/${tale.taleId}`"
+                        <RouterLink :to="`/customtale/${tale.customTaleId}`"
                             ><img class="thumbnail" :src="tale.thumbnail" />
                         </RouterLink>
                         <br />
-                        <RouterLink :to="`/tales/${tale.taleId}`">{{ tale.title }}</RouterLink>
+                        <RouterLink :to="`/customtale/${tale.customTaleId}`">{{ tale.title }}</RouterLink>
                         <br />
                     </div>
                 </ul>
