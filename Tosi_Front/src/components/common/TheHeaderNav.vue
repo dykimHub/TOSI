@@ -1,18 +1,18 @@
 <template>
-    <header>
-        <div class="headerContainer">
-            <div class="empty"></div>
-            <div class="logo-container">
-                <RouterLink to="/tosi">
-                    <img src="@/assets/logo.png" class="logo" alt="Logo" />
-                </RouterLink>
-            </div>
-            <div class="homeMenus">
-                <RouterLink to="/tosi">홈</RouterLink>
-                <button v-if="isLoggedIn" @click="logout" class="logoutButton">로그아웃</button>
-            </div>
-        </div>
-    </header>
+  <header>
+    <div class="headerContainer">
+      <div class="empty"></div>
+      <div class="logo-container">
+        <RouterLink to="/tosi">
+          <img src="@/assets/logo.png" class="logo" alt="Logo" />
+        </RouterLink>
+      </div>
+      <div class="homeMenus">
+        <RouterLink to="/tosi"  class="homeButton">홈으로</RouterLink>
+        <button v-if="isLoggedIn" @click="logout" class="logoutButton">로그아웃</button>
+      </div>
+    </div>
+  </header>
 </template>
 
 <script setup>
@@ -37,9 +37,9 @@ const logout = () => {
 
 <style scoped>
 .headerContainer {
-    display: flex;
-    margin-top: 25px;
-    justify-content: center;
+  display: flex;
+  margin-top: 25px;
+  justify-content: center;
 }
 .logo {
     flex-grow: 1;
@@ -66,7 +66,13 @@ a {
 }
 
 .logoutButton {
-    background-color: transparent;
-    border: none;
+  background-color: transparent;
+  border: none;
+  margin-left: 15em;
+}
+
+.homeButton{
+  margin-left: 15em;
+
 }
 </style>

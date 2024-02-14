@@ -80,19 +80,14 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <button type="button" class="readstart" @click="readBook">동화 읽기</button> -->
-                        <div claass="startbtn">
-                            <div class="rocketborder" @click="readBook">
-                                <img src="@/assets/rocket.png" class="rocket" />
-                            </div>
-                            <div class="starttitle">시작</div>
+                        <div class="rocketborder" @click="readBook">
+                            <img src="@/assets/rocket.png" class="rocket" />
                         </div>
                     </div>
                 </div>
             </div>
+          </div>
         </div>
-    </div>
-
     <div v-else>
         <div>is Loading...</div>
     </div>
@@ -176,22 +171,22 @@ function deleteName(index) {
     nameMap.value.splice(index, 1);
 }
 const readBook = async () => {
-    try {
-        const requests = Array.from(nameMap.value).map(([cname, bname]) =>
-            axios.post(`/tales/${cname}/${bname}`, { withCredentials: true })
-        );
+  try {
+    const requests = Array.from(nameMap.value).map(([cname, bname]) =>
+      axios.post(`/tales/${cname}/${bname}`, { withCredentials: true })
+    );
 
-        await Promise.all(requests);
+    await Promise.all(requests);
 
-        const response = await axios.post("/tales/read", taleDetailStore.tale, {
-            withCredentials: true,
-        });
-        taleDetailStore.pages = response.data;
-        console.log("요청이 성공적으로 완료된 후에 navigateToTalePlay 호출");
-        navigateToTalePlay();
-    } catch (error) {
-        console.error("Error fetching:", error);
-    }
+    const response = await axios.post("/tales/read", taleDetailStore.tale, {
+      withCredentials: true,
+    });
+    taleDetailStore.pages = response.data;
+    console.log("요청이 성공적으로 완료된 후에 navigateToTalePlay 호출");
+    navigateToTalePlay();
+  } catch (error) {
+    console.error("Error fetching:", error);
+  }
 };
 
 const navigateToTalePlay = () => {
@@ -208,48 +203,48 @@ const favorite = ref({
 });
 console.log(favorite.value);
 const postFavorite = () => {
-    axios
-        .post("/favorites", favorite.value, { withCredentials: true })
-        .then((res) => {
-            console.log(res.data);
-            getFavorite();
-            getLikeCnt();
-        })
-        .catch((err) => console.log(err));
+  axios
+    .post("/favorites", favorite.value, { withCredentials: true })
+    .then((res) => {
+      console.log(res.data);
+      getFavorite();
+      getLikeCnt();
+    })
+    .catch((err) => console.log(err));
 };
 const favoriteId = ref(null);
 const getFavorite = () => {
-    axios
-        .get(`/favorites/${props.taleId}`, { withCredentials: true })
-        .then((res) => {
-            favoriteId.value = res.data;
-        })
-        .catch((err) => console.log(err));
+  axios
+    .get(`/favorites/${props.taleId}`, { withCredentials: true })
+    .then((res) => {
+      favoriteId.value = res.data;
+    })
+    .catch((err) => console.log(err));
 };
 const deleteFavorite = () => {
-    axios
-        .delete(`http://localhost:8080/favorites/${favoriteId.value}`, { withCredentials: true })
-        .then((res) => {
-            favoriteId.value = null;
-            getFavorite();
-            getLikeCnt();
-        })
-        .catch((err) => console.log(err));
+  axios
+    .delete(`http://localhost:8080/favorites/${favoriteId.value}`, { withCredentials: true })
+    .then((res) => {
+      favoriteId.value = null;
+      getFavorite();
+      getLikeCnt();
+    })
+    .catch((err) => console.log(err));
 };
 const likeCnt = ref(null);
 const getLikeCnt = () => {
-    axios
-        .get(`/tales/like/${props.taleId}`)
-        .then((res) => {
-            return axios.get(`/tales/${props.taleId}`, { withCredentials: true });
-        })
-        .then((res) => {
-            likeCnt.value = res.data.likeCnt;
-            console.log(res.data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+  axios
+    .get(`/tales/like/${props.taleId}`)
+    .then((res) => {
+      return axios.get(`/tales/${props.taleId}`, { withCredentials: true });
+    })
+    .then((res) => {
+      likeCnt.value = res.data.likeCnt;
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 onMounted(() => {
@@ -259,12 +254,12 @@ onMounted(() => {
 </script>
 <style scoped>
 .play {
-    width: 1050px;
-    height: 630px;
-    border: 5px solid #cee8e8;
-    margin: 20px 0px 30px 0px;
-    border-radius: 50px;
-    background-color: white;
+  width: 1050px;
+  height: 630px;
+  border: 5px solid #cee8e8;
+  margin: 20px 0px 30px 0px;
+  border-radius: 50px;
+  background-color: white;
 }
 .container {
     display: flex;
@@ -319,23 +314,23 @@ onMounted(() => {
     margin-bottom: 20px;
 }
 .selectbox {
-    border: 5px solid #cee8e8;
-    background-color: white;
-    border-radius: 30px;
-    width: 250px;
-    height: 260px;
-    padding: 0px 15px 10px 15px;
+  border: 5px solid #cee8e8;
+  background-color: white;
+  border-radius: 30px;
+  width: 250px;
+  height: 260px;
+  padding: 0px 15px 10px 15px;
 }
 .selectedbox {
-    border: 5px solid #cee8e8;
-    background-color: white;
-    border-radius: 30px;
-    width: 250px;
-    height: 240px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  border: 5px solid #cee8e8;
+  background-color: white;
+  border-radius: 30px;
+  width: 250px;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .select {
     display: flex;
@@ -359,19 +354,19 @@ onMounted(() => {
     margin-right: 10px;
 }
 .chattitle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 5px solid #cee8e8;
-    border-radius: 30px;
-    width: 180px;
-    height: 55px;
-    text-align: center;
-    margin: 0 0 -35px 35px;
-    background-color: #ebffdf;
-    position: relative;
-    z-index: 5;
-    font-size: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #cee8e8;
+  border-radius: 30px;
+  width: 180px;
+  height: 55px;
+  text-align: center;
+  margin: 0 0 -35px 35px;
+  background-color: #ebffdf;
+  position: relative;
+  z-index: 5;
+  font-size: 23px;
 }
 @keyframes swing {
     0% {
@@ -420,35 +415,35 @@ onMounted(() => {
     margin-right: 5px;
 }
 .voicetitle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 5px solid #cee8e8;
-    border-radius: 30px;
-    width: 193px;
-    height: 55px;
-    text-align: center;
-    margin: -30px 0px 0px 80px;
-    background-color: #ebffdf;
-    position: relative;
-    z-index: 5;
-    font-size: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #cee8e8;
+  border-radius: 30px;
+  width: 193px;
+  height: 55px;
+  text-align: center;
+  margin: -30px 0px 0px 80px;
+  background-color: #ebffdf;
+  position: relative;
+  z-index: 5;
+  font-size: 23px;
 }
 .voicebox {
-    border: 5px solid #cee8e8;
-    background-color: white;
-    border-radius: 30px;
-    font-size: 20px;
-    width: 370px;
-    height: 150px;
-    margin: 30px 20px 0 0;
+  border: 5px solid #cee8e8;
+  background-color: white;
+  border-radius: 30px;
+  font-size: 20px;
+  width: 370px;
+  height: 150px;
+  margin: 30px 20px 0 0;
 }
 .rocketborder {
-    width: 120px;
-    height: 120px;
-    border: 2px solid black;
-    border-radius: 50%;
-    margin: 30px 0 0 0;
+  width: 120px;
+  height: 120px;
+  border: 2px solid black;
+  border-radius: 50%;
+  margin: 30px 0 0 0;
 }
 .rocket {
     width: 80px;
@@ -480,24 +475,24 @@ onMounted(() => {
     font-size: 30px;
 }
 .starttitle {
-    font-size: 23px;
-    margin-left: 35px;
+  font-size: 23px;
+  margin-left: 35px;
 }
 .readstart {
-    margin: 20px 10px 0 0;
-    width: 150px;
-    height: 150px;
-    border: 2px solid #d0d0d0;
-    border-radius: 50%;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 3px 3px 5px 0px #0002;
-    background-color: white;
-    font-size: 25px;
+  margin: 20px 10px 0 0;
+  width: 150px;
+  height: 150px;
+  border: 2px solid #d0d0d0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 5px 0px #0002;
+  background-color: white;
+  font-size: 25px;
 }
 </style>
