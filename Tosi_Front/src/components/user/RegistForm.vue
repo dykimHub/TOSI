@@ -1,7 +1,7 @@
 <template>
   <div class="regist-form">
     <form action="" class="form" @submit.prevent="onsubmit">
-      <h1 class="form__title">회원가입</h1>
+      <h1 class="title">회원가입</h1>
       <div class="info-form">
         <div class="regist-div">
           <label class="regist-label">이메일</label>
@@ -9,16 +9,16 @@
           <button type="button" @click="checkEmailDuplication" class="check-duplication-button">중복 확인</button>
         </div>
         <div class="regist-div">
-          <label class="regist-label">Password</label>
+          <label class="regist-label">비밀번호</label>
           <input type="password" class="regist-input" placeholder=" " v-model="password">
         </div>
         <div class="regist-div">
-          <label class="regist-label">Password Check</label>
+          <label class="regist-label">비밀번호 확인</label>
           <input type="password" class="regist-input" placeholder=" " v-model="passwordCheck">
         </div>
         <div class="regist-div">
           <label class="regist-label">나의 책장 이름</label>
-          <input type="text" class="regist-input" placeholder=" " v-model="bookshelfName">
+          <input type="text" class="regist-input" placeholder="나의 책장" v-model="bookshelfName">
         </div>
       </div>
       <div class="child-form">
@@ -31,10 +31,10 @@
         </div>
         <div class="regist-div">
           <div>
-            <label class="regist-label">아이 성별</label>
-            <input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="0">
-            여자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="1"> 남자
+              <label class="regist-label">아이 성별</label>
+              <label><input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="0">여자</label>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <label><input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="1">남자</label>
           </div>
         </div>
         <div class="regist-div">
@@ -46,17 +46,20 @@
 
         <div class="children-list-container">
           <ul class="children-ul">
-            <li v-for="(child, index) in childrenList" :key="index" class="one-child" :class="{ 'my-baby': child.myBaby }">
+            <li v-for="(child, index) in childrenList" :key="index" class="one-child"
+              :class="{ 'my-baby': child.myBaby }">
               <img v-if="child.gender === 0" src="@/assets/female-icon.png" alt="Female Icon" class="icon" />
               <img v-else src="@/assets/male-icon.png" alt="Male Icon" class="icon" />
               {{ child.childName }}
-            <button @click="deleteChild(index)" class="childDeleteButton">×</button>
+              <button @click="deleteChild(index)" class="childDeleteButton">×</button>
             </li>
           </ul>
         </div>
       </div>
+      <div class="button-container">
+        <input type="submit" class="regist-button" value="회원가입" @click="regist">
+      </div>
 
-      <input type="submit" class="regist-button" value="regist" @click="regist">
     </form>
   </div>
 </template>
@@ -87,11 +90,10 @@ const regist = () => {
     passwordCheck.value === "" ||
     childrenList.value === ""
   ) {
-    alert("모든 내용을 입력해주세요");
+    alert("모든 내용을 입력해주세요.");
     return;
   }
 
-  // 이메일 유효성 검사
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email.value.trim())) {
     alert("올바른 이메일 주소를 입력하세요.");
@@ -100,12 +102,12 @@ const regist = () => {
 
   userStore.getUserSearch(email.value);
   if (userStore.searchResult == true) {
-    alert("이미 등록된 이메일입니다.");
+    alert("이미 등록된 이메일이에요.");
     return;
   }
 
   if (password.value !== passwordCheck.value) {
-    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+    alert("비밀번호와 비밀번호 확인이 일치하지 않아요.");
     return;
   }
 
@@ -121,10 +123,9 @@ const regist = () => {
 
 const checkEmailDuplication = async function () {
   if (email.value.trim() === "") {
-    return; // 이메일이 비어있을 경우 건너뛰기
+    return;
   }
 
-  // 이메일 유효성 검사
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email.value.trim())) {
     alert("올바른 이메일 주소를 입력하세요.");
@@ -135,9 +136,9 @@ const checkEmailDuplication = async function () {
     await userStore.getUserSearch(email.value);
 
     if (userStore.searchResult == true) {
-      alert("이미 등록된 이메일입니다.");
+      alert("이미 등록된 이메일이에요.");
     } else if (userStore.searchResult == false) {
-      alert("사용 가능한 이메일입니다.");
+      alert("사용 가능한 이메일이에요.");
     }
   } catch (error) {
     console.error("에러 발생:", error);
@@ -152,7 +153,16 @@ const deleteChild = function (index) {
 </script>
 
 <style scoped>
-
+.title {
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: inset 0 -20px 0  #f1a8bc;
+    font-size: 40px;
+    margin: 30px 0px 0px 50px;
+    margin-bottom: 40px;
+    line-height: 1;
+    text-align: left;
+}
 .regist-div {
   display: flex;
   align-items: center;
@@ -161,16 +171,13 @@ const deleteChild = function (index) {
 
 .regist-label {
   width: 150px;
-  /* 레이블의 너비를 줄임 */
   margin-right: 10px;
 }
 
 .regist-input {
   flex: 1;
-  /* 입력 칸이 남은 공간을 모두 차지하도록 설정 */
   padding: 5px;
   max-width: 300px;
-  /* 최대 가로길이 설정 */
   margin-right: 10px;
 }
 
@@ -188,14 +195,13 @@ const deleteChild = function (index) {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px; /* 각 아이템 간 간격 조정 */
+  margin-right: 10px;
   margin-bottom: 10px;
   width: fit-content;
   width: max-content;
   height: 30px;
   border: 3px solid #eee58a;
   border-radius: 15px;
-  /* border-color: #eee58a; */
 }
 
 .one-child button {
@@ -209,32 +215,29 @@ form {
 .info-form,
 .child-form {
   border: 1px solid #ccc;
+  border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
 }
 
 .children-ul {
-  list-style-type: none; /* 리스트 스타일 제거 */
-  padding: 0; /* 내부 여백 제거 */
-  display: flex; /* 수평으로 배치되도록 설정 */
-  flex-wrap: wrap; /* 넘칠 경우 줄 바꿈 */
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .children-list-container {
   border: 1px solid #ccc;
+  border-radius: 4px;
   padding: 5px;
   overflow-y: auto;
   width: 500px;
-  /* background-color: #eee58a; */
 }
 
 .check-duplication-button,
 .register-child-button,
 .regist-button {
-  background-color: #f1a8bc;
-  /* Green */
-  border: none;
-  color: white;
   padding: 7.5px 15px;
   text-align: center;
   text-decoration: none;
@@ -242,12 +245,19 @@ form {
   font-size: 16px;
   margin-right: 5px;
   cursor: pointer;
+  box-shadow: 3px 3px 5px 0px #0002;
+  border: 2px solid #d0d0d0;
+  border-radius: 10px;
+  background: transparent;
+  transition: all 0.3s ease;
+  display: inline-block;
+  box-shadow: 3px 3px 5px 0px #0002;
 }
 
 .check-duplication-button:hover,
 .register-child-button:hover,
 .regist-button:hover {
-  background-color: #f1a8bc;
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
 }
 
 .register-child-button {
@@ -256,12 +266,15 @@ form {
 
 .childDeleteButton {
   background-color: transparent;
-  /* 배경색을 투명하게 설정 */
   border: none;
-  /* 테두리 제거 */
   font-size: 20px;
-  /* 텍스트 크기 설정 */
   cursor: pointer;
-  /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+
 </style>

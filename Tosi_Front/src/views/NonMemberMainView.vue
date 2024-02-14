@@ -1,23 +1,11 @@
 <template>
     <div class="nonMemberContainer">
-        <div class="black-bg" v-if="showRegistForm == true || showLoginForm == true">
-            <!-- <div class="white-bg"> -->
-            <div class="modal" v-if="showRegistForm === true">
-                <button @click="closeRegistForm">×</button>
-                <RegistForm @closeRegistForm="closeRegistForm" />
-            </div>
-            <div class="modal" v-if="showLoginForm === true">
-                <button @click="closeLoginForm">×</button>
-                <LoginForm @closeLoginForm="closeLoginForm" />
-            </div>
-            <!-- </div> -->
-        </div>
         <img src="@/assets/logo.png" class="logo" alt="Logo" />
         <div class="sign">
             <button @click="[openRegistForm(), closeLoginForm()]" class="regist-button">회원가입</button>
             <button @click="[openLoginForm(), closeRegistForm()]" class="login-button">로그인</button>
         </div>
-        <div v-if="showRegistForm == false && showLoginForm == false" class="toMenus">
+        <div  class="toMenus">
             <img class="icon" @click="toggleIcon('Play')" :class="{ 'active': activeIcon === 'Play' }"
                 src="@/assets/Play.png" />
             <img class="icon" @click="toggleIcon('Maker')" :class="{ 'active': activeIcon === 'Maker' }"
@@ -33,6 +21,16 @@
         <h5 v-if="activeIcon === 'Talk'">등장인물과의 대화</h5>
         <h5 v-if="activeIcon === 'Mine'">나의 책장</h5>
         <TheFooter />
+        <div class="black-bg" v-if="showRegistForm == true || showLoginForm == true">
+            <div class="modal" v-if="showRegistForm === true">
+                <button @click="closeRegistForm">×</button>
+                <RegistForm @closeRegistForm="closeRegistForm" />
+            </div>
+            <div class="modal" v-if="showLoginForm === true">
+                <button @click="closeLoginForm">×</button>
+                <LoginForm @closeLoginForm="closeLoginForm" />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -71,10 +69,6 @@ const toggleIcon = async (icon) => {
 </script>
 
 <style scoped>
-/* RegistForm {
-    overflow: auto;
-} */
-
 body {
     margin: 0;
 }
@@ -83,29 +77,19 @@ div {
     box-sizing: border-box;
 }
 
-/* 
+
 .black-bg {
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0);
+    background: rgba(0, 0, 0, 0.3);
     position: fixed;
     padding: 20px;
-} */
-/* 
-.white-bg {
-    width: 100%;
-    height: 100;
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-} */
+}
 
 .modal {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    /* position: fixed; */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -114,36 +98,20 @@ div {
     border-radius: 8px;
     width: 600px;
     height: min-content;
-    /* max-width: 90%; 최대 너비 설정 */
-    max-height: 90%;
-    /* overflow-y: auto; */
+    max-height: 98%;
+    z-index: 100;
+    overflow-y: auto;
 }
-
-/* RegistForm {
-    overflow: auto;
-}
-
-LoginForm {
-    height: min-content;
-} */
 
 .modal button {
     background-color: transparent;
-    /* 투명 */
     border: none;
-    /* 테두리 없음 */
     font-size: 20px;
-    /* 텍스트 크기 설정 */
     cursor: pointer;
-    /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
     position: absolute;
-    /* 버튼을 모달 안에서 절대 위치로 설정 */
     top: 10px;
-    /* 위쪽 여백 설정 */
     right: 10px;
-    /* 오른쪽 여백 설정 */
     color: rgb(5, 5, 5);
-    /* 텍스트 색상 설정 */
 }
 
 .logo {
@@ -191,7 +159,7 @@ h5 {
 .regist-button,
 .login-button {
     background-color: #ffffff;
-    border: none;
+    border: 2px solid #d0d0d0;
     border-radius: 8px;
     color: rgb(25, 30, 50);
     padding: 7.5px 15px;
@@ -207,5 +175,5 @@ h5 {
 
 .regist-button:hover,
 .login-button:hover {
-    transform: translateY(-3px); /* 마우스를 올렸을 때 아래로 이동하는 효과 */
+    transform: translateY(-3px);
 }</style>

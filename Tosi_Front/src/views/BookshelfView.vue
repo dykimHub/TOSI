@@ -31,8 +31,8 @@ const showFavoriteList = () => {
 <style scoped>
 .buttonContainer {
   display: flex;
-  justify-content: flex-end; /* 왼쪽으로 정렬 */
-  margin-right: 220px; /* 왼쪽으로 간격 추가 */
+  justify-content: flex-end;
+  margin-right: 220px;
 }
 
 button {

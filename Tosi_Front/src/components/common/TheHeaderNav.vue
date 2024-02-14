@@ -37,10 +37,9 @@ const logout = () => {
 
 <style scoped>
 .headerContainer {
-    display: flex;
-    margin-top: 25px;
-    justify-content: center;
-    /* align-items: center; */
+  display: flex;
+  margin-top: 25px;
+  justify-content: center;
 }
 .logo {
     flex-grow: 1;

@@ -29,9 +29,25 @@ export const useCustomTaleStore = defineStore("customtale", () => {
     });
   };
 
+//나의책장 - 커스텀동화 공개 여부 수정
+const updatedCustomTale = ref([]);
+const updateCustomTale = async function (customTaleId, opened) {
+  await axios({
+    method: "PUT",
+    url: `/customtale/${customTaleId}`,
+    params: {
+      opened: opened,
+    },
+    withCredentials: true 
+  }).then((response) => {
+    alert("공개 여부를 수정했어요~");
+  });
+};
+
+
   //나의책장 - 커스텀동화 삭제
   const deleteCustomTale = async function (customTaleId) {
-    await axios.delete(`/customtale/${customTaleId}`,customTaleId, { withCredentials: true }).then((response) => {
+    await axios.delete(`/customtale/${customTaleId}`, { withCredentials: true }).then((response) => {
     });
   };
 
@@ -133,6 +149,8 @@ const getCustomTaleText = async function (userInputMessage) {
     getCustomTalesList,
     myCustomTalesList,
     getMyCustomTalesList,
+    updatedCustomTale,
+    updateCustomTale,
     deleteCustomTale,
     customTale,
     getCustomTale,

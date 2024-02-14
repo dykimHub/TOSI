@@ -55,7 +55,7 @@ function getCookieValue(key) {
       return cookie.substring(key.length + 1);
     }
   }
-  return null; // 해당 키를 찾지 못한 경우
+  return null;
 }
 
 

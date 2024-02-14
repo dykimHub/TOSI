@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <form action="" class="form" @submit.prevent="onsubmit">
-      <h1 class="form__title">로그인</h1>
+      <h1 class="title">로그인</h1>
 
       <div class="login-div">
         <label for="" class="login-label">Email</label>
@@ -27,7 +27,6 @@
 <script setup>
 import { ref } from "vue";
 import { useUserStore } from "@/stores/userStore";
-import router from "@/router";
 
 const store = useUserStore()
 
@@ -49,6 +48,15 @@ const login = () => {
 
 
 <style scoped>
+.title {
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: inset 0 -20px 0  #c4ecb0;
+    font-size: 40px;
+    margin-bottom: 40px;
+    line-height: 1;
+    text-align: left;
+}
 .login-div {
   display: flex;
   align-items: center;
@@ -63,25 +71,29 @@ const login = () => {
 .login-input {
   flex: 1;
   padding: 5px;
+  height: 40px;
 }
 
 .login-button {
-  background-color: #abef8a;
-  border: none;
-  color: white; /* 텍스트 색상 */
   padding: 10px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   margin-top: 0px;
-  cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
-  margin-left: auto; /* 오른쪽 가장자리로 이동 */
+  margin-left: auto;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #d0d0d0;
+  border-radius: 10px;
+  background: transparent;
+  transition: all 0.3s ease;
+  display: inline-block;
+  box-shadow: 3px 3px 5px 0px #0002;
 }
 
 .login-button:hover {
-  background-color: #45a049; /* 마우스 호버시 배경색 변경 */
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
 }
 
 .checkbox-container {
