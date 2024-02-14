@@ -1,63 +1,58 @@
 <template>
-  <div v-if="customTaleStore.customTale">
-    <div class="play">
-      <div class="container">
-        <div class="topOfTaleList">
-          <div class="bigtitle">{{ customTaleStore.customTale.title }}</div>
-          <div class="taleinfo">
-            <div class="leftImg">
-              <div class="title">{{ customTaleStore.customTale.title }}</div>
-              <img
-                class="thumbnail"
-                :src="customTaleStore.customTale.thumbnail"
-              />
-            </div>
+  <div class="play">
+    <div class="container">
+      <div class="topOfTaleList">
+        <div class="bigtitle">{{ customTaleStore.customTale.title }}</div>
+        <div class="taleinfo">
+          <div class="leftImg">
+            <div class="title">{{ customTaleStore.customTale.title }}</div>
+            <img
+              class="thumbnail"
+              :src="customTaleStore.customTale.thumbnail"
+            />
+          </div>
 
-            <div class="chat">
-              <div class="startbox">
-                <div class="voicebox">
-                  <div class="voicetitle">
-                    <img class="mic" src="@/assets/mic.png" />목소리 선택
-                  </div>
-                  <div class="align-items-center grid-container">
-                    <div
-                      v-for="item in items"
-                      :key="item.speaker"
-                      class="form-wrapper align-items-center"
-                    >
-                      <label
-                        ><input
-                          type="radio"
-                          :value="item.speaker"
-                          v-model="speaker"
-                          :name="item.name"
-                        />
-                        {{ item.name }}
-                        <img
-                          src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
-                          alt="Speaker Image"
-                          class="speaker-image"
-                          @click="playVoice(item.url)"
-                        />
-                      </label>
-                    </div>
+          <div class="chat">
+            <div class="startbox">
+              <div class="voicebox">
+                <div class="voicetitle">
+                  <img class="mic" src="@/assets/mic.png" />목소리 선택
+                </div>
+                <div class="align-items-center grid-container">
+                  <div
+                    v-for="item in items"
+                    :key="item.speaker"
+                    class="form-wrapper align-items-center"
+                  >
+                    <label
+                      ><input
+                        type="radio"
+                        :value="item.speaker"
+                        v-model="speaker"
+                        :name="item.name"
+                      />
+                      {{ item.name }}
+                      <img
+                        src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+                        alt="Speaker Image"
+                        class="speaker-image"
+                        @click="playVoice(item.url)"
+                      />
+                    </label>
                   </div>
                 </div>
-                <div class="startbtn">
-                  <div class="rocketborder" @click="readBook">
-                    <img src="@/assets/rocket.png" class="rocket" />
-                  </div>
-                  <div class="starttitle">시작</div>
+              </div>
+              <div class="startbtn">
+                <div class="rocketborder" @click="readBook">
+                  <img src="@/assets/rocket.png" class="rocket" />
                 </div>
+                <div class="starttitle">시작</div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div v-else>
-    <div>is Loading...</div>
   </div>
 </template>
 <script setup>
@@ -167,23 +162,27 @@ onMounted(async () => {
 });
 </script>
 <style scoped>
+.topOfTaleList {
+  margin-left: 30px;
+}
 .infobox {
   border: 5px solid #cee8e8;
   border-radius: 30px;
   background-color: rgb(255, 255, 255);
   font-size: 20px;
-  width: 350px;
-  height: 370px;
-}
-.inputgroup {
-  padding: 10px;
+  width: 450px;
+  height: 450px;
+  margin-left: 50px;
 }
 .play {
   background-color: white;
   border-radius: 50px;
   margin-top: 35px;
-  padding: 40px 0px;
+  padding-top: 40px;
+  padding-bottom: 60px;
   border: 5px solid #cee8e8;
+  margin-bottom: 30px;
+  width: 80vw;
 }
 .container {
   display: flex;
@@ -202,6 +201,7 @@ onMounted(async () => {
 }
 .taleinfo {
   display: flex;
+  margin-left: 30px;
 }
 .title {
   margin: 30px 0px 25px 0px;
@@ -221,6 +221,7 @@ onMounted(async () => {
   width: 300px;
   height: 300px;
   border: 5px solid white;
+  margin-bottom: 40px;
 }
 
 .align-items-center {
@@ -241,7 +242,7 @@ onMounted(async () => {
 }
 .chat {
   width: 520px;
-  height: 500px;
+  /* height: 500px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -283,7 +284,7 @@ onMounted(async () => {
   width: 193px;
   height: 60px;
   text-align: center;
-  margin: -40px 0px 0px 80px;
+  margin: -30px 0px 0px 83px;
   background-color: #ebffdf;
   position: relative;
   z-index: 5;
@@ -298,7 +299,7 @@ onMounted(async () => {
   height: 150px;
 }
 .button {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   width: 130px;
   height: 40px;
   /* padding: 10px 25px; */
