@@ -1,49 +1,53 @@
 <template>
   <div v-if="taleDetailStore.tale && userStore.userInfo">
-    <div class="end">
-      <div class="book">
-        <div class="greet">
-          <div class="randomc">FROM. {{ randomC }}</div>
-          <div class="randomg">{{ randomG }}</div>
-          <button type="button" class="btn btn-light btn-lg replaybtn" @click="replay">
-            다시 보기
+    <div class="play">
+      <div class="end">
+        <div class="book">
+          <img src="@/assets/sticker.png" class="sticker" />
+          <div class="random">
+            <div class="randomc">FROM. {{ randomC }}</div>
+            <div class="randomg">{{ randomG }}</div>
+          </div>
+          <div class="btns">
+            <button class="replaybtn" @click="replay">다시 보기</button>
+            <button class="listbtn" @click="list">나가기</button>
+          </div>
+        </div>
+        <div class="chat">
+          <div class="chattitle">등장인물을 만나보아요</div>
+          <div class="selectbox">
+            <div class="select">
+              <img class="titleimg" src="@/assets/rabbit.png" />
+              <div class="selecttitle">등장인물</div>
+            </div>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              v-model="selectedCharacter"
+            >
+              <option v-for="character in taleDetailStore.tale.characters" :key="character.id">
+                {{ character }}
+              </option>
+            </select>
+            <div class="select">
+              <img class="titleimg" src="@/assets/girl.png" />
+              <div class="selecttitle">내 이름</div>
+            </div>
+            <select class="form-select" aria-label="Default select example" v-model="selectedName">
+              <option v-for="child in userStore.userInfo.childrenList" :key="child.id">
+                {{ child.childName }}
+              </option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-light btn-primary chatstart" @click="chatStart">
+            대화 시작하기
           </button>
-          <button type="button" class="btn btn-light btn-lg listbtn" @click="list">나가기</button>
         </div>
       </div>
-      <div class="chat">
-        <div class="chattitle">등장인물을 만나보아요</div>
-        <div class="selectbox">
-          <div class="select">
-            <img class="titleimg" src="@/assets/rabbit.png" />
-            <div class="selecttitle">등장인물</div>
-          </div>
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            v-model="selectedCharacter"
-          >
-            <option v-for="character in taleDetailStore.tale.characters" :key="character.id">
-              {{ character }}
-            </option>
-          </select>
-          <div class="select">
-            <img class="titleimg" src="@/assets/girl.png" />
-            <div class="selecttitle">내 이름</div>
-          </div>
-          <select class="form-select" aria-label="Default select example" v-model="selectedName">
-            <option v-for="child in userStore.userInfo.childrenList" :key="child.id">
-              {{ child.childName }}
-            </option>
-          </select>
-        </div>
-        <button type="button" class="btn btn-light btn-primary chatstart" @click="chatStart">
-          대화 시작하기
-        </button>
-      </div>
+      <!-- <img class="unfolded" src="@/assets/bookend.png" /> -->
     </div>
-    <img class="unfolded" src="@/assets/bookend.png" />
   </div>
+
   <div v-else>is Loading...</div>
 </template>
 
@@ -107,17 +111,20 @@ const chatStart = () => {
 </script>
 
 <style scoped>
+.play {
+  width: 1050px;
+  height: 590px;
+  border: 5px solid #cee8e8;
+  margin: 20px 0px 50px 0px;
+  border-radius: 50px;
+  background-color: white;
+}
 .end {
   display: flex;
-  height: 600px;
-  width: 1350px;
-  margin-top: 50px;
-}
-.book {
-  display: flex;
-  background-size: cover;
-  width: 600px;
-  height: 1100px;
+  justify-content: space-around;
+  height: 430px;
+  width: 1000px;
+  margin: 50px 0 100px 20px;
 }
 @keyframes popUp {
   0% {
@@ -132,46 +139,72 @@ const chatStart = () => {
     transform: scale(1); /* 최종적으로 요소의 원래 크기로 설정 */
   }
 }
-.greet {
-  width: 570px;
-  height: 570px;
-  background-image: url(@/assets/quote.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  animation: popUp 1s ease-out forwards;
+.book {
+  align-items: center;
+  background-image: url(@/assets/book_end.png);
+  background-size: cover;
+  width: 433px;
+  height: 446px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  padding: 0 50px 0 40px;
+}
+.sticker {
+  width: 150px;
+  height: 50px;
+  transform: rotate(10deg);
+  margin-top: 35px;
+  margin-left: 20px;
+}
+.random {
+  background-color: white;
+  height: 300px;
+  margin-top: -10px;
 }
 .randomc {
-  width: 300px;
-  font-size: 2.5vw;
-  margin-top: 130px;
-  margin-left: 130px;
-  text-align: center;
+  font-size: 28px;
   border-bottom: 3.5px solid black;
+  padding-top: 40px;
+  width: 280px;
+  margin: auto;
 }
 .randomg {
-  width: 360px;
-  font-size: 2.3vw;
-  margin-left: 95px;
-  margin-top: 5px;
+  padding: 0 15px 0 15px;
+  font-size: 27px;
+  margin-top: 10px;
   text-align: center;
 }
-.replaybtn {
-  margin: 20px 15px 0 170px;
-  border-radius: 50%;
-  box-shadow: 0 4px #0056b3;
+.btns {
+  display: flex;
+  justify-content: center;
 }
+.replaybtn,
 .listbtn {
-  margin-top: 20px;
-  border-radius: 50%;
-  box-shadow: 0 4px #0056b3;
+  margin: 10px 10px 0 0;
+  width: 100px;
+  height: 40px;
+  border: 2px solid #d0d0d0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 5px 0px #0002;
+  background-color: white;
 }
-.unfolded {
-  width: 1200px;
-  height: 300px;
-  margin-top: -30px;
-  margin-bottom: 60px;
-  animation: shake 3s forwards;
+
+.listbtn {
+  margin: 10px 0 0 0;
+}
+
+.replaybtn:hover {
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
+}
+.listbtn:hover {
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
 }
 @keyframes shake {
   0%,
@@ -192,34 +225,30 @@ const chatStart = () => {
     transform: rotate(3deg);
   }
 }
-.chat {
-  width: 450px;
-  height: 650px;
-  font-size: 25px;
-  margin-top: 30px;
-}
 .chattitle {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 10px solid #ebffdf;
+  border: 5px solid #cee8e8;
+  background-color: #ebffdf;
   border-radius: 30px;
-  width: 370px;
-  height: 65px;
+  width: 350px;
+  height: 62px;
   text-align: center;
-  margin-left: 45px;
   margin-bottom: -35px;
-  background-color: white;
   position: relative;
   z-index: 5;
   font-size: 27px;
+  margin-left: 40px;
+  margin-top: 20px;
 }
 .selectbox {
-  border: 10px solid #ebffdf;
+  border: 5px solid #cee8e8;
+  background-color: white;
   border-radius: 30px;
   padding: 30px 50px;
-  background-color: aliceblue;
-  height: 400px;
+  height: 350px;
+  width: 420px;
 }
 .form-select {
   font-size: 25px;
@@ -230,24 +259,25 @@ const chatStart = () => {
 .titleimg {
   width: 40px;
   height: 40px;
-  margin-top: 25px;
+  margin-top: 30px;
   margin-right: 10px;
 }
 .selecttitle {
   font-size: 28px;
   margin-top: 25px;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
 }
 .chatstart {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 125px;
+  margin-left: 115px;
   margin-top: -35px;
   width: 200px;
-  height: 70px;
+  height: 60px;
   font-size: 25px;
-  border: 8px solid rgba(173, 255, 47, 0.6);
+  border: 5px solid #cee8e8;
+  background-color: #ebffdf;
   border-radius: 30px;
 }
 </style>
