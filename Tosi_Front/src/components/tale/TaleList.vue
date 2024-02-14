@@ -169,7 +169,7 @@ onMounted(async() => {
 
 .talelistContainer {
   background-color: white;
-  border-radius: 20px;
+  border-radius: 50px;
   margin: 35px;
   opacity: 0.95;
   padding: 40px 60px;
@@ -184,7 +184,7 @@ onMounted(async() => {
 .oneTale {
   width: 13em;
   text-align: center;
-  margin: 3em;
+  margin: 1em;
 }
 
 .selecSort {

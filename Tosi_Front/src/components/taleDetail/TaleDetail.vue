@@ -87,41 +87,6 @@
                 </div>
             </div>
           </div>
-          <div class="startbox">
-            <div class="voicebox">
-              <div class="voicetitle"><img class="mic" src="@/assets/mic.png" />목소리 선택</div>
-              <div class="align-items-center grid-container">
-                <div
-                  v-for="item in items"
-                  :key="item.speaker"
-                  class="form-wrapper align-items-center"
-                >
-                  <label
-                    ><input
-                      type="radio"
-                      :value="item.speaker"
-                      v-model="speaker"
-                      :name="item.name"
-                    />
-                    {{ item.name }}
-                    <img
-                      src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
-                      alt="Speaker Image"
-                      class="speaker-image"
-                      @click="playVoice(item.url)"
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-            <!-- <button type="button" class="readstart" @click="readBook">동화 읽기</button> -->
-            <div claass="startbtn">
-              <div class="rocketborder" @click="readBook">
-                <img src="@/assets/rocket.png" class="rocket" />
-              </div>
-              <div class="starttitle">시작</div>
-            </div>
-          </div>
         </div>
     <div v-else>
         <div>is Loading...</div>

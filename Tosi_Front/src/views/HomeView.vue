@@ -19,7 +19,7 @@
             </div>
             <h5>최근에 친구들이 만든 이야기에요!</h5>
             <div class="top3">
-                <ul v-for="tale in  CTalestore.customTalesList.slice(-3).reverse()" :key="tale.taleId">
+                <ul v-for="tale in  CTalestore.customTalesList.slice(0,3)" :key="tale.taleId">
                     <div class="oneTale">
                         <RouterLink :to="`/tales/${tale.taleId}`"
                             ><img class="thumbnail" :src="tale.thumbnail" />
