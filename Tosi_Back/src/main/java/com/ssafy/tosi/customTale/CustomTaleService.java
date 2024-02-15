@@ -62,36 +62,66 @@ public class CustomTaleService {
         return true;
     }
 
-    public String split_sentences(String string) throws IOException {
-        String[] contents = new String[]{string};
-        String[] splitted_contents = new String[contents.length];
-        File[] files = new File[contents.length];
+    // public String split_sentences(String string) throws IOException {
+    //     String[] contents = new String[]{string};
+    //     String[] splitted_contents = new String[contents.length];
+    //     File[] files = new File[contents.length];
 
-        for (int i = 0; i < contents.length; i++) {
-            if (contents[i] == null) continue;
+    //     for (int i = 0; i < contents.length; i++) {
+    //         if (contents[i] == null) continue;
 
-            files[i] = File.createTempFile("content" + i, ".txt");
-            System.out.print(files[i]);
+    //         files[i] = File.createTempFile("content" + i, ".txt");
+    //         System.out.print(files[i]);
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(files[i]))) {
-                writer.write(contents[i]);
+    //         try (BufferedWriter writer = new BufferedWriter(new FileWriter(files[i]))) {
+    //             writer.write(contents[i]);
+    //         }
+
+    //         ProcessBuilder builder = new ProcessBuilder("node", "src/main/java/com/ssafy/tosi/taleDetail/morpheme/process.js", files[i].getAbsolutePath());
+    //         Process process = builder.start();
+
+    //         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    //         String line;
+    //         StringBuilder response = new StringBuilder();
+    //         while ((line = reader.readLine()) != null) {
+    //             response.append(line + "\n");
+    //         }
+
+    //         splitted_contents[i] = response.toString();
+
+    //     }
+    //     System.out.print(splitted_contents[0]);
+    //     return splitted_contents[0];
+
+    // }
+
+    public String split_sentences(String string) {
+        string = string.replace("n", "");
+        string = string.replace("\\", "");
+        string = string.replace("..","");
+
+        StringBuilder sb = new StringBuilder();
+        char[] str2char = string.toCharArray();
+
+        boolean flag = false;
+        for (char c : str2char) {
+            sb.append(c);
+
+            if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c) && (c != ',')) {
+                if (c == '"' && !flag) { // 첫번째 따옴표이면
+                    flag = true; // 따옴표 flag
+                } else if (c == '"' && flag) { // 두번째 따옴표라면
+                    flag = false; // 따옴표 flag 취소
+                    sb.append("\n"); // 띄우기
+                } else if (!flag) { // 따옴표 안 문장이 아니라면
+                    sb.append("\n"); // 띄우기
+                }
+
             }
-
-            ProcessBuilder builder = new ProcessBuilder("node", "src/main/java/com/ssafy/tosi/taleDetail/morpheme/process.js", files[i].getAbsolutePath());
-            Process process = builder.start();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            StringBuilder response = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                response.append(line + "\n");
-            }
-
-            splitted_contents[i] = response.toString();
-
         }
-        System.out.print(splitted_contents[0]);
-        return splitted_contents[0];
+
+        return sb.toString();
+
 
     }
 
