@@ -132,37 +132,40 @@
   // flip: true; 뒤집은 상태, false; 이전 페이지 펼친 상태
   const currentPageNum = ref(1); // 현재 페이지 번호
   function flipPage(index, flip) {
-    pages[index].flipped = flip;
-    // 페이지를 뒤집을 때
-    if (flip) {
-      zIndexes.forEach((_, i) => {
-        if (i === index) {
-          // 페이지 인덱스가 클수록 z-index가 낮아야 함
-          // 제일 낮은 인덱스(첫페이지)가 맨 위에 있어야 해서
-          zIndexes[i] = pages.length - index;
-        }
-        // 배열리스트의 현재 인덱스
-        currentPageIndex.value = index - 1;
-        currentPageNum.value = pages.length - currentPageIndex.value;
-        console.log("true플립에서 감지한 인덱스 : ", currentPageIndex.value, " index: ", index);
-      });
-    } else {
-      // 이전 상태로 되돌리면 해당 페이지가 제일 위에 와야함
-      // zindex의 max값에 1을 더한 값을 저장
-      const maxZIndex = Math.max(...zIndexes) + 1;
-      zIndexes[index] = maxZIndex;
-      // 다른 페이지들의 z-index 업데이트
-      zIndexes.forEach((z, i) => {
-        if (i !== index && pages[i].flipped) {
-          zIndexes[i] = z - 1;
-        }
-      });
+  pages[index].flipped = flip;
+
+  // 페이지를 뒤집을 때
+  if (flip) {
+    zIndexes.forEach((_, i) => {
+      if (i === index) {
+        // 페이지 인덱스가 클수록 z-index가 낮아야 함
+        // 제일 낮은 인덱스(첫페이지)가 맨 위에 있어야 해서
+        zIndexes[i] = pages.length - index;
+      }
       // 배열리스트의 현재 인덱스
-      currentPageIndex.value = index;
+      currentPageIndex.value = index - 1;
       currentPageNum.value = pages.length - currentPageIndex.value;
-      console.log("false플립에서 감지한 인덱스 : ", currentPageIndex.value, " index: ", index);
-    }
+      if (currentPageNum.value > pages.length) {
+        goToEnd();
+      }
+    });
+  } else {
+    // 이전 상태로 되돌리면 해당 페이지가 제일 위에 와야함
+    // zindex의 max값에 1을 더한 값을 저장
+    const maxZIndex = Math.max(...zIndexes) + 1;
+    zIndexes[index] = maxZIndex;
+
+    // 다른 페이지들의 z-index 업데이트
+    zIndexes.forEach((z, i) => {
+      if (i !== index && pages[i].flipped) {
+        zIndexes[i] = z - 1;
+      }
+    });
+    // 배열리스트의 현재 인덱스
+    currentPageIndex.value = index;
+    currentPageNum.value = pages.length - currentPageIndex.value;
   }
+}
   
   // tts
   const items = ref([
