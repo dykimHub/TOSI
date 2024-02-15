@@ -57,7 +57,6 @@ export const useUserStore = defineStore("user", () => {
             localStorage.removeItem("isLoggedIn");
             sessionStorage.removeItem("isLoggedIn");
             window.location.replace("/");
-            window.location.replace("/tosi");
         });
     };
     //이메일 중복 확인
