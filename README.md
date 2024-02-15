@@ -11,7 +11,7 @@
 
 ## :date: 기간
 
-- 2024.01.03 ~ 2024.02.17
+- 2024.01.03 ~ 2024.02.16
 
 ## :keyboard: 참여 인원 및 역할
 
@@ -24,44 +24,37 @@
 | 이아진 | FullStack, BackEnd leader, Infra              | AI를 활용한 등장인물과의 채팅, 도커라이징  
 | 김소연 | FullStack                | 회원가입, 자동 로그인, 마이페이지, 나의 책장
 
-## :runner: 주차별 진행 상황
-
-| 주차   | 진행 상황              |  
-| ------ | ---------------------|
-| 1주차 | 기획서, 페르소나 분석, 기능 정의서, ERD, 메뉴 구조도  |
-| 2주차 | 화면정의서, ERD, 시퀀스 다이어그램, 플로우차트, 시스템 아키텍쳐              | 동화 구연  | 
-| 3주차 | DB 구축, REST API 구현, 외부 API 솔루션 개발, vue 페이지 구현               | 동화 구연  | 
-| 4주차 |               | 커스텀 동화  | 
-| 5주차 |               | 등장인물과의 채팅  | 
-| 6주차 |               | 회원   |       
-
 ## :deciduous_tree: Stacks
 
-##### Environment
+**Environment**  
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white)  
-
-##### BackEnd
+**BackEnd**  
 ![Spring Boot](https://img.shields.io/badge/spring%20boot-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-
-##### FrontEnd
+<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
+<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">   
+**FrontEnd**  
 ![Vue.js](https://img.shields.io/badge/vue.js-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-
-##### DataBase
-![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
-
-##### Version Control
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)  
+**DataBase**    
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)  
+**Version Control**    
 ![GitLab](https://img.shields.io/badge/gitlab-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white)
-
-##### Communication
+![Gerrit](https://img.shields.io/badge/-Gerrit-lightgreen?style=for-the-badge&logo=gerrit&logoColor=white)  
+**Communication**  
 ![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white)
 ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
+![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white)
 
-## 💎 목차
 
-1. 프로젝트 설명
+
+## :runner: 메뉴 구조도
+![메뉴구조도](/uploads/e522685f7d7107d260725484ea5308c7/메뉴구조도.png)
+
+## :cd: 시스템 아키텍처
+![시스템_아키텍처](/uploads/a29edf13009c600e7cf3373d21b0e46f/시스템_아키텍처.png)
 
 <br />
 
