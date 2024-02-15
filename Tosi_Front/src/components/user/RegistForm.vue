@@ -88,9 +88,10 @@ const regist = () => {
     email.value === "" ||
     password.value === "" ||
     passwordCheck.value === "" ||
-    childrenList.value === ""
+    childrenList.value === null ||
+    (Array.isArray(childrenList.value) && childrenList.value.length === 0)
   ) {
-    alert("모든 내용을 입력해주세요.");
+    alert("모든 내용을 입력해주세요. \n아이를 1명 이상 등록해 주세요.");
     return;
   }
 

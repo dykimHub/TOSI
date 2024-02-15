@@ -102,6 +102,15 @@ const update = function () {
     alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
     return;
   }
+  
+  if (
+    childrenList.value === null ||
+    (Array.isArray(childrenList.value) && childrenList.value.length === 0)
+  ) {
+    alert("아이를 1명 이상 등록해 주세요.");
+    return;
+  }
+
   store.updateUser(userInfo.value);
 }
 

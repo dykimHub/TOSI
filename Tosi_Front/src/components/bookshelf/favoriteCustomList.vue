@@ -84,7 +84,7 @@ const sortedTaleList = ref([]);
 const sortTaleList = () => {
   switch (sortOptionC.value) {
     case 'regDate':
-      sortedTaleList.value = myCustomTalesList.value.sort((a, b) => a.customTaleId - b.customTaleId);
+      sortedTaleList.value = myCustomTalesList.value.sort((a, b) => b.customTaleId - a.customTaleId);
       break;
     case 'title':
       sortedTaleList.value = myCustomTalesList.value.sort((a, b) => a.title.localeCompare(b.title));
