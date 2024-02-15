@@ -104,8 +104,8 @@ const update = function () {
   }
   
   if (
-    childrenList.value === null ||
-    (Array.isArray(childrenList.value) && childrenList.value.length === 0)
+    userInfo.value.childrenList === null ||
+    (Array.isArray(userInfo.value.childrenList) && userInfo.value.childrenList.length === 0)
   ) {
     alert("아이를 1명 이상 등록해 주세요.");
     return;
