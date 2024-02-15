@@ -12,19 +12,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "users") // Entity명과 DB테이블명이 일치하지 않는 경우 어떤 테이블과 매칭할 건지 지정
+@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-@NoArgsConstructor // 매개변수가 없는 기본생성자 생성
+@NoArgsConstructor
 @Getter
 @Entity
 public class User {
 
-    @Id // Primary Key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // PK의 생성 방식 결정
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable=false)
     private Integer userId;
 
-    @Column(name = "email", nullable = false, unique = true, updatable = false) // DB 속성명과 일치하지 않는 경우 DB 속성 지정
+    @Column(name = "email", nullable = false, unique = true, updatable = false)
     private String email;
 
     private String password;
@@ -33,8 +33,7 @@ public class User {
     @Column(name = "regDate", nullable = false)
     private LocalDateTime regDate;
 
-//    @ColumnDefault("나의 책장")
-    @Column(name = "bookshelfName", nullable = false, columnDefinition = "나의 책장")
+    @Column(name = "bookshelfName", nullable = false)
     private String bookshelfName;
 
     @OneToMany
