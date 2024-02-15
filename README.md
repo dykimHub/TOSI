@@ -48,13 +48,14 @@
 ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
 ![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white)
 
-
-
 ## :runner: 메뉴 구조도
 ![메뉴구조도](/uploads/e522685f7d7107d260725484ea5308c7/메뉴구조도.png)
 
 ## :cd: 시스템 아키텍처
 ![시스템_아키텍처](/uploads/a29edf13009c600e7cf3373d21b0e46f/시스템_아키텍처.png)
+
+## :milky_way: 목업
+![목업](/uploads/2af294168bde04e37b37ae5863c5fe10/목업.gif)
 
 <br />
 
