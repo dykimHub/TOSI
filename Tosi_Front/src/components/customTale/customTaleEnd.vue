@@ -83,12 +83,12 @@ onMounted(async () => {
 });
 </script>
 <style scoped>
+.topOfTaleList {
+  margin-left: 30px;
+}
 a {
   color: black;
   text-decoration: none;
-}
-.topOfTaleList {
-  margin-left: 30px;
 }
 .infobox {
   border: 5px solid #cee8e8;
@@ -96,7 +96,6 @@ a {
   background-color: rgb(255, 255, 255);
   font-size: 20px;
   width: 450px;
-  height: 450px;
   margin-left: 50px;
 }
 .startbox {
@@ -208,7 +207,7 @@ a {
   width: 260px;
   height: 60px;
   text-align: center;
-  margin: -30px 0px 0px 90px;
+  margin: -30px 0px 0px 90px;  
   background-color: #ebffdf;
   position: relative;
   z-index: 5;

@@ -153,7 +153,7 @@ onMounted(async() => {
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  margin-left: 5vw;
+  /* margin-left: 5vw; */
 }
 
 .title {
@@ -171,7 +171,6 @@ onMounted(async() => {
   background-color: white;
   border-radius: 50px;
   margin: 35px;
-  opacity: 0.95;
   padding: 40px 60px;
   border: 5px solid #cee8e8;
   width: 80vw;
@@ -184,7 +183,7 @@ onMounted(async() => {
 .oneTale {
   width: 13em;
   text-align: center;
-  margin: 1em;
+  margin: 3.5em;
 }
 
 .selecSort {
@@ -201,8 +200,6 @@ onMounted(async() => {
 .topOfTaleList {
   display: flex;
   justify-content: space-between;
-  /* margin-left: 10%;
-    margin-right: 10%; */
 }
 a {
   text-decoration: none;
@@ -222,7 +219,6 @@ button {
   width: 3em;
   margin-left: 1em;
   height: 2em;
-  /* padding: 10px 25px; */
   border: 2px solid #d0d0d0;
   border-radius: 10px;
   background: transparent;

@@ -1,89 +1,77 @@
 <template>
-  <div v-if="customTaleStore.pages">
-    <div class="play">
-      <div class="title">{{ customTaleStore.customTale.title }}</div>
-      <div class="page-progress">
-        &lt; {{ currentPageNum }} / {{ pages.length }} >
-      </div>
-      <div class="book">
-        <div class="cover">
-          <img :src="customTaleStore.customTale.thumbnail" class="coverImg" />
-        </div>
-        <div class="flip-book">
-          <div
-            class="flip"
-            v-for="(page, index) in pages"
-            :key="`page-${index}`"
-            :class="{ flipped: page.flipped }"
-            :style="{ zIndex: zIndexes[index] }"
-          >
-            <div class="back" v-if="index >= 1">
-              <img :src="customTaleStore.customTale.thumbnail" class="leftImg" />
-              <img src="@/assets/leftarrow.gif" class="left" />
-              <img
-                src="@/assets/leftarrowstatic.png"
-                class="leftstatic"
-                @click="flipPage(index, false)"
-              />
+    <div v-if="customTaleStore.pages">
+        <div class="play">
+            <div class="title">{{ customTaleStore.customTale.title }}</div>
+            <div class="page-progress">&lt; {{ currentPageNum }} / {{ pages.length }} ></div>
+            <div class="book">
+                <div class="cover">
+                    <img :src="customTaleStore.customTale.thumbnail" class="coverImg" />
+                </div>
+                <div class="flip-book">
+                    <div
+                        class="flip"
+                        v-for="(page, index) in pages"
+                        :key="`page-${index}`"
+                        :class="{ flipped: page.flipped }"
+                        :style="{ zIndex: zIndexes[index] }"
+                    >
+                        <div class="back" v-if="index >= 1">
+                            <img :src="customTaleStore.customTale.thumbnail" class="leftImg" />
+                            <img src="@/assets/leftarrow.gif" class="left" />
+                            <img
+                                src="@/assets/leftarrowstatic.png"
+                                class="leftstatic"
+                                @click="flipPage(index, false)"
+                            />
+                        </div>
+                        <div class="front pre-wrap">
+                            <div class="page-separator-right"></div>
+                            <div class="content">{{ pages[index].right }}</div>
+                            <div v-if="index === 0">
+                                <img src="@/assets/end.gif" class="end" @click="goToEnd" />
+                            </div>
+                            <div v-else>
+                                <img src="@/assets/rightarrow.gif" class="right" />
+                                <img
+                                    src="@/assets/rightarrowstatic.png"
+                                    class="rightstatic"
+                                    @click="flipPage(index, true)"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="front pre-wrap">
-              <div class="page-separator-right"></div>
-              <div class="content">{{ pages[index].right }}</div>
-              <div v-if="index === 0">
-                <img src="@/assets/end.gif" class="end" @click="goToEnd" />
-              </div>
-              <div v-else>
-                <img src="@/assets/rightarrow.gif" class="right" />
-                <img
-                  src="@/assets/rightarrowstatic.png"
-                  class="rightstatic"
-                  @click="flipPage(index, true)"
-                />
-              </div>
+            <div class="controls-container">
+                <div class="volume-controls">
+                    <img
+                        src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
+                        alt="Speaker Image"
+                        class="speaker-image"
+                    />
+                    <div class="volume-bar" @click="setVolume">
+                        <div class="volume-bar-active" :style="{ width: volume + '%' }"></div>
+                    </div>
+                </div>
+                <div class="playstop-controls stopbtn">
+                    <img v-if="isPaused" src="@/assets/playaudio.png" @click="audioPause" class="start" />
+                    <img v-else src="@/assets/pause.png" @click="audioPause" class="pause" />
+                    <img src="@/assets/stop.png" class="stop" @click="replay()" />
+                </div>
+                <div class="speed-controls">
+                    <input type="radio" id="button1" name="buttons" v-model="selectedButton" value="button1" />
+                    <label for="button1" class="button" @click="changePlaybackRate(0.75)">느리게</label>
+
+                    <input type="radio" id="button2" name="buttons" v-model="selectedButton" value="button2" checked />
+                    <label for="button2" class="button" @click="changePlaybackRate(1)">보통</label>
+
+                    <input type="radio" id="button3" name="buttons" v-model="selectedButton" value="button3" />
+                    <label for="button3" class="button" @click="changePlaybackRate(1.25)">빠르게</label>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="controls-container">
-        <div class="volume-controls">
-          <img
-            src="https://talebucket.s3.ap-northeast-2.amazonaws.com/volume_up_FILL0_wght400_GRAD0_opsz24.svg"
-            alt="Speaker Image"
-            class="speaker-image"
-          />
-          <div class="volume-bar" @click="setVolume">
-            <div
-              class="volume-bar-active"
-              :style="{ width: volume + '%' }"
-            ></div>
-          </div>
-        </div>
-
-        <div class="playstop-controls stopbtn">
-          <img
-            v-if="isPaused"
-            src="@/assets/playaudio.png"
-            @click="audioPause"
-            class="start"
-          />
-          <img
-            v-else
-            src="@/assets/pause.png"
-            @click="audioPause"
-            class="pause"
-          />
-          <img src="@/assets/stop.png" class="stop" @click="replay()" />
-        </div>
-
-        <div class="speed-controls">
-          <button @click="changePlaybackRate(-0.25)"></button>
-          <span class="playback-rate">{{ playbackRate.toFixed(2) }}</span>
-          <button @click="changePlaybackRate(0.25)">>></button>
-        </div>
-      </div>
     </div>
-  </div>
-  <div v-else>is Loading...</div>
+    <div v-else>is Loading...</div>
 </template>
 
 <script setup>
@@ -184,7 +172,7 @@ const autoAudio = (text) => {
     // 이미 캐시된 결과가 있는지 확인
     if (audioSrcCache[text] != null) {
         audioRef.value = new Audio(audioSrcCache[text]);
-        audioVolume();
+        // audioRef.value.play(); // 재생
         // 재생이 끝나면 Promise를 resolve하도록 설정
         audioRef.value.onended = () => {
             onAudioEnded();
@@ -196,7 +184,6 @@ const autoAudio = (text) => {
         ttsMaker(text).then((url) => {
             if (url) {
                 audioRef.value = new Audio(url); // 새로운 오디오를 할당
-                audioVolume();
                 // 재생이 끝나면 Promise를 resolve하도록 설정
                 audioRef.value.onended = () => {
                     onAudioEnded();
@@ -240,8 +227,7 @@ const playbackRate = ref(1.0);
 // 배속을 조절하는 함수
 const changePlaybackRate = (change) => {
     try {
-        // 배속을 0.25씩 증감하되, 0.5와 2.00 사이의 값을 유지합니다.
-        playbackRate.value = Math.max(0.5, Math.min(2.0, playbackRate.value + change));
+        playbackRate.value = change;
         audioRef.value.playbackRate = playbackRate.value;
     } catch {
         console.error("Error changing playback rate:", error);
@@ -284,199 +270,200 @@ onMounted(async () => {
 
 <style scoped>
 .play {
-  background-color: white;
-  border-radius: 50px;
-  margin-top: 35px;
-  padding: 40px 60px;
-  border: 5px solid #cee8e8;
-  width: 80vw;
+    background-color: white;
+    border-radius: 50px;
+    margin-top: 35px;
+    padding: 40px 60px;
+    border: 5px solid #cee8e8;
+    width: 80vw;
 }
 .info {
-  display: flex;
-  justify-content: space-between;
-  width: 950px;
-  margin: 45px 10px 0 45px;
+    display: flex;
+    justify-content: space-between;
+    width: 950px;
+    margin: 45px 10px 0 45px;
 }
 .title {
-  text-decoration: none;
-  display: inline-block;
-  box-shadow: inset 0 -20px 0 #d3e4ff;
-  font-size: 40px;
-  margin-bottom: 10px;
-  margin-top: 20px;
-  line-height: 1;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: inset 0 -20px 0 #d3e4ff;
+    font-size: 40px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    line-height: 1;
 }
 .cover {
-  background-color: #fff;
-  box-sizing: border-box;
-  width: 500px;
-  height: 500px;
-  border-radius: 0px 40px 40px 0px;
+    background-color: #fff;
+    box-sizing: border-box;
+    width: 500px;
+    height: 500px;
+    border-radius: 0px 40px 40px 0px;
 }
 .coverImg,
 .leftImg {
-  width: 435px;
-  height: 450px;
-  margin-top: 25px;
-  margin-left: 10px;
+    width: 435px;
+    height: 450px;
+    margin-top: 25px;
+    margin-left: 10px;
 }
 .book {
-  margin: 0px 0px 0px 80px;
-  padding: 10px 10px 0px 5px;
-  display: flex;
-  background-color: #21364d;
-  width: 950px;
-  height: 520px;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    margin: 0px 0px 0px 80px;
+    padding: 10px 10px 0px 5px;
+    display: flex;
+    background-color: #21364d;
+    width: 950px;
+    height: 520px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
 }
 .flip-book {
-  width: 500px;
-  height: 500px;
-  position: relative;
-  perspective: 1500px;
-  border-radius: 100px;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    perspective: 1500px;
+    border-radius: 100px;
 }
 .flip {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform-origin: left;
-  transform-style: preserve-3d;
-  transition: 0.5s;
-  color: #000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transform-style: preserve-3d;
+    transition: 0.5s;
+    color: #000;
 }
 .front {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  backface-visibility: hidden;
-  background-color: #fff;
-  box-sizing: border-box;
-  padding: 0 13px;
-  border-radius: 40px 0px 0px 40px;
-  box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5); /* 내부 그림자 추가 */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 0 13px;
+    border-radius: 40px 0px 0px 40px;
+    box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5); /* 내부 그림자 추가 */
 }
 .page-separator-right {
-  position: absolute;
-  top: 6.5%;
-  right: 100%;
-  width: 2px;
-  height: 88%;
-  /* background-color: #5d4037; */
-  background-color: #ede7e0;
-  transform: translateX(1px);
-  border-radius: 10px;
+    position: absolute;
+    top: 6.5%;
+    right: 100%;
+    width: 2px;
+    height: 88%;
+    /* background-color: #5d4037; */
+    background-color: #ede7e0;
+    transform: translateX(1px);
+    border-radius: 10px;
 }
 .page-separator-left {
-  position: absolute;
-  top: 6%;
-  left: 100%;
-  width: 2px;
-  height: 88%;
-  /* background-color: #5d4037; */
-  background-color: #ede7e0;
-  transform: translateX(-1px);
-  border-radius: 10px;
+    position: absolute;
+    top: 6%;
+    left: 100%;
+    width: 2px;
+    height: 88%;
+    /* background-color: #5d4037; */
+    background-color: #ede7e0;
+    transform: translateX(-1px);
+    border-radius: 10px;
 }
 .back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  backface-visibility: hidden;
-  background-color: #fff;
-  transform: rotateY(180deg);
-  border-radius: 0px 40px 40px 0px;
-  box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    background-color: #fff;
+    transform: rotateY(180deg);
+    border-radius: 0px 40px 40px 0px;
+    box-shadow: inset 0 0 13px rgba(0, 0, 0, 0.5);
 }
 .flip.flipped {
-  transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
 }
 .pre-wrap {
-  white-space: pre-wrap;
+    white-space: pre-wrap;
 }
 .left,
 .leftstatic,
 .right,
 .rightstatic {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  background: white;
-  cursor: pointer;
-  bottom: 13px;
-  right: 13px;
-  border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background: white;
+    cursor: pointer;
+    bottom: 13px;
+    right: 13px;
+    border-radius: 50%;
 }
 .rightstatic:hover,
 .leftstatic:hover {
-  width: 40px;
-  height: 40px;
-  opacity: 0;
-  cursor: pointer;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    cursor: pointer;
 }
 .end {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  background: white;
-  cursor: pointer;
-  bottom: 13px;
-  right: 13px;
-  border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background: white;
+    cursor: pointer;
+    bottom: 13px;
+    right: 13px;
+    border-radius: 50%;
 }
 .content {
-  display: flex;
-  align-items: center;
-  font-size: 30px;
-  height: 100%;
-  margin-left: 20px;
-  margin-right: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    height: 100%;
+    margin-left: 20px;
+    margin-right: 10px;
 }
+
 .page-progress {
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
-  margin: -10px 0px 20px 0px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin: -10px 0px 20px 0px;
 }
 .start,
 .pause {
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
 }
 .stop {
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
-  border-radius: 50%;
-  border: 1px solid black;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 1px solid black;
 }
 .stopbtn {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .speaker-image {
-  width: 60px;
-  height: 60px;
+    width: 60px;
+    height: 60px;
 }
 .volume-bar {
-  position: relative;
-  width: 180px;
-  height: 15px;
-  background-color: #ddd;
-  cursor: pointer;
+    position: relative;
+    width: 180px;
+    height: 15px;
+    background-color: #ddd;
+    cursor: pointer;
 }
 
 .volume-bar::after {
-  content: "";
+    content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -494,51 +481,67 @@ onMounted(async () => {
 }
 
 .volume-bar-active {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: #0e94ff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #0e94ff;
 }
 .controls-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* 요소들 사이에 균등한 공간을 만들어 줍니다 */
-  padding: 10px; /* 컨테이너의 내부 여백 */
-  margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 950px;
+    margin-left: 35px;
+    margin-top: 15px;
 }
 .playstop-controls {
-  display: flex;
-  justify-content: center; /* 이 컨테이너 내의 버튼들을 가운데 정렬 */
-  gap: 1rem;
-  margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 5px;
 }
 .volume-controls {
-  display: flex; /* flex 컨테이너 설정 */
-  align-items: center; /* 요소들을 세로 방향으로 중앙에 정렬 */
-  margin-left: 20px;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
 }
 .speed-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 250px;
+    margin-left: -10px;
 }
 
-.playback-rate {
-  margin: 0 10px;
-  font-size: 1.2rem;
-  background-color: #f5f5f5;
-  color: #000;
-  padding: 2px 8px;
-  min-width: 50px; /* 충분한 너비를 확보하여 숫자가 변동되어도 레이아웃이 바뀌지 않도록 합니다. */
-  text-align: center;
+label {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 80px;
+    height: 30px;
+    margin-right: 5px;
+    box-shadow: 2px 2px 0 #d3e4ff;
+    text-align: center;
+}
+.button:hover {
+    background-color: #c4ecb0;
+    transition: 0.7s;
 }
 
-button {
-  background: none;
-  border: none;
-  width: 80px;
-  font-size: 1.7rem;
+#button1:checked + label {
+    background-color: #d3e4ff; /* 선택된 버튼의 배경색 */
+}
+
+#button2:checked + label {
+    background-color: #d3e4ff; /* 선택된 버튼의 배경색 */
+}
+
+#button3:checked + label {
+    background-color: #d3e4ff; /* 선택된 버튼의 배경색 */
+}
+input[type="radio"] {
+    -webkit-appearance: none; /* Safari 및 Chrome 등의 웹킷 브라우저 */
+    -moz-appearance: none; /* Firefox */
+    appearance: none;
 }
 </style>

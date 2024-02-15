@@ -99,7 +99,7 @@ const saveCustomTale = async function () {
 };
 
 const retry = function () {
-  if (confirm("동화를 저장하지 않고 다시 만드시겠습니까?") == true) {
+  if (confirm("만들어진 동화가 사라져요! 동화를 지우고 다시 만들까요?") == true) {
     customTaleStore.resetCustomTale();
     router.push({ name: "customTaleCreate" });
   } else {
@@ -108,7 +108,7 @@ const retry = function () {
 };
 
 const nosave = function () {
-  if (confirm("동화를 저장하지 않고 나가시겠습니까?") == true) {
+  if (confirm("만들어진 동화가 사라져요! 동화를 저장하지 않고 나갈까요?") == true) {
     customTaleStore.resetCustomTale();
     router.push({ name: "customTaleList" });
   } else {
@@ -170,13 +170,13 @@ const nosave = function () {
   font-size: 35px;
   width: 300px;
   text-align: center;
-  overflow: hidden;
-  white-space: nowrap;
+  overflow: hidden; /* 글자가 넘칠 경우 숨김 처리 */
+  white-space: nowrap; /* 글자가 한 줄에 표시되도록 설정 */
   text-overflow: ellipsis;
 }
 .leftImg {
   width: 400px;
-  height: 450px;
+  height: 430px;
   background-image: url(@/assets/book_end.png);
   background-size: cover;
   padding: 10px 10px 0px 57px;
@@ -200,11 +200,18 @@ const nosave = function () {
   width: 100%;
   max-width: 28rem;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 15px 15px 0 15px;
+}
 .chat {
   width: 520px;
-  height: 500px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  /* padding-right: 60px; */
 }
 .titleimg {
   width: 40px;
@@ -224,7 +231,10 @@ const nosave = function () {
   width: 25px;
   cursor: pointer;
 }
-
+.startbox {
+  display: flex;
+  flex-direction: column;
+}
 .mic {
   width: 30px;
   height: 30px;

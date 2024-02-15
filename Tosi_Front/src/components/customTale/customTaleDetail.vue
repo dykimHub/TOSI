@@ -11,7 +11,6 @@
               :src="customTaleStore.customTale.thumbnail"
             />
           </div>
-
           <div class="chat">
             <div class="startbox">
               <div class="voicebox">
@@ -62,11 +61,9 @@
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
 const route = useRoute();
 const router = useRouter();
 const customTaleStore = useCustomTaleStore();
-
 //tts
 const speaker = ref("vdain");
 const items = ref([
@@ -111,7 +108,6 @@ const playVoice = (url) => {
   audioRef.value.play();
 };
 //end tts
-
 //start go customPlay
 const readBook = async () => {
   try {
@@ -125,7 +121,6 @@ const readBook = async () => {
     console.error("Error fetching:", error);
   }
 };
-
 const navigateToTalePlay = () => {
   //   console.log("다음페이지 보내기");
   const selectedSpeaker = items.value.find(
@@ -137,7 +132,6 @@ const navigateToTalePlay = () => {
   });
 };
 //end go customPlay
-
 //custom
 const getRandomCustomTales = ref([]);
 function shuffleArray(array) {
@@ -148,7 +142,6 @@ function shuffleArray(array) {
   }
   return shuffledArray;
 }
-
 onMounted(async () => {
   // 비동기로 데이터를 먼저 로드
   await Promise.all([
@@ -226,7 +219,6 @@ onMounted(async () => {
   border: 5px solid white;
   margin-bottom: 40px;
 }
-
 .align-items-center {
   display: flex;
   align-items: center;
@@ -263,7 +255,6 @@ onMounted(async () => {
 .form-select {
   font-size: 18px;
 }
-
 .speaker-image {
   height: 25px;
   width: 25px;
@@ -318,7 +309,6 @@ onMounted(async () => {
 .button:hover {
   box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
 }
-
 .infobtn {
   text-align: center;
 }

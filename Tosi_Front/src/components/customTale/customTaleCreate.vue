@@ -114,9 +114,7 @@
                 <div class="rocketborder" @click="readBook">
                   <img src="@/assets/rocket.png" class="rocket" />
                 </div>
-                <div class="graytext">
-                  로켓을 클릭해서 동화를 시작해보세요!
-                </div>
+                <div class="graytext">로켓을 클릭해서 동화를 시작해보세요!</div>
               </div>
             </div>
           </div>
@@ -191,7 +189,11 @@ const generateCustomTale = async function () {
       "을 배경, " +
       prompt.value[1] +
       "를 이용해 500자 내외의 환상적인 동화를 만들어줘. 줄바꿈은 하지 말아줘. 성별언급은 하지말아줘. 자연스럽고 매끄러운 문맥.보내기전에 줄바꿈 모두 없애줘. 보내기전에 문맥이 자연스러운지 확인하고 부자연스러운부분은 자연스럽게 바꿔줘. 말투를 통일해줘.";
+
+    // console.log(gptPrompt);
+    // console.log(imagePrompt);
     await customTaleStore.getCustomTaleText(gptPrompt);
+    // customTaleStore.getCustomTaleText(gptPrompt);
   } catch (error) {
     console.error("커스텀 동화 생성 오류:", error);
   } finally {
@@ -281,12 +283,13 @@ onMounted(() => {
   background-color: rgb(255, 255, 255);
   font-size: 20px;
   width: 450px;
-  height: 450px;
+  height: 430px;
   margin-left: 50px;
 }
 .inputgroup {
   padding: 30px;
   padding-top: 0px;
+  padding-bottom: 15px;
 }
 .input {
   padding-bottom: 10px;
@@ -299,7 +302,7 @@ onMounted(() => {
   border-radius: 50px;
   margin-top: 35px;
   padding-top: 40px;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
   border: 5px solid #cee8e8;
   margin-bottom: 30px;
   width: 80vw;
@@ -334,7 +337,7 @@ onMounted(() => {
 }
 .leftImg {
   width: 400px;
-  height: 450px;
+  height: 430px;
   background-image: url(@/assets/cover.png);
   background-size: cover;
   padding: 10px 10px 0px 57px;
