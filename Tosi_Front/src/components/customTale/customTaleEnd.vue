@@ -96,7 +96,6 @@ a {
   background-color: rgb(255, 255, 255);
   font-size: 20px;
   width: 450px;
-  height: 450px;
   margin-left: 50px;
 }
 .startbox {
@@ -256,7 +255,6 @@ a {
 .twoColumns {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2개의 열로 설정 */
-  gap: 20px; /* 열 사이의 간격 설정 */
 }
 .onetale {
   margin: 10px 10px 10px 35px;

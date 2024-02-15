@@ -114,9 +114,7 @@
                 <div class="rocketborder" @click="readBook">
                   <img src="@/assets/rocket.png" class="rocket" />
                 </div>
-                <div class="graytext">
-                  로켓을 클릭해서 동화를 시작해보세요!
-                </div>
+                <div class="graytext">로켓을 클릭해서 동화를 시작해보세요!</div>
               </div>
             </div>
           </div>
@@ -285,12 +283,13 @@ onMounted(() => {
   background-color: rgb(255, 255, 255);
   font-size: 20px;
   width: 450px;
-  height: 450px;
+  height: 430px;
   margin-left: 50px;
 }
 .inputgroup {
   padding: 30px;
   padding-top: 0px;
+  padding-bottom: 15px;
 }
 .input {
   padding-bottom: 10px;
@@ -303,7 +302,7 @@ onMounted(() => {
   border-radius: 50px;
   margin-top: 35px;
   padding-top: 40px;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
   border: 5px solid #cee8e8;
   margin-bottom: 30px;
   width: 80vw;
@@ -338,7 +337,7 @@ onMounted(() => {
 }
 .leftImg {
   width: 400px;
-  height: 450px;
+  height: 430px;
   background-image: url(@/assets/cover.png);
   background-size: cover;
   padding: 10px 10px 0px 57px;

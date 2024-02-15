@@ -99,7 +99,7 @@ const saveCustomTale = async function () {
 };
 
 const retry = function () {
-  if (confirm("동화를 저장하지 않고 다시 만드시겠습니까?") == true) {
+  if (confirm("만들어진 동화가 사라져요! 동화를 지우고 다시 만들까요?") == true) {
     customTaleStore.resetCustomTale();
     router.push({ name: "customTaleCreate" });
   } else {
@@ -108,7 +108,7 @@ const retry = function () {
 };
 
 const nosave = function () {
-  if (confirm("동화를 저장하지 않고 나가시겠습니까?") == true) {
+  if (confirm("만들어진 동화가 사라져요! 동화를 저장하지 않고 나갈까요?") == true) {
     customTaleStore.resetCustomTale();
     router.push({ name: "customTaleList" });
   } else {
@@ -176,7 +176,7 @@ const nosave = function () {
 }
 .leftImg {
   width: 400px;
-  height: 450px;
+  height: 430px;
   background-image: url(@/assets/book_end.png);
   background-size: cover;
   padding: 10px 10px 0px 57px;
@@ -208,7 +208,6 @@ const nosave = function () {
 }
 .chat {
   width: 520px;
-  height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
