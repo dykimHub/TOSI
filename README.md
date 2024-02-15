@@ -15,14 +15,14 @@
 
 ## :keyboard: 참여 인원 및 역할
 
-| 이름   | 역할                  | 기능   | GitLab                                             |
-| ------ | --------------------- |-------|------------------------------------------------ |
-| 천우진 | FullStack, Team Leader              | 메인 페이지  | [@qpqpqp0102](https://lab.ssafy.com/qpqpqp0102) |
-| 우지민 | FullStack, FrontEnd leader              | 동화 구연  | [@0542say](https://lab.ssafy.com/0542say)        |
-| 김다윤 | FullStack, 서기               | 동화 구연  | [@kdayun](https://lab.ssafy.com/kdayun)      |
-| 양성주 | FullStack, UI 설계              | 커스텀 동화  | [@ztjdwnz](https://lab.ssafy.com/ztjdwnz)           |
-| 이아진 | FullStack, BackEnd leader              | 등장인물과의 채팅  | [@nuestiloveyou](https://lab.ssafy.com/nuestiloveyou) |
-| 김소연 | FullStack                | 회원   | [@summerfallwin](https://lab.ssafy.com/summerfallwin)       |
+| 이름   | 역할                  | 기능   | 
+| ------ | --------------------- |-------|
+| 천우진 | FullStack, Team Leader, Git Manager              | 메인 페이지, 동화 목록, 동화 검색  
+| 우지민 | FullStack, FrontEnd leader              | TTS 자동 재생 / 정지 / 배속 / 볼륨 적용(일반 동화, 커스텀 동화)  
+| 김다윤 | FullStack               | 등장인물 이름 변경 로직, AWS S3, 동화 페이지 구성, 관심 동화 등록   
+| 양성주 | FullStack, UI 설계              | AI를 활용한 커스텀 동화 생성 / 저장, 다른 회원과 커스텀 동화 공유  |
+| 이아진 | FullStack, BackEnd leader, Infra              | AI를 활용한 등장인물과의 채팅, 도커라이징  
+| 김소연 | FullStack                | 회원   | 회원가입, 자동 로그인, 마이페이지, 나의 책장
 
 ## :runner: 주차별 진행 상황
 
