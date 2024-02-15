@@ -189,8 +189,9 @@ onMounted(async() => {
 .selecSort {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
   margin-top: 0.5em;
+  
 }
 .searchContainer {
   display: flex;
@@ -211,8 +212,9 @@ select {
 }
 
 input {
-  width: 7em;
+  width: 10em;
   height: 2em;
+  border-radius: 10px;
 }
 
 button {
@@ -232,7 +234,6 @@ button {
 button:hover {
   box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
 }
-
 
 .pagination,
 .jsgrid .jsgrid-pager {

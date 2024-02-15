@@ -1,19 +1,19 @@
 <template>
   <div class="wholeContainer">
     <ul>
-      <div class="side" :class="{ active: $route.path === '/tales' }">
+      <div class="side" :class="{ active: $route.path.startsWith('/tales') }">
         <li><RouterLink to="/tales">전체 책 보기</RouterLink></li>
       </div>
-      <div class="side" :class="{ active: $route.path === '/bookshelf' }">
+      <div class="side" :class="{ active: $route.path.startsWith('/bookshelf') }">
         <li><RouterLink to="/bookshelf">나의 책장</RouterLink></li>
       </div>
-      <div class="side" :class="{ active: $route.path === '/customTale/create' }">
+      <div class="side" :class="{ active: $route.path.startsWith('/customTale') }">
         <li><RouterLink to="/customTale/create">나만의 동화 만들기</RouterLink></li>
       </div>
-      <div class="side" :class="{ active: $route.path === '/customtale' }">
+      <div class="side" :class="{ active: $route.path.startsWith('/customtale') }">
         <li><RouterLink to="/customtale">친구들의 동화 보기</RouterLink></li>
       </div>
-      <div class="side" :class="{ active: $route.path === '/userInfo' }">
+      <div class="side" :class="{ active: $route.path.startsWith('/userInfo') }">
         <li><RouterLink to="/userInfo">마이페이지</RouterLink></li>
       </div>
     </ul>

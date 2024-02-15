@@ -9,7 +9,7 @@
             <div class="randomg">{{ randomG }}</div>
           </div>
           <div class="btns">
-            <button class="replaybtn" @click="replay">다시 보기</button>
+            <button class="replaybtn" @click="replay">다시 볼게요</button>
             <button class="listbtn" @click="list">나가기</button>
           </div>
         </div>
@@ -112,12 +112,13 @@ const chatStart = () => {
 
 <style scoped>
 .play {
-  width: 1050px;
+  width: 80vw;
   height: 590px;
   border: 5px solid #cee8e8;
   margin: 20px 0px 50px 0px;
   border-radius: 50px;
   background-color: white;
+  padding-left: 90px;
 }
 .end {
   display: flex;

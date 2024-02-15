@@ -16,12 +16,10 @@ instance.interceptors.response.use(
     if (response.data['access-token']) {
       const accessToken = response.data['access-token'];
       await setCookie('access-token', accessToken, 1);
-      console.log("common:" + getCookieValue('access-token'));
     }
     if (response.data['refresh-token']) {
       const refreshToken = response.data['refresh-token'];
       await setCookie('refresh-token', refreshToken, 7);
-      console.log("common:" + getCookieValue('refresh-token'));
     }
     return response;
   },
@@ -43,16 +41,4 @@ function setCookie(name, value, days) {
   const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
   document.cookie = cookieString;
 }
-
-function getCookieValue(key) {
-  const cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    if (cookie.startsWith(key + '=')) {
-      return cookie.substring(key.length + 1);
-    }
-  }
-  return null;
-}
-
 

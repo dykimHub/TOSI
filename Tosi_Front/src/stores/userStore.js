@@ -1,6 +1,5 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import { useCookieStore } from "@/stores/cookieStore";
 import axios from "@/util/http-common";
 
 export const useUserStore = defineStore("user", () => {
@@ -9,7 +8,6 @@ export const useUserStore = defineStore("user", () => {
     const loginUserId = ref("");
     const childrenList = ref([]);
     const isLoggedIn = ref(false); // 로그인 했으면 true / false
-    const cookieStore = useCookieStore();
     const passwordCheck = ref(false);
 
     //회원 가입
@@ -39,9 +37,6 @@ export const useUserStore = defineStore("user", () => {
             withCredentials: true,
         }).then((response) => {
             userInfo.value = response.data;
-            console.log(userInfo.value.email);
-            console.log(userInfo.value.bookshelfName);
-            console.log(userInfo.value.childrenList);
         });
     };
     //회원정보 수정
@@ -59,6 +54,9 @@ export const useUserStore = defineStore("user", () => {
             url: `/users`,
             withCredentials: true,
         }).then(() => {
+            localStorage.removeItem("isLoggedIn");
+            sessionStorage.removeItem("isLoggedIn");
+            window.location.replace("/");
             window.location.replace("/tosi");
         });
     };
@@ -103,7 +101,6 @@ export const useUserStore = defineStore("user", () => {
         axios.get(`/users/logout`, { withCredentials: true });
         localStorage.removeItem("isLoggedIn");
         sessionStorage.removeItem("isLoggedIn");
-        cookieStore.deleteCookie("isLoggedIn");
         console.log(localStorage.getItem("isLoggedIn"));
         alert("로그아웃. 또 만나요~!!");
         window.location.replace(`http://localhost:5173/`);
