@@ -118,7 +118,7 @@
   });
   
   const goToEnd = () => {
-    alert("동화를 멈출게요.");
+    // alert("동화를 멈출게요.");
     audioRef.value.pause();
     router.push({ name: "taleEnd", params: { taleId: taleDetailStore.taleId } });
   };
@@ -347,7 +347,7 @@
     border: 5px solid #cee8e8;
     margin: 10px 0px 30px 0px;
     border-radius: 50px;
-    background-color: #f5f5f5;
+    background-color: white;
     padding-left: 90px;
   }
   .info {
