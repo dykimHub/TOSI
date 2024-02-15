@@ -253,7 +253,7 @@ const audioPause = () => {
     }
 };
 const replay = () => {
-    alert("동화를 게요.");
+    alert("동화를 멈출게요.");
     audioRef.value.pause();
     router.push({ name: "customTaleEnd" });
 };
