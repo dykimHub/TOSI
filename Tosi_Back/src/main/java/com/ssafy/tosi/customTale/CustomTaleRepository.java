@@ -12,4 +12,6 @@ public interface CustomTaleRepository extends JpaRepository<CustomTale, Integer>
     // opened가 true인 CustomTale 조회
     List<CustomTale> findByOpened(boolean opened);
 
+    void deleteByUserId(int userId);
+
 }

@@ -23,6 +23,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final ChildRepository childRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final FavoriteRepository favoriteRepository;
+    private final CustomTaleRepository customTaleRepository;
 
     // 회원 가입
     @Transactional
@@ -75,6 +77,8 @@ public class UserService {
     @Transactional
     // 회원 탈퇴
     public void deleteUser (int userId) {
+        customTaleRepository.deleteByUserId(userId);
+        favoriteRepository.deleteByUserId(userId);
         refreshTokenRepository.deleteByUserId(userId);
         childRepository.deleteByUserId(userId);
         userRepository.deleteById(userId);
