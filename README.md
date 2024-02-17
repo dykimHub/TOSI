@@ -11,57 +11,50 @@
 
 ## :date: 기간
 
-- 2024.01.03 ~ 2024.02.17
+- 2024.01.03 ~ 2024.02.16
 
 ## :keyboard: 참여 인원 및 역할
 
-| 이름   | 역할                  | 기능   | GitLab                                             |
-| ------ | --------------------- |-------|------------------------------------------------ |
-| 천우진 | FullStack, Team Leader              | 메인 페이지  | [@qpqpqp0102](https://lab.ssafy.com/qpqpqp0102) |
-| 우지민 | FullStack, FrontEnd leader              | 동화 구연  | [@0542say](https://lab.ssafy.com/0542say)        |
-| 김다윤 | FullStack, 서기               | 동화 구연  | [@kdayun](https://lab.ssafy.com/kdayun)      |
-| 양성주 | FullStack, UI 설계              | 커스텀 동화  | [@ztjdwnz](https://lab.ssafy.com/ztjdwnz)           |
-| 이아진 | FullStack, BackEnd leader              | 등장인물과의 채팅  | [@nuestiloveyou](https://lab.ssafy.com/nuestiloveyou) |
-| 김소연 | FullStack                | 회원   | [@summerfallwin](https://lab.ssafy.com/summerfallwin)       |
-
-## :runner: 주차별 진행 상황
-
-| 주차   | 진행 상황              |  
-| ------ | ---------------------|
-| 1주차 | 기획서, 페르소나 분석, 기능 정의서, ERD, 메뉴 구조도  |
-| 2주차 | 화면정의서, ERD, 시퀀스 다이어그램, 플로우차트, 시스템 아키텍쳐              | 동화 구연  | 
-| 3주차 | DB 구축, REST API 구현, 외부 API 솔루션 개발, vue 페이지 구현               | 동화 구연  | 
-| 4주차 |               | 커스텀 동화  | 
-| 5주차 |               | 등장인물과의 채팅  | 
-| 6주차 |               | 회원   |       
+| 이름   | 역할                  | 기능   | 
+| ------ | --------------------- |-------|
+| 천우진 | FullStack, Team Leader, Git Manager              | 메인 페이지, 동화 목록, 동화 검색  
+| 우지민 | FullStack, FrontEnd leader              | TTS 자동 재생 / 정지 / 배속 / 볼륨 적용(일반 동화, 커스텀 동화)  
+| 김다윤 | FullStack               | 등장인물 이름 변경 로직, AWS S3, 동화 페이지 구성, 관심 동화 등록   
+| 양성주 | FullStack, UI 설계              | AI를 활용한 커스텀 동화 및 썸네일 생성 / 저장, 다른 회원과 커스텀 동화 공유 |
+| 이아진 | FullStack, BackEnd leader, Infra              | AI를 활용한 등장인물과의 채팅, 도커라이징  
+| 김소연 | FullStack                | 회원가입, 자동 로그인(JWT), 마이페이지, 나의 책장
 
 ## :deciduous_tree: Stacks
 
-##### Environment
+**Environment**  
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white)  
-
-##### BackEnd
-![Spring Boot](https://img.shields.io/badge/spring%20boot-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-
-##### FrontEnd
+**BackEnd**  
+![Spring Boot](https://img.shields.io/badge/spring%20boot-%236DB33F.svg?style=for-the-badge&logo=springboot&logoColor=white)
+![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)  
+**FrontEnd**  
 ![Vue.js](https://img.shields.io/badge/vue.js-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-
-##### DataBase
-![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
-
-##### Version Control
-![GitLab](https://img.shields.io/badge/gitlab-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white)
-
-##### Communication
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)  
+**DataBase**    
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)  
+**Management Tool**  
 ![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white)
 ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
+![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white)
+![Gerrit](https://img.shields.io/badge/-Figma-orange?style=for-the-badge&logo=figma&logoColor=white)    
+![GitLab](https://img.shields.io/badge/gitlab-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white)
+![Gerrit](https://img.shields.io/badge/-Gerrit-lightgreen?style=for-the-badge&logo=gerrit&logoColor=white)  
 
-## 💎 목차
+## :runner: 메뉴 구조도
+![메뉴구조도](/uploads/e522685f7d7107d260725484ea5308c7/메뉴구조도.png)
 
-1. 프로젝트 설명
+## :cd: 시스템 아키텍처
+![시스템_아키텍처](/uploads/a29edf13009c600e7cf3373d21b0e46f/시스템_아키텍처.png)
+
+## :milky_way: 목업
+![목업](/uploads/2af294168bde04e37b37ae5863c5fe10/목업.gif)
 
 <br />
 
