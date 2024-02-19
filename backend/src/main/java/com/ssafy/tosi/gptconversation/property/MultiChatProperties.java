@@ -6,7 +6,7 @@ public class MultiChatProperties {
 
     private String model = "gpt-3.5-turbo-1106";
 
-    private Integer maxTokens = 100;
+    private Integer maxTokens = 1000;
 
     private Double temperature = 1.0;
 

@@ -24,8 +24,8 @@ public class CustomTale {
     private String title;
     private String content;
 
-    @Column(name = "ispublic")
-    private boolean isPublic; //공개여부
+    @Column(name = "opened")
+    private boolean opened; //공개여부
     private String thumbnail; //썸네일주소
     private int time; //재생시간
 

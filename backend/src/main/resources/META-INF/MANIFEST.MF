@@ -1,3 +1,2 @@
 Manifest-Version: 1.0
 Main-Class: com.ssafy.tosi.TosiBackApplication
-Class-Path: lib/kiwi.jar

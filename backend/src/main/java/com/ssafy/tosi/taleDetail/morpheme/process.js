@@ -13,6 +13,7 @@ fs.readFile(tempFilePath, 'utf8', (err, data) => {
 
     // 파이썬 스크립트 실행 명령
     const pythonProcess = spawn('python', ['src/main/java/com/ssafy/tosi/taleDetail/morpheme/kss_split.py']);
+    console.log("자바스크립트:" + inputText);
 
     // 입력 텍스트를 파이썬 스크립트로 전달
     pythonProcess.stdin.write(inputText);
@@ -27,7 +28,7 @@ fs.readFile(tempFilePath, 'utf8', (err, data) => {
         console.error(data.toString());
     });
 
-    // pythonProcess.on('close', (code) => {
-    //     console.log(`파이썬 프로세스 종료 코드: ${code}`);
-    // });
+    pythonProcess.on('close', (code) => {
+        console.log(`파이썬 프로세스 종료 코드: ${code}`);
+    });
 });

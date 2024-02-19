@@ -39,10 +39,6 @@ public class GptController {
     })
     @PostMapping("/input")
     ResponseEntity<?> putMessage(@Parameter(description="user가 입력하는 메세지", required=true, example="세상에서 제일 맛있는 도너츠는?") @RequestBody UserInputMessage userInputMessage){
-        System.out.println("입력된 메세지: "+userInputMessage);
-
-        System.out.println("chatgptService.sendChat method를 호출합니다.");
-
         Message responseMessage = (
                 new Message("assistant",chatgptService.sendChat(userInputMessage)));
 
@@ -53,10 +49,6 @@ public class GptController {
     // 다음 메소드는 마지막 응답을 호출합니다.
     @PostMapping("/bye")
     ResponseEntity<?> putByeMessage(@Parameter(description="user가 입력하는 메세지", required=true, example="세상에서 제일 맛있는 도너츠는?") @RequestBody UserInputMessage userInputMessage){
-        System.out.println("입력된 메세지: "+userInputMessage);
-
-        System.out.println("chatgptService.sendBye method를 호출합니다.");
-
         Message responseMessage = (
                 new Message("assistant",chatgptService.sendBye(userInputMessage)));
 

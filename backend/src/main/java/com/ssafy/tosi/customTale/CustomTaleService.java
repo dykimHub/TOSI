@@ -33,9 +33,9 @@ public class CustomTaleService {
         return customTaleRepository.findByUserId(userId);
     }
 
-    //isPublic이 true인 CustomTale 엔터티를 조회 (친구들이 만든 동화보기 목록)
+    //opened가 true인 CustomTale 엔터티를 조회 (친구들이 만든 동화보기 목록)
     public List<CustomTale> getCustomTales() {
-        return customTaleRepository.findByIsPublic(true);
+        return customTaleRepository.findByOpened(true);
     }
 
     //CustomTale 엔터티를 저장 (내가 만드는 동화 저장)
@@ -43,13 +43,13 @@ public class CustomTaleService {
         return customTaleRepository.save(customTale);
     }
 
-    //customTaleId에 해당하는 CustomTale 엔터티의 isPublic 값 변경 (나의 책장 - 내가 만든 동화)
-    public CustomTale putCustomTale(Integer customTaleId, boolean isPublic) {
+    //customTaleId에 해당하는 CustomTale 엔터티의 opened 값 변경 (나의 책장 - 내가 만든 동화)
+    public CustomTale putCustomTale(Integer customTaleId, boolean opened) {
         Optional<CustomTale> optionalCustomTale = customTaleRepository.findById(customTaleId);
 
         if (optionalCustomTale.isPresent()) {
             CustomTale customTale = optionalCustomTale.get();
-            customTale.setPublic(isPublic); //JavaBeans 규악에 따라 setIsPublic가 아니라 setPublic라는 세터 메소드를 생성합니다.
+            customTale.setOpened(opened);
             return customTaleRepository.save(customTale);
         } else {
             return null;
@@ -62,37 +62,31 @@ public class CustomTaleService {
         return true;
     }
 
-    public String split_sentences(String string) throws IOException {
-        String[] contents = new String[]{string};
-        String[] splitted_contents = new String[contents.length];
-        File[] files = new File[contents.length];
+    public String split_sentences(String string) {
+        string = string.replace("n", "");
+        string = string = string.replace("\\", "");
 
-        for (int i = 0; i < contents.length; i++) {
-            if (contents[i] == null) continue;
+        StringBuilder sb = new StringBuilder();
+        char[] str2char = string.toCharArray();
 
-            files[i] = File.createTempFile("content" + i, ".txt");
-            System.out.print(files[i]);
+        boolean flag = false;
+        for (char c : str2char) {
+            sb.append(c);
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(files[i]))) {
-                writer.write(contents[i]);
+            if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c) && (c != ',')) {
+                if (c == '"' && !flag) { // 첫번째 따옴표이면
+                    flag = true; // 따옴표 flag
+                } else if (c == '"' && flag) { // 두번째 따옴표라면
+                    flag = false; // 따옴표 flag 취소
+                    sb.append("\n"); // 띄우기
+                } else if (!flag) { // 따옴표 안 문장이 아니라면
+                    sb.append("\n"); // 띄우기
+                }
+
             }
-
-            ProcessBuilder builder = new ProcessBuilder("node", "src/main/java/com/ssafy/tosi/taleDetail/morpheme/process.js", files[i].getAbsolutePath());
-            Process process = builder.start();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            StringBuilder response = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                response.append(line + "\n");
-            }
-
-            splitted_contents[i] = response.toString();
-
         }
-        System.out.print(splitted_contents[0]);
-        return splitted_contents[0];
 
+        return sb.toString();
     }
 
     public List<Page> paging(String splitted_contents) {

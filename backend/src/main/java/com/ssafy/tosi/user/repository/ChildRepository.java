@@ -9,10 +9,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ChildRepository extends JpaRepository<Child, Integer> {
-
-    List<Child> findByUserId(Integer userId);
-
     @Modifying
     @Query("delete from Child c where c.userId = :userId")
     void deleteByUserId(@Param("userId") Integer userId);
+
+    @Query("SELECT c FROM Child c WHERE c.userId = :userId ORDER BY c.myBaby DESC, c.childName ASC")
+    List<Child> findByUserIdOrderByMyBabyDescAndChildNameAsc(@Param("userId") Integer userId);
 }

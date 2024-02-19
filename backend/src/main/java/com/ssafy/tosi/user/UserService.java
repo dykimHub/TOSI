@@ -1,5 +1,7 @@
 package com.ssafy.tosi.user;
 
+import com.ssafy.tosi.customTale.CustomTaleRepository;
+import com.ssafy.tosi.favorite.FavoriteRepository;
 import com.ssafy.tosi.jwt.RefreshTokenRepository;
 import com.ssafy.tosi.user.dto.ChildInfo;
 import com.ssafy.tosi.user.dto.LoginInfo;
@@ -22,6 +24,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ChildRepository childRepository;
+    private final FavoriteRepository favoriteRepository;
+    private final CustomTaleRepository customTaleRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
     // 회원 가입
@@ -54,7 +58,6 @@ public class UserService {
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            System.out.println("UserServier:" + user.toString());
             if(userInfo.getPassword() == null || userInfo.getPassword() == ""){
                 String password = user.getPassword();
                 userInfo.setPassword(password);
@@ -77,6 +80,8 @@ public class UserService {
     // 회원 탈퇴
     public void deleteUser (int userId) {
         refreshTokenRepository.deleteByUserId(userId);
+        customTaleRepository.deleteByUserId(userId);
+        favoriteRepository.deleteByUserId(userId);
         childRepository.deleteByUserId(userId);
         userRepository.deleteById(userId);
     }
@@ -84,7 +89,6 @@ public class UserService {
     // 로그인
     public Integer login (LoginInfo loginInfo) {
         User foundUser = userRepository.findByEmail(loginInfo.getEmail());
-        System.out.println(foundUser);
         if(foundUser != null && foundUser.getPassword().equals(loginInfo.getPassword())) {
             return foundUser.getUserId();
         }
@@ -95,7 +99,6 @@ public class UserService {
     public boolean checkEmailDuplication (String email) {
         User searchedUser = userRepository.findByEmail (email);
         if (searchedUser != null){
-            System.out.println("false");
             return true;
         }
         return false;
@@ -103,17 +106,11 @@ public class UserService {
 
     // 비밀번호 확인
     public boolean checkPassword (Integer userId, String password) {
-        System.out.println("userService:" + userId);
-        System.out.println("userService:" + password);
         Optional<User> optionalUser = userRepository.findById(userId);
-        System.out.println(optionalUser.toString());
-//        User user = null;
 
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
-            System.out.println(user.toString());
             if(user.getPassword().equals(password)) {
-                System.out.println("비밀번호 일치");
                 return true;
             }
         }
@@ -124,9 +121,7 @@ public class UserService {
     // 아이 목록 조회
     public List<Child> selectChildrenList(Integer userId) {
 
-        System.out.println("서비스:" + userId);
-        List<Child> childrenList = childRepository.findByUserId(userId);
-        System.out.println(childrenList);
+        List<Child> childrenList = childRepository.findByUserIdOrderByMyBabyDescAndChildNameAsc(userId);
         return childrenList;
     }
 

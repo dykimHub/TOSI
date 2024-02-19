@@ -16,11 +16,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT new com.ssafy.tosi.user.dto.UserInfoResponse(u.userId, u.email, u.bookshelfName, u.childrenList) FROM User u WHERE u.userId = :userId")
     UserInfo findUserInfoResponseByUserId(@Param("userId") Integer userId);
 
-//    @Modifying
-//    @Query("select * from Child c where c.userId = :userId")
-//    void deleteByUserId(@Param("userId") Integer userId);
-//
-//    @Query("SELECT c FROM Child c WHERE c.userId = :userId")
-//    List<Child> findByUserId(@Param("userId") Integer userId);
-
 }

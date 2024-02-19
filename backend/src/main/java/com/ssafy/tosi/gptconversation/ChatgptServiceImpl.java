@@ -105,19 +105,12 @@ public class ChatgptServiceImpl implements ChatgptService {
 
         List<Message> conversations = userInputMessage.getUserMessages();
 
-        // user, gpt의 message를 누적합니다.
-
         for (int i = 0; i < conversations.size(); i++) {
             if (conversations.get(i) == null) {
                 continue;
             }
 
             Message conversation = conversations.get(i);
-            System.out.println("i:" + i + ", " + conversation);
-
-            System.out.println(conversation.getRole() + "," + conversation.getMessage());
-
-            System.out.println("[입력중...]GPT에게 지속적으로 들어가고 있는 컨텍스트입니다:" + conversation.getMessage());
 
             messages.add(new MultiChatMessage(conversation.getRole(), conversation.getMessage()));
         }
@@ -203,11 +196,6 @@ public class ChatgptServiceImpl implements ChatgptService {
             }
 
             Message conversation = conversations.get(i);
-            System.out.println("i:" + i + ", " + conversation);
-
-            System.out.println(conversation.getRole() + "," + conversation.getMessage());
-
-            System.out.println("[입력중...]GPT에게 지속적으로 들어가고 있는 컨텍스트입니다:" + conversation.getMessage());
 
             messages.add(new MultiChatMessage(conversation.getRole(), conversation.getMessage()));
         }

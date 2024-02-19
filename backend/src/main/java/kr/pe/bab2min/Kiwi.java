@@ -428,7 +428,7 @@ public class Kiwi implements AutoCloseable  {
 
 	public static void loadLibrary() throws SecurityException, UnsatisfiedLinkError, NullPointerException {
 		try {
-			System.loadLibrary("KiwiJava-" + _version);
+			System.load("/home/ubuntu/kiwilib/KiwiJava-0.16.1.jar");
 		} catch (UnsatisfiedLinkError e) {
 			InputStream in = null;
 			String foundName = null;

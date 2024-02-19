@@ -1,13 +1,15 @@
 package com.ssafy.tosi.gptconversation.property;
 
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
+@Getter
 @ConfigurationProperties(prefix = "chatgpt")
 public class ChatgptProperties {
 
-    private String apiKey = "OPENAI_TOKEN=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";
+    private String apiKey;
 
     private String url = "https://api.openai.com/v1/chat/completions";
 
@@ -25,56 +27,26 @@ public class ChatgptProperties {
         this.multi = new MultiChatProperties();
     }
 
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
-    public String getUrl() {
-        return url;
-    }
+    public void setApiKey(String apiKey) { this.apiKey = apiKey; }
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getModel() {
-        return model;
     }
 
     public void setModel(String model) {
         this.model = model;
     }
 
-    public Integer getMaxTokens() {
-        return maxTokens;
-    }
-
     public void setMaxTokens(Integer maxTokens) {
         this.maxTokens = maxTokens;
-    }
-
-    public Double getTemperature() {
-        return temperature;
     }
 
     public void setTemperature(Double temperature) {
         this.temperature = temperature;
     }
 
-    public Double getTopP() {
-        return topP;
-    }
-
     public void setTopP(Double topP) {
         this.topP = topP;
-    }
-
-    public MultiChatProperties getMulti() {
-        return multi;
     }
 
     public void setMulti(MultiChatProperties multi) {

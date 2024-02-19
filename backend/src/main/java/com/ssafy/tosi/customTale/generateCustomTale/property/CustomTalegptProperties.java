@@ -11,7 +11,7 @@ public class CustomTalegptProperties {
 
     private String url = "https://api.openai.com/v1/chat/completions";
 
-    private String model = "gpt-3.5-turbo-1106";
+    private String model = "gpt-4";
 
     private Integer maxTokens = 500;
 

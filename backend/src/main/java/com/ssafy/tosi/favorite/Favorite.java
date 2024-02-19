@@ -30,7 +30,4 @@ public class Favorite {
     @Column(insertable = false)
     private LocalDateTime regDate;
 
-//    @ManyToOne
-//    @JoinColumn(name = "taleId")
-//    private Tale tale;
 }

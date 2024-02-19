@@ -52,7 +52,6 @@ public class CookieUtil {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
                     foundToken = cookie.getValue();
-                    System.out.println(foundToken);
                     return foundToken;
                 }
             }
