@@ -108,10 +108,12 @@
 - 원하는 이름, 배경, 상황을 입력하면 이야기가 자동으로 생성됩니다.
 - 생성된 동화는 내 책장에 추가하여 다시 볼 수 있습니다.
 
+## ⭐️ 결과 화면
+##### 전체 버전
+![Tosi_UCC](/uploads/fc5f8b1da2fcf971ef797a476004836d/Tosi_UCC.mp4)
 
-
-
-
+##### Short 버전
+![Tosi_UCC_Short](/uploads/c33b30af9309325eb926dab32596766b/Tosi_UCC_Short.mp4)
      
 
 
