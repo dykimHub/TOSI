@@ -18,8 +18,8 @@
 | 이름   | 역할                  | 기능   | 
 | ------ | --------------------- |-------|
 | 천우진 | FullStack, Team Leader, Git Manager              | 메인 페이지, 동화 목록, 동화 검색  
-| 우지민 | FullStack, FrontEnd leader              | TTS 자동 재생 / 정지 / 배속 / 볼륨 적용(일반 동화, 커스텀 동화)  
-| 김다윤 | FullStack               | 등장인물 이름 변경 로직, AWS S3, 동화 페이지 구성, 관심 동화 등록   
+| 우지민 | FullStack, FrontEnd leader              | 모든 동화에 TTS 자동 재생 / 정지 / 배속 / 볼륨 적용
+| 김다윤 | FullStack               | AWS S3, 등장인물 이름 변경, 모든 동화 페이지 구성, 일반 동화 찜 반영  
 | 양성주 | FullStack, UI 설계              | AI를 활용한 커스텀 동화 및 썸네일 생성 / 저장, 다른 회원과 커스텀 동화 공유 |
 | 이아진 | FullStack, BackEnd leader, Infra              | AI를 활용한 등장인물과의 채팅, 도커라이징  
 | 김소연 | FullStack                | 회원가입, 자동 로그인(JWT), 마이페이지, 나의 책장
@@ -38,14 +38,19 @@
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)  
 **DataBase**    
-![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)  
-**Management Tool**  
-![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white)
-![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
-![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white)
-![Gerrit](https://img.shields.io/badge/-Figma-orange?style=for-the-badge&logo=figma&logoColor=white)    
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![AWS S3](https://img.shields.io/badge/AWS%20S3-%23FF9900.svg?style=for-the-badge&logo=amazons3&logoColor=white)  
+**Version Control**  
 ![GitLab](https://img.shields.io/badge/gitlab-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white)
 ![Gerrit](https://img.shields.io/badge/-Gerrit-lightgreen?style=for-the-badge&logo=gerrit&logoColor=white)  
+**Deployment**  
+![Docker](https://img.shields.io/badge/Docker-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+![EC2](https://img.shields.io/badge/EC2-%23FF9900.svg?style=for-the-badge&logo=amazonec2&logoColor=white)  
+**Communication**  
+![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white)
+![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
+![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white) 
 
 ## :runner: 메뉴 구조도
 ![메뉴구조도](/uploads/e522685f7d7107d260725484ea5308c7/메뉴구조도.png)
@@ -53,10 +58,20 @@
 ## :cd: 시스템 아키텍처
 ![시스템_아키텍처](/uploads/a29edf13009c600e7cf3373d21b0e46f/시스템_아키텍처.png)
 
-## :milky_way: 목업
-![목업](/uploads/2af294168bde04e37b37ae5863c5fe10/목업.gif)
-
-<br />
+## :book: 주요 기능
+##### 도서관 & 내 책장
+- 많은 사람들이 책장에 추가한 동화가 상위에 노출됩니다.
+- 동화를 제목으로 검색할 수 있습니다.
+- 원하는 책을 내 책장에 등록할 수 있습니다.
+##### 동화 구연
+- 책장에 있는 책을 선택하면 책이 열립니다.
+- 등장인물의 이름을 아이의 이름으로 바꿔서 동화를 읽어 줍니다.
+- 동화를 읽어줄 목소리를 선택할 수 있습니다.
+##### 등장인물과의 대화
+- 동화를 다 읽으면 동화 속 등장인물을 선택하여 질문을 할 수 있습니다.
+##### 내가 쓰는 동화
+- 원하는 이름, 배경, 상황을 입력하면 이야기가 자동으로 생성됩니다.
+- 생성된 동화는 내 책장에 추가하여 다시 볼 수 있습니다.  
 
 # ⚙︎ 프로젝트 설명
 
@@ -92,21 +107,6 @@
 - 육아를 보조해 줄 질적인 도구가 필요한 양육자
 - 이야기 듣기를 좋아하는 어린이
 - 독서를 지루해하는 어린이
-
-## ⭐️ 주요 기능
-##### 동화 구연
-- 책장에 있는 책을 선택하면 책이 열립니다.
-- 등장인물의 이름을 아이의 이름으로 바꿔서 동화를 읽어 줍니다.
-- 동화를 읽어줄 목소리를 선택할 수 있습니다.
-##### 도서관 & 내 책장
-- 많은 사람들이 책장에 추가한 동화가 상위에 노출됩니다.
-- 동화를 제목으로 검색할 수 있습니다.
-- 원하는 책을 내 책장에 등록할 수 있습니다.
-##### 등장인물과의 대화
-- 동화를 다 읽으면 동화 속 등장인물을 선택하여 질문을 할 수 있습니다.
-##### 내가 쓰는 동화
-- 원하는 이름, 배경, 상황을 입력하면 이야기가 자동으로 생성됩니다.
-- 생성된 동화는 내 책장에 추가하여 다시 볼 수 있습니다.
 
 ## ⭐️ 결과 화면
 ##### 전체 버전
