@@ -12,19 +12,20 @@ const instance = axios.create({
 // 응답 Interceptor 설정
 instance.interceptors.response.use(
   async (response) => {
-    // console.log('응답 받은 후:', response);
     if (response.data['access-token']) {
       const accessToken = response.data['access-token'];
-      await setCookie('access-token', accessToken, 1);
+      setCookie('access-token', accessToken, 1);
     }
     if (response.data['refresh-token']) {
       const refreshToken = response.data['refresh-token'];
-      await setCookie('refresh-token', refreshToken, 7);
+      setCookie('refresh-token', refreshToken, 7);
     }
     return response;
   },
   async (error) => {
     if (error.response && error.response.status === 302) {
+      localStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("isLoggedIn");
       window.location.href = '/';
     } else {
       console.error('응답 실패:', error);
@@ -41,4 +42,3 @@ function setCookie(name, value, days) {
   const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
   document.cookie = cookieString;
 }
-

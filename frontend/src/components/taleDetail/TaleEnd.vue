@@ -1,6 +1,7 @@
 <template>
   <div v-if="taleDetailStore.tale && userStore.userInfo">
     <div class="play">
+      <div class="title">{{ taleDetailStore.tale.title }}</div>
       <div class="end">
         <div class="book">
           <img src="@/assets/sticker.png" class="sticker" />
@@ -38,10 +39,14 @@
                 {{ child.childName }}
               </option>
             </select>
+            <div class="chatbtn">
+              <button class="chatstartbtn" @click="chatStart">대화 시작하기</button>
+            </div>
           </div>
-          <button type="button" class="btn btn-light btn-primary chatstart" @click="chatStart">
+
+          <!-- <button type="button" class="btn btn-light btn-primary chatstart" @click="chatStart">
             대화 시작하기
-          </button>
+          </button> -->
         </div>
       </div>
       <!-- <img class="unfolded" src="@/assets/bookend.png" /> -->
@@ -113,7 +118,7 @@ const chatStart = () => {
 <style scoped>
 .play {
   width: 80vw;
-  height: 590px;
+  height: 43vw;
   border: 5px solid #cee8e8;
   margin: 20px 0px 50px 0px;
   border-radius: 50px;
@@ -125,7 +130,7 @@ const chatStart = () => {
   justify-content: space-around;
   height: 430px;
   width: 1000px;
-  margin: 50px 0 100px 20px;
+  margin: 30px 0 100px 20px;
 }
 @keyframes popUp {
   0% {
@@ -241,14 +246,13 @@ const chatStart = () => {
   z-index: 5;
   font-size: 27px;
   margin-left: 40px;
-  margin-top: 20px;
 }
 .selectbox {
   border: 5px solid #cee8e8;
   background-color: white;
   border-radius: 30px;
   padding: 30px 50px;
-  height: 350px;
+  height: 380px;
   width: 420px;
 }
 .form-select {
@@ -280,5 +284,39 @@ const chatStart = () => {
   border: 5px solid #cee8e8;
   background-color: #ebffdf;
   border-radius: 30px;
+}
+
+.chatbtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.chatstartbtn {
+  /* margin-top: 20px; */
+  width: 130px;
+  height: 40px;
+  /* padding: 10px 25px; */
+  border: 2px solid #d0d0d0;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: 3px 3px 5px 0px #0002;
+}
+.chatstartbtn:hover {
+  box-shadow: 7px 7px 5px 0px #0002, 4px 4px 5px 0px #0001;
+}
+
+.title {
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: inset 0 -20px 0 #ffd3d3;
+  font-size: 40px;
+  line-height: 1;
+  margin-top: 50px;
+  margin-left: 55px;
 }
 </style>

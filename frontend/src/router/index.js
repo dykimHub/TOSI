@@ -18,8 +18,10 @@ import TaleDetail from "@/components/taleDetail/TaleDetail.vue";
 import TalePlay from "@/components/taleDetail/TalePlay.vue";
 import TaleEnd from "@/components/taleDetail/TaleEnd.vue";
 import UserInfoView from "@/views/UserInfoView.vue";
-import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
 import BookshelfView from "@/views/BookshelfView.vue";
+import { useToast } from "vue-toast-notification";
+
+const toast = useToast();
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -163,13 +165,29 @@ router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   const isLoggedInS = sessionStorage.getItem("isLoggedIn") === "true";
   if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn && !isLoggedInS) {
-    alert("메인 페이지로 이동합니다.");
+    toast.info("메인 페이지로 이동할게요.", {
+      position: "top",
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: "#f1a8bc",
+        color: "white",
+      },
+    });
     next("/");
   } else if (
     to.matched.some((record) => record.meta.requiresGuest) &&
     (isLoggedIn || isLoggedInS)
   ) {
-    alert("이미 로그인 되어있습니다.");
+    toast.info("이미 로그인 되어있어요.", {
+      position: "top",
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: "#f1a8bc",
+        color: "white",
+      },
+    });
     next("/tosi");
   } else {
     next();

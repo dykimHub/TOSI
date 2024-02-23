@@ -129,7 +129,9 @@ import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
 import LoadingModal from "@/components/customTale/loadingModal.vue";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toast-notification";
 
+const toast = useToast();
 const router = useRouter();
 const customTaleStore = useCustomTaleStore();
 const userStore = useUserStore();
@@ -149,7 +151,15 @@ const generateCustomTale = async function () {
   try {
     loading.value = true;
     if (prompt.value.some((prompt) => prompt === "")) {
-      alert("입력칸을 모두 채워주세요.");
+        toast.info("입력칸을 모두 채워주세요.", {
+          position: "top",
+          duration: 2000,
+          queue: true,
+          style: {
+            backgroundColor: "#f1a8bc",
+            color: "white",
+          },
+        });
       return;
     }
 
@@ -165,7 +175,15 @@ const generateCustomTale = async function () {
     ];
 
     if (forbiddenWords.some((word) => prompt.value.includes(word))) {
-      alert("나쁜 말은 안돼요!!");
+      toast.info("나쁜 말은 안돼요!!", {
+          position: "top",
+          duration: 2000,
+          queue: true,
+          style: {
+            backgroundColor: "#f1a8bc",
+            color: "white",
+          },
+        });
       return;
     }
     const genderText = selectedChild.value.gender === 0 ? "girl" : "boy";

@@ -81,6 +81,8 @@ import { ref, computed, reactive, onMounted, watch } from "vue";
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { useRouter } from "vue-router";
 import { generateTTS } from "@/util/ttsSpeakerUtil";
+import Swal from "sweetalert2";
+
 
 const customTaleStore = useCustomTaleStore();
 const router = useRouter();
@@ -228,9 +230,18 @@ const audioPause = () => {
     }
 };
 const replay = () => {
-    // alert("동화를 멈출게요.");
-    audioRef.value.pause();
-    router.push({ name: "customTaleSave" });
+  Swal.fire({
+    title: "동화를 멈출까요?",
+    showCancelButton: true,
+    confirmButtonText: "네",
+    cancelButtonText: "아니오",
+    confirmButtonColor: '#f1a8bc'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      audioRef.value.pause();
+      router.push({ name: "customTaleSave" });
+    }
+  });
 };
 
 //오디오 볼륨
@@ -529,6 +540,7 @@ label {
     margin-right: 5px;
     box-shadow: 2px 2px 0 #d3e4ff;
     text-align: center;
+    padding-top: 2px;
 }
 button {
   background: none;

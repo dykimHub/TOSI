@@ -72,10 +72,12 @@
 <script setup>
 import { useCustomTaleStore } from "@/stores/customTaleStore";
 import { onMounted, ref } from "vue";
-const customTaleStore = useCustomTaleStore();
+import { useToast } from "vue-toast-notification";
 import LoadingModal from "@/components/customTale/loadingModal.vue";
 import router from "@/router";
 
+const toast = useToast();
+const customTaleStore = useCustomTaleStore();
 const loading = ref(false);
 const customTale = ref({
   title: "",
@@ -87,7 +89,15 @@ const customTale = ref({
 
 const saveCustomTale = async function () {
   if (customTale.value.title == "") {
-    alert("제목을 입력해주세요.");
+    toast.info("제목을 입력해주세요.", {
+          position: "top",
+          duration: 2000,
+          queue: true,
+          style: {
+            backgroundColor: "#f1a8bc",
+            color: "white",
+          },
+        });
     return;
   }
   try {

@@ -20,7 +20,7 @@
             <RouterLink :to="`/customTale/${tale.customTaleId}`"><img class="thumbnail" :src="tale.thumbnail" />
             </RouterLink>
             <br>
-            <RouterLink :to="`/customTale/${tale.customTaleId}`">{{ tale.title }}</RouterLink>
+            <RouterLink :to="`/customTale/${tale.customTaleId}`" class="titleOfTale">{{ tale.title }}</RouterLink>
           </div>
           <div v-if="deleteButton == true" class="opened-container">
             <label>
@@ -65,6 +65,8 @@
 import { useCustomTaleStore } from '@/stores/customTaleStore';
 import { onMounted, ref, watch, computed } from 'vue';
 import { useUserStore } from '@/stores/userStore';
+import Swal from "sweetalert2";
+
 const userStore = useUserStore();
 const bookshelfName = ref("");
 
@@ -101,10 +103,19 @@ const updateOpened = function (customTaleId, opened) {
   customTaleStore.updateCustomTale(customTaleId, opened);
 }
 
-const deleteCustomTale = async function (customTaleId) {
-  alert("나의 책장에서 삭제하시겠습니까?")
-  await customTaleStore.deleteCustomTale(customTaleId);
+const deleteCustomTale = function (customTaleId) {
+  Swal.fire({
+    title: "나의 책장에서 삭제할까요?",
+    showCancelButton: true,
+    confirmButtonText: "네",
+    cancelButtonText: "아니오",
+    confirmButtonColor: '#f1a8bc'
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      await customTaleStore.deleteCustomTale(customTaleId);
   myCustomTalesList.value = myCustomTalesList.value.filter(tale => tale.customTaleId !== customTaleId);
+    }
+  });
 }
 
 //page
@@ -140,6 +151,10 @@ onMounted(async () => {
 
 </script>
 <style scoped>
+.titleOfTale {
+  font-size: larger;
+}
+
 .title {
   text-decoration: none;
   display: inline-block;

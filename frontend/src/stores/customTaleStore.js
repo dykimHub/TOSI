@@ -3,7 +3,9 @@ import { defineStore } from "pinia";
 import axios from "@/util/http-common";
 import router from "@/router";
 import { useS3Store } from "@/stores/S3Store";
+import { useToast } from "vue-toast-notification";
 
+const toast = useToast();
 export const useCustomTaleStore = defineStore("customtale", () => {
   //공개 중인 모든 커스텀동화
   const customTalesList = ref([]);
@@ -40,7 +42,15 @@ const updateCustomTale = async function (customTaleId, opened) {
     },
     withCredentials: true 
   }).then((response) => {
-    alert("공개 여부를 수정했어요~");
+    toast.success("공개 여부를 수정했어요~", {
+      position: "top",
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: "#f1a8bc",
+        color: "white",
+      },
+    });
   });
 };
 
@@ -66,7 +76,15 @@ const updateCustomTale = async function (customTaleId, opened) {
    await axios.post(`/customtale`, customTale, { withCredentials: true }).then(() => {
       // console.log(customTale.value);
       router.push({name:'customTaleList'})
-      alert("동화가 저장되었어요.")
+      toast.success("동화가 저장되었어요.", {
+        position: "top",
+        duration: 2000,
+        queue: true,
+        style: {
+          backgroundColor: "#f1a8bc",
+          color: "white",
+        },
+      });
     });
   };
 
@@ -117,14 +135,38 @@ const getCustomTaleText = async function (userInputMessage) {
           customTaleImage.value = data.data[0].url;
           console.log("Image URL:", customTaleImage.value);
         } else {
-          alert("이미지 생성에 실패했습니다. 다시 시도해주세요.");
+        toast.error("이미지 생성에 실패했습니다. 다시 시도해주세요.", {
+          position: "top",
+          duration: 2000,
+          queue: true,
+          style: {
+            backgroundColor: "#f1a8bc",
+            color: "white",
+          },
+        });
         }
       } else {
-        alert("이미지 생성에 실패했습니다. 다시 시도해주세요.");
+        toast.error("이미지 생성에 실패했습니다. 다시 시도해주세요.", {
+          position: "top",
+          duration: 2000,
+          queue: true,
+          style: {
+            backgroundColor: "#f1a8bc",
+            color: "white",
+          },
+        });
       }
     } catch (error) {
       console.log("Error generating image:", error);
-      alert("이미지 생성에 실패했습니다. 다시 시도해주세요.");
+      toast.error("이미지 생성에 실패했습니다. 다시 시도해주세요.", {
+        position: "top",
+        duration: 2000,
+        queue: true,
+        style: {
+          backgroundColor: "#f1a8bc",
+          color: "white",
+        },
+      });
     }
 
   }

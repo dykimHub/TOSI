@@ -1,7 +1,9 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from "@/util/http-common";
+import { useToast } from "vue-toast-notification";
 
+const toast = useToast();
 export const useTaleStore = defineStore('tale', () => {
   //동화 목록
   const taleList = ref([])
@@ -27,7 +29,15 @@ const searchTaleByTitle = function (title) {
         resolve(response); // Promise를 성공 상태로 처리하고 응답 데이터 전달
       })
       .catch((error) => {
-        window.alert('일치하는 검색 결과가 없어요.')
+        toast.error('일치하는 검색 결과가 없어요.', {
+          position: "top",
+          duration: 2000,
+          queue: true,
+          style: {
+            backgroundColor: "#f1a8bc",
+            color: "white",
+          },
+        });
         console.error('API 호출 실패:', error);
         reject(error); // Promise를 실패 상태로 처리하고 에러 전달
       });

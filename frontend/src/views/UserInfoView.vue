@@ -27,7 +27,9 @@
 import { ref } from "vue";
 import { useUserStore } from "@/stores/userStore";
 import UserInfoUpdate from "@/components/user/UserInfoUpdate.vue";
+import { useToast } from "vue-toast-notification";
 
+const toast = useToast();
 const store = useUserStore()
 
 const userInfo = ref({ email: '', bookshelfName: '', childrenList: [] });
@@ -38,7 +40,15 @@ const checkPassword = async function () {
   if (
     password.value === ""
   ) {
-    alert("비밀번호를 입력해주세요");
+    toast.info("비밀번호를 입력해주세요", {
+      position: "top",
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: "#f1a8bc",
+        color: "white",
+      },
+    });
     return;
   }
   await store.getPasswordCheck(password.value);
@@ -64,7 +74,7 @@ const checkPassword = async function () {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-left:20px;
+  margin-left: 20px;
   margin-right: 20px;
 }
 
@@ -152,4 +162,5 @@ form {
   font-size: 1rem;
   transition: 0.3s;
   border-radius: 10px;
-}</style>
+}
+</style>

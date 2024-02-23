@@ -44,6 +44,8 @@
         <h5 v-if="activeIcon === 'Maker'">동화 만들기</h5>
         <h5 v-if="activeIcon === 'Talk'">등장인물과의 대화</h5>
         <h5 v-if="activeIcon === 'Mine'">나의 책장</h5>
+        <h5 v-if="havePlayed">이제, 회원가입 후 특별한 경험을 시작해보세요</h5>
+
         <TheFooter />
         <div class="black-bg" v-if="showRegistForm == true || showLoginForm == true">
             <div class="modal" v-if="showRegistForm === true">
@@ -89,6 +91,7 @@ const setActiveIcon = (icon) => {
 const resetActiveIcon = () => {
   activeIcon.value = '';
 };
+const havePlayed = ref(false);
 
 const isPlaying = ref(false);
 const activeIcon = ref('');
@@ -102,6 +105,7 @@ const toggleIcon = async (icon) => {
         activeIcon.value = '';
     })
     await audio.play();
+    havePlayed.value = true;
 }
 </script>
 
@@ -138,6 +142,11 @@ div {
     max-height: 98%;
     z-index: 100;
     overflow-y: auto;
+    -ms-overflow-style: none;
+}
+
+.modal::-webkit-scrollbar{
+  display:none;
 }
 
 .modal button {

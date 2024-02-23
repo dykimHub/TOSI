@@ -24,7 +24,7 @@
             ><img class="thumbnail" :src="tale.thumbnail"
           /></RouterLink>
           <br />
-          <RouterLink :to="`/tales/${tale.taleId}`">{{ tale.title }}</RouterLink>
+          <RouterLink :to="`/tales/${tale.taleId}`" class="titleOfTale">{{ tale.title }}</RouterLink>
           <br />
           재생 시간: {{ tale.time }}분
         </div>
@@ -138,14 +138,15 @@ onMounted(async() => {
     title.value = route.query.title.toString();
     let value = await Talestore.searchTaleByTitle(title.value);
     searchResults.value = value.data;
-    console.log("TEST", JSON.stringify(searchResults.value));
   }
 
 });
 </script>
 
 <style scoped>
-
+.titleOfTale {
+  font-size: larger;
+}
 .taleContainer {
   display: flex;
   justify-content: center;

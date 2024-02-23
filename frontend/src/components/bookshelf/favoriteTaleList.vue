@@ -11,7 +11,7 @@
         </select>
       </div>
       <button v-if="!deleteButton" @click="activateDeleteButton" class="modifyButton">편집</button>
-      <button v-if="deleteButton" @click="deactivateDeleteButton" class="modifyButton">편집 취소</button>
+      <button v-if="deleteButton" @click="deactivateDeleteButton" class="modifyButton">편집 완료</button>
     </div>
     <div class="taleContainer">
       <ul v-for="favorite in currentPageBoardList" :key="favorite.taleId">
@@ -19,7 +19,7 @@
           <div>
             <RouterLink :to="`/tales/${favorite.taleId}`"><img class="thumbnail" :src="favorite.thumbnail" /></RouterLink>
             <br />
-            <RouterLink :to="`/tales/${favorite.taleId}`">{{ favorite.title }}</RouterLink>
+            <RouterLink :to="`/tales/${favorite.taleId}`" class="titleOfTale">{{ favorite.title }}</RouterLink>
             <br />
             재생 시간: {{ favorite.time }}분
           </div>
@@ -52,6 +52,8 @@
 import { useFavoriteStore } from '@/stores/favoriteStore';
 import { onMounted, ref, watch, computed } from "vue";
 import { useUserStore } from '@/stores/userStore';
+import Swal from "sweetalert2";
+
 const userStore = useUserStore();
 const bookshelfName = ref("");
 const favoriteStore = useFavoriteStore();
@@ -84,10 +86,19 @@ const sortTaleList = () => {
   }
 };
 
-const deleteFavorite = async function (taleId) {
-  alert("나의 책장에서 삭제하시겠습니까?")
-  await favoriteStore.deleteMyFavoriteTale(taleId);
-  favoriteTalesList.value = favoriteTalesList.value.filter((favorite) => favorite.taleId !== taleId);
+const deleteFavorite = function (taleId) {
+  Swal.fire({
+    title: "나의 책장에서 삭제할까요?",
+    showCancelButton: true,
+    confirmButtonText: "네",
+    cancelButtonText: "아니오",
+    confirmButtonColor: '#f1a8bc'
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      await favoriteStore.deleteMyFavoriteTale(taleId);
+      favoriteTalesList.value = favoriteTalesList.value.filter((favorite) => favorite.taleId !== taleId);
+    }
+  });
 }
 
 //page
@@ -122,6 +133,9 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.titleOfTale {
+  font-size: larger;
+}
 .title {
   text-decoration: none;
   display: inline-block;

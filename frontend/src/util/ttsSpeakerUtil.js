@@ -1,8 +1,18 @@
 // ttsUtil.js
 // 응답을 바로재생하지 않고 반환
+import { useToast } from "vue-toast-notification";
+const toast = useToast();
 export const generateTTS = async (inputText, speaker, emotion, emotionStrength) => {
     if (!inputText) {
-        alert("Please enter some text");
+        toast.info("Please enter some text", {
+            position: "top",
+            duration: 2000,
+            queue: true,
+            style: {
+              backgroundColor: "#f1a8bc",
+              color: "white",
+            },
+          });
         return;
     }
 

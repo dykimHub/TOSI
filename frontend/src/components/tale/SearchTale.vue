@@ -16,7 +16,7 @@
             ><img class="thumbnail" :src="tale.images[1]"
           /></RouterLink>
           <br />
-          <RouterLink :to="`/tales/${tale.taleId}`">{{ tale.title }}</RouterLink>
+          <RouterLink :to="`/tales/${tale.taleId}`" class="titleOfTale">{{ tale.title }}</RouterLink>
           <br />
           재생 시간: {{ tale.time }}분
         </div>
@@ -65,6 +65,9 @@ onMounted( async() => {
 </script>
 
 <style scoped>
+.titleOfTale {
+  font-size: larger;
+}
 .taleContainer {
   display: flex;
   justify-content: center;

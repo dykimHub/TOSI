@@ -70,7 +70,10 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "@/stores/userStore";
+import Swal from "sweetalert2";
+import { useToast } from "vue-toast-notification";
 
+const toast = useToast();
 const store = useUserStore();
 const userInfo = ref({ email: '', password: '', bookshelfName: '', childrenList: [] });
 const child = ref({ childName: '', gender: 0, myBaby: false });
@@ -99,21 +102,62 @@ const deleteChild = function (index) {
 //업데이트
 const update = function () {
   if (userInfo.value.password && passwordCheck.value && userInfo.value.password !== passwordCheck.value) {
-    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+    toast.info("비밀번호와 비밀번호 확인이 달라요.", {
+          position: "top",
+          duration: 2000,
+          queue: true,
+          style: {
+            backgroundColor: "#f1a8bc",
+            color: "white",
+          },
+        });
     return;
   }
+  
+  if (
+    userInfo.value.childrenList === null ||
+    (Array.isArray(userInfo.value.childrenList) && userInfo.value.childrenList.length === 0)
+  ) {
+    toast.info("아이를 1명 이상 등록해 주세요.", {
+          position: "top",
+          duration: 2000,
+          queue: true,
+          style: {
+            backgroundColor: "#f1a8bc",
+            color: "white",
+          },
+        });
+    return;
+  }
+
   store.updateUser(userInfo.value);
 }
 
 //탈퇴
 const deleteUserInfo = function () {
-  alert("정말 회원 탈퇴하시겠습니까?")
-  console.log(userInfo.value.email);
-  store.deleteUser(userInfo.value.email);
-  userInfo.value = null;
-  localStorage.removeItem('isLoggedIn');
-  console.log("isLoggedIn:" + localStorage.getItem('isLoggedIn'));
-  alert("회원탈퇴 완료.");
+  Swal.fire({
+    title: "정말 회원 탈퇴하시려고요?",
+    showCancelButton: true,
+    confirmButtonText: "네",
+    cancelButtonText: "아니오",
+    confirmButtonColor: '#f1a8bc'
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      await store.deleteUser(userInfo.value.email);
+      userInfo.value = null;
+      localStorage.removeItem('isLoggedIn');
+      console.log("isLoggedIn:" + localStorage.getItem('isLoggedIn'));
+    }
+  });
+  toast.success("회원탈퇴 완료ㅠㅠ", {
+          position: "top",
+          duration: 2000,
+          queue: true,
+          style: {
+            backgroundColor: "#f1a8bc",
+            color: "white",
+          },
+        });
 }
 
 </script>
@@ -226,6 +270,7 @@ form {
   border-radius: 4px;
   padding: 5px;
   overflow: auto;
+  overflow-x: hidden;
   width: 500px;
 }
 

@@ -13,7 +13,7 @@
             <img class="thumbnail" :src="customTale.thumbnail"
           /></RouterLink>
           <br />
-          <RouterLink :to="`/customtale/${customTale.customTaleId}`">{{
+          <RouterLink :to="`/customtale/${customTale.customTaleId}`" class="titleOfTale">{{
             customTale.title
           }}</RouterLink>
         </div>
@@ -89,6 +89,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.titleOfTale {
+  font-size: larger;
+}
 .taleContainer {
   display: flex;
   justify-content: center;

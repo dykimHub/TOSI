@@ -31,10 +31,10 @@
         </div>
         <div class="regist-div">
           <div>
-              <label class="regist-label">아이 성별</label>
-              <label><input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="0">여자</label>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <label><input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="1">남자</label>
+            <label class="regist-label">아이 성별</label>
+            <label><input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="0">여자</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label><input type="radio" class="regist-input" placeholder=" " v-model="child.gender" value="1">남자</label>
           </div>
         </div>
         <div class="regist-div">
@@ -67,7 +67,10 @@
 <script setup>
 import { ref } from "vue";
 import { useUserStore } from "@/stores/userStore";
+import { useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
+const toast = useToast();
 const userStore = useUserStore()
 
 const email = ref("");
@@ -88,26 +91,59 @@ const regist = () => {
     email.value === "" ||
     password.value === "" ||
     passwordCheck.value === "" ||
-    childrenList.value === ""
+    childrenList.value === null ||
+    (Array.isArray(childrenList.value) && childrenList.value.length === 0)
   ) {
-    alert("모든 내용을 입력해주세요.");
+    toast.info('모든 내용을 입력해주세요. \n아이를 1명 이상 등록해 주세요.', {
+      position: 'top',
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: '#f1a8bc',
+        color: 'white',
+      }
+    });
     return;
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email.value.trim())) {
-    alert("올바른 이메일 주소를 입력하세요.");
+    toast.info('올바른 이메일 주소를 입력하세요.', {
+      position: 'top',
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: '#f1a8bc',
+        color: 'white',
+      }
+    });
     return;
   }
 
   userStore.getUserSearch(email.value);
   if (userStore.searchResult == true) {
-    alert("이미 등록된 이메일이에요.");
+    toast.info('이미 등록된 이메일이에요.', {
+      position: 'top',
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: '#f1a8bc',
+        color: 'white',
+      }
+    });
     return;
   }
 
   if (password.value !== passwordCheck.value) {
-    alert("비밀번호와 비밀번호 확인이 일치하지 않아요.");
+    toast.info('비밀번호와 비밀번호 확인이 달라요.', {
+      position: 'top',
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: '#f1a8bc',
+        color: 'white',
+      }
+    });
     return;
   }
 
@@ -132,7 +168,15 @@ const checkEmailDuplication = async function () {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email.value.trim())) {
-    alert("올바른 이메일 주소를 입력하세요.");
+    toast.info('올바른 이메일 주소를 입력하세요.', {
+      position: 'top',
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: '#f1a8bc',
+        color: 'white',
+      }
+    });
     return;
   }
 
@@ -140,9 +184,25 @@ const checkEmailDuplication = async function () {
     await userStore.getUserSearch(email.value);
 
     if (userStore.searchResult == true) {
-      alert("이미 등록된 이메일이에요.");
+      toast.info('이미 등록된 이메일이에요.', {
+      position: 'top',
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: '#f1a8bc',
+        color: 'white',
+      }
+    });
     } else if (userStore.searchResult == false) {
-      alert("사용 가능한 이메일이에요.");
+      toast.info('사용 가능한 이메일이에요.', {
+      position: 'top',
+      duration: 2000,
+      queue: true,
+      style: {
+        backgroundColor: '#f1a8bc',
+        color: 'white',
+      }
+    });
     }
   } catch (error) {
     console.error("에러 발생:", error);
@@ -158,15 +218,16 @@ const deleteChild = function (index) {
 
 <style scoped>
 .title {
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: inset 0 -20px 0  #f1a8bc;
-    font-size: 40px;
-    margin: 30px 0px 0px 50px;
-    margin-bottom: 40px;
-    line-height: 1;
-    text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: inset 0 -20px 0 #f1a8bc;
+  font-size: 40px;
+  margin: 30px 0px 0px 50px;
+  margin-bottom: 40px;
+  line-height: 1;
+  text-align: left;
 }
+
 .regist-div {
   display: flex;
   align-items: center;
@@ -236,6 +297,7 @@ form {
   border-radius: 4px;
   padding: 5px;
   overflow-y: auto;
+  overflow-x: hidden;
   width: 500px;
 }
 
@@ -279,6 +341,4 @@ form {
   display: flex;
   justify-content: center;
 }
-
-
 </style>

@@ -1,6 +1,9 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "@/util/http-common";
+import { useToast } from "vue-toast-notification";
+
+const toast = useToast();
 export const useFavoriteStore = defineStore("favorite", () => {
 
   //나의책장 - 일반동화
@@ -37,7 +40,15 @@ export const useFavoriteStore = defineStore("favorite", () => {
       return axios.delete(`/favorites/${favoriteId}`);
     })
     .then(() => {
-      alert("즐겨찾기가 삭제되었습니다.")
+      toast.success("즐겨찾기가 삭제되었어요.", {
+        position: "top",
+        duration: 2000,
+        queue: true,
+        style: {
+          backgroundColor: "#f1a8bc",
+          color: "white",
+        },
+      });
     })
     .catch((err) => console.error(err));
   };
