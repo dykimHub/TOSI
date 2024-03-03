@@ -76,11 +76,21 @@
 -  
 
 ## :book: 주요 기능
+<table>
+  <tr>
+    <th style="text-align: center;">메인페이지</th>
+    <th style="text-align: center;">메인페이지</th>
+  </tr>
+  <tr>
+    <td><img src="/uploads/56882f56e102a10a058abde34566a70d/main.gif"></td>
+    <td><img src="/uploads/56882f56e102a10a058abde34566a70d/main.gif"></td>
+  </tr>
+  <tr>
+    <td>- 비회원용 메인페이지에서는 토씨의 기능에 대해서 음성으로 설명합니다. <br> - 로그인에 성공하면 토씨의 기능을 사용할 수 있습니다.</td>
+    <td>- 비회원용 메인페이지에서는 토씨의 기능에 대해서 음성으로 설명합니다. <br> - 로그인에 성공하면 토씨의 기능을 사용할 수 있습니다.</td>
+  </tr>
+</table>
 
-| <center>메인페이지</center> |
-|-------------|
-| ![main](/uploads/56882f56e102a10a058abde34566a70d/main.gif) |
-| - 비회원용 메인페이지에서는 토씨의 기능에 대해서 음성으로 설명합니다. <br> - 로그인에 성공하면 토씨의 기능을 사용할 수 있습니다. |
 
 
 
