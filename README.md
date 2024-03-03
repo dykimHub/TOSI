@@ -52,18 +52,9 @@
 ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
 ![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white) 
 
-## :runner: 메뉴 구조도
-![메뉴구조도](/uploads/e522685f7d7107d260725484ea5308c7/메뉴구조도.png)
-
-## :cd: 시스템 아키텍처
-![시스템_아키텍처](/uploads/a29edf13009c600e7cf3373d21b0e46f/시스템_아키텍처.png)
-
 ## :book: 주요 기능
 
 ##### 동화 구연
-- 등장인물의 이름을 아이의 이름으로 바꿔서 동화를 읽어 줍니다.
-- 동화를 읽어줄 목소리를 선택할 수 있습니다.
-- 동화가 마음에 든다면 찜 버튼을 눌러 책장에 추가할 수 있습니다.
 - 
 ##### 등장인물과의 대화
 - 동화를 다 읽으면 동화 속 등장인물을 선택하여 질문을 할 수 있습니다.
@@ -90,15 +81,15 @@
 <table>
   <tr>
     <th style="text-align: center;">동화 상세</th>
-    <th style="text-align: center;">책 목록</th>
+    <th style="text-align: center;">동화 구연</th>
   </tr>
   <tr>
-    <td>![bookdetail](/uploads/19fbbbf99397735ba09b7465af30a795/bookdetail.gif)</td>
-    <td>![booklist](/uploads/133132d8f873fc00ae5812d04affc11b/booklist.gif)</td>
+    <td>![bookdetail](/uploads/62e4285c9134215b610461bce967a1c3/bookdetail.gif)</td>
+    <td>![bookread](/uploads/c56fa31c46c3df593ba75f88c45595d3/bookread.gif)</td>
   </tr>
   <tr>
-    <td>- 동화 찜 버튼을 누르면 나의 책장에 추가 됩니다. <br> - 이름을 바꾸길 원하는 등장인물과 어린이의 이름을 선택하면 변신 상자에 추가 됩니다. <br> - 동화를 읽어주길 원하는 목소리를 선택할 수 있습니다. <br> - 스피커를 누르면 목소리를 들어볼 수 있습니다.</td>
-    <td>- 동화를 인기순, 이름순, 랜덤으로 정렬합니다. <br> - 동화를 제목의 일부로 검색할 수 있습니다. <br> - 동화 수에 따라 페이지네이션이 가능합니다.</td>
+    <td>- 동화 찜 버튼을 누르면 나의 책장에 추가 됩니다. <br> - 이름을 바꾸길 원하는 등장인물과 어린이의 이름을 선택할 수 있습니다. <br> - 동화를 읽어주길 원하는 목소리를 선택할 수 있습니다. <br> - 스피커를 누르면 목소리를 들어볼 수 있습니다.</td>
+    <td>- 오른편엔 글, 왼편엔 내용과 어울리는 삽화가 나옵니다.  <br> - TTS 재생이 완료될 때마다 자동으로 다음 페이지로 넘어갑니다. <br> - 화살표를 누르면 이전 / 다음 페이지로 넘어갑니다. <br> - 하단에서 재생 제어, 볼륨 조절, 속도 조절이 가능합니다. </td>
   </tr>
 </table>
 
