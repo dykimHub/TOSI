@@ -18,10 +18,10 @@
 | 이름   | 역할                  | 기능   | 
 | ------ | --------------------- |-------|
 | 천우진 | FullStack, Team Leader, Git Manager              | 메인 페이지, 동화 목록, 동화 검색  
-| 우지민 | FullStack, FrontEnd leader              | 모든 동화에 TTS 자동 재생 / 정지 / 배속 / 볼륨 적용
-| 김다윤 | FullStack               | AWS S3, 등장인물 이름 변경, 모든 동화 페이지 구성, 일반 동화 찜 반영  
-| 양성주 | FullStack, UI 설계              | AI를 활용한 커스텀 동화 및 썸네일 생성 / 저장, 다른 회원과 커스텀 동화 공유 |
-| 이아진 | FullStack, BackEnd leader, Infra              | AI를 활용한 등장인물과의 채팅, 도커라이징  
+| 우지민 | FullStack, FrontEnd Leader              | 모든 동화에 TTS 자동 재생 / 정지 / 배속 / 볼륨 적용
+| 김다윤 | FullStack               | AWS S3, 등장인물 이름 / 조사 변경, 모든 동화 페이지 구성, 동화 찜 
+| 양성주 | FullStack, UI Manager              | AI를 활용한 커스텀 동화 및 썸네일 생성 / 저장, 다른 회원과 커스텀 동화 공유 |
+| 이아진 | FullStack, BackEnd Leader, Infra              | AI를 활용한 등장인물과의 채팅, 도커라이징  
 | 김소연 | FullStack                | 회원가입, 자동 로그인(JWT), 마이페이지, 나의 책장
 
 ## :deciduous_tree: Stacks
@@ -59,10 +59,7 @@
 ![시스템_아키텍처](/uploads/a29edf13009c600e7cf3373d21b0e46f/시스템_아키텍처.png)
 
 ## :book: 주요 기능
-##### 책 목록
-- 동화를 인기순, 이름순, 랜덤으로 정렬
-- 동화를 제목의 일부로 검색할 수 있습니다.
-- 
+
 ##### 동화 구연
 - 등장인물의 이름을 아이의 이름으로 바꿔서 동화를 읽어 줍니다.
 - 동화를 읽어줄 목소리를 선택할 수 있습니다.
@@ -75,19 +72,33 @@
 - 생성된 동화는 내 책장에 추가하여 다시 볼 수 있습니다. 
 -  
 
-## :book: 주요 기능
+## :book: 토씨의 기능
 <table>
   <tr>
     <th style="text-align: center;">메인페이지</th>
-    <th style="text-align: center;">메인페이지</th>
+    <th style="text-align: center;">동화 목록</th>
   </tr>
   <tr>
-    <td><img src="/uploads/56882f56e102a10a058abde34566a70d/main.gif"></td>
-    <td><img src="/uploads/56882f56e102a10a058abde34566a70d/main.gif"></td>
+    <td>![main](/uploads/56882f56e102a10a058abde34566a70d/main.gif)</td>
+    <td>![booklist](/uploads/133132d8f873fc00ae5812d04affc11b/booklist.gif)</td>
   </tr>
   <tr>
     <td>- 비회원용 메인페이지에서는 토씨의 기능에 대해서 음성으로 설명합니다. <br> - 로그인에 성공하면 토씨의 기능을 사용할 수 있습니다.</td>
-    <td>- 비회원용 메인페이지에서는 토씨의 기능에 대해서 음성으로 설명합니다. <br> - 로그인에 성공하면 토씨의 기능을 사용할 수 있습니다.</td>
+    <td>- 동화를 인기순, 이름순, 랜덤으로 정렬합니다. <br> - 동화를 제목의 일부로 검색할 수 있습니다. <br> - 동화 수에 따라 페이지네이션이 가능합니다.</td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <th style="text-align: center;">동화 상세</th>
+    <th style="text-align: center;">책 목록</th>
+  </tr>
+  <tr>
+    <td>![bookdetail](/uploads/19fbbbf99397735ba09b7465af30a795/bookdetail.gif)</td>
+    <td>![booklist](/uploads/133132d8f873fc00ae5812d04affc11b/booklist.gif)</td>
+  </tr>
+  <tr>
+    <td>- 동화 찜 버튼을 누르면 나의 책장에 추가 됩니다. <br> - 이름을 바꾸길 원하는 등장인물과 어린이의 이름을 선택하면 변신 상자에 추가 됩니다. <br> - 동화를 읽어주길 원하는 목소리를 선택할 수 있습니다. <br> - 스피커를 누르면 목소리를 들어볼 수 있습니다.</td>
+    <td>- 동화를 인기순, 이름순, 랜덤으로 정렬합니다. <br> - 동화를 제목의 일부로 검색할 수 있습니다. <br> - 동화 수에 따라 페이지네이션이 가능합니다.</td>
   </tr>
 </table>
 
