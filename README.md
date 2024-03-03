@@ -50,18 +50,7 @@
 **Communication**  
 ![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white)
 ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
-![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white) 
-
-## :book: 주요 기능
-
-##### 동화 구연
-- 
-##### 등장인물과의 대화
-- 동화를 다 읽으면 동화 속 등장인물을 선택하여 질문을 할 수 있습니다.
-##### 내가 쓰는 동화
-- 원하는 이름, 배경, 상황을 입력하면 이야기가 자동으로 생성됩니다.
-- 생성된 동화는 내 책장에 추가하여 다시 볼 수 있습니다. 
--  
+![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white)   
 
 ## :book: 토씨의 기능
 <table>
