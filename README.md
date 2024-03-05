@@ -50,7 +50,20 @@
 **Communication**  
 ![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white)
 ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
-![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white)   
+![Mattermost](https://img.shields.io/badge/-Mattermost-blue?style=for-the-badge&logo=mattermost&logoColor=white)
+
+## :deciduous_tree: Swagger
+
+![user](/uploads/6c96afc0a0f15f01eae6e30c39c88a13/user.PNG)
+![token](/uploads/4d058fbf9fe86d5c770d177f9461a974/token.PNG)
+![s3](/uploads/339d9af85f6445c9360e164e40ca2966/s3.PNG)
+![tts](/uploads/9b65e8831fb5d2b4b143dff02e7762b0/tts.PNG)
+![tale](/uploads/be72863acf7368092b5261110971ca86/tale.PNG)
+![taledetail](/uploads/d3c9c22b0330854928e56d76b6d89bc0/taledetail.PNG)
+![favorite](/uploads/3fd86cded0a60e22ea455591f9e3eb34/favorite.PNG)
+![gpt](/uploads/c53330e5fa18f39f14888a5dcaea594a/gpt.PNG)
+![custom](/uploads/4294a1ec4a3a83eef21e53da9da57a2f/custom.PNG)
+![generate](/uploads/ea35ff2c366e29947a47661fbd2da0d3/generate.PNG)
 
 ## :book: 토씨의 기능
 <table>
