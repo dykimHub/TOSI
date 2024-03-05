@@ -19,7 +19,7 @@
 | ------ | --------------------- |-------|
 | 천우진 | FullStack, Team Leader, Git Manager              | 메인 페이지, 동화 목록, 동화 검색  
 | 우지민 | FullStack, FrontEnd Leader              | 모든 동화에 TTS 자동 재생 / 정지 / 배속 / 볼륨 적용
-| 김다윤 | FullStack               | AWS S3, QueryDSL, 등장인물 이름 / 조사 변경, 모든 동화 페이지 구성
+| 김다윤 | FullStack               | AWS S3, QueryDSL, 등장인물 이름 / 조사 변경, 모든 동화 페이지 구조
 | 양성주 | FullStack, UI Manager              | AI를 활용한 커스텀 동화 및 썸네일 생성 / 저장, 다른 회원과 커스텀 동화 공유 |
 | 이아진 | FullStack, BackEnd Leader, Infra              | AI를 활용한 등장인물과의 채팅, 도커라이징  
 | 김소연 | FullStack                | 회원가입, 자동 로그인(JWT), 마이페이지, 나의 책장
@@ -99,16 +99,16 @@
 </table>
 <table>
   <tr>
-    <th style="text-align: center;">커스텀 동화 생성 및 구연</th>
+    <th style="text-align: center;">커스텀 동화 생성 및 저장</th>
     <th style="text-align: center;">다른 회원의 커스텀 동화 구연</th>
   </tr>
   <tr>
     <td>![custom](/uploads/a7252c6975ab6e95109b7d8a9f4589ff/custom.gif)</td>
-    <td>![chat](/uploads/32eeb133944be0c7c068feef3401745e/chat.gif)</td>
+    <td>![othercustom](/uploads/1af3b1aaa16588095f9015b366fb599d/othercustom.gif)</td>
   </tr>
   <tr>
     <td>- 원하는 배경과 키워드를 입력하면 어린이의 성별까지 반영한 썸네일과 동화가 생성됩니다. <br> - 커스텀 동화 구연을 마치면 원하는 제목을 짓고 공개 여부를 선택하여 저장할 수 있습니다. <br> - 내가 만든 동화 목록에서 저장된 동화를 확인할 수 있고 공개 여부를 수정하거나 삭제할 수 있습니다.   </td>
-    <td>  - 메세지가 추가될 때마다 스크롤을 최하단으로 내려 최신 메세지를 바로 볼 수 있도록 합니다. <br> - 5번의 대답이 끝나면 등장인물이 작별 인사를 보내고 대화를 종료합니다. 더 이상 채팅을 입력할 수 없고 나가기를 눌러 동화 목록 페이지로 갈 수 있습니다. </td>
+    <td>- 다른 회원이 공개한 커스텀 동화 목록을 볼 수 있습니다. <br> - 선택한 커스텀 동화의 구연이 끝나면 랜덤으로 선택된 다른 회원의 동화를 감상할 수 있습니다. <br> - 다시 보거나 나가기를 눌러 목록으로 돌아갈 수 있습니다. </td>
   </tr>
   
 </table>
