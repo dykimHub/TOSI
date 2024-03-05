@@ -54,33 +54,42 @@
 
 ## :art: Swagger
 
-<table>
+<table style="width: 100%;">
   <tr>
-    <th style="text-align: center;">회원 카테고리</th>
-    <th style="text-align: center;">동화 카테고리 </th>
+    <th style="width: 50%; text-align: center;">회원 카테고리</th>
+    <th style="width: 50%; text-align: center;">동화 카테고리</th>
   </tr>
   <tr>
-    <td>![user](/uploads/6c96afc0a0f15f01eae6e30c39c88a13/user.PNG)
-![token](/uploads/4d058fbf9fe86d5c770d177f9461a974/token.PNG)</td>
-    <td>![tale](/uploads/be72863acf7368092b5261110971ca86/tale.PNG)
-![taledetail](/uploads/d3c9c22b0330854928e56d76b6d89bc0/taledetail.PNG)
-![favorite](/uploads/3fd86cded0a60e22ea455591f9e3eb34/favorite.PNG)</td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <th style="text-align: center;">커스텀 동화 카테고리</th>
-    <th style="text-align: center;">복수 카테고리</th>
-  </tr>
-  <tr>
-    <td>![custom](/uploads/4294a1ec4a3a83eef21e53da9da57a2f/custom.PNG)
-![generate](/uploads/ea35ff2c366e29947a47661fbd2da0d3/generate.PNG)</td>
-    <td>![tts](/uploads/9b65e8831fb5d2b4b143dff02e7762b0/tts.PNG)
-    ![gpt](/uploads/c53330e5fa18f39f14888a5dcaea594a/gpt.PNG)
-    ![s3](/uploads/339d9af85f6445c9360e164e40ca2966/s3.PNG)
-</td>
+    <td style="text-align: center;">
+      <img src="/uploads/6c96afc0a0f15f01eae6e30c39c88a13/user.PNG" style="max-width: 100%; height: auto;">
+      <img src="/uploads/4d058fbf9fe86d5c770d177f9461a974/token.PNG" style="max-width: 100%; height: auto;">
+    </td>
+    <td style="text-align: center;">
+      <img src="/uploads/be72863acf7368092b5261110971ca86/tale.PNG" style="max-width: 100%; height: auto;">
+      <img src="/uploads/d3c9c22b0330854928e56d76b6d89bc0/taledetail.PNG" style="max-width: 100%; height: auto;">
+      <img src="/uploads/3fd86cded0a60e22ea455591f9e3eb34/favorite.PNG" style="max-width: 100%; height: auto;">
+    </td>
   </tr>
 </table>
+
+<table style="width: 100%;">
+  <tr>
+    <th style="width: 50%; text-align: center;">커스텀 동화 카테고리</th>
+    <th style="width: 50%; text-align: center;">복수 카테고리</th>
+  </tr>
+  <tr>
+    <td style="text-align: center;">
+      <img src="/uploads/4294a1ec4a3a83eef21e53da9da57a2f/custom.PNG" style="max-width: 100%; height: auto;">
+      <img src="/uploads/ea35ff2c366e29947a47661fbd2da0d3/generate.PNG" style="max-width: 100%; height: auto;">
+    </td>
+    <td style="text-align: center;">
+      <img src="/uploads/9b65e8831fb5d2b4b143dff02e7762b0/tts.PNG" style="max-width: 100%; height: auto;">
+      <img src="/uploads/c53330e5fa18f39f14888a5dcaea594a/gpt.PNG" style="max-width: 100%; height: auto;">
+      <img src="/uploads/339d9af85f6445c9360e164e40ca2966/s3.PNG" style="max-width: 100%; height: auto;">
+    </td>
+  </tr>
+</table>
+
 
 
 ## :book: 토씨의 기능
