@@ -54,8 +54,8 @@
 
 ## :art: Swagger
 
-<img src="/uploads/a3380622c1bf697e572a8b823c257384/capture2.PNG" width="100" />
-<img src="/uploads/c4651d7691d1101dffc19a5267f481ec/capture3.PNG" width="100" />
+<img src="/uploads/a3380622c1bf697e572a8b823c257384/capture2.PNG" width="400" />
+<img src="/uploads/c4651d7691d1101dffc19a5267f481ec/capture3.PNG" width="400" />
 
 
 
