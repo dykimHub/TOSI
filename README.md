@@ -54,8 +54,8 @@
 
 ## :art: Swagger
 
-<img src="./assets/swagger.png" width="400" />
-<img src="./assets/swagger2.png" width="400" />
+<img src="./assets/swagger.PNG" width="400" />
+<img src="./assets/swagger2.PNG" width="400" />
 
 
 
