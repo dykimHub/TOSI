@@ -1,5 +1,5 @@
 # 👪 Tosi(The only story in the world) :books:
-![tosi](/uploads/250f8a2563c1215cc494f3ea1f9f468b/tosi.png)
+<img src="./assets/tosi.png">
 
 ## :loud_sound: 주제
 
@@ -54,8 +54,8 @@
 
 ## :art: Swagger
 
-<img src="/uploads/a3380622c1bf697e572a8b823c257384/capture2.PNG" width="400" />
-<img src="/uploads/c4651d7691d1101dffc19a5267f481ec/capture3.PNG" width="400" />
+<img src="./assets/swagger.png" width="400" />
+<img src="./assets/swagger2.png" width="400" />
 
 
 
@@ -66,8 +66,8 @@
     <th style="text-align: center;">동화 목록</th>
   </tr>
   <tr>
-    <td>![main](/uploads/56882f56e102a10a058abde34566a70d/main.gif)</td>
-    <td>![booklist](/uploads/133132d8f873fc00ae5812d04affc11b/booklist.gif)</td>
+    <td><img src="./assets/main.gif"></td>
+    <td><img src="./assets/booklist.gif"></td>
   </tr>
   <tr>
     <td>- 비회원용 메인페이지에서는 토씨의 기능에 대해서 음성으로 설명합니다. <br> - 로그인에 성공하면 토씨의 기능을 사용할 수 있습니다.</td>
@@ -80,8 +80,8 @@
     <th style="text-align: center;">동화 구연</th>
   </tr>
   <tr>
-    <td>![bookdetail](/uploads/62e4285c9134215b610461bce967a1c3/bookdetail.gif)</td>
-    <td>![bookread](/uploads/c56fa31c46c3df593ba75f88c45595d3/bookread.gif)</td>
+    <td><img src="./assets/bookdetail.gif"></td>
+    <td><img src="./assets/bookread.gif"></td>
   </tr>
   <tr>
     <td>- 동화 찜 버튼을 누르면 나의 책장에 추가 됩니다. <br> - 이름을 바꾸길 원하는 등장인물과 어린이의 이름을 선택할 수 있습니다. 이미 선택된 등장인물은 클릭할 수 없습니다. <br> - 동화를 읽어주길 원하는 목소리를 선택할 수 있습니다. <br> - 스피커를 누르면 목소리를 들어볼 수 있습니다.</td>
@@ -95,8 +95,8 @@
     <th style="text-align: center;">등장인물과의 채팅</th>
   </tr>
   <tr>
-    <td>![bookend](/uploads/46e5d98e6d7a66d4518b6aa0ce764303/bookend.gif)</td>
-    <td>![chat](/uploads/32eeb133944be0c7c068feef3401745e/chat.gif)</td>
+    <td><img src="./assets/bookend.gif"></td>
+    <td><img src="./assets/chat.gif"></td>
   </tr>
   <tr>
     <td>- 동화 구연이 끝날 때마다 등장인물 중 한 명이 랜덤 메세지를 보냅니다. <br> - 원하는 등장인물에게 채팅을 걸 수 있습니다. 선택한 어린이의 이름으로 채팅방이 형성됩니다. <br> - 선택한 등장인물이 입장했다는 메세지가 뜹니다. 해당 등장인물에게 5번의 대답을 들을 수 있습니다. </td>
@@ -110,8 +110,8 @@
     <th style="text-align: center;">다른 회원의 커스텀 동화 구연</th>
   </tr>
   <tr>
-    <td>![custom](/uploads/a7252c6975ab6e95109b7d8a9f4589ff/custom.gif)</td>
-    <td>![othercustom](/uploads/1af3b1aaa16588095f9015b366fb599d/othercustom.gif)</td>
+    <td><img src="./assets/custom.gif"></td>
+    <td><img src="./assets/othercustom.gif"></td>
   </tr>
   <tr>
     <td>- 원하는 배경과 키워드를 입력하면 어린이의 성별까지 반영한 썸네일과 동화가 생성됩니다. <br> - 커스텀 동화 구연을 마치면 원하는 제목을 짓고 공개 여부를 선택하여 저장할 수 있습니다. <br> - 내가 만든 동화 목록에서 저장된 동화를 확인할 수 있고 공개 여부를 수정하거나 삭제할 수 있습니다.   </td>
@@ -160,10 +160,10 @@
 
 ## ⭐️ 결과 화면
 ##### 전체 버전
-![Tosi_UCC](/uploads/fc5f8b1da2fcf971ef797a476004836d/Tosi_UCC.mp4)
+<img src="./assets/Tosi_UCC.mp4">
 
 ##### Short 버전
-![Tosi_UCC_Short](/uploads/c33b30af9309325eb926dab32596766b/Tosi_UCC_Short.mp4)
+<img src="./assets/Tosi_UCC_Short.mp4">
      
 
 
