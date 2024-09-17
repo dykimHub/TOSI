@@ -3,9 +3,9 @@ spring:
     name: user
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/user?serverTimezone=UTC&characterEncoding=UTF-8
-    username: SSAFY
-    password: ssafy
+    url: jdbc:mysql://mysql:3306/user?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
@@ -30,26 +30,14 @@ spring:
   data:
     redis:
       port: 6379
-      host: localhost
+      host: redis
 logging:
   level:
     org.springframework.data.redis.cache: DEBUG
-cloud:
-  aws:
-    s3:
-      bucket: tosibucket
-    stack:
-      auto: false
-    region:
-      static: ap-northeast-2
-    credentials:
-      access-key: AKIAQ3EGUWZYIYWS6K4R
-      secret-key: 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
 jwt:
   secret: f671835008b1cea40c25b3743721b37428ad5124e631044a240bd5915dcf059c02ccd1ac0cc2f17df0654c6e85982a132a06f98e2ba199d2e1323a5dcdf8263f
 server:
   port: 8081
 service:
   tale:
-    url: http://localhost:8080/api/tales/
-
+    url: ${TALE_URL}

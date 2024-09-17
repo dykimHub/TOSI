@@ -3,12 +3,12 @@ services:
     image: "mysql:8.0"
     volumes:
       - ./my.cnf:/etc/mysql/my.cnf
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=SSAFY
       - MYSQL_PASSWORD=ssafy
-      - MYSQL_DATABASE=tale
   redis:
     image: "redis:6.2"
   backend-tale:
@@ -18,11 +18,23 @@ services:
     environment:
       - MYSQL_USER=SSAFY
       - MYSQL_PASSWORD=ssafy
-      - ACCESS_KEY
-      - SECRET_KEY
+      - ACCESS_KEY=AKIAQ3EGUWZYIYWS6K4R
+      - SECRET_KEY=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
     depends_on:
       - mysql
       - redis
+  backend-user:
+    build: ./backend/user
+    ports:
+      - 8081:8081
+    environment:
+      - MYSQL_USER=SSAFY
+      - MYSQL_PASSWORD=ssafy
+      - TALE_URL=http://backend-tale:8080/api/tales/
+    depends_on:
+      - mysql
+      - redis
+      - backend-tale
 
 volumes:
   data:
@@ -31,4 +43,5 @@ volumes:
 # docker exec -it tosi-deploy-mysql-1 mysql -uSSAFY -p
 # SHOW VARIABLES LIKE 'char%';
 # source /tmp/data.sql;
+# root 사용자로 로그인해서 권한 설정 확인
 
