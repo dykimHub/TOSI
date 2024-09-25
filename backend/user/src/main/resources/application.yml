@@ -3,7 +3,7 @@ spring:
     name: user
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/user?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://${MYSQL_URL}:3306/user?serverTimezone=UTC&characterEncoding=UTF-8
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
   jpa:
@@ -35,7 +35,7 @@ logging:
   level:
     org.springframework.data.redis.cache: DEBUG
 jwt:
-  secret: f671835008b1cea40c25b3743721b37428ad5124e631044a240bd5915dcf059c02ccd1ac0cc2f17df0654c6e85982a132a06f98e2ba199d2e1323a5dcdf8263f
+  secret: ${JWT_SECRET}
 server:
   port: 8081
 service:
