@@ -1,9 +1,9 @@
 spring:
   application:
-    name: tale
+    name: customTale
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_URL}:3306/tale?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://${MYSQL_URL}:3306/custom_tale?serverTimezone=UTC&characterEncoding=UTF-8
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
   jpa:
@@ -45,3 +45,10 @@ cloud:
     credentials:
       access-key: ${ACCESS_KEY}
       secret-key: ${SECRET_KEY}
+server:
+  port: 8083
+service:
+  user:
+    url: ${USER_URL}
+openai:
+  api-key: ${API_KEY}
